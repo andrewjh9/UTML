@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequestMapping("api/diagram")
+@CrossOrigin()
 @RestController
 public class DiagramController {
     private final DiagramService diagramService;

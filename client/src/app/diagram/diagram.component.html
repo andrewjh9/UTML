@@ -1,0 +1,11 @@
+<script>
+    function renderNode(node) {
+        return `<div>${node.texts[0]}</div>`
+    }
+</script>
+
+
+<div class="diagram-container" *ngFor="let node of diagram.nodes">
+    {{ renderNode(node) }}
+    
+</div>
