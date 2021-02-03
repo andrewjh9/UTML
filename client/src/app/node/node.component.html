@@ -1,0 +1,11 @@
+<div *ngIf="node">
+    <div class='wrapper' 
+        [ngStyle]="{
+            'width.px': node.width, 
+            'height.px': node.height,
+            'top.px': node.position.y,
+            'left.px': node.position.x
+        }">
+        {{node.texts[0]}}
+    </div>
+</div>

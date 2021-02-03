@@ -1,6 +1,6 @@
-import { Position } from './model/position';
+import { Position } from '../model/position';
 import { Component, OnInit } from '@angular/core';
-import { Node, Edge, Diagram, Shape } from './model/diagram';
+import { Node, Edge, Diagram, Shape } from '../model/diagram';
 
 @Component({
   selector: 'app-diagram',
@@ -15,10 +15,17 @@ export class DiagramComponent implements OnInit {
       shape: Shape.Rectangle,
       width: 100,
       height: 100,
-      position: {x: 10, y: 10},
+      position: {x: 10, y: 110},
       texts: ['something']
     };
-    this.diagram = {nodes: [node], edges: []};
+    const node2: Node = {
+      shape: Shape.Rectangle,
+      width: 100,
+      height: 100,
+      position: {x: 400, y: 110},
+      texts: ['something else ']
+    };
+    this.diagram = {nodes: [node, node2], edges: []};
   }
 
   ngOnInit(): void {
