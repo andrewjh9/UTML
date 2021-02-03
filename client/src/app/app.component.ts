@@ -11,10 +11,10 @@ export class AppComponent {
 
   constructor(private httpClient: HttpClient) {
     // this.diagrams = `hello`;
-    const h: HttpHeaders = (new HttpHeaders()).set(`Access-Control-Allow-Origin`, `*`);
-    this.httpClient.get(`http://localhost:8080/api/diagram`, {headers: h}).subscribe((data: any) => {
-      this.diagrams = JSON.stringify(data);
-      console.log(data);
-    });
+    // const h: HttpHeaders = (new HttpHeaders()).set(`Access-Control-Allow-Origin`, `*`);
+    // this.httpClient.get(`http://localhost:8080/api/diagram`, {headers: h}).subscribe((data: any) => {
+    //   this.diagrams = JSON.stringify(data);
+    //   console.log(data);
+    // });
   }
 }

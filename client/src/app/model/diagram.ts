@@ -28,8 +28,8 @@ export interface Node {
 }
 
 export interface Edge {
-    startNode: Node;
-    endNode: Node;
+    startNode?: Node;
+    endNode?: Node;
     startPosition: Position;
     endPosition: Position;
     points: Position[];

@@ -1,6 +1,6 @@
 import { Position } from '../model/position';
 import { Component, OnInit } from '@angular/core';
-import { Node, Edge, Diagram, Shape } from '../model/diagram';
+import {Node, Edge, Diagram, Shape, ArrowStyle, EdgeStyle} from '../model/diagram';
 
 @Component({
   selector: 'app-diagram',
@@ -25,7 +25,21 @@ export class DiagramComponent implements OnInit {
       position: {x: 400, y: 110},
       texts: ['something else ']
     };
-    this.diagram = {nodes: [node, node2], edges: []};
+    const edge: Edge = {
+      startPosition: {x: 10, y: 100},
+      endPosition: {x: 100, y: 10},
+      arrowStyle: ArrowStyle.None,
+      edgeStyle: EdgeStyle.Filled,
+      points: []
+    };
+    const edge2: Edge = {
+      startPosition: {x: 200, y: 200},
+      endPosition: {x: 300, y: 300},
+      arrowStyle: ArrowStyle.None,
+      edgeStyle: EdgeStyle.Filled,
+      points: []
+    };
+    this.diagram = {nodes: [node, node2], edges: [edge, edge2]};
   }
 
   ngOnInit(): void {
