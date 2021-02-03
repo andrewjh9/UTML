@@ -15,31 +15,31 @@ export class DiagramComponent implements OnInit {
       shape: Shape.Rectangle,
       width: 100,
       height: 100,
-      position: {x: 10, y: 110},
+      position: {x: 10, y: 10},
       texts: ['something']
     };
     const node2: Node = {
       shape: Shape.Rectangle,
       width: 100,
       height: 100,
-      position: {x: 400, y: 110},
+      position: {x: 400, y: 10},
       texts: ['something else ']
     };
     const edge: Edge = {
-      startPosition: {x: 10, y: 100},
-      endPosition: {x: 100, y: 10},
+      startPosition: {x: 110, y: 60},
+      endPosition: {x: 400, y: 60},
       arrowStyle: ArrowStyle.None,
       edgeStyle: EdgeStyle.Filled,
       points: []
     };
-    const edge2: Edge = {
-      startPosition: {x: 200, y: 200},
-      endPosition: {x: 300, y: 300},
-      arrowStyle: ArrowStyle.None,
-      edgeStyle: EdgeStyle.Filled,
-      points: []
-    };
-    this.diagram = {nodes: [node, node2], edges: [edge, edge2]};
+    // const edge2: Edge = {
+    //   startPosition: {x: 200, y: 200},
+    //   endPosition: {x: 300, y: 300},
+    //   arrowStyle: ArrowStyle.None,
+    //   edgeStyle: EdgeStyle.Filled,
+    //   points: []
+    // };
+    this.diagram = {nodes: [node, node2], edges: [edge]};
   }
 
   ngOnInit(): void {
