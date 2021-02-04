@@ -1,0 +1,8 @@
+<svg:line
+  *ngIf="edge !== undefined"
+  [attr.x1]="edge.startPosition.x"
+  [attr.y1]="edge.startPosition.y"
+  [attr.x2]="edge.endPosition.x"
+  [attr.y2]="edge.endPosition.y"
+  style="stroke:rgb(255,0,0);stroke-width:2">
+</svg:line>

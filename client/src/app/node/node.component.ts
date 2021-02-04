@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Node, Shape } from '../model/diagram';
 
 @Component({
-  selector: 'app-node',
+  selector: '[node-component]',
   templateUrl: './node.component.html',
   styleUrls: ['./node.component.scss']
 })

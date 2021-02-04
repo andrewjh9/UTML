@@ -1,11 +1,14 @@
-<div *ngIf="node">
-    <div class='wrapper'
-        [ngStyle]="{
-            'width.px': node.width,
-            'height.px': node.height,
-            'top.px': node.position.y,
-            'left.px': node.position.x
-        }">
-        {{node.texts[0]}}
-    </div>
-</div>
+<svg:g *ngIf="node">
+  <svg:text [attr.x]="node.position.x" [attr.y]="node.position.y">
+    {{node.texts[0]}}
+  </svg:text>
+  <svg:rect
+    [attr.x]="node.position.x"
+    [attr.y]="node.position.y"
+    [attr.width]="node.width"
+    [attr.height]="node.height"
+    rx="10"
+    style="fill:green;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
+  >
+  </svg:rect>
+</svg:g>

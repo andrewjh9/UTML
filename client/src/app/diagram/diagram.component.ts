@@ -7,7 +7,7 @@ import {Node, Edge, Diagram, Shape, ArrowStyle, EdgeStyle} from '../model/diagra
   templateUrl: './diagram.component.html',
   styleUrls: ['./diagram.component.scss']
 })
-export class DiagramComponent implements OnInit {
+export class DiagramComponent {
   public diagram: Diagram;
 
   constructor() {
@@ -27,26 +27,28 @@ export class DiagramComponent implements OnInit {
     };
     const edge: Edge = {
       startPosition: {x: 110, y: 60},
-      endPosition: {x: 400, y: 60},
+      endPosition: {x: 450, y: 100},
       arrowStyle: ArrowStyle.None,
       edgeStyle: EdgeStyle.Filled,
       points: []
     };
-    // const edge2: Edge = {
-    //   startPosition: {x: 200, y: 200},
-    //   endPosition: {x: 300, y: 300},
-    //   arrowStyle: ArrowStyle.None,
-    //   edgeStyle: EdgeStyle.Filled,
-    //   points: []
-    // };
-    this.diagram = {nodes: [node, node2], edges: [edge]};
+    const edge2: Edge = {
+      startPosition: {x: 200, y: 200},
+      endPosition: {x: 300, y: 300},
+      arrowStyle: ArrowStyle.None,
+      edgeStyle: EdgeStyle.Filled,
+      points: []
+    };
+    this.diagram = {nodes: [node, node2], edges: [edge, edge2]};
   }
 
-  ngOnInit(): void {
-  }
-
-  renderNode(node: Node): string {
-    return `<div>${node.texts[0]}</div>`;
+  getEdgeStyle(edge: Edge): any {
+    return {
+      x1: edge.startPosition.x,
+      y1: edge.startPosition.y,
+      x2: edge.endPosition.x,
+      y2: edge.endPosition.y
+    }
   }
 }
 

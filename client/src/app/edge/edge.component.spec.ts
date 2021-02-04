@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EdgeCanvasComponent } from './edge-canvas.component';
+import { EdgeComponent } from './edge.component';
 
-describe('EgdeCanvasComponent', () => {
-  let component: EdgeCanvasComponent;
-  let fixture: ComponentFixture<EdgeCanvasComponent>;
+describe('EdgeComponent', () => {
+  let component: EdgeComponent;
+  let fixture: ComponentFixture<EdgeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EdgeCanvasComponent ]
+      declarations: [ EdgeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EdgeCanvasComponent);
+    fixture = TestBed.createComponent(EdgeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

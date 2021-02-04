@@ -6,14 +6,14 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DiagramComponent } from './diagram/diagram.component';
 import { NodeComponent } from './node/node.component';
-import { EdgeCanvasComponent } from './egde-canvas/edge-canvas.component';
+import { EdgeComponent } from './edge/edge.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DiagramComponent,
     NodeComponent,
-    EdgeCanvasComponent
+    EdgeComponent
   ],
   imports: [
     BrowserModule,
