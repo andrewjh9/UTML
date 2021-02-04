@@ -7,13 +7,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { DiagramComponent } from './diagram/diagram.component';
 import { NodeComponent } from './node/node.component';
 import { EdgeComponent } from './edge/edge.component';
+import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DiagramComponent,
     NodeComponent,
-    EdgeComponent
+    EdgeComponent,
+    ArrowMarkerComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
-import {Component, Input, NgModule, NO_ERRORS_SCHEMA, OnInit} from '@angular/core';
-import {ArrowStyle, Edge, EdgeStyle} from "../model/diagram";
+import {Component, Input} from '@angular/core';
+import {ArrowStyle, Edge} from "../model/diagram";
+import {Position} from "../model/position";
 
 @Component({
   selector: '[edge-component]',
@@ -10,5 +11,36 @@ export class EdgeComponent {
   @Input() edge?: Edge;
   constructor() {
 
+  }
+
+  getPoints(): string | undefined {
+    if (!this.edge) {
+      return undefined;
+    }
+    let result: string = "";
+    result += this.positionToText(this.edge.startPosition);
+    for (let position of this.edge.points) {
+      result += this.positionToText(position)
+    }
+    result += this.positionToText(this.edge.endPosition);
+    return result;
+  }
+
+  getEndMarker(): string {
+    if (!this.edge) {
+      return "none";
+    }
+
+    switch (this.edge.arrowStyle) {
+      case ArrowStyle.None:
+        return "none";
+      case ArrowStyle.End:
+        return "url(#arrow)"
+    }
+    return "none";
+  }
+
+  positionToText(position: Position): string {
+    return `${position.x}, ${position.y} `;
   }
 }

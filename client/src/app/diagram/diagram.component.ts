@@ -28,27 +28,18 @@ export class DiagramComponent {
     const edge: Edge = {
       startPosition: {x: 110, y: 60},
       endPosition: {x: 450, y: 100},
-      arrowStyle: ArrowStyle.None,
+      arrowStyle: ArrowStyle.End,
       edgeStyle: EdgeStyle.Filled,
-      points: []
+      points: [{x:200, y: 200}]
     };
     const edge2: Edge = {
-      startPosition: {x: 200, y: 200},
-      endPosition: {x: 300, y: 300},
+      startPosition: {x: 500, y: 500},
+      endPosition: {x: 600, y: 600},
       arrowStyle: ArrowStyle.None,
       edgeStyle: EdgeStyle.Filled,
       points: []
     };
     this.diagram = {nodes: [node, node2], edges: [edge, edge2]};
-  }
-
-  getEdgeStyle(edge: Edge): any {
-    return {
-      x1: edge.startPosition.x,
-      y1: edge.startPosition.y,
-      x2: edge.endPosition.x,
-      y2: edge.endPosition.y
-    }
   }
 }
 

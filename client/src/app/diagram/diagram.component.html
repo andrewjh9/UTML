@@ -1,4 +1,6 @@
 <svg width="1000" height="1000">
+  <!--  Define markers-->
+  <defs arrow-marker></defs>
   <g *ngFor="let edge of diagram.edges" edge-component [edge]="edge"></g>
   <g *ngFor="let node of diagram.nodes" node-component [node]="node"></g>
 </svg>
