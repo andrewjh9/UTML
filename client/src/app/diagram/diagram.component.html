@@ -1,6 +1,9 @@
 <svg width="1000" height="1000">
   <!--  Define markers-->
   <defs arrow-marker></defs>
-  <g *ngFor="let edge of diagram.edges" edge-component [edge]="edge"></g>
-  <g *ngFor="let node of diagram.nodes" node-component [node]="node"></g>
+  <g *ngFor="let edge of diagram.edges; let i = index"
+     edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
+  <g *ngFor="let node of diagram.nodes; let i = index"
+     node-component [(node)]="diagram.nodes[i]" (nodeChange)="diagram.nodes[i]=$event" ></g>
 </svg>
+<button (click)="log()">Some button</button>

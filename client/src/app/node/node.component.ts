@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import { Node, Shape } from '../model/diagram';
 
 @Component({
@@ -8,6 +8,7 @@ import { Node, Shape } from '../model/diagram';
 })
 export class NodeComponent {
   @Input() node?: Node;
+  @Output() nodeChange = new EventEmitter<Node>();
   constructor() {
     // this.node = {
     //   shape: Shape.Rectangle,

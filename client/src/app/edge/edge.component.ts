@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ArrowStyle, Edge} from "../model/diagram";
 import {Position} from "../model/position";
 
@@ -9,6 +9,7 @@ import {Position} from "../model/position";
 })
 export class EdgeComponent {
   @Input() edge?: Edge;
+  @Output() edgeChange = new EventEmitter<Edge>();
   constructor() {
 
   }
@@ -42,5 +43,14 @@ export class EdgeComponent {
 
   positionToText(position: Position): string {
     return `${position.x}, ${position.y} `;
+  }
+
+  onClick(event: MouseEvent): void {
+    if (!this.edge) {
+      return;
+    }
+    this.edge.startPosition.y += 10;
+    this.edge.endPosition.y += 10;
+    this.edgeChange.emit(this.edge);
   }
 }

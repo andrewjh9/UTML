@@ -9,7 +9,7 @@ import {Node, Edge, Diagram, Shape, ArrowStyle, EdgeStyle} from '../model/diagra
 })
 export class DiagramComponent {
   public diagram: Diagram;
-
+  public diagramString: string;
   constructor() {
     const node: Node = {
       shape: Shape.Rectangle,
@@ -40,6 +40,11 @@ export class DiagramComponent {
       points: []
     };
     this.diagram = {nodes: [node, node2], edges: [edge, edge2]};
+    this.diagramString = JSON.stringify(this.diagram);
+  }
+
+  log(): void {
+    console.log(this.diagram);
   }
 }
 

@@ -8,6 +8,7 @@ import { DiagramComponent } from './diagram/diagram.component';
 import { NodeComponent } from './node/node.component';
 import { EdgeComponent } from './edge/edge.component';
 import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -17,11 +18,12 @@ import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
     EdgeComponent,
     ArrowMarkerComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule
+    ],
   providers: [],
   bootstrap: [AppComponent]
 })

@@ -1,11 +1,7 @@
 <svg:polyline
   *ngIf="edge !== undefined"
+  (click)="onClick($event)"
   [attr.points]="getPoints()"
-  style="stroke:rgb(0,0,0);stroke-width:2;fill:none;"
+  style="stroke:rgb(0,0,0); stroke-width:4; fill:none;"
   [attr.marker-end]="getEndMarker()">
-
 </svg:polyline>
-<!--  [attr.x1]="edge.startPosition.x"-->
-<!--  [attr.y1]="edge.startPosition.y"-->
-<!--  [attr.x2]="edge.endPosition.x"-->
-<!--  [attr.y2]="edge.endPosition.y"-->
