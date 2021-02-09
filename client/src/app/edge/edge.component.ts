@@ -8,6 +8,7 @@ import {Position} from "../model/position";
   styleUrls: ['./edge.component.scss'],
 })
 export class EdgeComponent {
+  @Input() mode?: boolean;
   @Input() edge?: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
   constructor() {

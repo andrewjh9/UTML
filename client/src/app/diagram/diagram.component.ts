@@ -1,5 +1,5 @@
 import { Position } from '../model/position';
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Node, Edge, Diagram, Shape, ArrowStyle, EdgeStyle} from '../model/diagram';
 
 @Component({
@@ -8,6 +8,9 @@ import {Node, Edge, Diagram, Shape, ArrowStyle, EdgeStyle} from '../model/diagra
   styleUrls: ['./diagram.component.scss']
 })
 export class DiagramComponent {
+  @Input() public mode?: boolean;
+  @Output() public modeChange: EventEmitter<boolean> = new EventEmitter();
+
   public diagram: Diagram;
   public diagramString: string;
   constructor() {
@@ -45,6 +48,11 @@ export class DiagramComponent {
 
   log(): void {
     console.log(this.diagram);
+  }
+
+  setMode(mode: boolean): void {
+    this.mode = mode;
+    this.modeChange.emit(this.mode);
   }
 }
 

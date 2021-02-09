@@ -9,6 +9,7 @@ import { NodeComponent } from './node/node.component';
 import { EdgeComponent } from './edge/edge.component';
 import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
 import {FormsModule} from "@angular/forms";
+import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {FormsModule} from "@angular/forms";
     DiagramComponent,
     NodeComponent,
     EdgeComponent,
-    ArrowMarkerComponent
+    ArrowMarkerComponent,
+    ModeSelectorComponent
   ],
     imports: [
         BrowserModule,
