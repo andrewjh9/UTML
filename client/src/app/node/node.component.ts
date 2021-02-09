@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import { Node, Shape } from '../model/diagram';
+import { Node, Shape } from '../../assets/serialisation/node';
 
 @Component({
   selector: '[node-component]',

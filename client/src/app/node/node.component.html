@@ -1,12 +1,12 @@
-<svg:g *ngIf="node">
-  <svg:text [attr.x]="node.position.x" [attr.y]="node.position.y">
-    {{node.texts[0]}}
+<svg:g *ngIf="node?.formatter">
+  <svg:text [attr.x]="node!.formatter!.position.x" [attr.y]="node!.formatter!.position.y">
+    {{ node!.texts[0] }}
   </svg:text>
-  <svg:rect
-    [attr.x]="node.position.x"
-    [attr.y]="node.position.y"
-    [attr.width]="node.width"
-    [attr.height]="node.height"
+  <svg:rect *ngIf="node?.formatter"
+    [attr.x]="node!.formatter!.position.x"
+    [attr.y]="node!.formatter!.position.y"
+    [attr.width]="node!.formatter!.width"
+    [attr.height]="node!.formatter!.height"
     rx="10"
     style="fill:green;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
   >

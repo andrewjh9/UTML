@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ArrowStyle, Edge} from "../model/diagram";
-import {Position} from "../model/position";
+import {Position} from "../../assets/serialisation/position";
+import {Edge, EndStyle} from "../../assets/serialisation/edge";
 
 @Component({
   selector: '[edge-component]',
@@ -16,27 +16,27 @@ export class EdgeComponent {
   }
 
   getPoints(): string | undefined {
-    if (!this.edge) {
+    if (!this.edge?.formatter) {
       return undefined;
     }
     let result: string = "";
-    result += this.positionToText(this.edge.startPosition);
-    for (let position of this.edge.points) {
+    result += this.positionToText(this.edge.formatter.getStartPosition());
+    for (let position of this.edge.formatter.middlePositions) {
       result += this.positionToText(position)
     }
-    result += this.positionToText(this.edge.endPosition);
+    result += this.positionToText(this.edge.formatter.getEndPosition());
     return result;
   }
 
   getEndMarker(): string {
-    if (!this.edge) {
+    if (!this.edge?.formatter) {
       return "none";
     }
 
-    switch (this.edge.arrowStyle) {
-      case ArrowStyle.None:
+    switch (this.edge.formatter.endStyle) {
+      case EndStyle.None:
         return "none";
-      case ArrowStyle.End:
+      case EndStyle.SmallFilledArrow:
         return "url(#arrow)"
     }
     return "none";
@@ -47,11 +47,10 @@ export class EdgeComponent {
   }
 
   onClick(event: MouseEvent): void {
-    if (!this.edge) {
+    if (!this.edge?.formatter) {
       return;
     }
-    this.edge.startPosition.y += 10;
-    this.edge.endPosition.y += 10;
+    this.edge.formatter.middlePositions.push(new Position(0, 500))
     this.edgeChange.emit(this.edge);
   }
 }

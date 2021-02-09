@@ -1,6 +1,8 @@
-import { Position } from '../model/position';
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Node, Edge, Diagram, Shape, ArrowStyle, EdgeStyle} from '../model/diagram';
+import {Position} from '../../assets/serialisation/position';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
+import {Edge, EdgeFormatter, EndStyle} from "../../assets/serialisation/edge";
+import {Diagram} from "../../assets/serialisation/diagram";
 
 @Component({
   selector: 'app-diagram',
@@ -15,34 +17,21 @@ export class DiagramComponent {
   public diagramString: string;
   constructor() {
     const node: Node = {
-      shape: Shape.Rectangle,
-      width: 100,
-      height: 100,
-      position: {x: 10, y: 10},
-      texts: ['something']
+      texts: ['something'],
+      formatter: new NodeFormatter(100, 100, new Position(100, 100), Shape.Rectangle)
     };
     const node2: Node = {
-      shape: Shape.Rectangle,
-      width: 100,
-      height: 100,
-      position: {x: 400, y: 10},
-      texts: ['something else ']
+      texts: ['something'],
+      formatter: new NodeFormatter(100, 100, new Position(300, 300), Shape.Rectangle)
     };
     const edge: Edge = {
-      startPosition: {x: 110, y: 60},
-      endPosition: {x: 450, y: 100},
-      arrowStyle: ArrowStyle.End,
-      edgeStyle: EdgeStyle.Filled,
-      points: [{x:200, y: 200}]
+      startNode: node,
+      endNode: node2,
     };
-    const edge2: Edge = {
-      startPosition: {x: 500, y: 500},
-      endPosition: {x: 600, y: 600},
-      arrowStyle: ArrowStyle.None,
-      edgeStyle: EdgeStyle.Filled,
-      points: []
-    };
-    this.diagram = {nodes: [node, node2], edges: [edge, edge2]};
+    edge.formatter = new EdgeFormatter(new Position(200, 200), new Position(300 ,300), node, node2);
+    edge.formatter.endStyle = EndStyle.SmallFilledArrow;
+
+    this.diagram = {nodes: [node, node2], edges: [edge]};
     this.diagramString = JSON.stringify(this.diagram);
   }
 
