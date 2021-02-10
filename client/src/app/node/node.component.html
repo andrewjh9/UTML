@@ -7,7 +7,7 @@
     {{ node!.texts[0] }}
   </svg:text>
 
-  <svg:rect *ngIf="node?.formatter"
+  <svg:rect *ngIf="node?.formatter && isRectangle()"
     [attr.x]="node!.formatter!.position.x"
     [attr.y]="node!.formatter!.position.y"
     [attr.width]="node!.formatter!.width"
@@ -15,4 +15,19 @@
     style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
   >
   </svg:rect>
+
+  <svg:ellipse *ngIf="node?.formatter && isEllipse()"
+            [attr.cx]="node!.formatter!.position.x + node!.formatter!.width / 2"
+            [attr.cy]="node!.formatter!.position.y + node!.formatter!.height / 2"
+            [attr.rx]="node!.formatter!.width / 2"
+            [attr.ry]="node!.formatter!.height / 2"
+            style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
+  >
+  </svg:ellipse>
+
+  <svg:polyline *ngIf="node?.formatter && isDiamond()"
+               [attr.points]="getDiamondPoints()"
+               style="fill:none;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
+  >
+  </svg:polyline>
 </svg:g>

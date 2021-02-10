@@ -17,29 +17,29 @@ export class DiagramComponent {
   public diagramString: string;
   constructor() {
     const node: Node = {
-      texts: ['GET'],
-      formatter: new NodeFormatter(200, 100, new Position(100, 200), Shape.Rectangle)
+      texts: ['( ͡° ͜ʖ ͡°)'],
+      formatter: new NodeFormatter(100, 100, new Position(100, 100), Shape.Diamond)
     };
     const node2: Node = {
-      texts: ['THAT'],
-      formatter: new NodeFormatter(200, 100, new Position(500, 200), Shape.Rectangle)
+      texts: ['( ͡° ͜ʖ ͡°)'],
+      formatter: new NodeFormatter(100, 100, new Position(100, 400), Shape.Ellipse)
     };
     const node3: Node = {
-      texts: ['BREAD'],
-      formatter: new NodeFormatter(200, 100, new Position(500, 400), Shape.Rectangle)
+      texts: ['( ͡° ͜ʖ ͡°)'],
+      formatter: new NodeFormatter(100, 100, new Position(600, 250), Shape.Ellipse)
     };
     const edge: Edge = {
       startNode: node,
-      endNode: node2,
+      endNode: node3,
     };
-    edge.formatter = new EdgeFormatter(AttachmentDirection.East, AttachmentDirection.West, node, node2);
-    edge.formatter.endStyle = EndStyle.SmallFilledArrow;
+    edge.formatter = new EdgeFormatter(AttachmentDirection.East, AttachmentDirection.North, node, node3);
+    // edge.formatter.endStyle = EndStyle.SmallFilledArrow;
     const edge2: Edge = {
       startNode: node2,
       endNode: node3,
     };
-    edge2.formatter = new EdgeFormatter(AttachmentDirection.South, AttachmentDirection.North, node2, node3);
-    edge2.formatter.endStyle = EndStyle.SmallFilledArrow;
+    edge2.formatter = new EdgeFormatter(AttachmentDirection.East, AttachmentDirection.South, node2, node3);
+    // edge2.formatter.endStyle = EndStyle.SmallFilledArrow;
 
     this.diagram = {nodes: [node, node2, node3], edges: [edge, edge2]};
     this.diagramString = JSON.stringify(this.diagram);

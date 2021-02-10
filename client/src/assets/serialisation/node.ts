@@ -21,6 +21,9 @@ export class NodeFormatter {
   }
 
   getAttachmentPointPosition(direction: AttachmentDirection): Position {
+    // todo: Refactor & Complete
+    // Currently only the rectangle calculation is complete.
+
     if (this.shape == Shape.Rectangle) {
       let x: number;
       let y: number;
@@ -42,16 +45,47 @@ export class NodeFormatter {
       }
       console.log(x + "---" + y);
       return new Position(x, y);
-    } else {
-      console.error("Only rectangles are supported.");
-      return new Position(100, 100);
+    }  else if (this.shape == Shape.Ellipse) {
+      let x: number;
+      let y: number;
+      console.log(direction.toString())
+      if ([AttachmentDirection.North, AttachmentDirection.NorthEast, AttachmentDirection.NorthWest].includes(direction)) {
+        y = this.position.y;
+      } else if ([AttachmentDirection.South, AttachmentDirection.NorthEast, AttachmentDirection.NorthWest].includes(direction)) {
+        y = this.position.y + this.height;
+      } else {
+        y = this.position.y + (this.height / 2);
+      }
+
+      if ([AttachmentDirection.West, AttachmentDirection.NorthWest, AttachmentDirection.NorthWest].includes(direction)) {
+        x = this.position.x;
+      } else if ([AttachmentDirection.East, AttachmentDirection.NorthEast, AttachmentDirection.SouthEast].includes(direction)) {
+        x = this.position.x + this.width;
+      } else {
+        x = this.position.x + (this.width / 2);
+      }
+      console.log(x + "---" + y);
+      return new Position(x, y);
+    } else if (this.shape == Shape.Diamond) {
+      switch(direction) {
+        case AttachmentDirection.North:
+          return new Position(this.position.x + this.width / 2, this.position.y);
+        case AttachmentDirection.East:
+          return new Position(this.position.x + this.width, this.position.y + this.height / 2);
+        case AttachmentDirection.South:
+          return new Position(this.position.x + this.width / 2, this.position.y + this.height);
+        case AttachmentDirection.West:
+          return new Position(this.position.x, this.position.y + this.height / 2);
+      }
+      return new Position(this.position.x, this.position.y);
     }
+    return new Position(this.position.x, this.position.y);
   }
 }
 
 export enum Shape {
     Rectangle,
-    Circle,
+    Ellipse,
     Diamond
 }
 
