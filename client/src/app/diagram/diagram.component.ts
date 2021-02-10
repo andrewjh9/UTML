@@ -1,6 +1,6 @@
 import {Position} from '../../assets/serialisation/position';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
+import {AttachmentDirection, Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
 import {Edge, EdgeFormatter, EndStyle} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
 
@@ -17,21 +17,30 @@ export class DiagramComponent {
   public diagramString: string;
   constructor() {
     const node: Node = {
-      texts: ['something'],
+      texts: ['node 1'],
       formatter: new NodeFormatter(100, 100, new Position(100, 100), Shape.Rectangle)
     };
     const node2: Node = {
-      texts: ['something'],
-      formatter: new NodeFormatter(100, 100, new Position(300, 300), Shape.Rectangle)
+      texts: ['node 2'],
+      formatter: new NodeFormatter(100, 100, new Position(400, 200), Shape.Rectangle)
+    };
+    const node3: Node = {
+      texts: ['node 3'],
+      formatter: new NodeFormatter(100, 100, new Position(400, 400), Shape.Rectangle)
     };
     const edge: Edge = {
       startNode: node,
       endNode: node2,
     };
-    edge.formatter = new EdgeFormatter(new Position(200, 200), new Position(300 ,300), node, node2);
-    edge.formatter.endStyle = EndStyle.SmallFilledArrow;
+    edge.formatter = new EdgeFormatter(AttachmentDirection.East, AttachmentDirection.West, node, node2);
 
-    this.diagram = {nodes: [node, node2], edges: [edge]};
+    const edge2: Edge = {
+      startNode: node2,
+      endNode: node3,
+    };
+    edge2.formatter = new EdgeFormatter(AttachmentDirection.South, AttachmentDirection.North, node2, node3);
+    edge2.formatter.endStyle = EndStyle.SmallFilledArrow
+    this.diagram = {nodes: [node, node2, node3], edges: [edge, edge2]};
     this.diagramString = JSON.stringify(this.diagram);
   }
 

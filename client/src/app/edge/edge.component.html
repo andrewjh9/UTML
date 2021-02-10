@@ -1,12 +1,12 @@
-<svg:polyline *ngIf="edge && mode"
+<svg:polyline *ngIf="edge && !mode"
   (click)="onClick($event)"
   [attr.points]="getPoints()"
   style="stroke:rgb(0,0,0); stroke-width:4; fill:none;"
   [attr.marker-end]="getEndMarker()">
 </svg:polyline>
-<svg:polyline *ngIf="edge !== undefined && !mode"
+<svg:polyline *ngIf="edge !== undefined && mode"
               (click)="onClick($event)"
               [attr.points]="getPoints()"
-              style="stroke:rgb(255,0,0); stroke-width:4; fill:none;"
+              style="stroke:rgb(255, 0, 0); stroke-width:4; fill:none;"
               [attr.marker-end]="getEndMarker()">
 </svg:polyline>

@@ -21,8 +21,31 @@ export class NodeFormatter {
   }
 
   getAttachmentPointPosition(direction: AttachmentDirection): Position {
-    // todo: implement
-    return new Position(100, 100);
+    if (this.shape == Shape.Rectangle) {
+      let x: number;
+      let y: number;
+      console.log(direction.toString())
+      if ([AttachmentDirection.North, AttachmentDirection.NorthEast, AttachmentDirection.NorthWest].includes(direction)) {
+        y = this.position.y;
+      } else if ([AttachmentDirection.South, AttachmentDirection.NorthEast, AttachmentDirection.NorthWest].includes(direction)) {
+        y = this.position.y + this.height;
+      } else {
+        y = this.position.y + (this.height / 2);
+      }
+
+      if ([AttachmentDirection.West, AttachmentDirection.NorthWest, AttachmentDirection.NorthWest].includes(direction)) {
+        x = this.position.x;
+      } else if ([AttachmentDirection.East, AttachmentDirection.NorthEast, AttachmentDirection.SouthEast].includes(direction)) {
+        x = this.position.x + this.width;
+      } else {
+        x = this.position.x + (this.width / 2);
+      }
+      console.log(x + "---" + y);
+      return new Position(x, y);
+    } else {
+      console.error("Only rectangles are supported.");
+      return new Position(100, 100);
+    }
   }
 }
 
