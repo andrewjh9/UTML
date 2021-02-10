@@ -10,3 +10,33 @@
               style="stroke:rgb(255, 0, 0); stroke-width:4; fill:none;"
               [attr.marker-end]="getEndMarker()">
 </svg:polyline>
+
+<!-- Start Label -->
+<svg:text *ngIf="edge?.startLabel && edge?.formatter"
+      [attr.x]="edge!.formatter!.getStartPosition().x"
+      [attr.y]="edge!.formatter!.getStartPosition().y - 20"
+      dominant-baseline="middle"
+      text-anchor="middle"
+      font-family="Comic Sans MS, Helvetica, sans-serif">
+  {{edge!.startLabel}}
+</svg:text>
+
+<!-- Middle Label -->
+<svg:text *ngIf="edge?.startLabel && edge?.formatter"
+          [attr.x]="(edge!.formatter!.getStartPosition().x + edge!.formatter!.getEndPosition().x) / 2"
+          [attr.y]="(edge!.formatter!.getStartPosition().y + edge!.formatter!.getEndPosition().y) / 2 - 20"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          font-family="Comic Sans MS, Helvetica, sans-serif">
+  {{edge!.middleLabel}}
+</svg:text>
+
+<!-- End Label -->
+<svg:text *ngIf="edge?.startLabel && edge?.formatter"
+          [attr.x]="edge!.formatter!.getEndPosition().x"
+          [attr.y]="edge!.formatter!.getEndPosition().y - 10"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          font-family="Comic Sans MS, Helvetica, sans-serif">
+  {{edge!.endLabel}}
+</svg:text>

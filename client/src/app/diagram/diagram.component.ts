@@ -33,13 +33,17 @@ export class DiagramComponent {
       endNode: node3,
     };
     edge.formatter = new EdgeFormatter(AttachmentDirection.East, AttachmentDirection.North, node, node3);
-    // edge.formatter.endStyle = EndStyle.SmallFilledArrow;
+    edge.startLabel = "start";
+    edge.endLabel = "end";
+    edge.middleLabel = "middle";
+
+    edge.formatter.endStyle = EndStyle.SmallFilledArrow;
     const edge2: Edge = {
       startNode: node2,
       endNode: node3,
     };
     edge2.formatter = new EdgeFormatter(AttachmentDirection.East, AttachmentDirection.South, node2, node3);
-    // edge2.formatter.endStyle = EndStyle.SmallFilledArrow;
+    edge2.formatter.endStyle = EndStyle.SmallFilledArrow;
 
     this.diagram = {nodes: [node, node2, node3], edges: [edge, edge2]};
     this.diagramString = JSON.stringify(this.diagram);

@@ -21,7 +21,6 @@ export class EdgeFormatter {
   private _startStyle: EndStyle = EndStyle.None;
   private _endStyle: EndStyle = EndStyle.None;
 
-
   constructor(startPosition: Position | AttachmentDirection, endPosition: Position | AttachmentDirection,
               startNode: Node, endNode: Node) {
     this._startPosition = startPosition;
