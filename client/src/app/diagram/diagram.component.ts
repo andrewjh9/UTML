@@ -6,6 +6,7 @@ import {Diagram} from "../../assets/serialisation/diagram";
 import {RepositionService} from "../reposition.service";
 import {fsm} from "../../assets/serialisation/examples/fsm";
 import {ad} from "../../assets/serialisation/examples/ad";
+import {EdgeRepositionService} from "../edge-reposition.service";
 
 
 @Component({
@@ -18,7 +19,7 @@ export class DiagramComponent {
   @Output() public modeChange: EventEmitter<boolean> = new EventEmitter();
 
   public diagram: Diagram;
-  constructor(private repositionService: RepositionService) {
+  constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService) {
     // this.diagram = fsm;
     this.diagram = ad;
   }
@@ -35,12 +36,16 @@ export class DiagramComponent {
   handleMouseUp(event: MouseEvent): void {
     if (this.repositionService.isActive()) {
       this.repositionService.deactivate();
+    } else if (this.edgeRepositionService.isActive()) {
+      this.edgeRepositionService.deactivate()
     }
   }
 
   handleMouseMove(event: MouseEvent) {
     if (this.repositionService.isActive()) {
       this.repositionService.update(new Position(event.clientX, event.clientY))
+    } else if (this.edgeRepositionService.isActive()) {
+      this.edgeRepositionService.update(new Position(event.clientX, event.clientY))
     }
   }
 }

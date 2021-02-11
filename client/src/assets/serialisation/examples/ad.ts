@@ -21,7 +21,7 @@ const edge: Edge = {
   startNode: node,
   endNode: node3,
 };
-edge.formatter = new EdgeFormatter(AttachmentDirection.East, AttachmentDirection.West, node, node3);
+edge.formatter = new EdgeFormatter(AttachmentDirection.East, AttachmentDirection.NorthWest, node, node3);
 edge.startLabel = "start";
 edge.endLabel = "end";
 edge.middleLabel = "middle";
@@ -34,7 +34,7 @@ const edge2: Edge = {
   startNode: node2,
   endNode: node3,
 };
-edge2.formatter = new EdgeFormatter(AttachmentDirection.East, AttachmentDirection.West, node2, node3);
+edge2.formatter = new EdgeFormatter(AttachmentDirection.East, AttachmentDirection.SouthWest, node2, node3);
 // edge2.formatter.endStyle = EndStyle.SmallFilledArrow;
 edge2.formatter.lineStyle = LineStyle.Dotted
 edge2.formatter.endStyle = EndStyle.SmallFilledArrow;

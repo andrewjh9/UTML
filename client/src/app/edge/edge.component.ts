@@ -2,6 +2,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Position} from "../../assets/serialisation/position";
 import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {LabelFormatter} from "../../assets/serialisation/label";
+import {EdgeRepositionService} from "../edge-reposition.service";
+import {FormattedElement} from "../reposition.service";
 
 @Component({
   selector: '[edge-component]',
@@ -12,7 +14,7 @@ export class EdgeComponent {
   @Input() mode?: boolean;
   @Input() edge?: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
-  constructor() {
+  constructor(private edgeRepositionService: EdgeRepositionService) {
 
   }
 
@@ -82,14 +84,6 @@ export class EdgeComponent {
     return `${position.x}, ${position.y} `;
   }
 
-  onClick(event: MouseEvent): void {
-    if (!this.edge?.formatter) {
-      return;
-    }
-    this.edge.formatter.middlePositions.push(new Position(0, 500))
-    this.edgeChange.emit(this.edge);
-  }
-
   getDashArray(): string {
     if (this.edge?.formatter) {
       switch(this.edge.formatter.lineStyle) {
@@ -111,7 +105,6 @@ export class EdgeComponent {
 
   isLine(): boolean {
     return this.edge?.formatter?.lineType == LineType.Line;
-
   }
 
   getStartLabel(): string {
@@ -163,5 +156,13 @@ export class EdgeComponent {
     }
 
     return formatter.endLabelFormatter;
+  }
+
+  public handleMouseDown(event: MouseEvent): void {
+    if (this.edge?.formatter?.middlePositions) {
+      let position = new Position(event.clientX, event.clientY);
+      this.edge.formatter.middlePositions.push(position);
+      this.edgeRepositionService.activate(position);
+    }
   }
 }

@@ -29,13 +29,13 @@ export class NodeFormatter {
       let y: number;
       if ([AttachmentDirection.North, AttachmentDirection.NorthEast, AttachmentDirection.NorthWest].includes(direction)) {
         y = this.position.y;
-      } else if ([AttachmentDirection.South, AttachmentDirection.NorthEast, AttachmentDirection.NorthWest].includes(direction)) {
+      } else if ([AttachmentDirection.South, AttachmentDirection.SouthEast, AttachmentDirection.SouthWest].includes(direction)) {
         y = this.position.y + this.height;
       } else {
         y = this.position.y + (this.height / 2);
       }
 
-      if ([AttachmentDirection.West, AttachmentDirection.NorthWest, AttachmentDirection.NorthWest].includes(direction)) {
+      if ([AttachmentDirection.West, AttachmentDirection.NorthWest, AttachmentDirection.SouthWest].includes(direction)) {
         x = this.position.x;
       } else if ([AttachmentDirection.East, AttachmentDirection.NorthEast, AttachmentDirection.SouthEast].includes(direction)) {
         x = this.position.x + this.width;

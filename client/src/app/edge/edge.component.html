@@ -11,7 +11,7 @@
 
 <!-- Line Rendering -->
 <svg:polyline *ngIf="edge && !mode && isLine()"
-  (click)="onClick($event)"
+  (mousedown)="handleMouseDown($event)"
   [attr.points]="getPoints()"
   style="stroke:rgb(0,0,0); stroke-width:4; fill:none;"
   [attr.marker-end]="getEndMarker()"
