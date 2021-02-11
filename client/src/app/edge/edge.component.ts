@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Position} from "../../assets/serialisation/position";
-import {Edge, EndStyle} from "../../assets/serialisation/edge";
+import {Edge, EndStyle, LineStyle} from "../../assets/serialisation/edge";
 
 @Component({
   selector: '[edge-component]',
@@ -52,5 +52,20 @@ export class EdgeComponent {
     }
     this.edge.formatter.middlePositions.push(new Position(0, 500))
     this.edgeChange.emit(this.edge);
+  }
+
+  getDashArray(): string {
+    if (this.edge?.formatter) {
+      switch(this.edge.formatter.lineStyle) {
+        case LineStyle.Filled:
+          return "none";
+        case LineStyle.Dashed:
+          return "12, 2"
+        case LineStyle.Dotted:
+          return "4, 4"
+      }
+    }
+
+    return "none";
   }
 }
