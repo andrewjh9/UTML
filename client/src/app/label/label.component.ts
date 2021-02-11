@@ -20,4 +20,9 @@ export class LabelComponent {
       this.formatter.position.y -= 10;
     }
   }
+
+  handleDoubleClick($event: MouseEvent): void {
+    this.label = window.prompt("New label?") || this.label;
+    this.labelChange.emit(this.label);
+  }
 }
