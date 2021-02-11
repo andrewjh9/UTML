@@ -17,7 +17,9 @@
   </svg:rect>
 
   <svg:ellipse *ngIf="node?.formatter && isEllipse()"
-            [attr.cx]="node!.formatter!.position.x + node!.formatter!.width / 2"
+               (mousedown)="handleMouseDown($event)"
+               (mouseup)="handleMouseUp($event)"
+               [attr.cx]="node!.formatter!.position.x + node!.formatter!.width / 2"
             [attr.cy]="node!.formatter!.position.y + node!.formatter!.height / 2"
             [attr.rx]="node!.formatter!.width / 2"
             [attr.ry]="node!.formatter!.height / 2"

@@ -11,6 +11,7 @@ import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
 import {FormsModule} from "@angular/forms";
 import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
 import { LabelComponent } from './label/label.component';
+import {RepositionService} from "./reposition.service";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,7 @@ import { LabelComponent } from './label/label.component';
         HttpClientModule,
         FormsModule
     ],
-  providers: [],
+  providers: [RepositionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,4 +1,7 @@
-<svg width="1000" height="1000">
+<svg width="1000"
+     height="1000"
+     (mouseup)="handleMouseUp($event)"
+     (mousemove)="handleMouseMove($event)">
   <!--  Define markers-->
   <defs arrow-marker></defs>
   <g *ngFor="let edge of diagram.edges; let i = index"

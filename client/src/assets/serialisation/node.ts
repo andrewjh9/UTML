@@ -27,7 +27,6 @@ export class NodeFormatter {
     if (this.shape == Shape.Rectangle) {
       let x: number;
       let y: number;
-      console.log(direction.toString())
       if ([AttachmentDirection.North, AttachmentDirection.NorthEast, AttachmentDirection.NorthWest].includes(direction)) {
         y = this.position.y;
       } else if ([AttachmentDirection.South, AttachmentDirection.NorthEast, AttachmentDirection.NorthWest].includes(direction)) {
@@ -43,12 +42,10 @@ export class NodeFormatter {
       } else {
         x = this.position.x + (this.width / 2);
       }
-      console.log(x + "---" + y);
       return new Position(x, y);
     }  else if (this.shape == Shape.Ellipse) {
       let x: number;
       let y: number;
-      console.log(direction.toString())
       if ([AttachmentDirection.North, AttachmentDirection.NorthEast, AttachmentDirection.NorthWest].includes(direction)) {
         y = this.position.y;
       } else if ([AttachmentDirection.South, AttachmentDirection.NorthEast, AttachmentDirection.NorthWest].includes(direction)) {
@@ -64,7 +61,6 @@ export class NodeFormatter {
       } else {
         x = this.position.x + (this.width / 2);
       }
-      console.log(x + "---" + y);
       return new Position(x, y);
     } else if (this.shape == Shape.Diamond) {
       switch(direction) {

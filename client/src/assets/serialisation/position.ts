@@ -5,8 +5,16 @@ export class Position {
     return `${this.x}${separator}${this.y}${end}`;
   }
 
+  public getLength(): number {
+    return Math.sqrt(this.x * this.x + this.y * this.y);
+  }
+
   public static add(p1: Position, p2: Position): Position {
     return new Position(p1.x + p2.x, p1.y + p2.y);
+  }
+
+  public static subtract(p1: Position, p2: Position): Position {
+    return new Position(p1.x - p2.x, p1.y - p2.y);
   }
 
   public static multiply(scalar: number, position: Position): Position {

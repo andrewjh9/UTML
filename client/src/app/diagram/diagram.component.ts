@@ -3,6 +3,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {AttachmentDirection, Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
 import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
+import {RepositionService} from "../reposition.service";
 
 @Component({
   selector: 'app-diagram',
@@ -14,7 +15,7 @@ export class DiagramComponent {
   @Output() public modeChange: EventEmitter<boolean> = new EventEmitter();
 
   public diagram: Diagram;
-  constructor() {
+  constructor(private repositionService: RepositionService) {
     const n1: Node = {
       texts: ['n1'],
       formatter: new NodeFormatter(100, 100, new Position(100, 100), Shape.Ellipse)
@@ -101,6 +102,18 @@ export class DiagramComponent {
   setMode(mode: boolean): void {
     this.mode = mode;
     this.modeChange.emit(this.mode);
+  }
+
+  handleMouseUp(event: MouseEvent): void {
+    if (this.repositionService.isActive()) {
+      this.repositionService.deactivate();
+    }
+  }
+
+  handleMouseMove(event: MouseEvent) {
+    if (this.repositionService.isActive()) {
+      this.repositionService.update(new Position(event.clientX, event.clientY))
+    }
   }
 }
 
