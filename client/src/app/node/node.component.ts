@@ -1,35 +1,20 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
 import {Position} from "../../assets/serialisation/position";
-import {RepositionService} from "../reposition.service";
+import {FormattedElement, RepositionService} from "../reposition.service";
+import {Movable} from "../moveable";
 
 @Component({
   selector: '[node-component]',
   templateUrl: './node.component.html',
   styleUrls: ['./node.component.scss']
 })
-export class NodeComponent {
+export class NodeComponent extends Movable {
   @Input() node?: Node;
   @Output() nodeChange = new EventEmitter<Node>();
   private positionAtMouseDown?: Position;
 
-  constructor(private repositionService: RepositionService) { }
-
-  handleMouseDown(event: any): void {
-    if (this.node?.formatter) {
-      this.repositionService.activate(this.node.formatter, new Position(event.clientX, event.clientY))
-
-    }
-  }
-
-  handleMouseUp(event: any): void {
-    if (this.node?.formatter && this.positionAtMouseDown !== undefined) {
-      let formatter = this.node.formatter;
-      let current = new Position(event.clientX, event.clientY);
-      let difference = Position.subtract(current, this.positionAtMouseDown);
-      formatter.position = Position.add(formatter.position, difference);
-    }
-  }
+  constructor(repositionService: RepositionService) { super(repositionService) }
 
   // This check is done here to easily handle undefined and as Shape is not defined in the .html
   isRectangle(): boolean {
@@ -59,5 +44,9 @@ export class NodeComponent {
      else {
       return '';
     }
+  }
+
+  getFormatter(): FormattedElement | undefined {
+    return this.node?.formatter;
   }
 }

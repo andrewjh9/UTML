@@ -5,7 +5,7 @@ import {Position} from "../assets/serialisation/position";
   providedIn: 'root'
 })
 export class RepositionService {
-  private formatter?: formattedElement;
+  private formatter?: FormattedElement;
   private startPosition?: Position;
   constructor() { }
 
@@ -13,7 +13,7 @@ export class RepositionService {
     return this.formatter !== undefined;
   }
 
-  public activate(current: formattedElement, startPosition: Position): void {
+  public activate(current: FormattedElement, startPosition: Position): void {
     this.formatter = current;
     this.startPosition = startPosition;
   }
@@ -33,6 +33,6 @@ export class RepositionService {
   }
 }
 
-interface formattedElement {
+export interface FormattedElement {
   position: Position
 }

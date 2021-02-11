@@ -13,17 +13,18 @@
     [attr.width]="node!.formatter!.width"
     [attr.height]="node!.formatter!.height"
     style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
+    class="movable"
   >
   </svg:rect>
 
   <svg:ellipse *ngIf="node?.formatter && isEllipse()"
                (mousedown)="handleMouseDown($event)"
-               (mouseup)="handleMouseUp($event)"
                [attr.cx]="node!.formatter!.position.x + node!.formatter!.width / 2"
-            [attr.cy]="node!.formatter!.position.y + node!.formatter!.height / 2"
-            [attr.rx]="node!.formatter!.width / 2"
-            [attr.ry]="node!.formatter!.height / 2"
-            style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
+               [attr.cy]="node!.formatter!.position.y + node!.formatter!.height / 2"
+               [attr.rx]="node!.formatter!.width / 2"
+               [attr.ry]="node!.formatter!.height / 2"
+               style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
+               class="movable"
   >
   </svg:ellipse>
 
