@@ -108,17 +108,45 @@ export class EdgeComponent {
   }
 
   getStartLabelFormatterAndSetIfAbsent(): LabelFormatter {
-    // todo: implement
-    return new LabelFormatter(new Position(500, 500));
+    if (this.edge?.formatter === undefined) {
+      console.error("Somehow the edge formatter is undefined.");
+      return new LabelFormatter(new Position(-1, -1));
+    }
+    let formatter: EdgeFormatter = this.edge.formatter;
+
+    if (formatter.startLabelFormatter === undefined) {
+      formatter.startLabelFormatter = new LabelFormatter(formatter.getStartPosition());
+    }
+
+    return formatter.startLabelFormatter;
   }
 
   getMiddleLabelFormatterAndSetIfAbsent(): LabelFormatter {
-    // todo: implement
-    return new LabelFormatter(new Position(500, 500));
+    if (this.edge?.formatter === undefined) {
+      console.error("Somehow the edge formatter is undefined.");
+      return new LabelFormatter(new Position(-1, -1));
+    }
+    let formatter: EdgeFormatter = this.edge.formatter;
+
+    if (formatter.middleLabelFormatter === undefined) {
+      formatter.middleLabelFormatter = new LabelFormatter(
+        Position.multiply(0.5, Position.add(formatter.getStartPosition(), formatter.getEndPosition())));
+    }
+
+    return formatter.middleLabelFormatter;
   }
 
   getEndLabelFormatterAndSetIfAbsent(): LabelFormatter {
-    // todo: implement
-    return new LabelFormatter(new Position(500, 500));
+    if (this.edge?.formatter === undefined) {
+      console.error("Somehow the edge formatter is undefined.");
+      return new LabelFormatter(new Position(-1, -1));
+    }
+    let formatter: EdgeFormatter = this.edge.formatter;
+
+    if (formatter.endLabelFormatter === undefined) {
+      formatter.endLabelFormatter = new LabelFormatter(formatter.getEndPosition());
+    }
+
+    return formatter.endLabelFormatter;
   }
 }

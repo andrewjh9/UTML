@@ -14,4 +14,10 @@ export class LabelComponent {
 
   constructor() {
   }
+
+  handleClick($event: MouseEvent): void {
+    if (this.formatter) {
+      this.formatter.position.y -= 10;
+    }
+  }
 }

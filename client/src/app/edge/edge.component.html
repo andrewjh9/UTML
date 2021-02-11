@@ -1,3 +1,4 @@
+<!-- Arc Rendering -->
 <svg:path *ngIf="edge && isArc()"
           [attr.d]="getPoints()"
           stroke="black"
@@ -5,9 +6,9 @@
           style="stroke-width: 2"
           [attr.marker-end]="getEndMarker()"
           [attr.stroke-dasharray]="getDashArray()">
-
 </svg:path>
 
+<!-- Line Rendering -->
 <svg:polyline *ngIf="edge && !mode && isLine()"
   (click)="onClick($event)"
   [attr.points]="getPoints()"
@@ -16,6 +17,7 @@
   [attr.stroke-dasharray]="getDashArray()">
 </svg:polyline>
 
+<!-- Render labels if set -->
 <svg:g *ngIf="edge && edge?.startLabel"
        label-component
        [(label)]="edge.startLabel"
@@ -30,6 +32,11 @@
 
 <svg:g *ngIf="edge && edge?.startLabel"
        label-component
-       [(label)]="edge.startLabel"
+       [(label)]="edge.endLabel"
        [formatter]="getEndLabelFormatterAndSetIfAbsent()">
 </svg:g>
+
+<!-- Temporary debugging text -->
+<svg:text x="500" y="500" *ngIf="edge?.formatter?.startLabelFormatter">
+  {{edge!.formatter!.startLabelFormatter!.position.x}}, {{edge!.formatter!.startLabelFormatter!.position.y}}
+</svg:text>

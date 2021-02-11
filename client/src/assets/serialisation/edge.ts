@@ -1,5 +1,6 @@
 import {Position} from "./position";
 import {AttachmentDirection, Node, NodeFormatter} from "./node";
+import {LabelFormatter} from "./label";
 
 export interface Edge {
   startNode: Node;
@@ -20,6 +21,10 @@ export class EdgeFormatter {
   private _lineStyle: LineStyle = LineStyle.Filled;
   private _startStyle: EndStyle = EndStyle.None;
   private _endStyle: EndStyle = EndStyle.None;
+  private _startLabelFormatter?: LabelFormatter;
+  private _middleLabelFormatter?: LabelFormatter;
+  private _endLabelFormatter?: LabelFormatter;
+
 
   constructor(startPosition: Position | AttachmentDirection, endPosition: Position | AttachmentDirection,
               startNode: Node, endNode: Node) {
@@ -87,6 +92,30 @@ export class EdgeFormatter {
 
   set endPosition(value: Position | AttachmentDirection) {
     this._endPosition = value;
+  }
+
+  get startLabelFormatter(): LabelFormatter | undefined {
+    return this._startLabelFormatter;
+  }
+
+  set startLabelFormatter(value: LabelFormatter | undefined) {
+    this._startLabelFormatter = value;
+  }
+
+  get middleLabelFormatter(): LabelFormatter | undefined{
+    return this._middleLabelFormatter;
+  }
+
+  set middleLabelFormatter(value: LabelFormatter | undefined) {
+    this._middleLabelFormatter = value;
+  }
+
+  get endLabelFormatter(): LabelFormatter | undefined{
+    return this._endLabelFormatter;
+  }
+
+  set endLabelFormatter(value: LabelFormatter | undefined) {
+    this._endLabelFormatter = value;
   }
 
   private static getPosition(node: Node, positionOrDirection: Position | AttachmentDirection) {

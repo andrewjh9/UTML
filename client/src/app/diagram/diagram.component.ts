@@ -36,7 +36,9 @@ export class DiagramComponent {
     e1.formatter.lineType = LineType.Arc;
     e1.formatter.lineStyle = LineStyle.Dotted;
     e1.formatter.middlePositions = [new Position(250, -50)];
-    e1.middleLabel = "transition 1";
+    e1.middleLabel = "m";
+    e1.startLabel = "s";
+    e1.endLabel = "e";
 
     const e2: Edge = {
       startNode: n1,
