@@ -10,6 +10,7 @@ import { EdgeComponent } from './edge/edge.component';
 import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
 import {FormsModule} from "@angular/forms";
 import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
+import { LabelComponent } from './label/label.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
     NodeComponent,
     EdgeComponent,
     ArrowMarkerComponent,
-    ModeSelectorComponent
+    ModeSelectorComponent,
+    LabelComponent
   ],
     imports: [
         BrowserModule,

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Position} from "../../assets/serialisation/position";
 import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
+import {LabelFormatter} from "../../assets/serialisation/label";
 
 @Component({
   selector: '[edge-component]',
@@ -96,5 +97,28 @@ export class EdgeComponent {
   isLine(): boolean {
     return this.edge?.formatter?.lineType == LineType.Line;
 
+  }
+
+  getStartLabel(): string {
+    return this.edge?.startLabel || "error";
+  }
+
+  handleStartLabelUpdate($event: any): void {
+
+  }
+
+  getStartLabelFormatterAndSetIfAbsent(): LabelFormatter {
+    // todo: implement
+    return new LabelFormatter(new Position(500, 500));
+  }
+
+  getMiddleLabelFormatterAndSetIfAbsent(): LabelFormatter {
+    // todo: implement
+    return new LabelFormatter(new Position(500, 500));
+  }
+
+  getEndLabelFormatterAndSetIfAbsent(): LabelFormatter {
+    // todo: implement
+    return new LabelFormatter(new Position(500, 500));
   }
 }

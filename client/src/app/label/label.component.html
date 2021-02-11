@@ -1,0 +1,9 @@
+<svg:text *ngIf="formatter"
+          [attr.x]="formatter.position.x"
+          [attr.y]="formatter.position.y"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          font-family="Comic Sans MS, Helvetica, sans-serif">
+  {{label}}
+</svg:text>
+<svg:text>{{label}}</svg:text>
