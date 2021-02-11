@@ -49,6 +49,21 @@ export class EdgeComponent {
     }
   }
 
+  getStartMarker(): string {
+    if (!this.edge?.formatter) {
+      return "none";
+    }
+
+    switch (this.edge.formatter.startStyle) {
+      case EndStyle.None:
+        return "none";
+      case EndStyle.SmallFilledArrow:
+        return "url(#start-small-filled-arrow)"
+    }
+    return "none";
+  }
+
+
   getEndMarker(): string {
     if (!this.edge?.formatter) {
       return "none";
@@ -58,7 +73,7 @@ export class EdgeComponent {
       case EndStyle.None:
         return "none";
       case EndStyle.SmallFilledArrow:
-        return "url(#arrow)"
+        return "url(#end-small-filled-arrow)"
     }
     return "none";
   }

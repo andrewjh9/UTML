@@ -1,7 +1,7 @@
 import {Position} from '../../assets/serialisation/position';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {AttachmentDirection, Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
-import {Edge, EdgeFormatter, LineStyle, LineType} from "../../assets/serialisation/edge";
+import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
 
 @Component({
@@ -36,9 +36,9 @@ export class DiagramComponent {
     e1.formatter.lineType = LineType.Arc;
     e1.formatter.lineStyle = LineStyle.Dotted;
     e1.formatter.middlePositions = [new Position(250, -50)];
-    e1.middleLabel = "m";
-    e1.startLabel = "s";
-    e1.endLabel = "e";
+    e1.formatter.endStyle = EndStyle.SmallFilledArrow;
+
+    e1.middleLabel = "transition 1";
 
     const e2: Edge = {
       startNode: n1,
@@ -48,6 +48,8 @@ export class DiagramComponent {
     e2.formatter.lineType = LineType.Arc;
     e2.formatter.lineStyle = LineStyle.Dashed;
     e2.formatter.middlePositions = [new Position(450, 350)];
+    e2.formatter.endStyle = EndStyle.SmallFilledArrow;
+    e2.middleLabel = "transition 2"
     this.diagram = {
       nodes: [n1, n2, n3],
       edges: [e1, e2]
