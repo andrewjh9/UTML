@@ -66,6 +66,10 @@ export class EdgeFormatter {
     return this._middlePositions;
   }
 
+  set middlePositions(value: Position[]) {
+    this._middlePositions = value;
+  }
+
 // Note that accessors are not used here because because we want to deal with a Position from outside of the class,
   // but the positions are internally stored using Position | AttachmentDirection
   public getStartPosition(): Position {

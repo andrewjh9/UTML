@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Position} from "../../assets/serialisation/position";
-import {Edge, EndStyle, LineStyle} from "../../assets/serialisation/edge";
+import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 
 @Component({
   selector: '[edge-component]',
@@ -16,16 +16,36 @@ export class EdgeComponent {
   }
 
   getPoints(): string | undefined {
-    if (!this.edge?.formatter) {
+    if (this.edge?.formatter && this.edge.formatter.lineType == LineType.Line) {
+      if (!this.edge?.formatter) {
+        return undefined;
+      }
+      let result: string = "";
+      result += this.positionToText(this.edge.formatter.getStartPosition());
+      for (let position of this.edge.formatter.middlePositions) {
+        result += this.positionToText(position)
+      }
+      result += this.positionToText(this.edge.formatter.getEndPosition());
+      return result;
+    } else if (this.edge?.formatter && this.edge.formatter.lineType == LineType.Arc){
+      let formatter: EdgeFormatter = this.edge.formatter;
+      if (formatter.middlePositions.length != 1) {
+        console.error(`An Arc typed edge should have exactly 1 middle position. Edge ${this} has
+        ${formatter.middlePositions.length}.`);
+        return undefined;
+      }
+
+      let start: string = formatter.getStartPosition().toString(' ', ', ');
+      let startWithoutEnd = formatter.getStartPosition().toString(' ', '')
+      let middle: string = formatter.middlePositions[0].toString();
+      let end: string = formatter.getEndPosition().toString();
+      // Todo: Alter this in such a way that the curve goes through the point.
+      // return `M ${startWithoutEnd} C ${start} ${middle} ${end}`;
+      return `M ${startWithoutEnd} Q ${middle} ${end}`;
+
+    } else {
       return undefined;
     }
-    let result: string = "";
-    result += this.positionToText(this.edge.formatter.getStartPosition());
-    for (let position of this.edge.formatter.middlePositions) {
-      result += this.positionToText(position)
-    }
-    result += this.positionToText(this.edge.formatter.getEndPosition());
-    return result;
   }
 
   getEndMarker(): string {
@@ -67,5 +87,14 @@ export class EdgeComponent {
     }
 
     return "none";
+  }
+
+  isArc(): boolean {
+    return this.edge?.formatter?.lineType == LineType.Arc;
+  }
+
+  isLine(): boolean {
+    return this.edge?.formatter?.lineType == LineType.Line;
+
   }
 }
