@@ -1,7 +1,6 @@
 package nl.utwente.utml.dao;
 
 import nl.utwente.utml.model.Diagram;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

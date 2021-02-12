@@ -12,7 +12,7 @@ import java.util.UUID;
 public interface DiagramDao {
     /**
      * Add a diagram. Generates a new UUID for the diagram to be added.
-     * @param diagram Diagram to be added. UUID need not be set.
+     * @param diagram Node to be added. UUID need not be set.
      * @return The added diagram with the newly generated UUID.
      */
     Diagram add(Diagram diagram);
@@ -26,7 +26,7 @@ public interface DiagramDao {
     /**
      * Returns a diagram with a given id if it can be found.
      * @param id ID of the diagram to be returned.
-     * @return Diagram with provided id if it exists. Optional.empty() otherwise.
+     * @return Node with provided id if it exists. Optional.empty() otherwise.
      */
     Optional<Diagram> get(UUID id);
 

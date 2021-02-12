@@ -6,21 +6,30 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DiagramComponent } from './diagram/diagram.component';
 import { NodeComponent } from './node/node.component';
-import { EdgeCanvasComponent } from './egde-canvas/edge-canvas.component';
+import { EdgeComponent } from './edge/edge.component';
+import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
+import {FormsModule} from "@angular/forms";
+import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
+import { LabelComponent } from './label/label.component';
+import {RepositionService} from "./reposition.service";
 
 @NgModule({
   declarations: [
     AppComponent,
     DiagramComponent,
     NodeComponent,
-    EdgeCanvasComponent
+    EdgeComponent,
+    ArrowMarkerComponent,
+    ModeSelectorComponent,
+    LabelComponent
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule
-  ],
-  providers: [],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        FormsModule
+    ],
+  providers: [RepositionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

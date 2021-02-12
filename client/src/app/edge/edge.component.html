@@ -1,0 +1,38 @@
+<!-- Arc Rendering -->
+<svg:path *ngIf="edge && isArc()"
+          [attr.d]="getPoints()"
+          stroke="black"
+          fill="transparent"
+          style="stroke-width: 2"
+          [attr.marker-end]="getEndMarker()"
+          [attr.marker-start]="getStartMarker()"
+          [attr.stroke-dasharray]="getDashArray()">
+</svg:path>
+
+<!-- Line Rendering -->
+<svg:polyline *ngIf="edge && !mode && isLine()"
+  (mousedown)="handleMouseDown($event)"
+  [attr.points]="getPoints()"
+  style="stroke:rgb(0,0,0); stroke-width:4; fill:none;"
+  [attr.marker-end]="getEndMarker()"
+  [attr.marker-start]="getStartMarker()"
+  [attr.stroke-dasharray]="getDashArray()">
+</svg:polyline>
+<!-- Render labels if set -->
+<svg:g *ngIf="edge && edge?.startLabel"
+       label-component
+       [(label)]="edge.startLabel"
+       [formatter]="getStartLabelFormatterAndSetIfAbsent()">
+</svg:g>
+
+<svg:g *ngIf="edge && edge?.middleLabel"
+       label-component
+       [(label)]="edge.middleLabel"
+       [formatter]="getMiddleLabelFormatterAndSetIfAbsent()">
+</svg:g>
+
+<svg:g *ngIf="edge && edge?.startLabel"
+       label-component
+       [(label)]="edge.endLabel"
+       [formatter]="getEndLabelFormatterAndSetIfAbsent()">
+</svg:g>

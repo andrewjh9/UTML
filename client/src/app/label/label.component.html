@@ -1,0 +1,12 @@
+<svg:text *ngIf="formatter"
+          [attr.x]="formatter.position.x"
+          [attr.y]="formatter.position.y"
+          (mousedown)="handleMouseDown($event)"
+          (dblclick)="handleDoubleClick($event)"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          font-family="Comic Sans MS, Helvetica, sans-serif"
+          class="movable">
+  {{label}}
+</svg:text>
+<svg:text>{{label}}</svg:text>
