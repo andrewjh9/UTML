@@ -149,6 +149,8 @@ export enum EndStyle {
   None,
   LargeUnfilledArrow,
   SmallFilledArrow,
+  FilledDiamond,
+  UnfilledDiamond,
 }
 
 // export interface Edge {

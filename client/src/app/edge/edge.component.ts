@@ -3,7 +3,6 @@ import {Position} from "../../assets/serialisation/position";
 import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {LabelFormatter} from "../../assets/serialisation/label";
 import {EdgeRepositionService} from "../edge-reposition.service";
-import {FormattedElement} from "../reposition.service";
 
 @Component({
   selector: '[edge-component]',
@@ -62,6 +61,12 @@ export class EdgeComponent {
         return "none";
       case EndStyle.SmallFilledArrow:
         return "url(#start-small-filled-arrow)"
+      case EndStyle.LargeUnfilledArrow:
+        return "url(#start-big-unfilled-arrow)"
+      case EndStyle.FilledDiamond:
+        return "url(#start-filled-diamond)"
+      case EndStyle.UnfilledDiamond:
+        return "url(#start-unfilled-diamond)"
     }
     return "none";
   }
@@ -77,6 +82,12 @@ export class EdgeComponent {
         return "none";
       case EndStyle.SmallFilledArrow:
         return "url(#end-small-filled-arrow)"
+      case EndStyle.LargeUnfilledArrow:
+        return "url(#end-big-unfilled-arrow)"
+      case EndStyle.FilledDiamond:
+        return "url(#end-filled-diamond)"
+      case EndStyle.UnfilledDiamond:
+        return "url(#end-unfilled-diamond)"
     }
     return "none";
   }
