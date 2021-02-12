@@ -14,6 +14,7 @@ export class EdgeComponent {
   @Input() mode?: boolean;
   @Input() edge?: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
+
   constructor(private edgeRepositionService: EdgeRepositionService) {
 
   }
@@ -105,14 +106,6 @@ export class EdgeComponent {
 
   isLine(): boolean {
     return this.edge?.formatter?.lineType == LineType.Line;
-  }
-
-  getStartLabel(): string {
-    return this.edge?.startLabel || "error";
-  }
-
-  handleStartLabelUpdate($event: any): void {
-
   }
 
   getStartLabelFormatterAndSetIfAbsent(): LabelFormatter {

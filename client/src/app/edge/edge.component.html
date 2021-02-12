@@ -18,7 +18,6 @@
   [attr.marker-start]="getStartMarker()"
   [attr.stroke-dasharray]="getDashArray()">
 </svg:polyline>
-
 <!-- Render labels if set -->
 <svg:g *ngIf="edge && edge?.startLabel"
        label-component
@@ -37,8 +36,3 @@
        [(label)]="edge.endLabel"
        [formatter]="getEndLabelFormatterAndSetIfAbsent()">
 </svg:g>
-
-<!-- Temporary debugging text -->
-<svg:text x="500" y="500" *ngIf="edge?.formatter?.startLabelFormatter">
-  {{edge!.formatter!.startLabelFormatter!.position.x}}, {{edge!.formatter!.startLabelFormatter!.position.y}}
-</svg:text>
