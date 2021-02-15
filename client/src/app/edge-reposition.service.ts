@@ -40,11 +40,30 @@ export class EdgeRepositionService {
       return;
     }
 
-    // Todo: Place position correctly
-    this.position = new Position(mousePosition.x, mousePosition.y);
-    this.mode = Mode.MiddlePosition;
+    let allPoints = this.edge!.formatter!.getAllPoints();
+    console.log(allPoints)
+    let indexToBeInserted: number | undefined;
+    for (let i = 0; i < allPoints.length - 1; i++) {
+      if (this.liesOnSegment(mousePosition, allPoints[i], allPoints[i + 1])) {
+        indexToBeInserted = i;
+        break;
+      }
+    }
 
-    this.edge.formatter?.middlePositions.push(this.position);
+    if (indexToBeInserted !== undefined) {
+      this.edge!.formatter!.middlePositions.splice(indexToBeInserted, 0, mousePosition);
+      this.position = mousePosition;
+      this.mode = Mode.MiddlePosition;
+    }
+  }
+
+  private liesOnSegment(point: Position, start: Position, end: Position, allowed_error: number = 50): boolean {
+    let segmentLength = Position.getDistance(end, start);
+    let ourSegment = Position.subtract(point, start);
+    let scalar = segmentLength / ourSegment.getLength()
+    ourSegment = Position.add(start, Position.multiply(scalar, ourSegment));
+    let difference = Position.getDistance(end, ourSegment);
+    return difference <= allowed_error;
   }
 
   public update(newPosition: Position): void {
