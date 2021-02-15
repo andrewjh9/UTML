@@ -4,25 +4,27 @@ import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/s
 import {LabelFormatter} from "../../assets/serialisation/label";
 import {EdgeRepositionService} from "../edge-reposition.service";
 import {FormattedElement} from "../reposition.service";
+import {AbstractEdgeComponent} from "../abstract-edge-component";
 
 @Component({
   selector: '[edge-component]',
   templateUrl: './edge.component.html',
   styleUrls: ['./edge.component.scss'],
 })
-export class EdgeComponent {
+export class EdgeComponent extends AbstractEdgeComponent {
   @Input() mode?: boolean;
   @Input() edge?: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
+  public readonly hasLabels = true;
 
-  constructor(private edgeRepositionService: EdgeRepositionService) { }
+  constructor(private edgeRepositionService: EdgeRepositionService) { super() }
 
-  isArc(): boolean {
-    return this.edge?.formatter?.lineType == LineType.Arc;
+  public formatterIsDefined(): boolean {
+    return this.edge?.formatter !== undefined;
   }
 
-  isLine(): boolean {
-    return this.edge?.formatter?.lineType == LineType.Line;
+  public getFormatter(): EdgeFormatter | undefined {
+    return this.edge?.formatter;
   }
 
   getStartLabelFormatterAndSetIfAbsent(): LabelFormatter {
@@ -66,6 +68,18 @@ export class EdgeComponent {
     }
 
     return formatter.endLabelFormatter;
+  }
+
+  public getStartLabel(): string | undefined {
+    return this.edge?.startLabel;
+  }
+
+  public getMiddleLabel(): string | undefined {
+    return this.edge?.middleLabel;
+  }
+
+  public getEndLabel(): string | undefined {
+    return this.edge?.endLabel;
   }
 
   public handleMouseDown(event: MouseEvent): void {

@@ -12,7 +12,7 @@ import {FormattedElement, RepositionService} from "../reposition.service";
 export class LabelComponent extends Movable {
   @Input() formatter?: LabelFormatter;
   @Input() label?: string;
-  @Output() labelChange: EventEmitter<string> = new EventEmitter<string>()
+  // @Output() labelChange: EventEmitter<string> = new EventEmitter<string>()
 
   constructor(repositionService: RepositionService) {
     super(repositionService);
@@ -20,7 +20,7 @@ export class LabelComponent extends Movable {
 
   handleDoubleClick($event: MouseEvent): void {
     this.label = window.prompt("New label?") || this.label;
-    this.labelChange.emit(this.label);
+    // this.labelChange.emit(this.label);
   }
 
   getFormatter(): FormattedElement | undefined {
