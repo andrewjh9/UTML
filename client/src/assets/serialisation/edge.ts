@@ -183,7 +183,13 @@ export class EdgeFormatter {
       case EndStyle.None:
         return "none";
       case EndStyle.SmallFilledArrow:
-        return "url(#start-small-filled-arrow)"
+        return "url(#start-small-filled-arrow)";
+      case EndStyle.FilledDiamond:
+        return "url(#start-filled-diamond)";
+      case EndStyle.UnfilledDiamond:
+        return "url(#start-unfilled-diamond)";
+      case EndStyle.LargeUnfilledArrow:
+        return "url(#start-big-unfilled-arrow)";
     }
     return "none";
   }
@@ -197,7 +203,13 @@ export class EdgeFormatter {
       case EndStyle.None:
         return "none";
       case EndStyle.SmallFilledArrow:
-        return "url(#end-small-filled-arrow)"
+        return "url(#end-small-filled-arrow)";
+      case EndStyle.FilledDiamond:
+        return "url(#end-filled-diamond)";
+      case EndStyle.UnfilledDiamond:
+        return "url(#end-unfilled-diamond)";
+      case EndStyle.LargeUnfilledArrow:
+        return "url(#end-big-unfilled-arrow)";
     }
     return "none";
   }

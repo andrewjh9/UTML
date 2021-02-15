@@ -14,7 +14,6 @@ export class EdgeRepositionService {
   private readonly DISTANCE_THRESHOLD: number = 25;
   private mode: Mode = Mode.Inactive;
 
-
   constructor() { }
 
   public isActive(): boolean {
@@ -58,7 +57,6 @@ export class EdgeRepositionService {
             for (let direction: number = 0; direction < 8; direction++) {
               let attachmentPosition = node.formatter!.getAttachmentPointPosition(direction as AttachmentDirection);
               if (Position.getDistance(attachmentPosition, newPosition) <= this.DISTANCE_THRESHOLD / 2) {
-                console.log("here");
                 this.edge!.endNode = node;
                 this.edge!.formatter!.endPosition = direction as AttachmentDirection;
                 this.edge!.formatter!.endNode = node;
@@ -77,7 +75,7 @@ export class EdgeRepositionService {
             for (let direction: number = 0; direction < 8; direction++) {
               let attachmentPosition = node.formatter!.getAttachmentPointPosition(direction as AttachmentDirection);
               if (Position.getDistance(attachmentPosition, newPosition) <= this.DISTANCE_THRESHOLD) {
-                this.edge!.endNode = node;
+                this.edge!.startNode = node;
                 this.edge!.formatter!.startPosition = direction as AttachmentDirection;
                 this.edge!.formatter!.startNode = node;
                 return;
