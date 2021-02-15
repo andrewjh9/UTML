@@ -20,8 +20,8 @@ export class DiagramComponent {
 
   public diagram: Diagram;
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService) {
-    // this.diagram = fsm;
-    this.diagram = ad;
+    this.diagram = fsm;
+    // this.diagram = ad;
   }
 
   log(): void {
