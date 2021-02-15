@@ -13,6 +13,9 @@ export abstract class AbstractEdgeComponent {
   public abstract getStartLabel(): string | undefined;
   public abstract getMiddleLabel(): string | undefined;
   public abstract getEndLabel(): string | undefined;
+  public abstract setStartLabel(label: string): void;
+  public abstract setMiddleLabel(label: string): void;
+  public abstract setEndLabel(label: string): void;
 
 
   public isLine(): boolean {

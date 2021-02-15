@@ -11,31 +11,34 @@
 
 <!-- Line Rendering -->
 <svg:polyline *ngIf="formatterIsDefined() && isLine()"
-  [attr.points]="getFormatter()!.getPointString()"
-  style="stroke:rgb(0,0,0); stroke-width:2; fill:none;"
-  [attr.marker-end]="getFormatter()!.getEndMarker()"
-  [attr.marker-start]="getFormatter()!.getStartMarker()"
-  [attr.stroke-dasharray]="getFormatter()!.getLineStyleString()">
+              [attr.points]="getFormatter()!.getPointString()"
+              style="stroke:rgb(0, 0, 0); stroke-width:2; fill:none;"
+              [attr.marker-end]="getFormatter()!.getEndMarker()"
+              [attr.marker-start]="getFormatter()!.getStartMarker()"
+              [attr.stroke-dasharray]="getFormatter()!.getLineStyleString()">
 </svg:polyline>
 <!--  (mousedown)="handleMouseDown($event)"-->
 
 <!-- Render labels if they exist -->
 <svg:g *ngIf="hasLabels">
   <svg:g *ngIf="getStartLabel()"
-       label-component
-       [label]="getStartLabel()"
-       [formatter]="getStartLabelFormatterAndSetIfAbsent()">
+         label-component
+         [label]="getStartLabel()"
+         (labelChange)="setStartLabel($event)"
+         [formatter]="getStartLabelFormatterAndSetIfAbsent()">
   </svg:g>
 
   <svg:g *ngIf="getMiddleLabel()"
-       label-component
-       [label]="getMiddleLabel()"
-       [formatter]="getMiddleLabelFormatterAndSetIfAbsent()">
+         label-component
+         [label]="getMiddleLabel()"
+         (labelChange)="setMiddleLabel($event)"
+         [formatter]="getMiddleLabelFormatterAndSetIfAbsent()">
   </svg:g>
 
   <svg:g *ngIf="getEndLabel()"
-       label-component
-       [label]="getEndLabel()"
-       [formatter]="getEndLabelFormatterAndSetIfAbsent()">
+         label-component
+         [label]="getEndLabel()"
+         (labelChange)="setEndLabel($event)"
+         [formatter]="getEndLabelFormatterAndSetIfAbsent()">
   </svg:g>
 </svg:g>

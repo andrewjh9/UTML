@@ -74,12 +74,29 @@ export class EdgeComponent extends AbstractEdgeComponent {
     return this.edge?.startLabel;
   }
 
+  public setStartLabel(label: string) {
+    if (this.edge) {
+      this.edge.startLabel = label;
+    }
+  }
+
   public getMiddleLabel(): string | undefined {
     return this.edge?.middleLabel;
   }
 
+  public setMiddleLabel(label: string) {
+    if (this.edge) {
+      this.edge.middleLabel = label;
+    }
+  }
   public getEndLabel(): string | undefined {
     return this.edge?.endLabel;
+  }
+
+  public setEndLabel(label: string) {
+    if (this.edge) {
+      this.edge.endLabel = label;
+    }
   }
 
   public handleMouseDown(event: MouseEvent): void {

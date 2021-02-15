@@ -20,6 +20,9 @@ export class NonStructuralEdgeComponent extends AbstractEdgeComponent {
   public getStartLabel(): string | undefined  { throw new Error("Undefined behavior")}
   public getMiddleLabel(): string | undefined  { throw new Error("Undefined behavior")}
   public getEndLabel(): string | undefined { throw new Error("Undefined behavior")}
+  public setStartLabel(label: string) { throw new Error("Undefined behavior") }
+  public setMiddleLabel(label: string) { throw new Error("Undefined behavior") }
+  public setEndLabel(label: string) { throw new Error("Undefined behavior") }
 
   public getFormatter(): EdgeFormatter | undefined {
     return this.formatter;
