@@ -1,12 +1,21 @@
 <svg:g *ngIf="node?.formatter">
-  <!-- Text rendering -->
-  <svg:text [attr.x]="node!.formatter!.position.x + node!.formatter!.width / 2"
-            [attr.y]="node!.formatter!.position.y + node!.formatter!.height / 2"
-            dominant-baseline="middle"
-            text-anchor="middle"
-            font-family="Comic Sans MS, Helvetica, sans-serif">
-    {{ node!.texts[0] }}
-  </svg:text>
+<!--   Text rendering -->
+    <svg:foreignObject
+      [attr.x]="node!.formatter!.position.x"
+      [attr.y]="node!.formatter!.position.y"
+      [attr.width]="node!.formatter!.width"
+      [attr.height]="node!.formatter!.height"
+      style="text-align:center;"
+    >
+      <div style="height: 100%" xmlns="http://www.w3.org/1999/xhtml">
+        <div style="padding: 1px;transform: translateY(-50%);position: absolute;text-align: center; top: 50%; width: 100%">
+          <span>{{ node!.texts[0] }}</span>
+
+        </div>
+
+      </div>
+
+    </svg:foreignObject>
 
   <!--  Rectangle rendering-->
   <svg:rect *ngIf="node?.formatter && isRectangle()"
@@ -19,6 +28,7 @@
     style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
     class="movable"
   >
+
   </svg:rect>
 
   <!-- Ellipse rendering -->
@@ -37,7 +47,21 @@
   <!-- Diamond rendering -->
   <svg:polyline *ngIf="node?.formatter && isDiamond()"
                [attr.points]="getDiamondPoints()"
-               style="fill:none;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
+               (mousedown)="handleMouseDown($event)"
+               (dblclick)="handleDoubleClick($event)"
+               style="fill:white;stroke:black;stroke-width:2;fill-opacity:0.0;stroke-opacity:0.9"
+               class="movable"
   >
   </svg:polyline>
+
+  <svg:ellipse *ngFor="let pos of getAllAttachmentPoints()"
+               [attr.cx]="pos.x"
+               [attr.cy]="pos.y"
+               cx="10"
+               cy="10"
+               rx="5"
+               ry="5"
+               style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.5;stroke-opacity:0.9"
+  >
+  </svg:ellipse>
 </svg:g>

@@ -3,6 +3,7 @@ import {LabelFormatter} from "../../assets/serialisation/label";
 import {Position} from "../../assets/serialisation/position";
 import {Movable} from "../moveable";
 import {FormattedElement, RepositionService} from "../reposition.service";
+import {SafeHtml} from "@angular/platform-browser";
 
 @Component({
   selector: '[label-component]',
@@ -13,7 +14,6 @@ export class LabelComponent extends Movable {
   @Input() formatter?: LabelFormatter;
   @Input() label?: string;
   @Output() labelChange: EventEmitter<string> = new EventEmitter<string>()
-
   constructor(repositionService: RepositionService) {
     super(repositionService);
   }
@@ -25,5 +25,12 @@ export class LabelComponent extends Movable {
 
   getFormatter(): FormattedElement | undefined {
     return this.formatter;
+  }
+
+  lineBreakLabel() : string[]{
+    if (this.label){
+      return  this.label.split("\\");
+    }
+    return []
   }
 }
