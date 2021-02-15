@@ -44,6 +44,7 @@ export class NodeFormatter {
       let a: number = (this.width/2)^2;
       let b: number = (this.height/2)^2
       let x: number = this.width/4;
+      let y: number = Math.sqrt((1-(x**2 / a**2))*b**2);
       let originX: number = this.position.x + this.width/2;
       let originY: number = this.position.y + this.height/2;
 
@@ -57,13 +58,13 @@ export class NodeFormatter {
         case AttachmentDirection.West:
           return new Position(this.position.x, this.position.y + this.height / 2);
         case AttachmentDirection.NorthEast:
-          return new Position(originX + x, originY - this.getEllipsYCoord(a,b,x));
+          return new Position(originX + x, originY - y);
         case AttachmentDirection.NorthWest:
-          return new Position(originX - x, originY - this.getEllipsYCoord(a,b,x));
+          return new Position(originX - x, originY - y);
         case AttachmentDirection.SouthEast:
-          return new Position(originX + x, originY + this.getEllipsYCoord(a,b,x));
+          return new Position(originX + x, originY + y);
         case AttachmentDirection.SouthWest:
-          return new Position(originX - x, originY + this.getEllipsYCoord(a,b,x));
+          return new Position(originX - x, originY + y);
       }
     } else if (this.shape == Shape.Diamond) {
       switch(direction) {
@@ -87,10 +88,6 @@ export class NodeFormatter {
       return new Position(this.position.x, this.position.y);
     }
     return new Position(this.position.x, this.position.y);
-  }
-
-  getEllipsYCoord(a:number,b:number,x:number): number {
-    return Math.sqrt((1-(x**2 / a**2))*b**2);
   }
 }
 
