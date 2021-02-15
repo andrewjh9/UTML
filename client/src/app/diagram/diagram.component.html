@@ -9,7 +9,6 @@
      edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event" [mode]="mode"></g>
   <g *ngFor="let node of diagram.nodes; let i = index"
      node-component [(node)]="diagram.nodes[i]" (nodeChange)="diagram.nodes[i]=$event"></g>
-     node-component [(node)]="diagram.nodes[i]" (nodeChange)="diagram.nodes[i]=$event" ></g>
 
   <g non-structural-edge [formatter]="edgeFormatter"></g>
 </svg>
