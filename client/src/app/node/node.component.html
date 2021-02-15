@@ -37,7 +37,10 @@
   <!-- Diamond rendering -->
   <svg:polyline *ngIf="node?.formatter && isDiamond()"
                [attr.points]="getDiamondPoints()"
-               style="fill:none;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
+               (mousedown)="handleMouseDown($event)"
+               (dblclick)="handleDoubleClick($event)"
+               style="fill:white;stroke:black;stroke-width:2;fill-opacity:0.0;stroke-opacity:0.9"
+               class="movable"
   >
   </svg:polyline>
 </svg:g>

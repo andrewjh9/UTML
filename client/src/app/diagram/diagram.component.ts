@@ -1,11 +1,11 @@
 import {Position} from '../../assets/serialisation/position';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {AttachmentDirection, Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
-import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
+import {EdgeFormatter, EndStyle, LineStyle} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
 import {RepositionService} from "../reposition.service";
 import {fsm} from "../../assets/serialisation/examples/fsm";
 import {ad} from "../../assets/serialisation/examples/ad";
+
 import {EdgeRepositionService} from "../edge-reposition.service";
 
 
@@ -19,9 +19,13 @@ export class DiagramComponent {
   @Output() public modeChange: EventEmitter<boolean> = new EventEmitter();
 
   public diagram: Diagram;
+  public edgeFormatter: EdgeFormatter;
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService) {
-    // this.diagram = fsm;
-    this.diagram = ad;
+    this.diagram = fsm;
+    // this.diagram = ad;
+    this.edgeFormatter = new EdgeFormatter(new Position(10, 150), new Position(100, 150));
+    this.edgeFormatter.endStyle = EndStyle.SmallFilledArrow;
+    this.edgeFormatter.lineStyle = LineStyle.Dashed;
   }
 
   log(): void {

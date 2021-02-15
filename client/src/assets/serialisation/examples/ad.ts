@@ -11,7 +11,7 @@ const node: Node = {
 };
 const node2: Node = {
   texts: ['( ͡° ͜ʖ ͡°)'],
-  formatter: new NodeFormatter(100, 100, new Position(100, 400), Shape.Ellipse)
+  formatter: new NodeFormatter(100, 100, new Position(100, 400), Shape.Diamond)
 };
 const node3: Node = {
   texts: ['( ͡° ͜ʖ ͡°)'],

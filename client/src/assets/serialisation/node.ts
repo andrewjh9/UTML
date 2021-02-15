@@ -21,9 +21,6 @@ export class NodeFormatter {
   }
 
   getAttachmentPointPosition(direction: AttachmentDirection): Position {
-    // todo: Refactor & Complete
-    // Currently only the rectangle calculation is complete.
-
     if (this.shape == Shape.Rectangle) {
       let x: number;
       let y: number;
