@@ -147,7 +147,6 @@ export enum LineStyle {
 
 export enum EndStyle {
   None,
-  LargeUnfilledArrow,
   SmallFilledArrow,
 }
 
