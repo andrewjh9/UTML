@@ -60,7 +60,7 @@ export class DiagramComponent implements AfterViewInit {
     }
   }
 
-  handeDoubleClick(event: MouseEvent){
+  handleDoubleClick(event: MouseEvent){
     let nodeWidth : number = 100;
     let nodeHeight: number = 100;
     let nf: NodeFormatter = new NodeFormatter(nodeWidth, nodeHeight, new Position(event.clientX - nodeWidth / 2, event.clientY-nodeHeight / 2), Shape.Rectangle);
