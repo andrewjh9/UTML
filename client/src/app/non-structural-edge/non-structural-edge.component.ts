@@ -31,4 +31,8 @@ export class NonStructuralEdgeComponent extends AbstractEdgeComponent {
   public formatterIsDefined(): boolean {
     return this.formatter !== undefined;
   }
+
+  public handleMouseDown(event: any) {
+
+  }
 }

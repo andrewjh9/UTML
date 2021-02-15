@@ -15,9 +15,10 @@
               style="stroke:rgb(0, 0, 0); stroke-width:2; fill:none;"
               [attr.marker-end]="getFormatter()!.getEndMarker()"
               [attr.marker-start]="getFormatter()!.getStartMarker()"
-              [attr.stroke-dasharray]="getFormatter()!.getLineStyleString()">
+              [attr.stroke-dasharray]="getFormatter()!.getLineStyleString()"
+              (mousedown)="handleMouseDown($event)"
+>
 </svg:polyline>
-<!--  (mousedown)="handleMouseDown($event)"-->
 
 <!-- Render labels if they exist -->
 <svg:g *ngIf="hasLabels">

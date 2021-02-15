@@ -1,5 +1,5 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
-import {Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
+import {AttachmentDirection, Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
 import {Position} from "../../assets/serialisation/position";
 import {FormattedElement, RepositionService} from "../reposition.service";
 import {Movable} from "../moveable";
@@ -54,6 +54,18 @@ export class NodeComponent extends Movable {
     if (this.node) {
       this.node.texts[0] = window.prompt("New label?") || this.node.texts[0];
     }
+  }
+
+  getAllAttachmentPoints(): Position[] {
+    let result: Position[] = [];
+
+    if (this.node?.formatter) {
+      for (let i = 0; i < 8; i++) {
+        result.push(this.node.formatter.getAttachmentPointPosition(i as AttachmentDirection))
+      }
+    }
+
+    return result;
   }
 
 }

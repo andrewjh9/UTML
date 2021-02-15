@@ -1,5 +1,5 @@
 import {Position} from '../../assets/serialisation/position';
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import {EdgeFormatter, EndStyle, LineStyle} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
 import {RepositionService} from "../reposition.service";
@@ -14,18 +14,24 @@ import {EdgeRepositionService} from "../edge-reposition.service";
   templateUrl: './diagram.component.html',
   styleUrls: ['./diagram.component.scss']
 })
-export class DiagramComponent {
+export class DiagramComponent implements AfterViewInit {
   @Input() public mode?: boolean;
   @Output() public modeChange: EventEmitter<boolean> = new EventEmitter();
 
   public diagram: Diagram;
   public edgeFormatter: EdgeFormatter;
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService) {
-    this.diagram = fsm;
-    // this.diagram = ad;
+    // this.diagram = fsm;
+    this.diagram = ad;
     this.edgeFormatter = new EdgeFormatter(new Position(10, 150), new Position(100, 150));
     this.edgeFormatter.endStyle = EndStyle.SmallFilledArrow;
     this.edgeFormatter.lineStyle = LineStyle.Dashed;
+  }
+
+  ngAfterViewInit() {
+    if (this.diagram) {
+      this.edgeRepositionService.setNodes(this.diagram.nodes);
+    }
   }
 
   log(): void {

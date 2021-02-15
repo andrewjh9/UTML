@@ -12,8 +12,8 @@ export interface Edge {
 }
 
 export class EdgeFormatter {
-  private readonly startNode?: Node;
-  private readonly endNode?: Node;
+  public startNode?: Node;
+  public endNode?: Node;
   private _startPosition: Position | AttachmentDirection;
   private _endPosition: Position | AttachmentDirection;
   private _middlePositions: Position[] = [];
@@ -74,7 +74,7 @@ export class EdgeFormatter {
     this._middlePositions = value;
   }
 
-// Note that accessors are not used here because because we want to deal with a Position from outside of the class,
+  // Note that accessors are not used here because because we want to deal with a Position from outside of the class,
   // but the positions are internally stored using Position | AttachmentDirection
   public getStartPosition(): Position {
     return EdgeFormatter.getPosition(this.startNode, this._startPosition);
@@ -115,6 +115,14 @@ export class EdgeFormatter {
 
   set endLabelFormatter(value: LabelFormatter | undefined) {
     this._endLabelFormatter = value;
+  }
+
+  public getAllPoints(): Position[] {
+    let result: Position[] = [];
+    result.push(this.getStartPosition());
+    result.push(...this.middlePositions);
+    result.push(this.getEndPosition());
+    return result;
   }
 
   private static getPosition(node: Node | undefined, positionOrDirection: Position | AttachmentDirection) {
