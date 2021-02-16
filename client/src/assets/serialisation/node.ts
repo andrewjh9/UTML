@@ -41,8 +41,8 @@ export class NodeFormatter {
       return new Position(x, y);
     }  else if (this.shape == Shape.Ellipse) {
       let a: number = (this.width/2)^2;
-      let b: number = (this.height/2)^2
-      let x: number = this.width / 3.5;
+      let b: number = (this.height/2)^2;
+      let x: number = this.width/4;
       let y: number = Math.sqrt((1-(x**2 / a**2))*b**2);
       let originX: number = this.position.x + this.width/2;
       let originY: number = this.position.y + this.height/2;
