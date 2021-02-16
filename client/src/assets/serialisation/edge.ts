@@ -164,11 +164,10 @@ export class EdgeFormatter {
       let middle: Position = this.middlePositions[0];
       let end: Position = this.getEndPosition();
 
-      let A: number = this.dist(end, middle);
-      let B: number = this.dist(middle, start);
-      let C: number = this.dist(start, end);
-      // Todo: Alter this in such a way that the curve goes through the point.
-      // return `M ${startWithoutEnd} C ${start} ${middle} ${end}`;
+      let A: number = Position.getDistance(end, middle);
+      let B: number = Position.getDistance(middle, start);
+      let C: number = Position.getDistance(start, end);
+
       let angle: number = Math.acos((A*A + B*B - C*C)/(2*A*B));
 
       //calc radius of circle
@@ -180,19 +179,13 @@ export class EdgeFormatter {
       let laf: number = +(Math.PI/2 > angle);
 
       //sweep flag
-      let saf:number = +((end.x - start.x)*(middle.y - start.y) - (end.y - start.y)*(middle.x - start.x) < 0);
+      let saf: number = +((end.x - start.x)*(middle.y - start.y) - (end.y - start.y)*(middle.x - start.x) < 0);
 
       return ['M', start.x, start.y, 'A', r, r, 0, laf, saf, end.x, end.y].join(' ');
 
     } else {
       throw new Error(`EdgeFormatter ${this} has type ${this.lineType} for which points can not be computed.`);
     }
-  }
-
-  public dist(a:Position, b:Position): number {
-    return Math.sqrt(
-      Math.pow(a.x - b.x, 2) +
-      Math.pow(a.y - b.y, 2));
   }
 
   /**
