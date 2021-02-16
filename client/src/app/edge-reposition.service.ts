@@ -58,12 +58,18 @@ export class EdgeRepositionService {
   }
 
   private liesOnSegment(point: Position, start: Position, end: Position, allowed_error: number = 50): boolean {
-    let segmentLength = Position.getDistance(end, start);
+    let actualSegment = Position.subtract(end, start);
+    let actualAngle = Math.atan2(actualSegment.y, actualSegment.x);
     let ourSegment = Position.subtract(point, start);
-    let scalar = segmentLength / ourSegment.getLength()
-    ourSegment = Position.add(start, Position.multiply(scalar, ourSegment));
-    let difference = Position.getDistance(end, ourSegment);
-    return difference <= allowed_error;
+    let ourAngle = Math.atan2(ourSegment.y, ourSegment.x);
+
+    return Math.abs(actualAngle - ourAngle) <= 0.5 &&
+      EdgeRepositionService.between(start.x, point.x, end.x) &&
+      EdgeRepositionService.between(start.y, point.y, end.y);
+  }
+
+  private static between(start: number, between: number, end: number): boolean {
+    return (start <= between && between <= end) || (end <= between && between <= start)
   }
 
   public update(newPosition: Position): void {

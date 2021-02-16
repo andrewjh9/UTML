@@ -7,11 +7,11 @@ export let ad: Diagram;
 
 const node: Node = {
   texts: ['( ͡° ͜ʖ ͡°)'],
-  formatter: new NodeFormatter(100, 100, new Position(100, 100), Shape.Ellipse)
+  formatter: new NodeFormatter(200, 100, new Position(100, 100), Shape.Rectangle)
 };
 const node2: Node = {
   texts: ['( ͡° ͜ʖ ͡°)'],
-  formatter: new NodeFormatter(100, 100, new Position(100, 400), Shape.Diamond)
+  formatter: new NodeFormatter(100, 100, new Position(100, 400), Shape.Rectangle)
 };
 const node3: Node = {
   texts: ['( ͡° ͜ʖ ͡°)'],
@@ -41,4 +41,6 @@ edge2.formatter.lineStyle = LineStyle.Dotted
 edge2.formatter.endStyle = EndStyle.SmallFilledArrow;
 
 ad = {nodes: [node, node2, node3], edges: [edge, edge2]};
+// ad = {nodes: [node, node2, node3], edges: []};
+
 // this.diagramString = JSON.stringify(this.diagram);
