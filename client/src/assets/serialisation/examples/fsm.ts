@@ -25,7 +25,7 @@ const e1: Edge = {
 e1.formatter = new EdgeFormatter(AttachmentDirection.North, AttachmentDirection.North, n1, n2);
 e1.formatter.lineType = LineType.Arc;
 e1.formatter.lineStyle = LineStyle.Dotted;
-e1.formatter.middlePositions = [new Position(250, -50)];
+e1.formatter.middlePositions = [new Position(250, 50)];
 e1.formatter.endStyle = EndStyle.SmallFilledArrow;
 
 e1.middleLabel = "transition 1";
@@ -37,7 +37,7 @@ const e2: Edge = {
 e2.formatter = new EdgeFormatter(AttachmentDirection.South, AttachmentDirection.South, n2, n3);
 e2.formatter.lineType = LineType.Arc;
 e2.formatter.lineStyle = LineStyle.Dashed;
-e2.formatter.middlePositions = [new Position(450, 350)];
+e2.formatter.middlePositions = [new Position(450, 250)];
 e2.formatter.endStyle = EndStyle.SmallFilledArrow;
 e2.middleLabel = "transition 2"
 

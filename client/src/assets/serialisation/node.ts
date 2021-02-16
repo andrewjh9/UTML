@@ -12,7 +12,6 @@ export class NodeFormatter {
   public position: Position;
   public shape: Shape;
 
-
   constructor(width: number, height: number, position: Position, shape: Shape) {
     this.width = width;
     this.height = height;
@@ -42,7 +41,7 @@ export class NodeFormatter {
       return new Position(x, y);
     }  else if (this.shape == Shape.Ellipse) {
       let a: number = (this.width/2)^2;
-      let b: number = (this.height/2)^2
+      let b: number = (this.height/2)^2;
       let x: number = this.width/4;
       let y: number = Math.sqrt((1-(x**2 / a**2))*b**2);
       let originX: number = this.position.x + this.width/2;

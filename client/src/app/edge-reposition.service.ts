@@ -11,7 +11,7 @@ export class EdgeRepositionService {
   private position?: Position;
   private edge?: Edge;
   private nodes?: Node[];
-  private readonly DISTANCE_THRESHOLD: number = 25;
+  private readonly DISTANCE_THRESHOLD: number = 50;
   private mode: Mode = Mode.Inactive;
 
   constructor() { }
@@ -40,11 +40,36 @@ export class EdgeRepositionService {
       return;
     }
 
-    // Todo: Place position correctly
-    this.position = new Position(mousePosition.x, mousePosition.y);
-    this.mode = Mode.MiddlePosition;
+    let allPoints = this.edge!.formatter!.getAllPoints();
+    console.log(allPoints)
+    let indexToBeInserted: number | undefined;
+    for (let i = 0; i < allPoints.length - 1; i++) {
+      if (EdgeRepositionService.liesOnSegment(mousePosition, allPoints[i], allPoints[i + 1])) {
+        indexToBeInserted = i;
+        break;
+      }
+    }
 
-    this.edge.formatter?.middlePositions.push(this.position);
+    if (indexToBeInserted !== undefined) {
+      this.edge!.formatter!.middlePositions.splice(indexToBeInserted, 0, mousePosition);
+      this.position = mousePosition;
+      this.mode = Mode.MiddlePosition;
+    }
+  }
+
+  private static liesOnSegment(point: Position, start: Position, end: Position): boolean {
+    let actualSegment = Position.subtract(end, start);
+    let actualAngle = Math.atan2(actualSegment.y, actualSegment.x);
+    let ourSegment = Position.subtract(point, start);
+    let ourAngle = Math.atan2(ourSegment.y, ourSegment.x);
+
+    return Math.abs(actualAngle - ourAngle) <= 0.25 &&
+      EdgeRepositionService.between(start.x, point.x, end.x) &&
+      EdgeRepositionService.between(start.y, point.y, end.y);
+  }
+
+  private static between(start: number, between: number, end: number): boolean {
+    return (start <= between && between <= end) || (end <= between && between <= start)
   }
 
   public update(newPosition: Position): void {
@@ -74,7 +99,7 @@ export class EdgeRepositionService {
           for (let node of this.nodes!) {
             for (let direction: number = 0; direction < 8; direction++) {
               let attachmentPosition = node.formatter!.getAttachmentPointPosition(direction as AttachmentDirection);
-              if (Position.getDistance(attachmentPosition, newPosition) <= this.DISTANCE_THRESHOLD) {
+              if (Position.getDistance(attachmentPosition, newPosition) <= this.DISTANCE_THRESHOLD / 2) {
                 this.edge!.startNode = node;
                 this.edge!.formatter!.startPosition = direction as AttachmentDirection;
                 this.edge!.formatter!.startNode = node;
@@ -89,6 +114,23 @@ export class EdgeRepositionService {
   }
 
   public deactivate(): void {
+    if (this.mode == Mode.MiddlePosition && this.position) {
+      let foundIndex: number = -1;
+      let allPoints = this.edge!.formatter!.getAllPoints();
+      for (let i = 0; i < allPoints.length; i++) {
+        if (allPoints[i] == this.position) {
+          foundIndex = i;
+        }
+      }
+
+      if (foundIndex !== -1) {
+        if (EdgeRepositionService.liesOnSegment(this.position, allPoints[foundIndex - 1], allPoints[foundIndex + 1])) {
+          // Remove the found index from the middle position array of the edge.
+          // Since the allPoints contains the start and the middlePositions does not we subtract 1.
+          this.edge!.formatter!.middlePositions.splice(foundIndex - 1, 1);
+        }
+      }
+    }
     this.position = undefined;
     this.edge = undefined;
     this.mode = Mode.Inactive;

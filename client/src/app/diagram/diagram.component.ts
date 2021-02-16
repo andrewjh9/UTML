@@ -21,8 +21,8 @@ export class DiagramComponent implements AfterViewInit {
   public diagram: Diagram;
   public edgeFormatter: EdgeFormatter;
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService) {
-    // this.diagram = fsm;
-    this.diagram = ad;
+    this.diagram = fsm;
+    // this.diagram = ad;
     this.edgeFormatter = new EdgeFormatter(new Position(10, 150), new Position(100, 150));
     this.edgeFormatter.endStyle = EndStyle.SmallFilledArrow;
     this.edgeFormatter.lineStyle = LineStyle.Dashed;
