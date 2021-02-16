@@ -20,4 +20,8 @@ export class Position {
   public static multiply(scalar: number, position: Position): Position {
     return new Position(scalar * position.x, scalar * position.y);
   }
+
+  public static getDistance(pos1: Position, pos2: Position): number {
+    return this.subtract(pos1, pos2).getLength()
+  }
 }

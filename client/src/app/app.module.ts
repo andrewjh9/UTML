@@ -12,6 +12,7 @@ import {FormsModule} from "@angular/forms";
 import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
 import { LabelComponent } from './label/label.component';
 import {RepositionService} from "./reposition.service";
+import { NonStructuralEdgeComponent } from './non-structural-edge/non-structural-edge.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import {RepositionService} from "./reposition.service";
     EdgeComponent,
     ArrowMarkerComponent,
     ModeSelectorComponent,
-    LabelComponent
+    LabelComponent,
+    NonStructuralEdgeComponent
   ],
     imports: [
         BrowserModule,

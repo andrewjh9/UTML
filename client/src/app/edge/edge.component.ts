@@ -3,120 +3,28 @@ import {Position} from "../../assets/serialisation/position";
 import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {LabelFormatter} from "../../assets/serialisation/label";
 import {EdgeRepositionService} from "../edge-reposition.service";
+import {FormattedElement} from "../reposition.service";
+import {AbstractEdgeComponent} from "../abstract-edge-component";
 
 @Component({
   selector: '[edge-component]',
   templateUrl: './edge.component.html',
   styleUrls: ['./edge.component.scss'],
 })
-export class EdgeComponent {
+export class EdgeComponent extends AbstractEdgeComponent {
   @Input() mode?: boolean;
   @Input() edge?: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
+  public readonly hasLabels = true;
 
-  constructor(private edgeRepositionService: EdgeRepositionService) {
+  constructor(private edgeRepositionService: EdgeRepositionService) { super() }
 
+  public formatterIsDefined(): boolean {
+    return this.edge?.formatter !== undefined;
   }
 
-  getPoints(): string | undefined {
-    if (this.edge?.formatter && this.edge.formatter.lineType == LineType.Line) {
-      if (!this.edge?.formatter) {
-        return undefined;
-      }
-      let result: string = "";
-      result += this.positionToText(this.edge.formatter.getStartPosition());
-      for (let position of this.edge.formatter.middlePositions) {
-        result += this.positionToText(position)
-      }
-      result += this.positionToText(this.edge.formatter.getEndPosition());
-      return result;
-    } else if (this.edge?.formatter && this.edge.formatter.lineType == LineType.Arc){
-      let formatter: EdgeFormatter = this.edge.formatter;
-      if (formatter.middlePositions.length != 1) {
-        console.error(`An Arc typed edge should have exactly 1 middle position. Edge ${this} has
-        ${formatter.middlePositions.length}.`);
-        return undefined;
-      }
-
-      let start: string = formatter.getStartPosition().toString(' ', ', ');
-      let startWithoutEnd = formatter.getStartPosition().toString(' ', '')
-      let middle: string = formatter.middlePositions[0].toString();
-      let end: string = formatter.getEndPosition().toString();
-      // Todo: Alter this in such a way that the curve goes through the point.
-      // return `M ${startWithoutEnd} C ${start} ${middle} ${end}`;
-      return `M ${startWithoutEnd} Q ${middle} ${end}`;
-
-    } else {
-      return undefined;
-    }
-  }
-
-  getStartMarker(): string {
-    if (!this.edge?.formatter) {
-      return "none";
-    }
-
-    switch (this.edge.formatter.startStyle) {
-      case EndStyle.None:
-        return "none";
-      case EndStyle.SmallFilledArrow:
-        return "url(#start-small-filled-arrow)"
-      case EndStyle.LargeUnfilledArrow:
-        return "url(#start-big-unfilled-arrow)"
-      case EndStyle.FilledDiamond:
-        return "url(#start-filled-diamond)"
-      case EndStyle.UnfilledDiamond:
-        return "url(#start-unfilled-diamond)"
-    }
-    return "none";
-  }
-
-
-  getEndMarker(): string {
-    if (!this.edge?.formatter) {
-      return "none";
-    }
-
-    switch (this.edge.formatter.endStyle) {
-      case EndStyle.None:
-        return "none";
-      case EndStyle.SmallFilledArrow:
-        return "url(#end-small-filled-arrow)"
-      case EndStyle.LargeUnfilledArrow:
-        return "url(#end-big-unfilled-arrow)"
-      case EndStyle.FilledDiamond:
-        return "url(#end-filled-diamond)"
-      case EndStyle.UnfilledDiamond:
-        return "url(#end-unfilled-diamond)"
-    }
-    return "none";
-  }
-
-  positionToText(position: Position): string {
-    return `${position.x}, ${position.y} `;
-  }
-
-  getDashArray(): string {
-    if (this.edge?.formatter) {
-      switch(this.edge.formatter.lineStyle) {
-        case LineStyle.Filled:
-          return "none";
-        case LineStyle.Dashed:
-          return "12, 2"
-        case LineStyle.Dotted:
-          return "4, 4"
-      }
-    }
-
-    return "none";
-  }
-
-  isArc(): boolean {
-    return this.edge?.formatter?.lineType == LineType.Arc;
-  }
-
-  isLine(): boolean {
-    return this.edge?.formatter?.lineType == LineType.Line;
+  public getFormatter(): EdgeFormatter | undefined {
+    return this.edge?.formatter;
   }
 
   getStartLabelFormatterAndSetIfAbsent(): LabelFormatter {
@@ -162,11 +70,39 @@ export class EdgeComponent {
     return formatter.endLabelFormatter;
   }
 
+  public getStartLabel(): string | undefined {
+    return this.edge?.startLabel;
+  }
+
+  public setStartLabel(label: string) {
+    if (this.edge) {
+      this.edge.startLabel = label;
+    }
+  }
+
+  public getMiddleLabel(): string | undefined {
+    return this.edge?.middleLabel;
+  }
+
+  public setMiddleLabel(label: string) {
+    if (this.edge) {
+      this.edge.middleLabel = label;
+    }
+  }
+  public getEndLabel(): string | undefined {
+    return this.edge?.endLabel;
+  }
+
+  public setEndLabel(label: string) {
+    if (this.edge) {
+      this.edge.endLabel = label;
+    }
+  }
+
   public handleMouseDown(event: MouseEvent): void {
     if (this.edge?.formatter?.middlePositions) {
-      let position = new Position(event.clientX, event.clientY);
-      this.edge.formatter.middlePositions.push(position);
-      this.edgeRepositionService.activate(position);
+      let mousePosition = new Position(event.clientX, event.clientY);
+      this.edgeRepositionService.activate(mousePosition, this.edge);
     }
   }
 }
