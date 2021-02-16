@@ -12,7 +12,6 @@ export class NodeFormatter {
   public position: Position;
   public shape: Shape;
 
-
   constructor(width: number, height: number, position: Position, shape: Shape) {
     this.width = width;
     this.height = height;

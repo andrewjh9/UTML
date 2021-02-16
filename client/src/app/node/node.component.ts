@@ -12,7 +12,6 @@ import {Movable} from "../moveable";
 export class NodeComponent extends Movable {
   @Input() node?: Node;
   @Output() nodeChange = new EventEmitter<Node>();
-  private positionAtMouseDown?: Position;
 
   constructor(repositionService: RepositionService) { super(repositionService) }
 
