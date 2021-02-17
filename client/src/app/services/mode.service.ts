@@ -3,6 +3,7 @@ import {Observable, Subject} from "rxjs";
 import {EdgeRepositionService} from "./edge-reposition.service";
 import {RepositionService} from "./reposition.service";
 import {Deactivatable} from "./deactivatable";
+import {EdgeCreationService} from "./edge-creation-service.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,9 @@ export class ModeService {
   public modeObservable: Observable<Mode> = new Observable<Mode>();
   private mode: Subject<Mode>;
 
-  constructor(edgeRepositionService: EdgeRepositionService, repositionService: RepositionService) {
-    this.deactivatables = [edgeRepositionService, repositionService];
+  constructor(edgeRepositionService: EdgeRepositionService, repositionService: RepositionService,
+              edgeCreationService: EdgeCreationService) {
+    this.deactivatables = [edgeRepositionService, repositionService, edgeCreationService];
     this.mode = new Subject<Mode>();
     this.modeObservable = this.mode.asObservable();
     this.mode.next(Mode.Select);

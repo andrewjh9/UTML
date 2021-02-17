@@ -11,6 +11,6 @@ export class ModeSelectorComponent {
   constructor(private modeService: ModeService) {
     modeService.modeObservable.subscribe((mode :Mode)=> this.mode = mode);
     // Todo: @Andrew why is this initialised?
-    this.mode = Mode.Create;
+    this.mode = Mode.Select;
   }
 }

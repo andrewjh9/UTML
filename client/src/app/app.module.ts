@@ -14,6 +14,7 @@ import {RepositionService} from "./services/reposition.service";
 import { NonStructuralEdgeComponent } from './non-structural-edge/non-structural-edge.component';
 import {ModeSelectorComponent} from "./mode-selector/mode-selector.component";
 import {ModeService} from "./services/mode.service";
+import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {ModeService} from "./services/mode.service";
     ArrowMarkerComponent,
     LabelComponent,
     NonStructuralEdgeComponent,
-    ModeSelectorComponent
+    ModeSelectorComponent,
+    NewEdgePreviewComponent
   ],
     imports: [
         BrowserModule,

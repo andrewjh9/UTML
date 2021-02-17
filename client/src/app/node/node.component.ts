@@ -1,9 +1,10 @@
-import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {AttachmentDirection, Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
 import {Position} from "../../assets/serialisation/position";
 import {FormattedElement, RepositionService} from "../services/reposition.service";
 import {Movable} from "../moveable";
-import {ModeService} from "../services/mode.service";
+import {Mode, ModeService} from "../services/mode.service";
+import {EdgeCreationService} from "../services/edge-creation-service.service";
 
 @Component({
   selector: '[node-component]',
@@ -14,7 +15,8 @@ export class NodeComponent extends Movable {
   @Input() node?: Node;
   @Output() nodeChange = new EventEmitter<Node>();
 
-  constructor(repositionService: RepositionService, modeService: ModeService) {
+  constructor(repositionService: RepositionService, modeService: ModeService,
+              private edgeCreationService: EdgeCreationService) {
     super(repositionService, modeService);
   }
 
@@ -58,14 +60,35 @@ export class NodeComponent extends Movable {
     }
   }
 
-  getAllAttachmentPoints(): Position[] {
-    let result: Position[] = [];
+  getAllAttachmentPoints(): number[] {
+    let result: number[] = [];
 
-    if (this.node?.formatter) {
-      for (let i = 0; i < 8; i++) {
-        result.push(this.node.formatter.getAttachmentPointPosition(i as AttachmentDirection))
-      }
+    for (let i = 0; i < 8; i++) {
+      result.push(i);
     }
+
     return result;
   }
+
+  public getPosition(attachmentNumber: number): Position {
+    return this.node!.formatter!.getAttachmentPointPosition(attachmentNumber as AttachmentDirection);
+  }
+
+  handleEdgeCreationClick(event: MouseEvent, direction: number): void {
+    console.log("Handling click");
+    if (!this.node) {
+      throw new Error("Node should be set!")
+    }
+    if (this.edgeCreationService.isActive()) {
+      this.edgeCreationService.setEnd(this.node!, direction as AttachmentDirection);
+    } else {
+      this.edgeCreationService.activate(this.node!, direction as AttachmentDirection);
+    }
+  }
+
+  isInCreateMode(): boolean {
+    return this.mode === Mode.Create;
+  }
+
+
 }

@@ -19,7 +19,7 @@ export class NodeFormatter {
     this.shape = shape;
   }
 
-  getAttachmentPointPosition(direction: AttachmentDirection): Position {
+  public getAttachmentPointPosition(direction: AttachmentDirection): Position {
     if (this.shape == Shape.Rectangle) {
       let x: number;
       let y: number;

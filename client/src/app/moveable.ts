@@ -4,7 +4,7 @@ import {ModeService, Mode} from "./services/mode.service";
 
 export abstract class Movable {
   abstract getFormatter(): FormattedElement | undefined;
-  private mode?: Mode;
+  protected mode?: Mode;
 
   protected constructor(private repositionService: RepositionService, modeService: ModeService) {
     modeService.modeObservable.subscribe(mode => this.mode = mode);
