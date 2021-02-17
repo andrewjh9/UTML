@@ -16,13 +16,13 @@ export class ModeService {
   toggleMode(mode: string){
     switch (mode) {
       case "Digit1" :
-        this.mode.next(Mode.Move);
+        this.mode.next(Mode.Select);
         break;
       case "Digit2":
         this.mode.next(Mode.Create);
         break;
       case "Digit3":
-        this.mode.next(Mode.Select);
+        this.mode.next(Mode.Move);
         break;
     }
   }
