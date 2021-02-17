@@ -7,6 +7,7 @@ import {fsm} from "../../assets/serialisation/examples/fsm";
 import {ad} from "../../assets/serialisation/examples/ad";
 
 import {EdgeRepositionService} from "../edge-reposition.service";
+import {NonStructuralEdgeRepositionServiceService} from "../non-structural-edge-reposition-service.service";
 
 
 @Component({
@@ -20,7 +21,8 @@ export class DiagramComponent implements AfterViewInit {
 
   public diagram: Diagram;
   public edgeFormatter: EdgeFormatter;
-  constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService) {
+  constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService,
+              private nonStructuralEdgeRepositionServiceService: NonStructuralEdgeRepositionServiceService) {
     this.diagram = fsm;
     // this.diagram = ad;
     this.edgeFormatter = new EdgeFormatter(new Position(10, 150), new Position(100, 150));
@@ -48,14 +50,19 @@ export class DiagramComponent implements AfterViewInit {
       this.repositionService.deactivate();
     } else if (this.edgeRepositionService.isActive()) {
       this.edgeRepositionService.deactivate()
+    } else if (this.nonStructuralEdgeRepositionServiceService.isActive()) {
+      this.nonStructuralEdgeRepositionServiceService.deactivate();
     }
   }
 
   handleMouseMove(event: MouseEvent) {
+    let position = new Position(event.clientX, event.clientY);
     if (this.repositionService.isActive()) {
-      this.repositionService.update(new Position(event.clientX, event.clientY))
+      this.repositionService.update(new Position(event.clientX, event.clientY));
     } else if (this.edgeRepositionService.isActive()) {
-      this.edgeRepositionService.update(new Position(event.clientX, event.clientY))
+      this.edgeRepositionService.update(new Position(event.clientX, event.clientY));
+    } else if (this.nonStructuralEdgeRepositionServiceService.isActive()) {
+      this.nonStructuralEdgeRepositionServiceService.update(new Position(event.clientX, event.clientY));
     }
   }
 }

@@ -66,21 +66,6 @@ export class EdgeRepositionService {
     }
   }
 
-  private static liesOnSegment(point: Position, start: Position, end: Position): boolean {
-    let actualSegment = Position.subtract(end, start);
-    let actualAngle = Math.atan2(actualSegment.y, actualSegment.x);
-    let ourSegment = Position.subtract(point, start);
-    let ourAngle = Math.atan2(ourSegment.y, ourSegment.x);
-
-    return Math.abs(actualAngle - ourAngle) <= 0.25 &&
-      EdgeRepositionService.between(start.x, point.x, end.x) &&
-      EdgeRepositionService.between(start.y, point.y, end.y);
-  }
-
-  private static between(start: number, between: number, end: number): boolean {
-    return (start <= between && between <= end) || (end <= between && between <= start)
-  }
-
   public update(newPosition: Position): void {
     if (this.isActive()) {
       switch (this.mode) {
@@ -144,6 +129,21 @@ export class EdgeRepositionService {
 
   public setNodes(nodes: Node[]) {
     this.nodes = nodes;
+  }
+
+  private static liesOnSegment(point: Position, start: Position, end: Position): boolean {
+    let actualSegment = Position.subtract(end, start);
+    let actualAngle = Math.atan2(actualSegment.y, actualSegment.x);
+    let ourSegment = Position.subtract(point, start);
+    let ourAngle = Math.atan2(ourSegment.y, ourSegment.x);
+
+    return Math.abs(actualAngle - ourAngle) <= 0.25 &&
+      EdgeRepositionService.between(start.x, point.x, end.x) &&
+      EdgeRepositionService.between(start.y, point.y, end.y);
+  }
+
+  private static between(start: number, between: number, end: number): boolean {
+    return (start <= between && between <= end) || (end <= between && between <= start)
   }
 }
 
