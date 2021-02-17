@@ -76,11 +76,6 @@ export class EdgeRepositionService {
       this.position = formatter!.middlePositions[0];
       this.mode = Mode.FixedPosition;
     }
-    if (indexToBeInserted !== undefined) {
-      this.edge!.formatter!.middlePositions.splice(indexToBeInserted, 0, mousePosition);
-      this.position = mousePosition;
-      this.mode = Mode.MiddlePosition;
-    }
   }
 
   private static liesOnSegment(point: Position, start: Position, end: Position): boolean {
@@ -90,12 +85,8 @@ export class EdgeRepositionService {
     let rotationMatrix: number[][] = [[Math.cos(angle), Math.sin(angle)],[-Math.sin(angle), Math.cos(angle)]];
     let baseVector: number[] = this.matrixVectorMult(rotationMatrix, [actualSegment.x, actualSegment.y]);
     let transformedPoint: number[] = this.matrixVectorMult(rotationMatrix, [ourSegment.x, ourSegment.y]);
-    console.log([actualSegment.x, actualSegment.y]);
-    console.log(baseVector);
-    console.log([ourSegment.x, ourSegment.y]);
-    console.log(transformedPoint);
-    console.log(Math.abs(transformedPoint[1]) < 10 && transformedPoint[0] >= 0 && transformedPoint[0] <= baseVector[0])
-    return transformedPoint[1] < Math.abs(30) && transformedPoint[0] >= 0 && transformedPoint[0] <= baseVector[0]
+    return (Math.abs(transformedPoint[1]) < 10 && (transformedPoint[0] >= 0) && (transformedPoint[0] <= baseVector[0]))
+
   }
 
 
@@ -168,12 +159,16 @@ export class EdgeRepositionService {
     if (this.mode == Mode.FixedPosition && this.position) {
       let allPoints = this.formatter!.getAllPoints();
       let foundIndex: number = allPoints.indexOf(this.position);
-
+      console.log(foundIndex);
+      console.log(allPoints.length);
       if (0 < foundIndex && foundIndex < allPoints.length - 1) {
         if (EdgeRepositionService.liesOnSegment(this.position, allPoints[foundIndex - 1], allPoints[foundIndex + 1])) {
+
           // Remove the found index from the middle position array of the edge.
           // Since the allPoints contains the start and the middlePositions does not we subtract 1.
           this.formatter!.middlePositions.splice(foundIndex - 1, 1);
+          alert("removing");
+          console.log()
         }
       }
     }

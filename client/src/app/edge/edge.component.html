@@ -16,7 +16,13 @@
               style="stroke:rgb(0, 0, 0); stroke-width:2; fill:none;"
               [attr.marker-end]="getFormatter()!.getEndMarker()"
               [attr.marker-start]="getFormatter()!.getStartMarker()"
-              [attr.stroke-dasharray]="getFormatter()!.getLineStyleString()"
+              [attr.stroke-dasharray]="getFormatter()!.getLineStyleString()">
+>
+</svg:polyline>
+<!-- Invisible, selectable to make the mouse down trigger easily accessible -->
+<svg:polyline *ngIf="formatterIsDefined() && isLine()"
+              [attr.points]="getFormatter()!.getPointString()"
+              style="stroke:rgb(0, 0, 0); stroke-width:10; stroke-opacity: 0;  fill:none;"
               (mousedown)="handleMouseDown($event)"
 >
 </svg:polyline>
