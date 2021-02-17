@@ -15,6 +15,7 @@ import { NonStructuralEdgeComponent } from './non-structural-edge/non-structural
 import {ModeSelectorComponent} from "./mode-selector/mode-selector.component";
 import {ModeService} from "./services/mode.service";
 import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.component';
+import { SelectedEditorComponent } from './selected-editor/selected-editor.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.com
     LabelComponent,
     NonStructuralEdgeComponent,
     ModeSelectorComponent,
-    NewEdgePreviewComponent
+    NewEdgePreviewComponent,
+    SelectedEditorComponent
   ],
     imports: [
         BrowserModule,

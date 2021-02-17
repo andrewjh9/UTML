@@ -6,19 +6,11 @@ export abstract class Movable {
   abstract getFormatter(): FormattedElement | undefined;
   protected mode?: Mode;
 
-  protected constructor(private repositionService: RepositionService, modeService: ModeService) {
+  protected constructor(protected repositionService: RepositionService, modeService: ModeService) {
     modeService.modeObservable.subscribe(mode => this.mode = mode);
   }
 
   public isInMoveMode(): boolean {
     return this.mode === Mode.Move;
-  }
-
-  public handleMouseDown(event: MouseEvent): void {
-    if (this.isInMoveMode()) {
-      if (this.getFormatter() !== undefined) {
-        this.repositionService.activate(this.getFormatter() as FormattedElement, new Position(event.clientX, event.clientY))
-      }
-    }
   }
 }

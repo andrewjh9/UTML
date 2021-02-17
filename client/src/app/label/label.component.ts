@@ -34,4 +34,12 @@ export class LabelComponent extends Movable {
     }
     return []
   }
+
+  public handleMouseDown(event: MouseEvent): void {
+    if (this.isInMoveMode()) {
+      if (this.getFormatter() !== undefined) {
+        this.repositionService.activate(this.getFormatter() as FormattedElement, new Position(event.clientX, event.clientY))
+      }
+    }
+  }
 }

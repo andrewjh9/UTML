@@ -5,6 +5,9 @@ import {LabelFormatter} from "../../assets/serialisation/label";
 import {EdgeRepositionService} from "../services/edge-reposition.service";
 import {FormattedElement} from "../services/reposition.service";
 import {AbstractEdgeComponent} from "../abstract-edge-component";
+import {EdgeCreationService} from "../services/edge-creation-service.service";
+import {Mode, ModeService} from "../services/mode.service";
+import {SelectionService} from "../services/selection.service";
 
 @Component({
   selector: '[edge-component]',
@@ -12,12 +15,17 @@ import {AbstractEdgeComponent} from "../abstract-edge-component";
   styleUrls: ['./edge.component.scss'],
 })
 export class EdgeComponent extends AbstractEdgeComponent {
-  @Input() mode?: boolean;
   @Input() edge?: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
   public readonly hasLabels = true;
+  private mode: Mode = Mode.Select
 
-  constructor(private edgeRepositionService: EdgeRepositionService) { super() }
+  constructor(private edgeRepositionService: EdgeRepositionService,
+              modeService: ModeService,
+              private selectionService: SelectionService) {
+    super();
+    modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
+  }
 
   public formatterIsDefined(): boolean {
     return this.edge?.formatter !== undefined;
@@ -100,11 +108,14 @@ export class EdgeComponent extends AbstractEdgeComponent {
   }
 
   public handleMouseDown(event: MouseEvent): void {
-    if (this.edge?.formatter?.middlePositions) {
-
-      // Todo: fix mouse positioning
-      let mousePosition = new Position(event.clientX, event.clientY);
-      this.edgeRepositionService.activate(mousePosition, this.edge, this.edge.formatter);
+    if (this.mode === Mode.Move) {
+      if (this.edge?.formatter?.middlePositions) {
+        // Todo: fix mouse positioning
+        let mousePosition = new Position(event.clientX, event.clientY);
+        this.edgeRepositionService.activate(mousePosition, this.edge, this.edge.formatter);
+      }
+    } else if (this.mode === Mode.Select && this.edge) {
+      this.selectionService.setEdge(this.edge);
     }
   }
 }

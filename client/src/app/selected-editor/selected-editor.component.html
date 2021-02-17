@@ -1,0 +1,36 @@
+<div *ngIf="currentEdge">
+  <p>An edge is selected! {{currentEdge}}</p>
+  Start label: <input type="text" [(ngModel)]="currentEdge.startLabel">
+  Middle label: <input type="text" [(ngModel)]="currentEdge.middleLabel">
+  End label: <input type="text" [(ngModel)]="currentEdge.endLabel">
+  Line Style:
+  <select [(ngModel)]="currentEdge.formatter!.lineStyle">
+    <option [ngValue]="0">Filled</option>
+    <option [ngValue]="1">Dotted</option>
+    <option [ngValue]="2">Dashed</option>
+  </select>
+  Start Style:
+  <select [(ngModel)]="currentEdge.formatter!.startStyle">
+    <option [ngValue]="0">None</option>
+    <option [ngValue]="1">Big Unfilled Arrow</option>
+    <option [ngValue]="2">Filled Diamond</option>
+    <option [ngValue]="3">Unfilled Diamond</option>
+    <option [ngValue]="4">Small Filled Arrow</option>
+  </select>
+  End Style:
+  <select [(ngModel)]="currentEdge.formatter!.endStyle">
+    <option [ngValue]="0">None</option>
+    <option [ngValue]="1">Big Unfilled Arrow</option>
+    <option [ngValue]="2">Filled Diamond</option>
+    <option [ngValue]="3">Unfilled Diamond</option>
+    <option [ngValue]="4">Small Filled Arrow</option>
+  </select>
+</div>
+
+<div *ngIf="currentNode && currentNode.formatter">
+  Width: <input type="number" [(ngModel)]="currentNode.formatter.width">
+  Height: <input type="number" [(ngModel)]="currentNode.formatter.height">
+
+  <p>A node is selected! {{currentNode}}</p>1
+</div>
+

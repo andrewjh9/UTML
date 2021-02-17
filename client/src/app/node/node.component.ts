@@ -5,6 +5,7 @@ import {FormattedElement, RepositionService} from "../services/reposition.servic
 import {Movable} from "../moveable";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation-service.service";
+import {SelectionService} from "../services/selection.service";
 
 @Component({
   selector: '[node-component]',
@@ -15,8 +16,10 @@ export class NodeComponent extends Movable {
   @Input() node?: Node;
   @Output() nodeChange = new EventEmitter<Node>();
 
-  constructor(repositionService: RepositionService, modeService: ModeService,
-              private edgeCreationService: EdgeCreationService) {
+  constructor(repositionService: RepositionService,
+              modeService: ModeService,
+              private edgeCreationService: EdgeCreationService,
+              private selectionService: SelectionService) {
     super(repositionService, modeService);
   }
 
@@ -75,7 +78,6 @@ export class NodeComponent extends Movable {
   }
 
   handleEdgeCreationClick(event: MouseEvent, direction: number): void {
-    console.log("Handling click");
     if (!this.node) {
       throw new Error("Node should be set!")
     }
@@ -90,5 +92,13 @@ export class NodeComponent extends Movable {
     return this.mode === Mode.Create;
   }
 
-
+  public handleMouseDown(event: MouseEvent): void {
+    if (this.isInMoveMode()) {
+      if (this.getFormatter() !== undefined) {
+        this.repositionService.activate(this.getFormatter() as FormattedElement, new Position(event.clientX, event.clientY))
+      }
+    } else if (this.mode === Mode.Select && this.node) {
+      this.selectionService.setNode(this.node);
+    }
+  }
 }
