@@ -11,6 +11,7 @@ import {BehaviorSubject} from "rxjs";
 export class EdgeRepositionService {
   private position?: Position;
   private edge?: Edge;
+  private formatter?: EdgeFormatter;
   private nodes?: Node[];
   private readonly DISTANCE_THRESHOLD: number = 50;
   private mode: Mode = Mode.Inactive;
@@ -21,30 +22,41 @@ export class EdgeRepositionService {
     return this.mode !== Mode.Inactive;
   }
 
-  public activate(mousePosition: Position, edge: Edge): void {
+  public activate(mousePosition: Position, edge: Edge | undefined, formatter: EdgeFormatter): void {
     this.edge = edge;
+    this.formatter = formatter;
 
     // Check if the point to be moved is one of the middle positions.
-    for (let pointOnLine of edge.formatter!.middlePositions) {
+    for (let pointOnLine of formatter!.middlePositions) {
       if (Position.getDistance(pointOnLine, mousePosition) <= this.DISTANCE_THRESHOLD) {
         this.position = pointOnLine;
-        this.mode = Mode.MiddlePosition;
+        this.mode = Mode.FixedPosition;
         return;
       }
     }
 
     // Check if the point to be moved is either the start or end position.
-    if (Position.getDistance(mousePosition, edge.formatter!.getStartPosition()) <= this.DISTANCE_THRESHOLD) {
-      this.mode = Mode.StartPosition;
+    if (Position.getDistance(mousePosition, formatter!.getStartPosition()) <= this.DISTANCE_THRESHOLD) {
+      if (this.edge) {
+        this.mode = Mode.StartPosition;
+      } else {
+        this.mode = Mode.FixedPosition;
+        this.position = formatter.startPosition as Position;
+      }
       return;
-    } else if (Position.getDistance(mousePosition, edge.formatter!.getEndPosition()) <= this.DISTANCE_THRESHOLD) {
-      this.mode = Mode.EndPosition;
+    } else if (Position.getDistance(mousePosition, formatter!.getEndPosition()) <= this.DISTANCE_THRESHOLD) {
+      if (this.edge) {
+        this.mode = Mode.EndPosition;
+      } else {
+        this.mode = Mode.FixedPosition;
+        this.position = formatter.endPosition as Position;
+      }
       return;
     }
 
     // Add a new point to the line. This only happens if we are not dealing with an Arc.
-    if (this.edge.formatter?.lineType !== LineType.Arc) {
-      let allPoints = this.edge!.formatter!.getAllPoints();
+    if (this.formatter?.lineType !== LineType.Arc) {
+      let allPoints = this.formatter!.getAllPoints();
       let indexToBeInserted: number | undefined;
       for (let i = 0; i < allPoints.length - 1; i++) {
         if (EdgeRepositionService.liesOnSegment(mousePosition, allPoints[i], allPoints[i + 1])) {
@@ -54,15 +66,15 @@ export class EdgeRepositionService {
       }
 
       if (indexToBeInserted !== undefined) {
-        this.edge!.formatter!.middlePositions.splice(indexToBeInserted, 0, mousePosition);
+        this.formatter!.middlePositions.splice(indexToBeInserted, 0, mousePosition);
         this.position = mousePosition;
-        this.mode = Mode.MiddlePosition;
+        this.mode = Mode.FixedPosition;
       }
-    } else if (this.edge.formatter?.lineType === LineType.Arc) {
-      this.edge.formatter!.middlePositions[0].x = mousePosition.x;
-      this.edge.formatter!.middlePositions[0].y = mousePosition.y;
-      this.position = this.edge.formatter!.middlePositions[0];
-      this.mode = Mode.MiddlePosition;
+    } else if (formatter?.lineType === LineType.Arc) {
+      this.formatter!.middlePositions[0].x = mousePosition.x;
+      this.formatter!.middlePositions[0].y = mousePosition.y;
+      this.position = formatter!.middlePositions[0];
+      this.mode = Mode.FixedPosition;
     }
   }
 
@@ -85,7 +97,7 @@ export class EdgeRepositionService {
           }
           this.edge!.formatter!.endPosition = newPosition;
           break;
-        case Mode.MiddlePosition:
+        case Mode.FixedPosition:
           this.position!.x = newPosition.x;
           this.position!.y = newPosition.y;
           break;
@@ -110,15 +122,15 @@ export class EdgeRepositionService {
   public deactivate(): void {
     // This if statement checks if the new position of the middle position lies on the line segment
     // of the point before and after it. If it does we delete it.
-    if (this.mode == Mode.MiddlePosition && this.position) {
-      let allPoints = this.edge!.formatter!.getAllPoints();
+    if (this.mode == Mode.FixedPosition && this.position) {
+      let allPoints = this.formatter!.getAllPoints();
       let foundIndex: number = allPoints.indexOf(this.position);
 
-      if (foundIndex !== -1) {
+      if (0 < foundIndex && foundIndex < allPoints.length - 1) {
         if (EdgeRepositionService.liesOnSegment(this.position, allPoints[foundIndex - 1], allPoints[foundIndex + 1])) {
           // Remove the found index from the middle position array of the edge.
           // Since the allPoints contains the start and the middlePositions does not we subtract 1.
-          this.edge!.formatter!.middlePositions.splice(foundIndex - 1, 1);
+          this.formatter!.middlePositions.splice(foundIndex - 1, 1);
         }
       }
     }
@@ -149,7 +161,7 @@ export class EdgeRepositionService {
 
 enum Mode {
   Inactive,
-  MiddlePosition,
+  FixedPosition,
   StartPosition,
   EndPosition
 }

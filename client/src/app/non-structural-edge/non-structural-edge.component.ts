@@ -3,7 +3,7 @@ import {EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/seriali
 import {Position} from "../../assets/serialisation/position";
 import {LabelFormatter} from "../../assets/serialisation/label";
 import {AbstractEdgeComponent} from "../abstract-edge-component";
-import {NonStructuralEdgeRepositionServiceService} from "../non-structural-edge-reposition-service.service";
+import {EdgeRepositionService} from "../edge-reposition.service";
 
 @Component({
   selector: '[non-structural-edge]',
@@ -13,7 +13,7 @@ import {NonStructuralEdgeRepositionServiceService} from "../non-structural-edge-
 export class NonStructuralEdgeComponent extends AbstractEdgeComponent {
   @Input() formatter?: EdgeFormatter;
 
-  constructor(private repositionService: NonStructuralEdgeRepositionServiceService) {
+  constructor(private repositionService: EdgeRepositionService) {
     super();
   }
 
@@ -40,7 +40,7 @@ export class NonStructuralEdgeComponent extends AbstractEdgeComponent {
   public handleMouseDown(event: MouseEvent) {
     console.log("Handling mouse down event in non-structural edge")
     if (this.formatter) {
-      this.repositionService.activate(new Position(event.pageX, event.pageY), this.formatter);
+      this.repositionService.activate(new Position(event.pageX, event.pageY), undefined, this.formatter);
     }
   }
 }
