@@ -140,8 +140,6 @@ export class EdgeRepositionService {
     if (this.mode == Mode.FixedPosition && this.position) {
       let allPoints = this.formatter!.getAllPoints();
       let foundIndex: number = allPoints.indexOf(this.position);
-      console.log(foundIndex);
-      console.log(allPoints.length);
       if (0 < foundIndex && foundIndex < allPoints.length - 1) {
         if (EdgeRepositionService.liesOnSegment(this.position, allPoints[foundIndex - 1], allPoints[foundIndex + 1])) {
 
