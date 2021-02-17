@@ -76,7 +76,50 @@ export class EdgeRepositionService {
       this.position = formatter!.middlePositions[0];
       this.mode = Mode.FixedPosition;
     }
+    if (indexToBeInserted !== undefined) {
+      this.edge!.formatter!.middlePositions.splice(indexToBeInserted, 0, mousePosition);
+      this.position = mousePosition;
+      this.mode = Mode.MiddlePosition;
+    }
   }
+
+  private static liesOnSegment(point: Position, start: Position, end: Position): boolean {
+    let actualSegment: Position = Position.subtract(end, start);
+    let ourSegment: Position = Position.subtract(point, start);
+    let angle: number = Math.atan2(-actualSegment.y, actualSegment.x);
+    let rotationMatrix: number[][] = [[Math.cos(angle), Math.sin(angle)],[-Math.sin(angle), Math.cos(angle)]];
+    let baseVector: number[] = this.matrixVectorMult(rotationMatrix, [actualSegment.x, actualSegment.y]);
+    let transformedPoint: number[] = this.matrixVectorMult(rotationMatrix, [ourSegment.x, ourSegment.y]);
+    console.log([actualSegment.x, actualSegment.y]);
+    console.log(baseVector);
+    console.log([ourSegment.x, ourSegment.y]);
+    console.log(transformedPoint);
+    console.log(Math.abs(transformedPoint[1]) < 10 && transformedPoint[0] >= 0 && transformedPoint[0] <= baseVector[0])
+    return transformedPoint[1] < Math.abs(30) && transformedPoint[0] >= 0 && transformedPoint[0] <= baseVector[0]
+  }
+
+
+//   private static matrixInverse(matrix: number[][]): number[][] {
+//     let c = 1 / (matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]);
+//     let inverse: number[][] = [
+//       [c*matrix[1][1], -c*matrix[1][0]],
+//       [-c*matrix[0][1], c*matrix[0][0]]
+//     ];
+//     return inverse
+// }
+
+  private static matrixVectorMult(matrix: number[][], vector: number[]): number[] {
+    return [matrix[0][0] * vector[0] + matrix[1][0] * vector[1], matrix[0][1] * vector[0] + matrix[1][1] * vector[1]]
+  }
+
+  // private static matrixConstantMult(matrix: number[][], constant: number): number[][] {
+  //   for (let i=0; i<matrix.length; i++) {
+  //     for (let j=0; j<matrix[0].length; j++){
+  //       matrix[i][j] = constant * matrix[i][j];
+  //     }
+  //   }
+  //   return matrix
+  // }
 
   public update(newPosition: Position): void {
     if (this.isActive()) {
@@ -141,21 +184,6 @@ export class EdgeRepositionService {
 
   public setNodes(nodes: Node[]) {
     this.nodes = nodes;
-  }
-
-  private static liesOnSegment(point: Position, start: Position, end: Position): boolean {
-    let actualSegment = Position.subtract(end, start);
-    let actualAngle = Math.atan2(actualSegment.y, actualSegment.x);
-    let ourSegment = Position.subtract(point, start);
-    let ourAngle = Math.atan2(ourSegment.y, ourSegment.x);
-
-    return Math.abs(actualAngle - ourAngle) <= 0.25 &&
-      EdgeRepositionService.between(start.x, point.x, end.x) &&
-      EdgeRepositionService.between(start.y, point.y, end.y);
-  }
-
-  private static between(start: number, between: number, end: number): boolean {
-    return (start <= between && between <= end) || (end <= between && between <= start)
   }
 }
 
