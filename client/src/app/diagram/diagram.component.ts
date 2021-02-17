@@ -8,6 +8,7 @@ import {ad} from "../../assets/serialisation/examples/ad";
 import {NodeFormatter, Shape} from "../../assets/serialisation/node";
 
 import {EdgeRepositionService} from "../edge-reposition.service";
+import {ModeService} from "../services/mode.service";
 
 
 @Component({
@@ -21,7 +22,7 @@ export class DiagramComponent implements AfterViewInit {
 
   public diagram: Diagram;
   public edgeFormatter: EdgeFormatter;
-  constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService) {
+  constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService, private modeService: ModeService) {
     // this.diagram = fsm;
     this.diagram = ad;
     this.edgeFormatter = new EdgeFormatter(new Position(10, 150), new Position(100, 150));
@@ -61,10 +62,16 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleDoubleClick(event: MouseEvent){
-    let nodeWidth : number = 100;
-    let nodeHeight: number = 100;
-    let nf: NodeFormatter = new NodeFormatter(nodeWidth, nodeHeight, new Position(event.clientX - nodeWidth / 2, event.clientY-nodeHeight / 2), Shape.Rectangle);
-    this.diagram.nodes.push({texts: [], formatter: nf});
+      //Add node
+      let nodeWidth : number = 100;
+      let nodeHeight: number = 100;
+      let nf: NodeFormatter = new NodeFormatter(nodeWidth, nodeHeight, new Position(event.clientX - nodeWidth / 2, event.clientY-nodeHeight / 2), Shape.Rectangle);
+      this.diagram.nodes.push({texts: [], formatter: nf});
+
+  }
+
+  handleKeyPressed(event : KeyboardEvent){
+    this.modeService.toggleMode(event.code);
   }
 }
 

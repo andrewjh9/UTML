@@ -9,10 +9,10 @@ import { NodeComponent } from './node/node.component';
 import { EdgeComponent } from './edge/edge.component';
 import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
 import {FormsModule} from "@angular/forms";
-import { ModeSelectorComponent } from './mode-selector/mode-selector.component';
 import { LabelComponent } from './label/label.component';
 import {RepositionService} from "./reposition.service";
 import { NonStructuralEdgeComponent } from './non-structural-edge/non-structural-edge.component';
+import {ModeSelectorComponent} from "./mode-selector/mode-selector.component";
 
 @NgModule({
   declarations: [
@@ -21,9 +21,9 @@ import { NonStructuralEdgeComponent } from './non-structural-edge/non-structural
     NodeComponent,
     EdgeComponent,
     ArrowMarkerComponent,
-    ModeSelectorComponent,
     LabelComponent,
-    NonStructuralEdgeComponent
+    NonStructuralEdgeComponent,
+    ModeSelectorComponent
   ],
     imports: [
         BrowserModule,

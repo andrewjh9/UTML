@@ -1,28 +1,15 @@
-import {Component, OnInit, EventEmitter, Output} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, NgZone} from '@angular/core';
+import {Mode, ModeService} from "../services/mode.service";
 
 @Component({
   selector: 'app-mode-selector',
   templateUrl: './mode-selector.component.html',
   styleUrls: ['./mode-selector.component.scss']
 })
-export class ModeSelectorComponent implements OnInit {
-  public mode: boolean = false;
-  @Output() public modeChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-
-  constructor() {
-
-  }
-
-  ngOnInit(): void {
-    this.emitMode();
-  }
-
-  private emitMode(): void {
-    this.modeChange.emit(this.mode);
-  }
-
-  toggleMode() {
-    this.mode = !this.mode;
-    this.emitMode();
+export class ModeSelectorComponent {
+  @Input() mode: Mode;
+  constructor(private modeService: ModeService) {
+    modeService.modeOb.subscribe((mode :Mode)=> this.mode = mode);
+    this.mode = Mode.Create;
   }
 }
