@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {Position} from "../assets/serialisation/position";
 import {AttachmentDirection, Node} from "../assets/serialisation/node";
-import {Edge, EdgeFormatter} from "../assets/serialisation/edge";
+import {Edge, EdgeFormatter, LineType} from "../assets/serialisation/edge";
 import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
+// Todo: Refactor this.
 export class EdgeRepositionService {
   private position?: Position;
   private edge?: Edge;
@@ -22,7 +23,8 @@ export class EdgeRepositionService {
 
   public activate(mousePosition: Position, edge: Edge): void {
     this.edge = edge;
-    // Check existing middle positions
+
+    // Check if the point to be moved is one of the middle positions.
     for (let pointOnLine of edge.formatter!.middlePositions) {
       if (Position.getDistance(pointOnLine, mousePosition) <= this.DISTANCE_THRESHOLD) {
         this.position = pointOnLine;
@@ -31,7 +33,7 @@ export class EdgeRepositionService {
       }
     }
 
-    // Check start and end position
+    // Check if the point to be moved is either the start or end position.
     if (Position.getDistance(mousePosition, edge.formatter!.getStartPosition()) <= this.DISTANCE_THRESHOLD) {
       this.mode = Mode.StartPosition;
       return;
@@ -40,19 +42,26 @@ export class EdgeRepositionService {
       return;
     }
 
-    let allPoints = this.edge!.formatter!.getAllPoints();
-    console.log(allPoints)
-    let indexToBeInserted: number | undefined;
-    for (let i = 0; i < allPoints.length - 1; i++) {
-      if (EdgeRepositionService.liesOnSegment(mousePosition, allPoints[i], allPoints[i + 1])) {
-        indexToBeInserted = i;
-        break;
+    // Add a new point to the line. This only happens if we are not dealing with an Arc.
+    if (this.edge.formatter?.lineType !== LineType.Arc) {
+      let allPoints = this.edge!.formatter!.getAllPoints();
+      let indexToBeInserted: number | undefined;
+      for (let i = 0; i < allPoints.length - 1; i++) {
+        if (EdgeRepositionService.liesOnSegment(mousePosition, allPoints[i], allPoints[i + 1])) {
+          indexToBeInserted = i;
+          break;
+        }
       }
-    }
 
-    if (indexToBeInserted !== undefined) {
-      this.edge!.formatter!.middlePositions.splice(indexToBeInserted, 0, mousePosition);
-      this.position = mousePosition;
+      if (indexToBeInserted !== undefined) {
+        this.edge!.formatter!.middlePositions.splice(indexToBeInserted, 0, mousePosition);
+        this.position = mousePosition;
+        this.mode = Mode.MiddlePosition;
+      }
+    } else if (this.edge.formatter?.lineType === LineType.Arc) {
+      this.edge.formatter!.middlePositions[0].x = mousePosition.x;
+      this.edge.formatter!.middlePositions[0].y = mousePosition.y;
+      this.position = this.edge.formatter!.middlePositions[0];
       this.mode = Mode.MiddlePosition;
     }
   }
@@ -114,14 +123,11 @@ export class EdgeRepositionService {
   }
 
   public deactivate(): void {
+    // This if statement checks if the new position of the middle position lies on the line segment
+    // of the point before and after it. If it does we delete it.
     if (this.mode == Mode.MiddlePosition && this.position) {
-      let foundIndex: number = -1;
       let allPoints = this.edge!.formatter!.getAllPoints();
-      for (let i = 0; i < allPoints.length; i++) {
-        if (allPoints[i] == this.position) {
-          foundIndex = i;
-        }
-      }
+      let foundIndex: number = allPoints.indexOf(this.position);
 
       if (foundIndex !== -1) {
         if (EdgeRepositionService.liesOnSegment(this.position, allPoints[foundIndex - 1], allPoints[foundIndex + 1])) {

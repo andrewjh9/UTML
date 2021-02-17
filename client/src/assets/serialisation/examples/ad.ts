@@ -29,7 +29,7 @@ edge.middleLabel = "middle";
 edge.formatter.startStyle = EndStyle.UnfilledDiamond;
 edge.formatter.endStyle = EndStyle.FilledDiamond;
 edge.formatter.lineStyle = LineStyle.Dashed
-edge.formatter.middlePositions.push(new Position(200, 0))
+// edge.formatter.middlePositions.push(new Position(200, 0))
 
 const edge2: Edge = {
   startNode: node2,

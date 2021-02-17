@@ -6,7 +6,8 @@
           style="stroke-width: 2"
           [attr.marker-end]="getFormatter()!.getEndMarker()"
           [attr.marker-start]="getFormatter()!.getStartMarker()"
-          [attr.stroke-dasharray]="getFormatter()!.getLineStyleString()">
+          [attr.stroke-dasharray]="getFormatter()!.getLineStyleString()"
+          (mousedown)="handleMouseDown($event)">
 </svg:path>
 
 <!-- Line Rendering -->
@@ -19,6 +20,18 @@
               (mousedown)="handleMouseDown($event)"
 >
 </svg:polyline>
+
+<!-- Debugging ellipse around Arc middle position -->
+<svg:ellipse *ngIf="isArc() && formatterIsDefined()"
+             [attr.cx]="getFormatter()!.middlePositions[0].x"
+             [attr.cy]="getFormatter()!.middlePositions[0].y"
+             cx="10"
+             cy="10"
+             rx="5"
+             ry="5"
+             style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.5;stroke-opacity:0.9">
+
+</svg:ellipse>
 
 <!-- Render labels if they exist -->
 <svg:g *ngIf="hasLabels">
