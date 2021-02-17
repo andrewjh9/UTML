@@ -49,8 +49,8 @@ export class NodeComponent extends Movable {
     return this.node?.formatter;
   }
 
-  handleDoubleClick($event: MouseEvent): void {
-    if (this.node) {
+  handleDoubleClick(event: MouseEvent): void {
+    if(this.node){
       this.node.texts[0] = window.prompt("New label?") || this.node.texts[0];
     }
   }
@@ -63,8 +63,6 @@ export class NodeComponent extends Movable {
         result.push(this.node.formatter.getAttachmentPointPosition(i as AttachmentDirection))
       }
     }
-
     return result;
   }
-
 }
