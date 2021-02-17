@@ -46,7 +46,9 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleMouseMove(event: MouseEvent) {
-    let position = new Position(event.clientX, event.clientY);
+    // let position = new Position(event.clientX, event.clientY);
+    let position = new Position(event.pageX, event.pageY);
+
     if (this.repositionService.isActive()) {
       this.repositionService.update(position);
     } else if (this.edgeRepositionService.isActive()) {
