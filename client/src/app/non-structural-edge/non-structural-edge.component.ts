@@ -3,6 +3,7 @@ import {EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/seriali
 import {Position} from "../../assets/serialisation/position";
 import {LabelFormatter} from "../../assets/serialisation/label";
 import {AbstractEdgeComponent} from "../abstract-edge-component";
+import {EdgeRepositionService} from "../edge-reposition.service";
 
 @Component({
   selector: '[non-structural-edge]',
@@ -11,6 +12,10 @@ import {AbstractEdgeComponent} from "../abstract-edge-component";
 })
 export class NonStructuralEdgeComponent extends AbstractEdgeComponent {
   @Input() formatter?: EdgeFormatter;
+
+  constructor(private repositionService: EdgeRepositionService) {
+    super();
+  }
 
   public readonly hasLabels = false;
 
@@ -32,7 +37,10 @@ export class NonStructuralEdgeComponent extends AbstractEdgeComponent {
     return this.formatter !== undefined;
   }
 
-  public handleMouseDown(event: any) {
-
+  public handleMouseDown(event: MouseEvent) {
+    if (this.formatter) {
+      // todo: fix mouse positioning.
+      this.repositionService.activate(new Position(event.pageX, event.pageY), undefined, this.formatter);
+    }
   }
 }

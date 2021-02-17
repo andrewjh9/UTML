@@ -14,8 +14,8 @@ export interface Edge {
 export class EdgeFormatter {
   public startNode?: Node;
   public endNode?: Node;
-  private _startPosition: Position | AttachmentDirection;
-  private _endPosition: Position | AttachmentDirection;
+  public startPosition: Position | AttachmentDirection;
+  public endPosition: Position | AttachmentDirection;
   private _middlePositions: Position[] = [];
   private _lineType: LineType = LineType.Line;
   private _lineStyle: LineStyle = LineStyle.Filled;
@@ -28,8 +28,8 @@ export class EdgeFormatter {
 
   constructor(startPosition: Position | AttachmentDirection, endPosition: Position | AttachmentDirection,
               startNode: Node | undefined = undefined, endNode: Node | undefined = undefined) {
-    this._startPosition = startPosition;
-    this._endPosition = endPosition;
+    this.startPosition = startPosition;
+    this.endPosition = endPosition;
     this.startNode = startNode;
     this.endNode = endNode;
   }
@@ -77,21 +77,14 @@ export class EdgeFormatter {
   // Note that accessors are not used here because because we want to deal with a Position from outside of the class,
   // but the positions are internally stored using Position | AttachmentDirection
   public getStartPosition(): Position {
-    return EdgeFormatter.getPosition(this.startNode, this._startPosition);
+    return EdgeFormatter.getPosition(this.startNode, this.startPosition);
   }
 
   public getEndPosition(): Position {
-    return EdgeFormatter.getPosition(this.endNode, this._endPosition);
+    return EdgeFormatter.getPosition(this.endNode, this.endPosition);
   }
 
 
-  set startPosition(value: Position | AttachmentDirection) {
-    this._startPosition = value;
-  }
-
-  set endPosition(value: Position | AttachmentDirection) {
-    this._endPosition = value;
-  }
 
   get startLabelFormatter(): LabelFormatter | undefined {
     return this._startLabelFormatter;

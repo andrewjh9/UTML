@@ -1,4 +1,3 @@
-<app-mode-selector></app-mode-selector>
 <svg width="1000"
      height="1000"
      (window:keydown)="handleKeyPressed($event)"
@@ -17,7 +16,7 @@
 
   <g non-structural-edge [formatter]="edgeFormatter"></g>
 </svg>
+<app-mode-selector></app-mode-selector>
+
 <button (click)="log()">Some button</button>
 <span><br>Inside diagram: {{mode}}</span>
-
-<span><br>Start label y coordinate: {{diagram.edges[0].formatter?.startLabelFormatter?.position?.y}}</span>
