@@ -101,7 +101,9 @@ export class EdgeComponent extends AbstractEdgeComponent {
 
   public handleMouseDown(event: MouseEvent): void {
     if (this.edge?.formatter?.middlePositions) {
-      let mousePosition = new Position(event.pageX, event.pageY);
+
+      // Todo: fix mouse positioning
+      let mousePosition = new Position(event.clientX, event.clientY);
       this.edgeRepositionService.activate(mousePosition, this.edge, this.edge.formatter);
     }
   }

@@ -85,32 +85,13 @@ export class EdgeRepositionService {
     let rotationMatrix: number[][] = [[Math.cos(angle), Math.sin(angle)],[-Math.sin(angle), Math.cos(angle)]];
     let baseVector: number[] = this.matrixVectorMult(rotationMatrix, [actualSegment.x, actualSegment.y]);
     let transformedPoint: number[] = this.matrixVectorMult(rotationMatrix, [ourSegment.x, ourSegment.y]);
-    return (Math.abs(transformedPoint[1]) < 10 && (transformedPoint[0] >= 0) && (transformedPoint[0] <= baseVector[0]))
+    return (Math.abs(transformedPoint[1]) < 10 && (transformedPoint[0] >= 0) && (transformedPoint[0] <= baseVector[0]));
 
   }
-
-
-//   private static matrixInverse(matrix: number[][]): number[][] {
-//     let c = 1 / (matrix[0][0] * matrix[1][1] - matrix[1][0] * matrix[0][1]);
-//     let inverse: number[][] = [
-//       [c*matrix[1][1], -c*matrix[1][0]],
-//       [-c*matrix[0][1], c*matrix[0][0]]
-//     ];
-//     return inverse
-// }
 
   private static matrixVectorMult(matrix: number[][], vector: number[]): number[] {
     return [matrix[0][0] * vector[0] + matrix[1][0] * vector[1], matrix[0][1] * vector[0] + matrix[1][1] * vector[1]]
   }
-
-  // private static matrixConstantMult(matrix: number[][], constant: number): number[][] {
-  //   for (let i=0; i<matrix.length; i++) {
-  //     for (let j=0; j<matrix[0].length; j++){
-  //       matrix[i][j] = constant * matrix[i][j];
-  //     }
-  //   }
-  //   return matrix
-  // }
 
   public update(newPosition: Position): void {
     if (this.isActive()) {
@@ -167,7 +148,6 @@ export class EdgeRepositionService {
           // Remove the found index from the middle position array of the edge.
           // Since the allPoints contains the start and the middlePositions does not we subtract 1.
           this.formatter!.middlePositions.splice(foundIndex - 1, 1);
-          alert("removing");
           console.log()
         }
       }

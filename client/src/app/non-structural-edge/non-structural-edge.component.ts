@@ -38,8 +38,8 @@ export class NonStructuralEdgeComponent extends AbstractEdgeComponent {
   }
 
   public handleMouseDown(event: MouseEvent) {
-    console.log("Handling mouse down event in non-structural edge")
     if (this.formatter) {
+      // todo: fix mouse positioning.
       this.repositionService.activate(new Position(event.pageX, event.pageY), undefined, this.formatter);
     }
   }
