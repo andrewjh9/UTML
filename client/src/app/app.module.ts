@@ -13,6 +13,7 @@ import { LabelComponent } from './label/label.component';
 import {RepositionService} from "./reposition.service";
 import { NonStructuralEdgeComponent } from './non-structural-edge/non-structural-edge.component';
 import {ModeSelectorComponent} from "./mode-selector/mode-selector.component";
+import {ModeService} from "./services/mode.service";
 
 @NgModule({
   declarations: [
@@ -31,7 +32,7 @@ import {ModeSelectorComponent} from "./mode-selector/mode-selector.component";
         HttpClientModule,
         FormsModule
     ],
-  providers: [RepositionService],
+  providers: [RepositionService, ModeService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
