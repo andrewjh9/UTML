@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import {Position} from "../assets/serialisation/position";
+import {Position} from "../../assets/serialisation/position";
+import {Deactivatable} from "./deactivatable";
 
 @Injectable({
   providedIn: 'root'
 })
-export class RepositionService {
+export class RepositionService implements Deactivatable {
   private formatter?: FormattedElement;
   private startPosition?: Position;
   constructor() { }

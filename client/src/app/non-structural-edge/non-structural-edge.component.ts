@@ -3,7 +3,7 @@ import {EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/seriali
 import {Position} from "../../assets/serialisation/position";
 import {LabelFormatter} from "../../assets/serialisation/label";
 import {AbstractEdgeComponent} from "../abstract-edge-component";
-import {EdgeRepositionService} from "../edge-reposition.service";
+import {EdgeRepositionService} from "../services/edge-reposition.service";
 
 @Component({
   selector: '[non-structural-edge]',

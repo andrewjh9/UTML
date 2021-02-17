@@ -3,6 +3,7 @@
           [attr.y]="formatter.position.y"
           (mousedown)="handleMouseDown($event)"
           (dblclick)="handleDoubleClick($event)"
+          [ngClass]="{'Movable': isInMoveMode()}"
           dominant-baseline="middle"
           text-anchor="middle"
           font-family="Comic Sans MS, Helvetica, sans-serif"

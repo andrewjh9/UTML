@@ -9,7 +9,8 @@ import {Mode, ModeService} from "../services/mode.service";
 export class ModeSelectorComponent {
   @Input() mode: Mode;
   constructor(private modeService: ModeService) {
-    modeService.modeOb.subscribe((mode :Mode)=> this.mode = mode);
+    modeService.modeObservable.subscribe((mode :Mode)=> this.mode = mode);
+    // Todo: @Andrew why is this initialised?
     this.mode = Mode.Create;
   }
 }

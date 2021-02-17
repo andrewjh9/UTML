@@ -1,5 +1,5 @@
 <svg width="1000"
-     height="1000"
+     height="600"
      (window:keydown)="handleKeyPressed($event)"
      (mouseup)="handleMouseUp($event)"
      (mousemove)="handleMouseMove($event)"
@@ -10,13 +10,10 @@
   <defs arrow-marker></defs>
 
   <g *ngFor="let edge of diagram.edges; let i = index"
-     edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event" [mode]="mode"></g>
+     edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
   <g *ngFor="let node of diagram.nodes; let i = index"
      node-component [(node)]="diagram.nodes[i]" (nodeChange)="diagram.nodes[i]=$event"></g>
 
   <g non-structural-edge [formatter]="edgeFormatter"></g>
 </svg>
 <app-mode-selector></app-mode-selector>
-
-<button (click)="log()">Some button</button>
-<span><br>Inside diagram: {{mode}}</span>

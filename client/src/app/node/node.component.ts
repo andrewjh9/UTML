@@ -1,8 +1,9 @@
 import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 import {AttachmentDirection, Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
 import {Position} from "../../assets/serialisation/position";
-import {FormattedElement, RepositionService} from "../reposition.service";
+import {FormattedElement, RepositionService} from "../services/reposition.service";
 import {Movable} from "../moveable";
+import {ModeService} from "../services/mode.service";
 
 @Component({
   selector: '[node-component]',
@@ -13,7 +14,9 @@ export class NodeComponent extends Movable {
   @Input() node?: Node;
   @Output() nodeChange = new EventEmitter<Node>();
 
-  constructor(repositionService: RepositionService) { super(repositionService) }
+  constructor(repositionService: RepositionService, modeService: ModeService) {
+    super(repositionService, modeService);
+  }
 
   // This check is done here to easily handle undefined and as Shape is not defined in the .html
   isRectangle(): boolean {

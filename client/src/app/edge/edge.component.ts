@@ -2,8 +2,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Position} from "../../assets/serialisation/position";
 import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {LabelFormatter} from "../../assets/serialisation/label";
-import {EdgeRepositionService} from "../edge-reposition.service";
-import {FormattedElement} from "../reposition.service";
+import {EdgeRepositionService} from "../services/edge-reposition.service";
+import {FormattedElement} from "../services/reposition.service";
 import {AbstractEdgeComponent} from "../abstract-edge-component";
 
 @Component({

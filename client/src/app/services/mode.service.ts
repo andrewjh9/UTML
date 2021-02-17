@@ -1,30 +1,55 @@
 import { Injectable } from '@angular/core';
 import {Observable, Subject} from "rxjs";
+import {EdgeRepositionService} from "./edge-reposition.service";
+import {RepositionService} from "./reposition.service";
+import {Deactivatable} from "./deactivatable";
 
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service responsible for determining in which mode the drawing tool resides.
+ * If using the service, the mode should be read by subscribing to the modeObservable.
+ * When a mode is switch any Deactivatable service is deactivated.
+ */
 export class ModeService {
-
-  public modeOb: Observable<Mode> = new Observable<Mode>();
+  private deactivatables: Deactivatable[];
+  public modeObservable: Observable<Mode> = new Observable<Mode>();
   private mode: Subject<Mode>;
-  constructor() {
+
+  constructor(edgeRepositionService: EdgeRepositionService, repositionService: RepositionService) {
+    this.deactivatables = [edgeRepositionService, repositionService];
     this.mode = new Subject<Mode>();
-    this.modeOb = this.mode.asObservable();
-    this.mode.next(1);
+    this.modeObservable = this.mode.asObservable();
+    this.mode.next(Mode.Select);
   }
-  toggleMode(mode: string){
-    switch (mode) {
+
+  /**
+   * Set the mode based upon
+   * @param keyCode
+   */
+  public toggleMode(keyCode: string){
+    switch (keyCode) {
       case "Digit1" :
-        this.mode.next(Mode.Select);
+        this.setMode(Mode.Select);
         break;
       case "Digit2":
-        this.mode.next(Mode.Create);
+        this.setMode(Mode.Create);
         break;
       case "Digit3":
-        this.mode.next(Mode.Move);
+        this.setMode(Mode.Move);
         break;
     }
+  }
+
+  /**
+   * Sets the mode and multi-casts this update to all subscribed.
+   * In addition to this all deactivatables are deactivated.
+   * @param mode New mode value
+   */
+  public setMode(mode: Mode): void {
+    this.mode.next(mode);
+    this.deactivatables.forEach(d => d.deactivate());
   }
 }
 

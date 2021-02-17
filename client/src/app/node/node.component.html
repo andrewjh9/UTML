@@ -25,8 +25,8 @@
     [attr.height]="node!.formatter!.height"
     (mousedown)="handleMouseDown($event)"
     (dblclick)="handleDoubleClick($event)"
+    [ngClass]="{'movable': isInMoveMode()}"
     style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
-    class="movable"
   >
 
   </svg:rect>
@@ -39,8 +39,8 @@
                [attr.cy]="node!.formatter!.position.y + node!.formatter!.height / 2"
                [attr.rx]="node!.formatter!.width / 2"
                [attr.ry]="node!.formatter!.height / 2"
+               [ngClass]="{'movable': isInMoveMode()}"
                style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
-               class="movable"
   >
   </svg:ellipse>
 
@@ -49,8 +49,8 @@
                [attr.points]="getDiamondPoints()"
                (mousedown)="handleMouseDown($event)"
                (dblclick)="handleDoubleClick($event)"
-               style="fill:white;stroke:black;stroke-width:2;fill-opacity:0.0;stroke-opacity:0.9"
-               class="movable"
+                [ngClass]="{'movable': isInMoveMode()}"
+                style="fill:white;stroke:black;stroke-width:2;fill-opacity:0.0;stroke-opacity:0.9"
   >
   </svg:polyline>
 

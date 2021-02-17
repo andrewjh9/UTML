@@ -10,7 +10,7 @@ import { EdgeComponent } from './edge/edge.component';
 import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
 import {FormsModule} from "@angular/forms";
 import { LabelComponent } from './label/label.component';
-import {RepositionService} from "./reposition.service";
+import {RepositionService} from "./services/reposition.service";
 import { NonStructuralEdgeComponent } from './non-structural-edge/non-structural-edge.component';
 import {ModeSelectorComponent} from "./mode-selector/mode-selector.component";
 import {ModeService} from "./services/mode.service";

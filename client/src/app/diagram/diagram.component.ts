@@ -2,13 +2,13 @@ import {Position} from '../../assets/serialisation/position';
 import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
 import {EdgeFormatter, EndStyle, LineStyle} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
-import {RepositionService} from "../reposition.service";
+import {RepositionService} from "../services/reposition.service";
 import {fsm} from "../../assets/serialisation/examples/fsm";
 import {ad} from "../../assets/serialisation/examples/ad";
 import {NodeFormatter, Shape} from "../../assets/serialisation/node";
 
-import {EdgeRepositionService} from "../edge-reposition.service";
-import {ModeService} from "../services/mode.service";
+import {EdgeRepositionService} from "../services/edge-reposition.service";
+import {Mode, ModeService} from "../services/mode.service";
 
 
 @Component({
@@ -17,11 +17,9 @@ import {ModeService} from "../services/mode.service";
   styleUrls: ['./diagram.component.scss']
 })
 export class DiagramComponent implements AfterViewInit {
-  @Input() public mode?: boolean;
-  @Output() public modeChange: EventEmitter<boolean> = new EventEmitter();
-
   public diagram: Diagram;
   public edgeFormatter: EdgeFormatter;
+
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService, private modeService: ModeService) {
     // this.diagram = fsm;
     this.diagram = ad;
@@ -34,15 +32,6 @@ export class DiagramComponent implements AfterViewInit {
     if (this.diagram) {
       this.edgeRepositionService.setNodes(this.diagram.nodes);
     }
-  }
-
-  log(): void {
-    console.log(this.diagram);
-  }
-
-  setMode(mode: boolean): void {
-    this.mode = mode;
-    this.modeChange.emit(this.mode);
   }
 
   handleMouseUp(event: MouseEvent): void {
@@ -72,7 +61,22 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleKeyPressed(event : KeyboardEvent){
-    this.modeService.toggleMode(event.code);
+    const SELECT_KEY = "1";
+    const CREATE_KEY = "2";
+    const MOVE_KEY = "3";
+
+    console.log(event.key)
+    switch (event.key) {
+      case SELECT_KEY :
+        this.modeService.setMode(Mode.Select);
+        break;
+      case CREATE_KEY:
+        this.modeService.setMode(Mode.Create);
+        break;
+      case MOVE_KEY:
+        this.modeService.setMode(Mode.Move);
+        break;
+    }
   }
 }
 

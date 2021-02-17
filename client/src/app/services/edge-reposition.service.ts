@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
-import {Position} from "../assets/serialisation/position";
-import {AttachmentDirection, Node} from "../assets/serialisation/node";
-import {Edge, EdgeFormatter, LineType} from "../assets/serialisation/edge";
+import {Position} from "../../assets/serialisation/position";
+import {AttachmentDirection, Node} from "../../assets/serialisation/node";
+import {Edge, EdgeFormatter, LineType} from "../../assets/serialisation/edge";
 import {BehaviorSubject} from "rxjs";
+import {Deactivatable} from "./deactivatable";
 
 @Injectable({
   providedIn: 'root'
 })
 // Todo: Refactor this.
-export class EdgeRepositionService {
+export class EdgeRepositionService implements Deactivatable {
   private position?: Position;
   private edge?: Edge;
   private formatter?: EdgeFormatter;
