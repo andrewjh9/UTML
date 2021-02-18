@@ -10,6 +10,7 @@ import {EdgeRepositionService} from "../services/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation-service.service";
 import {DeletionService} from "../services/deletion.service";
+import {CreationFormatterSelectionService} from "../services/creation-formatter-selection.service";
 
 
 @Component({
@@ -25,7 +26,8 @@ export class DiagramComponent implements AfterViewInit {
 
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService,
               private modeService: ModeService, private edgeCreationService: EdgeCreationService,
-              deletionService: DeletionService) {
+              deletionService: DeletionService,
+              private creationFormatterSelectionService: CreationFormatterSelectionService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
@@ -68,9 +70,8 @@ export class DiagramComponent implements AfterViewInit {
 
   handleDoubleClick(event: MouseEvent){
     if (this.mode === Mode.Create) {
-      let nodeWidth: number = 100;
-      let nodeHeight: number = 100;
-      let nf: NodeFormatter = new NodeFormatter(100, 100, new Position(event.clientX - nodeWidth / 2, event.clientY - nodeHeight / 2), Shape.Rectangle);
+      let nf: NodeFormatter = this.creationFormatterSelectionService.getSelectedNodeFormatter();
+      nf.position = new Position(event.clientX - nf.width / 2, event.clientY - nf.height / 2);
       this.diagram.nodes.push({texts: [], formatter: nf});
     }
   }
