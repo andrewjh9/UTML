@@ -2,6 +2,7 @@ import {EdgeFormatter, LineType} from "../assets/serialisation/edge";
 import {LabelFormatter} from "../assets/serialisation/label";
 import {SelectionService} from "./services/selection.service";
 import {Mode, ModeService} from "./services/mode.service";
+import {OnDestroy} from "@angular/core";
 
 export abstract class AbstractEdgeComponent {
   public abstract getFormatter(): EdgeFormatter | undefined;

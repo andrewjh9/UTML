@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {Position} from "../../assets/serialisation/position";
 import {LabelFormatter} from "../../assets/serialisation/label";
@@ -12,7 +12,7 @@ import {Mode, ModeService} from "../services/mode.service";
   templateUrl: '../edge/edge.component.html',
   styleUrls: ['../edge/edge.component.scss']
 })
-export class NonStructuralEdgeComponent extends AbstractEdgeComponent {
+export class NonStructuralEdgeComponent extends AbstractEdgeComponent implements OnDestroy {
   @Input() formatter?: EdgeFormatter;
 
   constructor(private repositionService: EdgeRepositionService,
@@ -53,5 +53,9 @@ export class NonStructuralEdgeComponent extends AbstractEdgeComponent {
       }
       this.selectionService.setEdgeFormatter(this.formatter);
     }
+  }
+
+  ngOnDestroy(): void {
+    console.log("Nonstructured edge component is being destroyed.")
   }
 }

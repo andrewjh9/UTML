@@ -5,11 +5,12 @@ import {Diagram} from "../../assets/serialisation/diagram";
 import {RepositionService} from "../services/reposition.service";
 import {fsm} from "../../assets/serialisation/examples/fsm";
 import {ad} from "../../assets/serialisation/examples/ad";
-import {NodeFormatter, Shape} from "../../assets/serialisation/node";
+import {Node, NodeFormatter, Shape} from "../../assets/serialisation/node";
 
 import {EdgeRepositionService} from "../services/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation-service.service";
+import {DeletionService} from "../services/deletion.service";
 
 
 @Component({
@@ -20,15 +21,39 @@ import {EdgeCreationService} from "../services/edge-creation-service.service";
 export class DiagramComponent implements AfterViewInit {
   public diagram: Diagram;
   public edgeFormatter: EdgeFormatter;
+  private mode?: Mode;
 
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService,
-              private modeService: ModeService, private edgeCreationService: EdgeCreationService) {
+              private modeService: ModeService, private edgeCreationService: EdgeCreationService,
+              deletionService: DeletionService) {
+    this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     // this.diagram = fsm;
     this.diagram = ad;
     this.edgeFormatter = new EdgeFormatter(new Position(10, 150), new Position(100, 150));
     this.edgeFormatter.endStyle = EndStyle.SmallFilledArrow;
     this.edgeFormatter.lineStyle = LineStyle.Dashed;
+
     edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => this.diagram.edges.push(newEdge));
+
+    deletionService.setDiagram(this.diagram);
+    // deletionService.deleteNodeEvent.subscribe((node: Node) => {
+    //   let edgesToBeDeleted: Edge[] = this.diagram.edges.filter((edge: Edge) => {
+    //     return edge.startNode === node || edge.endNode == node;
+    //   });
+    //
+    //   edgesToBeDeleted.forEach((edge: Edge) => {
+    //     const index = this.diagram.edges.indexOf(edge);
+    //     this.diagram.edges.splice(index, 1);
+    //   })
+    //
+    //   const index = this.diagram.nodes.indexOf(node);
+    //   console.log(`Deleting node with index ${index}.`);
+    //   if (index === -1) {
+    //     throw new Error("Trying to delete a node that can not be found in the list of nodes!");
+    //   } else {
+    //     this.diagram.nodes.splice(index, 1);
+    //   }
+    // });
   }
 
   ngAfterViewInit() {
@@ -59,11 +84,12 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleDoubleClick(event: MouseEvent){
-      // 1Add node
-      let nodeWidth : number = 100;
+    if (this.mode === Mode.Create) {
+      let nodeWidth: number = 100;
       let nodeHeight: number = 100;
-      let nf: NodeFormatter = new NodeFormatter(nodeWidth, nodeHeight, new Position(event.clientX - nodeWidth / 2, event.clientY-nodeHeight / 2), Shape.Rectangle);
+      let nf: NodeFormatter = new NodeFormatter(100, 100, new Position(event.clientX - nodeWidth / 2, event.clientY - nodeHeight / 2), Shape.Rectangle);
       this.diagram.nodes.push({texts: [], formatter: nf});
+    }
 
   }
 

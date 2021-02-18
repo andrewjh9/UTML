@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {AttachmentDirection, Node, NodeFormatter, Shape} from '../../assets/serialisation/node';
 import {Position} from "../../assets/serialisation/position";
 import {FormattedElement, RepositionService} from "../services/reposition.service";
@@ -12,7 +12,7 @@ import {SelectionService} from "../services/selection.service";
   templateUrl: './node.component.html',
   styleUrls: ['./node.component.scss']
 })
-export class NodeComponent extends Movable {
+export class NodeComponent extends Movable implements OnDestroy {
   @Input() node?: Node;
   @Output() nodeChange = new EventEmitter<Node>();
 
@@ -100,5 +100,9 @@ export class NodeComponent extends Movable {
     } else if (this.mode === Mode.Select && this.node) {
       this.selectionService.setNode(this.node);
     }
+  }
+
+  ngOnDestroy(): void {
+    console.log("Node component is being destroyed.")
   }
 }
