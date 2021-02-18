@@ -1,25 +1,33 @@
-<svg width="1000"
-     height="600"
-     (window:keydown)="handleKeyPressed($event)"
-     (mouseup)="handleMouseUp($event)"
-     (mousemove)="handleMouseMove($event)"
-     (dblclick)="handleDoubleClick($event)"
->
+<div class="container-fluid">
+  <div class="row d-flex">
+    <div class="flex-grow-1">
+      <svg width="1000"
+           height="600"
+           (window:keydown)="handleKeyPressed($event)"
+           (mouseup)="handleMouseUp($event)"
+           (mousemove)="handleMouseMove($event)"
+           (dblclick)="handleDoubleClick($event)"
+      >
 
-  <g new-edge-preview></g>
+        <g new-edge-preview></g>
 
 
-  <!--  Define markers-->
-  <defs arrow-marker></defs>
+        <!--  Define markers-->
+        <defs arrow-marker></defs>
 
-  <g *ngFor="let edge of diagram.edges; let i = index"
-     edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
-  <g *ngFor="let node of diagram.nodes; let i = index"
-     node-component [(node)]="diagram.nodes[i]" (nodeChange)="diagram.nodes[i]=$event"></g>
+        <g *ngFor="let edge of diagram.edges; let i = index"
+           edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
+        <g *ngFor="let node of diagram.nodes; let i = index"
+           node-component [(node)]="diagram.nodes[i]" (nodeChange)="diagram.nodes[i]=$event"></g>
 
-  <g non-structural-edge [formatter]="edgeFormatter"></g>
+        <g non-structural-edge [formatter]="edgeFormatter"></g>
 
-</svg>
+      </svg>
+    </div>
 
-<app-mode-selector></app-mode-selector>
-<app-selected-editor></app-selected-editor>
+    <div style="width: 500px">
+      <app-mode-selector></app-mode-selector>
+      <app-selected-editor></app-selected-editor>
+    </div>
+  </div>
+</div>

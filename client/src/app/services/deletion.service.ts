@@ -25,10 +25,10 @@ export class DeletionService {
       throw new Error("Trying to use deletion service whilst the diagram is undefined");
     }
     let edgesToBeDeleted: Edge[] = this.diagram.edges.filter((edge: Edge) => {
-      return edge.startNode === node || edge.endNode == node;
+      return edge.startNode === node || edge.endNode === node;
     });
 
-    edgesToBeDeleted.forEach((edge: Edge) => {1
+    edgesToBeDeleted.forEach((edge: Edge) => {
       const index = this.diagram!.edges.indexOf(edge);
       this.diagram!.edges.splice(index, 1);
     })

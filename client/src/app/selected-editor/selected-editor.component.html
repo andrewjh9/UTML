@@ -26,7 +26,7 @@
     <option [ngValue]="4">Small Filled Arrow</option>
   </select>
 
-  <button (click)="deleteEdge()">Delete</button>
+  <button type="button" class="btn btn-danger" (click)="deleteEdge()">Delete</button>
 </div>
 
 <div *ngIf="currentEdgeFormatter">
@@ -53,7 +53,7 @@
     <option [ngValue]="3">Unfilled Diamond</option>
     <option [ngValue]="4">Small Filled Arrow</option>
   </select>
-  <button (click)="deleteEdgeFormatter()">Delete</button>
+  <button type="button" class="btn btn-danger" (click)="deleteEdgeFormatter()">Delete</button>
 </div>
 
 <div *ngIf="currentNode && currentNode.formatter">
@@ -67,7 +67,7 @@
   </select>
 
   <p>A node is selected! {{currentNode}}</p>
-  <button (click)="deleteNode()">Delete</button>
+  <button type="button" class="btn btn-danger"(click)="deleteNode()">Delete</button>
 
 </div>
 

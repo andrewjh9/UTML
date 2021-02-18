@@ -6,7 +6,6 @@ import {RepositionService} from "../services/reposition.service";
 import {fsm} from "../../assets/serialisation/examples/fsm";
 import {ad} from "../../assets/serialisation/examples/ad";
 import {Node, NodeFormatter, Shape} from "../../assets/serialisation/node";
-
 import {EdgeRepositionService} from "../services/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation-service.service";
@@ -73,7 +72,6 @@ export class DiagramComponent implements AfterViewInit {
       let nf: NodeFormatter = new NodeFormatter(100, 100, new Position(event.clientX - nodeWidth / 2, event.clientY - nodeHeight / 2), Shape.Rectangle);
       this.diagram.nodes.push({texts: [], formatter: nf});
     }
-
   }
 
   handleKeyPressed(event: KeyboardEvent): void{
@@ -94,4 +92,3 @@ export class DiagramComponent implements AfterViewInit {
     }
   }
 }
-

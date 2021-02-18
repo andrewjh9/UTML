@@ -17,6 +17,7 @@ import {ModeService} from "./services/mode.service";
 import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.component';
 import { SelectedEditorComponent } from './selected-editor/selected-editor.component';
 import {DeletionService} from "./services/deletion.service";
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {DeletionService} from "./services/deletion.service";
         BrowserModule,
         AppRoutingModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        NgbModule
     ],
   providers: [RepositionService, ModeService, DeletionService],
   bootstrap: [AppComponent]

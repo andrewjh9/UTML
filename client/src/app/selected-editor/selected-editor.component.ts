@@ -32,6 +32,7 @@ export class SelectedEditorComponent {
   private setAllUndefined(): void {
     this.currentEdge = undefined;
     this.currentNode = undefined;
+    this.currentEdgeFormatter = undefined;
   }
 
   deleteNode() {
