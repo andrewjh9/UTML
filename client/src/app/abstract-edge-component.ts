@@ -7,11 +7,12 @@ import {OnDestroy} from "@angular/core";
 export abstract class AbstractEdgeComponent {
   public abstract getFormatter(): EdgeFormatter | undefined;
   public abstract formatterIsDefined(): boolean;
-  protected mode?: Mode;
+  protected mode: Mode;
 
   protected constructor(protected selectionService: SelectionService,
               modeService: ModeService) {
     modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
+    this.mode = modeService.getLatestMode();
   }
 
   // Label stuff only relevant for structural component

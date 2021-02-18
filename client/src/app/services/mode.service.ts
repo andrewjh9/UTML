@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {EdgeRepositionService} from "./edge-reposition.service";
 import {RepositionService} from "./reposition.service";
 import {Deactivatable} from "./deactivatable";
@@ -16,14 +16,13 @@ import {EdgeCreationService} from "./edge-creation-service.service";
 export class ModeService {
   private deactivatables: Deactivatable[];
   public modeObservable: Observable<Mode> = new Observable<Mode>();
-  private mode: Subject<Mode>;
+  private mode: BehaviorSubject<Mode>;
 
   constructor(edgeRepositionService: EdgeRepositionService, repositionService: RepositionService,
               edgeCreationService: EdgeCreationService) {
     this.deactivatables = [edgeRepositionService, repositionService, edgeCreationService];
-    this.mode = new Subject<Mode>();
+    this.mode = new BehaviorSubject<Mode>(Mode.Select);
     this.modeObservable = this.mode.asObservable();
-    this.mode.next(Mode.Select);
   }
 
   /**
@@ -52,6 +51,15 @@ export class ModeService {
   public setMode(mode: Mode): void {
     this.mode.next(mode);
     this.deactivatables.forEach(d => d.deactivate());
+  }
+
+  /**
+   * Returns what the mode was set to in the last update.
+   * This should be used to initialise objects when they are creation.
+   * After creation they should rely on subscription to the observable for updates.
+   */
+  public getLatestMode(): Mode {
+    return this.mode.getValue();
   }
 }
 

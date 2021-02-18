@@ -21,12 +21,13 @@ import {DeletionService} from "../services/deletion.service";
 export class DiagramComponent implements AfterViewInit {
   public diagram: Diagram;
   public edgeFormatter: EdgeFormatter;
-  private mode?: Mode;
+  private mode: Mode;
 
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService,
               private modeService: ModeService, private edgeCreationService: EdgeCreationService,
               deletionService: DeletionService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
+    this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
     this.diagram = ad;
     this.edgeFormatter = new EdgeFormatter(new Position(10, 150), new Position(100, 150));
