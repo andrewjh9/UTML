@@ -1,9 +1,8 @@
 <svg:line *ngIf="edgeCreationService.isActive()"
-          [attr.x1]="edgeCreationService.startPosition!.x"
-          [attr.y1]="edgeCreationService.startPosition!.y"
+          [attr.x1]="edgeCreationService.startPreview!.x"
+          [attr.y1]="edgeCreationService.startPreview!.y"
           [attr.x2]="edgeCreationService.endPreview!.x"
           [attr.y2]="edgeCreationService.endPreview!.y"
           style="stroke:rgb(255,0,0);stroke-width:2">
-
-
 </svg:line>
+

@@ -12,6 +12,7 @@ export class EdgeCreationService implements Deactivatable {
   private startNode?: Node;
   private startAttachment?: AttachmentDirection;
   public endPreview?: Position;
+  public startPreview?: Position;
   public newEdgeEmitter: EventEmitter<Edge> = new EventEmitter<Edge>();
 
   constructor() { }
@@ -21,6 +22,7 @@ export class EdgeCreationService implements Deactivatable {
     this.startNode = node;
     this.startAttachment = attachment;
     this.endPreview = node.formatter!.getAttachmentPointPosition(attachment);
+    this.startPreview = node.formatter!.getAttachmentPointPosition(attachment);
     console.log(this.startNode);
     console.log(this.startAttachment);
   }
@@ -48,13 +50,5 @@ export class EdgeCreationService implements Deactivatable {
     this.startNode = undefined;
     this.startAttachment = undefined;
     this.endPreview !== undefined;
-  }
-
-  get startPosition(): Position | undefined {
-    if (this.startNode?.formatter && this.startAttachment) {
-      return this.startNode.formatter.getAttachmentPointPosition(this.startAttachment);
-    } else {
-      return undefined;
-    }
   }
 }
