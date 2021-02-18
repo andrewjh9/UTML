@@ -20,7 +20,8 @@ import {DeletionService} from "../services/deletion.service";
 export class DiagramComponent implements AfterViewInit {
   public diagram: Diagram;
   public edgeFormatter: EdgeFormatter;
-  private mode: Mode;
+  mode: Mode;
+  Mode = Mode;
 
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService,
               private modeService: ModeService, private edgeCreationService: EdgeCreationService,

@@ -8,9 +8,7 @@
            (mousemove)="handleMouseMove($event)"
            (dblclick)="handleDoubleClick($event)"
       >
-
         <g new-edge-preview></g>
-
 
         <!--  Define markers-->
         <defs arrow-marker></defs>
@@ -27,7 +25,7 @@
 
     <div style="width: 500px">
       <app-mode-selector></app-mode-selector>
-      <app-selected-editor></app-selected-editor>
+      <app-selected-editor *ngIf="mode === Mode.Select"></app-selected-editor>
     </div>
   </div>
 </div>
