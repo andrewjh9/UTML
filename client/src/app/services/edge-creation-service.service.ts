@@ -8,9 +8,16 @@ import {Edge, EdgeFormatter} from "../../assets/serialisation/edge";
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service for creating edges between nodes.
+ * The start node of the edge is specified in activate and the end node is specified by setEnd.
+ * The service also provides a start and end preview that can be used to provide a preview.
+ * Lastly the newEdgeEmitter emits the newly created Edge upon its creation.
+ */
 export class EdgeCreationService implements Deactivatable {
   private startNode?: Node;
   private startAttachment?: AttachmentDirection;
+
   public endPreview?: Position;
   public startPreview?: Position;
   public newEdgeEmitter: EventEmitter<Edge> = new EventEmitter<Edge>();
@@ -18,13 +25,10 @@ export class EdgeCreationService implements Deactivatable {
   constructor() { }
 
   public activate(node: Node, attachment: AttachmentDirection) {
-    console.log("Activating");
     this.startNode = node;
     this.startAttachment = attachment;
     this.endPreview = node.formatter!.getAttachmentPointPosition(attachment);
     this.startPreview = node.formatter!.getAttachmentPointPosition(attachment);
-    console.log(this.startNode);
-    console.log(this.startAttachment);
   }
 
   public isActive() {
@@ -32,10 +36,6 @@ export class EdgeCreationService implements Deactivatable {
   }
 
   public setEnd(endNode: Node, endAttachment: AttachmentDirection) {
-    console.log("setting end")
-    console.log(this.startNode);
-    console.log(this.startAttachment);
-
     if ((this.startNode === undefined)|| (this.startAttachment === undefined)) {
       throw new Error("Trying to set end of to be created edge while start is unset!");
     }

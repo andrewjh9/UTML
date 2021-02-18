@@ -103,6 +103,6 @@ export class NodeComponent extends Movable implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log("Node component is being destroyed.")
+    console.log("Node component is being destroyed.");
   }
 }

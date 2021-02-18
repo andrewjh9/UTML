@@ -6,11 +6,20 @@ import {Edge, EdgeFormatter} from "../../assets/serialisation/edge";
 @Injectable({
   providedIn: "root"
 })
-// Todo: Check if this also removes the compontents fully.
+/**
+ * Service for deleting edges, nodes and unstructured edges.
+ * This deletion happens both in the underlying data structure and in the corresponding components.
+ * Before this service can be used the Diagram object is acts upon should be set using setDiagram.
+ */
 export class DeletionService {
-  // public deleteNodeEvent: EventEmitter<Node> = new EventEmitter<Node>();
   private diagram?: Diagram;
 
+  /**
+   * Delete a node and any connected edges from the diagram data structure and its component from the DOM.
+   * @throws Throws an error if the diagram is not set, the node can not be found in the diagram.nodes list
+   *         or if any of the edges connecting to this node can not be found.
+   * @param node Node to be deleted.
+   */
   public deleteNode(node: Node) {
     if (this.diagram === undefined) {
       throw new Error("Trying to use deletion service whilst the diagram is undefined");
@@ -33,6 +42,11 @@ export class DeletionService {
     }
   }
 
+  /**
+   * Delete an edge from the diagram data structure and its component from the DOM.
+   * @throws Throws an error if the diagram is not set or if the edge can not be found in diagram.edges.
+   * @param edge Edge to be deleted.
+   */
   public deleteEdge(edge: Edge) {
     if (this.diagram === undefined) {
       throw new Error("Trying to use deletion service whilst the diagram is undefined");
@@ -47,11 +61,22 @@ export class DeletionService {
     }
   }
 
+  /**
+   * Delete an edge formatter from the diagram data structure and its component from the DOM.
+   * @throws Throws an error if the diagram is not set or if the edge formatter can not be found in the diagram..
+   * @param edgeFormatter EdgeFormatter to be deleted.
+   */
   public deleteEdgeFormatter(edgeFormatter: EdgeFormatter) {
     // todo: Implement this
     // this can not currently be implemented as edge formatter are not explicitly stored in the diagram right now.
   }
 
+  /**
+   * Set the diagram on which deletion will happen.
+   * This function needs to be called at least once with a valid diagram before the deletionService can be used.
+   * This setting needs to happen each time the reference to the diagram is changed.
+   * @param diagram Diagram on which deletion needs to happen.
+   */
   public setDiagram(diagram: Diagram): void {
     this.diagram = diagram;
   }

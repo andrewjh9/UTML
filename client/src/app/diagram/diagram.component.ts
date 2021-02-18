@@ -37,24 +37,6 @@ export class DiagramComponent implements AfterViewInit {
     edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => this.diagram.edges.push(newEdge));
 
     deletionService.setDiagram(this.diagram);
-    // deletionService.deleteNodeEvent.subscribe((node: Node) => {
-    //   let edgesToBeDeleted: Edge[] = this.diagram.edges.filter((edge: Edge) => {
-    //     return edge.startNode === node || edge.endNode == node;
-    //   });
-    //
-    //   edgesToBeDeleted.forEach((edge: Edge) => {
-    //     const index = this.diagram.edges.indexOf(edge);
-    //     this.diagram.edges.splice(index, 1);
-    //   })
-    //
-    //   const index = this.diagram.nodes.indexOf(node);
-    //   console.log(`Deleting node with index ${index}.`);
-    //   if (index === -1) {
-    //     throw new Error("Trying to delete a node that can not be found in the list of nodes!");
-    //   } else {
-    //     this.diagram.nodes.splice(index, 1);
-    //   }
-    // });
   }
 
   ngAfterViewInit() {

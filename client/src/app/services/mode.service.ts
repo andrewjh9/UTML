@@ -12,35 +12,23 @@ import {EdgeCreationService} from "./edge-creation-service.service";
  * Service responsible for determining in which mode the drawing tool resides.
  * If using the service, the mode should be read by subscribing to the modeObservable.
  * When a mode is switch any Deactivatable service is deactivated.
+ * Note that you have to manually add your Deactivatable to the constructor.
  */
 export class ModeService {
   private deactivatables: Deactivatable[];
-  public modeObservable: Observable<Mode> = new Observable<Mode>();
   private mode: BehaviorSubject<Mode>;
+
+  /**
+   * Observable wrapper around the mode. You can use this to subscribe to mode updates.
+   */
+  public readonly modeObservable: Observable<Mode> = new Observable<Mode>();
+
 
   constructor(edgeRepositionService: EdgeRepositionService, repositionService: RepositionService,
               edgeCreationService: EdgeCreationService) {
     this.deactivatables = [edgeRepositionService, repositionService, edgeCreationService];
     this.mode = new BehaviorSubject<Mode>(Mode.Select);
     this.modeObservable = this.mode.asObservable();
-  }
-
-  /**
-   * Set the mode based upon
-   * @param keyCode
-   */
-  public toggleMode(keyCode: string){
-    switch (keyCode) {
-      case "Digit1" :
-        this.setMode(Mode.Select);
-        break;
-      case "Digit2":
-        this.setMode(Mode.Create);
-        break;
-      case "Digit3":
-        this.setMode(Mode.Move);
-        break;
-    }
   }
 
   /**
