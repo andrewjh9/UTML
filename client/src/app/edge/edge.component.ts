@@ -18,13 +18,10 @@ export class EdgeComponent extends AbstractEdgeComponent {
   @Input() edge?: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
   public readonly hasLabels = true;
-  private mode: Mode = Mode.Select
 
   constructor(private edgeRepositionService: EdgeRepositionService,
-              modeService: ModeService,
-              private selectionService: SelectionService) {
-    super();
-    modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
+              modeService: ModeService, selectionService: SelectionService) {
+    super(selectionService, modeService);
   }
 
   public formatterIsDefined(): boolean {

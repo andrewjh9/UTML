@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Edge, LineStyle} from "../../assets/serialisation/edge";
+import {Edge, EdgeFormatter, LineStyle} from "../../assets/serialisation/edge";
 import {Node} from "../../assets/serialisation/node";
 import {SelectionService} from "../services/selection.service";
 
@@ -11,6 +11,7 @@ import {SelectionService} from "../services/selection.service";
 export class SelectedEditorComponent {
   currentNode?: Node;
   currentEdge?: Edge;
+  currentEdgeFormatter?: EdgeFormatter;
 
   constructor(private selectionService: SelectionService) {
     selectionService.edgeEmitter.subscribe((edge: Edge) => {
@@ -21,6 +22,10 @@ export class SelectedEditorComponent {
       this.setAllUndefined();
       this.currentNode = node;
     });
+    this.selectionService.edgeFormatterEmitter.subscribe((formatter: EdgeFormatter) => {
+      this.setAllUndefined();
+      this.currentEdgeFormatter = formatter;
+    })
   }
 
   private setAllUndefined(): void {
