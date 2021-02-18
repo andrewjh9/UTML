@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {Position} from "../../assets/serialisation/position";
 import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {LabelFormatter} from "../../assets/serialisation/label";
@@ -14,17 +14,14 @@ import {SelectionService} from "../services/selection.service";
   templateUrl: './edge.component.html',
   styleUrls: ['./edge.component.scss'],
 })
-export class EdgeComponent extends AbstractEdgeComponent {
+export class EdgeComponent extends AbstractEdgeComponent implements OnDestroy {
   @Input() edge?: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
   public readonly hasLabels = true;
-  private mode: Mode = Mode.Select
 
   constructor(private edgeRepositionService: EdgeRepositionService,
-              modeService: ModeService,
-              private selectionService: SelectionService) {
-    super();
-    modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
+              modeService: ModeService, selectionService: SelectionService) {
+    super(selectionService, modeService);
   }
 
   public formatterIsDefined(): boolean {
@@ -117,5 +114,9 @@ export class EdgeComponent extends AbstractEdgeComponent {
     } else if (this.mode === Mode.Select && this.edge) {
       this.selectionService.setEdge(this.edge);
     }
+  }
+
+  ngOnDestroy(): void {
+    console.log("Edge component is being destroyed.")
   }
 }

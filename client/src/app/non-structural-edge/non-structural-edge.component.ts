@@ -1,20 +1,24 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {Position} from "../../assets/serialisation/position";
 import {LabelFormatter} from "../../assets/serialisation/label";
 import {AbstractEdgeComponent} from "../abstract-edge-component";
 import {EdgeRepositionService} from "../services/edge-reposition.service";
+import {SelectionService} from "../services/selection.service";
+import {Mode, ModeService} from "../services/mode.service";
 
 @Component({
   selector: '[non-structural-edge]',
   templateUrl: '../edge/edge.component.html',
   styleUrls: ['../edge/edge.component.scss']
 })
-export class NonStructuralEdgeComponent extends AbstractEdgeComponent {
+export class NonStructuralEdgeComponent extends AbstractEdgeComponent implements OnDestroy {
   @Input() formatter?: EdgeFormatter;
 
-  constructor(private repositionService: EdgeRepositionService) {
-    super();
+  constructor(private repositionService: EdgeRepositionService,
+              selectionService: SelectionService,
+              modeService: ModeService) {
+    super(selectionService, modeService);
   }
 
   public readonly hasLabels = false;
@@ -38,9 +42,20 @@ export class NonStructuralEdgeComponent extends AbstractEdgeComponent {
   }
 
   public handleMouseDown(event: MouseEvent) {
-    if (this.formatter) {
-      // todo: fix mouse positioning.
-      this.repositionService.activate(new Position(event.pageX, event.pageY), undefined, this.formatter);
+    if (this.mode === Mode.Move) {
+      if (this.formatter) {
+        // todo: fix mouse positioning.
+        this.repositionService.activate(new Position(event.pageX, event.pageY), undefined, this.formatter);
+      }
+    } else if (this.mode === Mode.Select) {
+      if (this.formatter === undefined) {
+        throw new Error("Somehow you are clicking a non-structural edge which does not have a formatter");
+      }
+      this.selectionService.setEdgeFormatter(this.formatter);
     }
+  }
+
+  ngOnDestroy(): void {
+    console.log("Nonstructured edge component is being destroyed.")
   }
 }

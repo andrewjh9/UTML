@@ -16,6 +16,7 @@ import {ModeSelectorComponent} from "./mode-selector/mode-selector.component";
 import {ModeService} from "./services/mode.service";
 import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.component';
 import { SelectedEditorComponent } from './selected-editor/selected-editor.component';
+import {DeletionService} from "./services/deletion.service";
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { SelectedEditorComponent } from './selected-editor/selected-editor.compo
         HttpClientModule,
         FormsModule
     ],
-  providers: [RepositionService, ModeService],
+  providers: [RepositionService, ModeService, DeletionService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

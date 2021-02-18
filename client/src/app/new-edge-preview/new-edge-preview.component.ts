@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {EdgeCreationService} from "../services/edge-creation-service.service";
 import {ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
+import {Position} from "../../assets/serialisation/position";
 
 @Component({
   selector: '[new-edge-preview]',
@@ -9,15 +10,16 @@ import {SelectionService} from "../services/selection.service";
   styleUrls: ['./new-edge-preview.component.scss']
 })
 export class NewEdgePreviewComponent {
-  // Todo fix this implementation.
-  constructor(public edgeCreationService: EdgeCreationService) { }
+  constructor(public edgeCreationService: EdgeCreationService) {
+
+  }
 
   edgeCreationIsActive(): boolean {
     return this.edgeCreationService.isActive();
   }
 
   getPoints(): string | undefined {
-    let start: undefined | string  = this.edgeCreationService.startPosition?.toString(',', ' ');
+    let start: undefined | string  = this.edgeCreationService.startPreview?.toString(',', ' ');
     let end: undefined | string  = this.edgeCreationService.endPreview?.toString(',', ' ');
     console.log(start)
     console.log(end)
