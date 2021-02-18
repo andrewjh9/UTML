@@ -11,6 +11,7 @@ import {EdgeRepositionService} from "../services/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation-service.service";
 import {DeletionService} from "../services/deletion.service";
+import {ResizeService} from "../services/resize.service";
 
 
 @Component({
@@ -25,7 +26,7 @@ export class DiagramComponent implements AfterViewInit {
 
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService,
               private modeService: ModeService, private edgeCreationService: EdgeCreationService,
-              deletionService: DeletionService) {
+              deletionService: DeletionService, private resizeService: ResizeService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
@@ -50,6 +51,8 @@ export class DiagramComponent implements AfterViewInit {
       this.repositionService.deactivate();
     } else if (this.edgeRepositionService.isActive()) {
       this.edgeRepositionService.deactivate()
+    } else if (this.resizeService.isActive()) {
+      this.resizeService.deactivate()
     }
   }
 
@@ -63,6 +66,8 @@ export class DiagramComponent implements AfterViewInit {
       this.edgeRepositionService.update(position);
     } else if (this.edgeCreationService.isActive()) {
       this.edgeCreationService.endPreview = position;
+    } else if (this.resizeService.isActive()) {
+      this.resizeService.update(position);
     }
   }
 

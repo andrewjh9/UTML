@@ -86,7 +86,7 @@ export class EdgeRepositionService implements Deactivatable {
     let rotationMatrix: number[][] = [[Math.cos(angle), Math.sin(angle)],[-Math.sin(angle), Math.cos(angle)]];
     let baseVector: number[] = this.matrixVectorMult(rotationMatrix, [actualSegment.x, actualSegment.y]);
     let transformedPoint: number[] = this.matrixVectorMult(rotationMatrix, [ourSegment.x, ourSegment.y]);
-    return (Math.abs(transformedPoint[1]) < 10 && (transformedPoint[0] >= 0) && (transformedPoint[0] <= baseVector[0]));
+    return (Math.abs(transformedPoint[1]) < 30 && (transformedPoint[0] >= 0) && (transformedPoint[0] <= baseVector[0]));
 
   }
 

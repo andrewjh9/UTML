@@ -68,4 +68,19 @@
 <!--    (click)="handleEdgeCreationClick($event)"-->
 
   </svg:g>
+  <svg:g *ngIf="isInSelectMode()" >
+    <svg:ellipse *ngFor="let direction of getAllAttachmentPoints()"
+                 [attr.cx]="getPosition(direction).x"
+                 [attr.cy]="getPosition(direction).y"
+                 (mousedown)="handleNodeResizeMouseDown($event, getPosition(direction), direction)"
+                 cx="10"
+                 cy="10"
+                 rx="5"
+                 ry="5"
+                 style="fill:pink;stroke:black;stroke-width:2;fill-opacity:1;stroke-opacity:0.9"
+    >
+    </svg:ellipse>
+    <!--    (click)="handleEdgeCreationClick($event)"-->
+
+  </svg:g>
 </svg:g>

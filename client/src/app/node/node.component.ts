@@ -6,6 +6,7 @@ import {Movable} from "../moveable";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation-service.service";
 import {SelectionService} from "../services/selection.service";
+import {FormattedResizeElement, ResizeService} from "../services/resize.service";
 
 @Component({
   selector: '[node-component]',
@@ -19,7 +20,8 @@ export class NodeComponent extends Movable implements OnDestroy {
   constructor(repositionService: RepositionService,
               modeService: ModeService,
               private edgeCreationService: EdgeCreationService,
-              private selectionService: SelectionService) {
+              private selectionService: SelectionService,
+              private resizeService: ResizeService) {
     super(repositionService, modeService);
   }
 
@@ -92,6 +94,10 @@ export class NodeComponent extends Movable implements OnDestroy {
     return this.mode === Mode.Create;
   }
 
+  isInSelectMode(): boolean {
+    return this.mode === Mode.Select;
+  }
+
   public handleMouseDown(event: MouseEvent): void {
     if (this.isInMoveMode()) {
       if (this.getFormatter() !== undefined) {
@@ -99,6 +105,14 @@ export class NodeComponent extends Movable implements OnDestroy {
       }
     } else if (this.mode === Mode.Select && this.node) {
       this.selectionService.setNode(this.node);
+    }
+  }
+
+  handleNodeResizeMouseDown(event: MouseEvent, pos: Position, direction: number): void {
+    if (this.isInSelectMode()) {
+      if (this.getFormatter() !== undefined) {
+        this.resizeService.activate(this.getFormatter() as FormattedResizeElement, pos, direction)
+      }
     }
   }
 
