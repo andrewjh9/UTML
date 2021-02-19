@@ -1,8 +1,9 @@
-import {Edge} from "./edge";
+import {Edge, EdgeFormatter} from "./edge";
 import {Node} from "./node";
 
 
 export interface Diagram {
   edges: Edge[],
-  nodes: Node[]
+  nodes: Node[],
+  unstructuredEdges: EdgeFormatter[]
 }

@@ -67,8 +67,17 @@ export class DeletionService {
    * @param edgeFormatter EdgeFormatter to be deleted.
    */
   public deleteEdgeFormatter(edgeFormatter: EdgeFormatter) {
-    // todo: Implement this
-    // this can not currently be implemented as edge formatter are not explicitly stored in the diagram right now.
+    if (this.diagram === undefined) {
+      throw new Error("Trying to use deletion service whilst the diagram is undefined");
+    }
+
+    const index = this.diagram!.unstructuredEdges.indexOf(edgeFormatter);
+
+    if (index === -1) {
+      throw new Error("Trying to delete an edge that can not be found in the list of edges!");
+    } else {
+      this.diagram.unstructuredEdges.splice(index, 1);
+    }
   }
 
   /**

@@ -1,32 +1,8 @@
 <app-edge-editor *ngIf="currentEdge" [edge]="currentEdge"></app-edge-editor>
 
+<app-unstructured-edge-editor *ngIf="currentEdgeFormatter" [formatter]="currentEdgeFormatter">
 
-<div *ngIf="currentEdgeFormatter">
-  <p>An unstructured edge is selected!</p>
-  Line Style:
-  <select [(ngModel)]="currentEdgeFormatter.lineStyle">
-    <option [ngValue]="0">Filled</option>
-    <option [ngValue]="1">Dotted</option>
-    <option [ngValue]="2">Dashed</option>
-  </select>
-  Start Style:
-  <select [(ngModel)]="currentEdgeFormatter.startStyle">
-    <option [ngValue]="0">None</option>
-    <option [ngValue]="1">Big Unfilled Arrow</option>
-    <option [ngValue]="2">Filled Diamond</option>
-    <option [ngValue]="3">Unfilled Diamond</option>
-    <option [ngValue]="4">Small Filled Arrow</option>
-  </select>
-  End Style:
-  <select [(ngModel)]="currentEdgeFormatter.endStyle">
-    <option [ngValue]="0">None</option>
-    <option [ngValue]="1">Big Unfilled Arrow</option>
-    <option [ngValue]="2">Filled Diamond</option>
-    <option [ngValue]="3">Unfilled Diamond</option>
-    <option [ngValue]="4">Small Filled Arrow</option>
-  </select>
-  <button type="button" class="btn btn-danger" (click)="deleteEdgeFormatter()">Delete</button>
-</div>
+</app-unstructured-edge-editor>
 
 <app-node-editor *ngIf="currentNode" [node]="currentNode"></app-node-editor>
 <!--<div *ngIf="currentNode && currentNode.formatter">-->

@@ -16,6 +16,7 @@ export class NodeEditorComponent {
   delete(): void {
     if (this.node) {
       this.deletionService.deleteNode(this.node);
+      this.node = undefined;
     } else {
       throw new Error("Trying to delete an node from the node edit menu whilst no node is selected.");
     }

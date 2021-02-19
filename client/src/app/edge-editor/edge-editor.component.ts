@@ -16,6 +16,7 @@ export class EdgeEditorComponent {
   delete(): void {
     if (this.edge) {
       this.deletionService.deleteEdge(this.edge);
+      this.edge = undefined;
     } else {
       throw new Error("Trying to delete an edge from the edge edit menu whilst no edge is selected.");
     }

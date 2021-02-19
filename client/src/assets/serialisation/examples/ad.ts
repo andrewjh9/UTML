@@ -40,7 +40,11 @@ edge2.formatter = new EdgeFormatter(AttachmentDirection.South, AttachmentDirecti
 edge2.formatter.lineStyle = LineStyle.Dotted
 edge2.formatter.endStyle = EndStyle.SmallFilledArrow;
 
-ad = {nodes: [node, node2, node3], edges: [edge, edge2]};
+let edgeFormatter = new EdgeFormatter(new Position(10, 150), new Position(100, 150));
+edgeFormatter.endStyle = EndStyle.SmallFilledArrow;
+edgeFormatter.lineStyle = LineStyle.Dashed;
+
+ad = {nodes: [node, node2, node3], edges: [edge, edge2], unstructuredEdges: [edgeFormatter]};
 // ad = {nodes: [node, node2, node3], edges: []};
 
 // this.diagramString = JSON.stringify(this.diagram);

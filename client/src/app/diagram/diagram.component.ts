@@ -20,7 +20,6 @@ import {CreationFormatterSelectionService} from "../services/creation-formatter-
 })
 export class DiagramComponent implements AfterViewInit {
   public diagram: Diagram;
-  public edgeFormatter: EdgeFormatter;
   mode: Mode;
   Mode = Mode;
 
@@ -32,10 +31,6 @@ export class DiagramComponent implements AfterViewInit {
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
     this.diagram = ad;
-    this.edgeFormatter = new EdgeFormatter(new Position(10, 150), new Position(100, 150));
-    this.edgeFormatter.endStyle = EndStyle.SmallFilledArrow;
-    this.edgeFormatter.lineStyle = LineStyle.Dashed;
-
     edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => this.diagram.edges.push(newEdge));
 
     deletionService.setDiagram(this.diagram);
@@ -70,13 +65,23 @@ export class DiagramComponent implements AfterViewInit {
 
   handleDoubleClick(event: MouseEvent){
     if (this.mode === Mode.Create) {
-      let nf: NodeFormatter = this.creationFormatterSelectionService.getSelectedNodeFormatter();
-      nf.position = new Position(event.clientX - nf.width / 2, event.clientY - nf.height / 2);
-      this.diagram.nodes.push({texts: [], formatter: nf});
+      if (event.ctrlKey) {
+        let formatter = new EdgeFormatter(new Position(event.clientX, event.clientY),
+          new Position(event.clientX + 20, event.clientY + 20), undefined, undefined);
+        for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
+          // @ts-ignore
+          formatter[key] = value;
+        }
+        this.diagram.unstructuredEdges.push(formatter);
+      } else {
+        let nf: NodeFormatter = this.creationFormatterSelectionService.getSelectedNodeFormatter();
+        nf.position = new Position(event.clientX - nf.width / 2, event.clientY - nf.height / 2);
+        this.diagram.nodes.push({texts: [], formatter: nf});
+      }
     }
   }
 
-  handleKeyPressed(event: KeyboardEvent): void{
+  handleKeyPressed(event: KeyboardEvent): void {
     // const SELECT_KEY = "1";
     // const CREATE_KEY = "2";
     // const MOVE_KEY = "3";

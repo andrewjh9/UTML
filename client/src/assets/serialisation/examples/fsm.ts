@@ -41,7 +41,12 @@ e2.formatter.middlePositions = [new Position(450, 250)];
 e2.formatter.endStyle = EndStyle.SmallFilledArrow;
 e2.middleLabel = "transition 2"
 
+let edgeFormatter = new EdgeFormatter(new Position(10, 150), new Position(100, 150));
+edgeFormatter.endStyle = EndStyle.SmallFilledArrow;
+edgeFormatter.lineStyle = LineStyle.Dashed;
+
 fsm = {
   nodes: [n1, n2, n3],
-  edges: [e1, e2]
+  edges: [e1, e2],
+  unstructuredEdges: [edgeFormatter]
 }

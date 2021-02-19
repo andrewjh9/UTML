@@ -21,6 +21,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
 import { CreationMenuComponent } from './creation-menu/creation-menu.component';
 import { NodeEditorComponent } from './node-editor/node-editor.component';
+import { UnstructuredEdgeEditorComponent } from './unstructured-edge-editor/unstructured-edge-editor.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { NodeEditorComponent } from './node-editor/node-editor.component';
     SelectedEditorComponent,
     EdgeEditorComponent,
     CreationMenuComponent,
-    NodeEditorComponent
+    NodeEditorComponent,
+    UnstructuredEdgeEditorComponent
   ],
     imports: [
         BrowserModule,
