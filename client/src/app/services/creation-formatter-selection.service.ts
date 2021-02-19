@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import {NodeFormatter, Shape} from "../../assets/serialisation/node";
 import {BehaviorSubject} from "rxjs";
 import {Position} from "../../assets/serialisation/position";
-import {EdgeFormatter, EndStyle} from "../../assets/serialisation/edge";
+import {EdgeFormatter, EndStyle, LineType} from "../../assets/serialisation/edge";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +25,7 @@ export class CreationFormatterSelectionService {
     this.edgeFormatterProperties = [
       {},
       {"endStyle": EndStyle.SmallFilledArrow},
+      {"lineType": LineType.Arc}
     ];
     this.currentEdgeFormatterIndex = 1;
   }

@@ -1,0 +1,40 @@
+<div class="w-100" *ngIf="formatter">
+  <div class="form-group row px-3">
+    <label class="w-25 col-form-label">Line Style</label>
+    <div class="w-75">
+      <select class="custom-select" [(ngModel)]="formatter.lineStyle">
+        <option [ngValue]="0">Filled</option>
+        <option [ngValue]="1">Dotted</option>
+        <option [ngValue]="2">Dashed</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row px-3">
+    <label class="w-25 col-form-label">Start Style</label>
+    <div class="w-75">
+      <select class="custom-select" [(ngModel)]="formatter.startStyle">
+        <option [ngValue]="0">None</option>
+        <option [ngValue]="1">Big Unfilled Arrow</option>
+        <option [ngValue]="2">Filled Diamond</option>
+        <option [ngValue]="3">Unfilled Diamond</option>
+        <option [ngValue]="4">Small Filled Arrow</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-group row px-3">
+    <label class="w-25 col-form-label">End Style</label>
+    <div class="w-75">
+      <select class="custom-select" [(ngModel)]="formatter.endStyle">
+        <option [ngValue]="0">None</option>
+        <option [ngValue]="1">Small Filled Arrow</option>
+        <option [ngValue]="2">Filled Diamond</option>
+        <option [ngValue]="3">Unfilled Diamond</option>
+        <option [ngValue]="4">Big Unfilled Arrow</option>
+      </select>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+</div>

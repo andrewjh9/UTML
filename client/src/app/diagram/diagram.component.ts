@@ -29,8 +29,8 @@ export class DiagramComponent implements AfterViewInit {
               private creationFormatterSelectionService: CreationFormatterSelectionService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
-    // this.diagram = fsm;
-    this.diagram = ad;
+    this.diagram = fsm;
+    // this.diagram = ad;
     edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => this.diagram.edges.push(newEdge));
 
     deletionService.setDiagram(this.diagram);
