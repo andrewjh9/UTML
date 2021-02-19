@@ -3,6 +3,7 @@ import {Deactivatable} from "./deactivatable";
 import {AttachmentDirection, Node} from "../../assets/serialisation/node";
 import {Position} from "../../assets/serialisation/position";
 import {Edge, EdgeFormatter} from "../../assets/serialisation/edge";
+import {CreationFormatterSelectionService} from "./creation-formatter-selection.service";
 
 
 @Injectable({
@@ -22,7 +23,7 @@ export class EdgeCreationService implements Deactivatable {
   public startPreview?: Position;
   public newEdgeEmitter: EventEmitter<Edge> = new EventEmitter<Edge>();
 
-  constructor() { }
+  constructor(private creationFormatterSelectionService: CreationFormatterSelectionService) { }
 
   public activate(node: Node, attachment: AttachmentDirection) {
     this.startNode = node;
@@ -41,6 +42,10 @@ export class EdgeCreationService implements Deactivatable {
     }
     let edge: Edge = {startNode: this.startNode, endNode: endNode}
     edge.formatter = new EdgeFormatter(this.startAttachment, endAttachment, this.startNode, endNode);
+    for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
+      // @ts-ignore
+      edge.formatter[key] = value;
+    }
     this.newEdgeEmitter.emit(edge);
 
     this.deactivate();

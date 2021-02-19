@@ -3,6 +3,7 @@ import {Edge, EdgeFormatter, LineStyle} from "../../assets/serialisation/edge";
 import {Node} from "../../assets/serialisation/node";
 import {SelectionService} from "../services/selection.service";
 import {DeletionService} from "../services/deletion.service";
+import {ModeService} from "../services/mode.service";
 
 @Component({
   selector: 'app-selected-editor',

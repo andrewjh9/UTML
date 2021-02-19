@@ -18,6 +18,8 @@ import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.com
 import { SelectedEditorComponent } from './selected-editor/selected-editor.component';
 import {DeletionService} from "./services/deletion.service";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
+import { CreationMenuComponent } from './creation-menu/creation-menu.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     NonStructuralEdgeComponent,
     ModeSelectorComponent,
     NewEdgePreviewComponent,
-    SelectedEditorComponent
+    SelectedEditorComponent,
+    EdgeEditorComponent,
+    CreationMenuComponent
   ],
     imports: [
         BrowserModule,

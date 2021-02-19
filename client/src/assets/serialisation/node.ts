@@ -19,6 +19,9 @@ export class NodeFormatter {
     this.shape = shape;
   }
 
+  public getDeepCopy(): NodeFormatter {
+    return new NodeFormatter(this.width, this.height, new Position(this.position.x, this.position.y), this.shape);
+  }
   public getAttachmentPointPosition(direction: AttachmentDirection): Position {
     if (this.shape == Shape.Rectangle) {
       let x: number;

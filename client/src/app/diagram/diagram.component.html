@@ -1,16 +1,14 @@
 <div class="container-fluid">
   <div class="row d-flex">
     <div class="flex-grow-1">
-      <svg width="1000"
+      <svg width="1200"
            height="600"
            (window:keydown)="handleKeyPressed($event)"
            (mouseup)="handleMouseUp($event)"
            (mousemove)="handleMouseMove($event)"
            (dblclick)="handleDoubleClick($event)"
       >
-
         <g new-edge-preview></g>
-
 
         <!--  Define markers-->
         <defs arrow-marker></defs>
@@ -27,7 +25,9 @@
 
     <div style="width: 500px">
       <app-mode-selector></app-mode-selector>
-      <app-selected-editor></app-selected-editor>
+      <app-selected-editor *ngIf="mode === Mode.Select"></app-selected-editor>
+      <app-creation-menu *ngIf="mode === Mode.Create"></app-creation-menu>
+
     </div>
   </div>
 </div>
