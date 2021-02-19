@@ -237,6 +237,23 @@ export class EdgeFormatter {
 
     return "none";
   }
+
+  public setDefaultMiddlePointOnArc(): void {
+    // Arcs require a middle point for their rendering.
+    // By default we place this in the middle between start and end and then plus 0.25 of the vector perpendicular to
+    // end - start.
+    if (this.lineType !== LineType.Arc) {
+      throw new Error("This method should only be called on arcs.");
+    }
+
+    let start = this.getStartPosition();
+    let end = this.getEndPosition();
+    let between = Position.subtract(end, start)
+    let betweenPerpendicular = new Position(-between.y, between.x)
+    let middle = Position.multiply(0.5, Position.add(start, end));
+    let position = Position.add(middle, Position.multiply(0.25, betweenPerpendicular))
+    this.middlePositions.push(position);
+  }
 }
 
 export enum LineType {

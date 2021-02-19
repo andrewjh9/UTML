@@ -50,13 +50,7 @@ export class EdgeCreationService implements Deactivatable {
 
     // Arcs must have 1 middle point, so we add it if needed.
     if (edge.formatter.lineType === LineType.Arc) {
-      let start = edge.formatter.getStartPosition();
-      let end = edge.formatter.getEndPosition();
-      let between = Position.subtract(end, start)
-      let betweenPerpendicular = new Position(-between.y, between.x)
-      let middle = Position.multiply(0.5, Position.add(start, end));
-      let position = Position.add(middle, Position.multiply(0.25, betweenPerpendicular))
-      edge.formatter.middlePositions.push(position);
+      edge.formatter.setDefaultMiddlePointOnArc();
     }
 
     this.newEdgeEmitter.emit(edge);

@@ -1,11 +1,10 @@
 import {Position} from '../../assets/serialisation/position';
-import {AfterViewInit, Component, EventEmitter, Input, Output} from '@angular/core';
-import {Edge, EdgeFormatter, EndStyle, LineStyle} from "../../assets/serialisation/edge";
+import {AfterViewInit, Component} from '@angular/core';
+import {Edge, EdgeFormatter, LineType} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
 import {RepositionService} from "../services/reposition.service";
 import {fsm} from "../../assets/serialisation/examples/fsm";
-import {ad} from "../../assets/serialisation/examples/ad";
-import {Node, NodeFormatter, Shape} from "../../assets/serialisation/node";
+import {NodeFormatter} from "../../assets/serialisation/node";
 import {EdgeRepositionService} from "../services/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation-service.service";
@@ -67,11 +66,15 @@ export class DiagramComponent implements AfterViewInit {
     if (this.mode === Mode.Create) {
       if (event.ctrlKey) {
         let formatter = new EdgeFormatter(new Position(event.clientX, event.clientY),
-          new Position(event.clientX + 20, event.clientY + 20), undefined, undefined);
+          new Position(event.clientX + 100, event.clientY + 100), undefined, undefined);
         for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
           // @ts-ignore
           formatter[key] = value;
         }
+        if (formatter.lineType === LineType.Arc) {
+          formatter.setDefaultMiddlePointOnArc();
+        }
+
         this.diagram.unstructuredEdges.push(formatter);
       } else {
         let nf: NodeFormatter = this.creationFormatterSelectionService.getSelectedNodeFormatter();
