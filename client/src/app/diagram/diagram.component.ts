@@ -77,20 +77,20 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleKeyPressed(event: KeyboardEvent): void{
-    const SELECT_KEY = "1";
-    const CREATE_KEY = "2";
-    const MOVE_KEY = "3";
-
-    switch (event.key) {
-      case SELECT_KEY :
-        this.modeService.setMode(Mode.Select);
-        break;
-      case CREATE_KEY:
-        this.modeService.setMode(Mode.Create);
-        break;
-      case MOVE_KEY:
-        this.modeService.setMode(Mode.Move);
-        break;
-    }
+    // const SELECT_KEY = "1";
+    // const CREATE_KEY = "2";
+    // const MOVE_KEY = "3";
+    //
+    // switch (event.key) {
+    //   case SELECT_KEY :
+    //     this.modeService.setMode(Mode.Select);
+    //     break;
+    //   case CREATE_KEY:
+    //     this.modeService.setMode(Mode.Create);
+    //     break;
+    //   case MOVE_KEY:
+    //     this.modeService.setMode(Mode.Move);
+    //     break;
+    // }
   }
 }

@@ -7,7 +7,6 @@ import {EdgeFormatter, EndStyle} from "../../assets/serialisation/edge";
 @Injectable({
   providedIn: 'root'
 })
-// Todo : remove duplication between edge and node (something with a generic maybe)
 export class CreationFormatterSelectionService {
   private readonly nodeFormatters: NodeFormatter[];
   private currentNodeIndex: number;
@@ -66,7 +65,7 @@ export class CreationFormatterSelectionService {
     if (index < 0 || index >= this.nodeFormatters.length) {
       throw new Error("The provided index is not validf");
     }
-
+1
     this.currentNodeIndex = index;
   }
 }
