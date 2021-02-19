@@ -22,6 +22,7 @@ import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
 import { CreationMenuComponent } from './creation-menu/creation-menu.component';
 import { NodeEditorComponent } from './node-editor/node-editor.component';
 import { UnstructuredEdgeEditorComponent } from './unstructured-edge-editor/unstructured-edge-editor.component';
+import { MoveMenuComponent } from './move-menu/move-menu.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { UnstructuredEdgeEditorComponent } from './unstructured-edge-editor/unst
     EdgeEditorComponent,
     CreationMenuComponent,
     NodeEditorComponent,
-    UnstructuredEdgeEditorComponent
+    UnstructuredEdgeEditorComponent,
+    MoveMenuComponent
   ],
     imports: [
         BrowserModule,
