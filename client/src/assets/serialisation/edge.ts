@@ -10,60 +10,22 @@ export class Edge {
   public middleLabel?: string;
   public startPosition: Position | number;
   public endPosition: Position | number;
-  private _middlePositions: Position[] = [];
-  private _lineType: LineType = LineType.Line;
-  private _lineStyle: LineStyle = LineStyle.Filled;
-  private _startStyle: EndStyle = EndStyle.None;
-  private _endStyle: EndStyle = EndStyle.None;
-  private _startLabelFormatter?: LabelFormatter;
-  private _middleLabelFormatter?: LabelFormatter;
-  private _endLabelFormatter?: LabelFormatter;
+  public middlePositions: Position[] = [];
+  public lineType: LineType = LineType.Line;
+  public lineStyle: LineStyle = LineStyle.Filled;
+  public startStyle: EndStyle = EndStyle.None;
+  public endStyle: EndStyle = EndStyle.None;
+  public startLabelFormatter?: LabelFormatter;
+  public middleLabelFormatter?: LabelFormatter;
+  public endLabelFormatter?: LabelFormatter;
 
 
   constructor(startPosition: Position | number, endPosition: Position | number,
               startNode: Node | undefined = undefined, endNode: Node | undefined = undefined) {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
-  }
-
-  get lineType(): LineType {
-    return this._lineType;
-  }
-
-  set lineType(value: LineType) {
-    this._lineType = value;
-  }
-
-  get lineStyle(): LineStyle {
-    return this._lineStyle;
-  }
-
-  set lineStyle(value: LineStyle) {
-    this._lineStyle = value;
-  }
-
-  get startStyle(): EndStyle {
-    return this._startStyle;
-  }
-
-  set startStyle(value: EndStyle) {
-    this._startStyle = value;
-  }
-
-  get endStyle(): EndStyle {
-    return this._endStyle;
-  }
-
-  set endStyle(value: EndStyle) {
-    this._endStyle = value;
-  }
-
-  get middlePositions(): Position[] {
-    return this._middlePositions;
-  }
-
-  set middlePositions(value: Position[]) {
-    this._middlePositions = value;
+    this.startNode = startNode;
+    this.endNode = endNode;
   }
 
   // Note that accessors are not used here because because we want to deal with a Position from outside of the class,
@@ -74,31 +36,6 @@ export class Edge {
 
   public getEndPosition(): Position {
     return Edge.getPosition(this.endNode, this.endPosition);
-  }
-
-
-  get startLabelFormatter(): LabelFormatter | undefined {
-    return this._startLabelFormatter;
-  }
-
-  set startLabelFormatter(value: LabelFormatter | undefined) {
-    this._startLabelFormatter = value;
-  }
-
-  get middleLabelFormatter(): LabelFormatter | undefined {
-    return this._middleLabelFormatter;
-  }
-
-  set middleLabelFormatter(value: LabelFormatter | undefined) {
-    this._middleLabelFormatter = value;
-  }
-
-  get endLabelFormatter(): LabelFormatter | undefined {
-    return this._endLabelFormatter;
-  }
-
-  set endLabelFormatter(value: LabelFormatter | undefined) {
-    this._endLabelFormatter = value;
   }
 
   public getAllPoints(): Position[] {

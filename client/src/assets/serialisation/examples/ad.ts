@@ -11,7 +11,9 @@ const node = new RectangleNode(100, 100, new Position(100, 100));
 
 const node2 = new RectangleNode(100, 100, new Position(300, 100));
 
-const edge: Edge = new Edge(2, 6, node, node2)
+const edge: Edge = new Edge(2, 6, node, node2);
+edge.middleLabel = "abc";
+const edge2: Edge = new Edge(new Position(200, 200), new Position(300, 300), undefined, undefined);
 
 // const node: Node = {
 //   width: 200,
@@ -57,4 +59,4 @@ const edge: Edge = new Edge(2, 6, node, node2)
 // ad = {nodes: [node, node2, node3], edges: []};
 
 // this.diagramString = JSON.stringify(this.diagram);
-ad = {nodes: [node, node2], edges: [edge]};
+ad = {nodes: [node, node2], edges: [edge, edge2]};

@@ -1,39 +1,40 @@
 import { Injectable } from '@angular/core';
 import {Position} from "../../assets/serialisation/position";
 import {Deactivatable} from "./deactivatable";
+import {Node} from '../../assets/serialisation/node/node';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RepositionService implements Deactivatable {
-  private formatter?: FormattedElement;
+  private node?: Positionable;
   private startPosition?: Position;
   constructor() { }
 
   public isActive(): boolean {
-    return this.formatter !== undefined;
+    return this.node !== undefined;
   }
 
-  public activate(current: FormattedElement, startPosition: Position): void {
-    this.formatter = current;
+  public activate(current: Positionable, startPosition: Position): void {
+    this.node = current;
     this.startPosition = startPosition;
   }
 
   public update(endPosition: Position): void {
-    if (this.formatter !== undefined && this.startPosition !== undefined) {
+    if (this.node !== undefined && this.startPosition !== undefined) {
       let difference = Position.subtract(endPosition, this.startPosition);
-      let newPosition = Position.add(this.formatter.position, difference);
-      this.formatter.position = newPosition;
+      let newPosition = Position.add(this.node.position, difference);
+      this.node.position = newPosition;
       this.startPosition = endPosition;
     }
   }
 
   public deactivate(): void {
-    this.formatter = undefined;
+    this.node = undefined;
     this.startPosition = undefined;
   }
 }
 
-export interface FormattedElement {
-  position: Position
+export interface Positionable {
+  position: Position;
 }

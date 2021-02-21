@@ -1,22 +1,25 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {LabelFormatter} from "../../assets/serialisation/label";
 import {Position} from "../../assets/serialisation/position";
-import {Movable} from "../moveable";
-import {FormattedElement, RepositionService} from "../services/reposition.service";
+import {RepositionService} from "../services/reposition.service";
 import {SafeHtml} from "@angular/platform-browser";
-import {ModeService} from "../services/mode.service";
+import {Mode, ModeService} from "../services/mode.service";
 
 @Component({
   selector: '[label-component]',
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss']
 })
-export class LabelComponent extends Movable {
+export class LabelComponent {
   @Input() formatter?: LabelFormatter;
   @Input() label?: string;
-  @Output() labelChange: EventEmitter<string> = new EventEmitter<string>()
-  constructor(repositionService: RepositionService, modeService: ModeService) {
-    super(repositionService, modeService);
+  @Output() labelChange: EventEmitter<string> = new EventEmitter<string>();
+  private mode: Mode;
+
+  constructor(private repositionService: RepositionService,
+              modeService: ModeService) {
+    this.mode = modeService.getLatestMode();
+    modeService.modeObservable.subscribe(mode => this.mode = mode);
   }
 
   handleDoubleClick($event: MouseEvent): void {
@@ -24,7 +27,7 @@ export class LabelComponent extends Movable {
     this.labelChange.emit(this.label);
   }
 
-  getFormatter(): FormattedElement | undefined {
+  getFormatter(): LabelFormatter | undefined {
     return this.formatter;
   }
 
@@ -37,9 +40,13 @@ export class LabelComponent extends Movable {
 
   public handleMouseDown(event: MouseEvent): void {
     if (this.isInMoveMode()) {
-      if (this.getFormatter() !== undefined) {
-        this.repositionService.activate(this.getFormatter() as FormattedElement, new Position(event.clientX, event.clientY))
+      if (this.formatter !== undefined) {
+        this.repositionService.activate(this.formatter, new Position(event.clientX, event.clientY));
       }
     }
+  }
+
+  isInMoveMode(): boolean {
+    return this.mode === Mode.Move;
   }
 }

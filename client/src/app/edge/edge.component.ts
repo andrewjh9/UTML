@@ -3,7 +3,6 @@ import {Position} from "../../assets/serialisation/position";
 import {Edge, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {LabelFormatter} from "../../assets/serialisation/label";
 import {EdgeRepositionService} from "../services/edge-reposition.service";
-import {FormattedElement} from "../services/reposition.service";
 import {AbstractEdgeComponent} from "../abstract-edge-component";
 import {EdgeCreationService} from "../services/edge-creation-service.service";
 import {Mode, ModeService} from "../services/mode.service";
