@@ -1,3 +1,2 @@
 export abstract class AbstractNodeComponent {
-  pubilc abstract foo(): void;
 }

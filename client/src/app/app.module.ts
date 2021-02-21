@@ -24,6 +24,8 @@ import { UnstructuredEdgeEditorComponent } from './unstructured-edge-editor/unst
 import { MoveMenuComponent } from './move-menu/move-menu.component';
 import { NodeDispatcherComponent } from './node-compontents/node-dispatcher/node-dispatcher.component';
 import { RectangleNodeComponent } from './node-compontents/rectangle-node/rectangle-node.component';
+import { EllipseNodeComponent } from './node-compontents/ellipse-node/ellipse-node.component';
+import { DiamondNodeComponent } from './node-compontents/diamond-node/diamond-node.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { RectangleNodeComponent } from './node-compontents/rectangle-node/rectan
     UnstructuredEdgeEditorComponent,
     MoveMenuComponent,
     NodeDispatcherComponent,
-    RectangleNodeComponent
+    RectangleNodeComponent,
+    EllipseNodeComponent,
+    DiamondNodeComponent
   ],
     imports: [
         BrowserModule,

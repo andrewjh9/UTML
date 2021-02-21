@@ -1,0 +1,10 @@
+<svg:polyline *ngIf="node"
+              [attr.points]="node.getSVGPoints()"
+              style="fill:white;stroke:black;stroke-width:2;fill-opacity:0.0;stroke-opacity:0.9"
+>
+</svg:polyline>
+<!--
+              [ngClass]="{'movable': isInMoveMode()}"
+
+              (mousedown)="handleMouseDown($event)"
+              (dblclick)="handleDoubleClick($event)"-->

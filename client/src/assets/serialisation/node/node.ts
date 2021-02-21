@@ -18,7 +18,7 @@ export abstract class Node {
   protected abstract getAllOffsets(): Position[];
 
   public getPositionOfAttachment(index: number): Position {
-    return this.getAllOffsets()[index];
+    return this.getAllAttachmentPoints()[index];
   }
 
   public isValidAttachment(index: number): boolean {

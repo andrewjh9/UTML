@@ -8,18 +8,18 @@ export class RectangleNode extends Node {
 
   protected getAllOffsets(): Position[] {
     return [
-      new Position(0, 0),
-      new Position(this.width, 0),
-      new Position(0, this.height),
-      new Position(this.width, this.height),
       new Position(this.width / 2, 0),
+      new Position(this.width, 0),
+      new Position(this.width, this.height / 2),
+      new Position(this.width, this.height),
       new Position(this.width / 2, this.height),
+      new Position(0, this.height),
       new Position(0, this.height / 2),
-      new Position(this.width, this.height / 2)
+      new Position(0, 0),
     ];
   }
 
   getDeepCopy(): Node {
-    return new RectangleNode(this.width, this.height, this.position);
+    return new RectangleNode(this.width, this.height, this.position.getDeepCopy());
   }
 }

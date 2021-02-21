@@ -14,8 +14,8 @@ export interface Edge {
 export class EdgeFormatter {
   public startNode?: Node;
   public endNode?: Node;
-  public startPosition: Position | AttachmentDirection;
-  public endPosition: Position | AttachmentDirection;
+  public startPosition: Position | number;
+  public endPosition: Position | number;
   private _middlePositions: Position[] = [];
   private _lineType: LineType = LineType.Line;
   private _lineStyle: LineStyle = LineStyle.Filled;
@@ -26,7 +26,7 @@ export class EdgeFormatter {
   private _endLabelFormatter?: LabelFormatter;
 
 
-  constructor(startPosition: Position | AttachmentDirection, endPosition: Position | AttachmentDirection,
+  constructor(startPosition: Position | number, endPosition: Position | number,
               startNode: Node | undefined = undefined, endNode: Node | undefined = undefined) {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
@@ -75,7 +75,7 @@ export class EdgeFormatter {
   }
 
   // Note that accessors are not used here because because we want to deal with a Position from outside of the class,
-  // but the positions are internally stored using Position | AttachmentDirection
+  // but the positions are internally stored using Position | number
   public getStartPosition(): Position {
     return EdgeFormatter.getPosition(this.startNode, this.startPosition);
   }
@@ -117,11 +117,11 @@ export class EdgeFormatter {
     return result;
   }
 
-  private static getPosition(node: Node | undefined, positionOrDirection: Position | AttachmentDirection) {
+  private static getPosition(node: Node | undefined, positionOrDirection: Position | number) {
     if (positionOrDirection instanceof Position) {
       return positionOrDirection;
     } else if (node === undefined) {
-      console.error("Trying to position an edge according to AttachmentDirection but node is not set.");
+      console.error("Trying to position an edge according to number but node is not set.");
       return new Position(0, 0);
     } else {
       if (node) {

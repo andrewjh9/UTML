@@ -1,10 +1,18 @@
 import {Position} from "../position";
 import {Diagram} from "../diagram";
 import {RectangleNode} from "../node/rectangle-node";
+import {EllipseNode} from "../node/ellipse-node";
+import {DiamondNode} from "../node/diamond-node";
+import {Edge, EdgeFormatter} from "../edge";
 
 export let ad: Diagram;
 
-const node = new RectangleNode(200, 100, new Position(100, 100));
+const node = new RectangleNode(100, 100, new Position(100, 100));
+
+const node2 = new RectangleNode(100, 100, new Position(300, 100));
+
+const edge: Edge = {startNode: node, endNode: node2};
+edge.formatter =  new EdgeFormatter(2, 6, node, node2);
 
 // const node: Node = {
 //   width: 200,
@@ -50,4 +58,4 @@ const node = new RectangleNode(200, 100, new Position(100, 100));
 // ad = {nodes: [node, node2, node3], edges: []};
 
 // this.diagramString = JSON.stringify(this.diagram);
-ad = {nodes: [node], edges: [], unstructuredEdges: []};
+ad = {nodes: [node, node2], edges: [edge], unstructuredEdges: []};
