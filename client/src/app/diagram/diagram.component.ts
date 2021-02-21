@@ -6,7 +6,7 @@ import {RepositionService} from "../services/reposition.service";
 import {fsm} from "../../assets/serialisation/examples/fsm";
 import {EdgeRepositionService} from "../services/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
-import {EdgeCreationService} from "../services/edge-creation-service.service";
+import {EdgeCreationService} from "../services/edge-creation.service";
 import {DeletionService} from "../services/deletion.service";
 import {CreationFormatterSelectionService} from "../services/creation-formatter-selection.service";
 import {RectangleNode} from "../../assets/serialisation/node/rectangle-node";

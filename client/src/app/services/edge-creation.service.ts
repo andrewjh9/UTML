@@ -37,23 +37,18 @@ export class EdgeCreationService implements Deactivatable {
   }
 
   public setEnd(endNode: Node, endAttachment: AttachmentDirection) {
-    // if ((this.startNode === undefined)|| (this.startAttachment === undefined)) {
-    //   throw new Error("Trying to set end of to be created edge while start is unset!");
-    // }
-    //
-    // let edge: Edge = {startNode: this.startNode, endNode: endNode}
-    // edge.formatter = new EdgeFormatter(this.startAttachment, endAttachment, this.startNode, endNode);
-    // // for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
-    // //   // @ts-ignore
-    // //   edge.formatter[key] = value;
-    // // }
-    //
-    // // Arcs must have 1 middle point, so we add it if needed.
-    // if (edge.formatter.lineType === LineType.Arc) {
-    //   edge.formatter.setDefaultMiddlePointOnArc();
-    // }
-    //
-    // this.newEdgeEmitter.emit(edge);
+    if ((this.startNode === undefined)|| (this.startAttachment === undefined)) {
+      throw new Error("Trying to set end of to be created edge while start is unset!");
+    }
+
+    let edge = new Edge(this.startAttachment, endAttachment, this.startNode, endNode);
+
+    // Arcs must have 1 middle point, so we add it if needed.
+    if (edge.lineType === LineType.Arc) {
+      edge.setDefaultMiddlePointOnArc();
+    }
+
+    this.newEdgeEmitter.emit(edge);
 
     this.deactivate();
   }
@@ -61,6 +56,6 @@ export class EdgeCreationService implements Deactivatable {
   public deactivate(): void {
     this.startNode = undefined;
     this.startAttachment = undefined;
-    this.endPreview !== undefined;
+    this.endPreview = undefined;
   }
 }

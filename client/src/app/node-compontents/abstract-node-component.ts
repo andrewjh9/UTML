@@ -3,15 +3,13 @@ import {Mode, ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
 import {Node} from "../../assets/serialisation/node/node";
 import {Position} from "../../assets/serialisation/position";
+import {ModeAwareComponent} from "../mode-aware-component";
 
-export abstract class AbstractNodeComponent {
-  protected mode: Mode;
-
+export abstract class AbstractNodeComponent extends ModeAwareComponent {
   protected constructor(private repositionService: RepositionService,
                         modeService: ModeService,
                         private selectionService: SelectionService) {
-    this.mode = modeService.getLatestMode();
-    modeService.modeObservable.subscribe(mode => this.mode = mode);
+    super(modeService);
   }
 
   protected abstract getNode(): Node;

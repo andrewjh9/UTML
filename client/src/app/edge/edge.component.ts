@@ -4,7 +4,7 @@ import {Edge, EndStyle, LineStyle, LineType} from "../../assets/serialisation/ed
 import {LabelFormatter} from "../../assets/serialisation/label";
 import {EdgeRepositionService} from "../services/edge-reposition.service";
 import {AbstractEdgeComponent} from "../abstract-edge-component";
-import {EdgeCreationService} from "../services/edge-creation-service.service";
+import {EdgeCreationService} from "../services/edge-creation.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
 
@@ -92,15 +92,15 @@ export class EdgeComponent extends AbstractEdgeComponent implements OnDestroy {
   }
 
   public handleMouseDown(event: MouseEvent): void {
-    // if (this.mode === Mode.Move) {
-    //   if (this.edge?.formatter?.middlePositions) {
-    //     // Todo: fix mouse positioning
-    //     let mousePosition = new Position(event.clientX, event.clientY);
-    //     this.edgeRepositionService.activate(mousePosition, this.edge, this.edge.formatter);
-    //   }
-    // } else if (this.mode === Mode.Select && this.edge) {
-    //   this.selectionService.setEdge(this.edge);
-    // }
+    if (this.mode === Mode.Move) {
+      if (this.edge?.middlePositions) {
+        // Todo: fix mouse positioning
+        let mousePosition = new Position(event.clientX, event.clientY);
+        this.edgeRepositionService.activate(mousePosition, this.edge);
+      }
+    } else if (this.mode === Mode.Select && this.edge) {
+      this.selectionService.setEdge(this.edge);
+    }
   }
 
   ngOnDestroy(): void {

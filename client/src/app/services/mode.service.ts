@@ -3,7 +3,7 @@ import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {EdgeRepositionService} from "./edge-reposition.service";
 import {RepositionService} from "./reposition.service";
 import {Deactivatable} from "./deactivatable";
-import {EdgeCreationService} from "./edge-creation-service.service";
+import {EdgeCreationService} from "./edge-creation.service";
 
 @Injectable({
   providedIn: 'root'

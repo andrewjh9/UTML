@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {EdgeCreationService} from "../services/edge-creation-service.service";
+import {EdgeCreationService} from "../services/edge-creation.service";
 import {ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
 import {Position} from "../../assets/serialisation/position";
