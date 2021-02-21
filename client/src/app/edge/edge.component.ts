@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {Position} from "../../assets/serialisation/position";
-import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
+import {Edge, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {LabelFormatter} from "../../assets/serialisation/label";
 import {EdgeRepositionService} from "../services/edge-reposition.service";
 import {FormattedElement} from "../services/reposition.service";
@@ -24,55 +24,43 @@ export class EdgeComponent extends AbstractEdgeComponent implements OnDestroy {
     super(selectionService, modeService);
   }
 
-  public formatterIsDefined(): boolean {
-    return this.edge?.formatter !== undefined;
-  }
-
-  public getFormatter(): EdgeFormatter | undefined {
-    return this.edge?.formatter;
-  }
-
   getStartLabelFormatterAndSetIfAbsent(): LabelFormatter {
-    if (this.edge?.formatter === undefined) {
+    if (this.edge === undefined) {
       console.error("Somehow the edge formatter is undefined.");
       return new LabelFormatter(new Position(-1, -1));
     }
-    let formatter: EdgeFormatter = this.edge.formatter;
 
-    if (formatter.startLabelFormatter === undefined) {
-      formatter.startLabelFormatter = new LabelFormatter(formatter.getStartPosition());
+    if (this.edge.startLabelFormatter === undefined) {
+      this.edge.startLabelFormatter = new LabelFormatter(this.edge.getStartPosition());
     }
 
-    return formatter.startLabelFormatter;
+    return this.edge.startLabelFormatter;
   }
 
   getMiddleLabelFormatterAndSetIfAbsent(): LabelFormatter {
-    if (this.edge?.formatter === undefined) {
+    if (this.edge === undefined) {
       console.error("Somehow the edge formatter is undefined.");
       return new LabelFormatter(new Position(-1, -1));
     }
-    let formatter: EdgeFormatter = this.edge.formatter;
 
-    if (formatter.middleLabelFormatter === undefined) {
-      formatter.middleLabelFormatter = new LabelFormatter(
-        Position.multiply(0.5, Position.add(formatter.getStartPosition(), formatter.getEndPosition())));
+    if (this.edge.middleLabelFormatter === undefined) {
+      this.edge.middleLabelFormatter = new LabelFormatter(
+        Position.multiply(0.5, Position.add(this.edge.getStartPosition(), this.edge.getEndPosition())));
     }
 
-    return formatter.middleLabelFormatter;
+    return this.edge.middleLabelFormatter;
   }
 
   getEndLabelFormatterAndSetIfAbsent(): LabelFormatter {
-    if (this.edge?.formatter === undefined) {
+    if (this.edge === undefined) {
       console.error("Somehow the edge formatter is undefined.");
       return new LabelFormatter(new Position(-1, -1));
     }
-    let formatter: EdgeFormatter = this.edge.formatter;
-
-    if (formatter.endLabelFormatter === undefined) {
-      formatter.endLabelFormatter = new LabelFormatter(formatter.getEndPosition());
+    if (this.edge.endLabelFormatter === undefined) {
+      this.edge.endLabelFormatter = new LabelFormatter(this.edge.getEndPosition());
     }
 
-    return formatter.endLabelFormatter;
+    return this.edge.endLabelFormatter;
   }
 
   public getStartLabel(): string | undefined {
@@ -105,15 +93,15 @@ export class EdgeComponent extends AbstractEdgeComponent implements OnDestroy {
   }
 
   public handleMouseDown(event: MouseEvent): void {
-    if (this.mode === Mode.Move) {
-      if (this.edge?.formatter?.middlePositions) {
-        // Todo: fix mouse positioning
-        let mousePosition = new Position(event.clientX, event.clientY);
-        this.edgeRepositionService.activate(mousePosition, this.edge, this.edge.formatter);
-      }
-    } else if (this.mode === Mode.Select && this.edge) {
-      this.selectionService.setEdge(this.edge);
-    }
+    // if (this.mode === Mode.Move) {
+    //   if (this.edge?.formatter?.middlePositions) {
+    //     // Todo: fix mouse positioning
+    //     let mousePosition = new Position(event.clientX, event.clientY);
+    //     this.edgeRepositionService.activate(mousePosition, this.edge, this.edge.formatter);
+    //   }
+    // } else if (this.mode === Mode.Select && this.edge) {
+    //   this.selectionService.setEdge(this.edge);
+    // }
   }
 
   ngOnDestroy(): void {

@@ -1,36 +1,36 @@
 <!-- Arc Rendering -->
-<svg:path *ngIf="formatterIsDefined() && isArc()"
-          [attr.d]="getFormatter()!.getPointString()"
+<svg:path *ngIf="edge && isArc()"
+          [attr.d]="edge.getPointString()"
           stroke="black"
           fill="transparent"
           style="stroke-width: 2"
-          [attr.marker-end]="getFormatter()!.getEndMarker()"
-          [attr.marker-start]="getFormatter()!.getStartMarker()"
-          [attr.stroke-dasharray]="getFormatter()!.getLineStyleString()"
+          [attr.marker-end]="edge.getEndMarker()"
+          [attr.marker-start]="edge.getStartMarker()"
+          [attr.stroke-dasharray]="edge.getLineStyleString()"
           (mousedown)="handleMouseDown($event)">
 </svg:path>
 
 <!-- Line Rendering -->
-<svg:polyline *ngIf="formatterIsDefined() && isLine()"
-              [attr.points]="getFormatter()!.getPointString()"
+<svg:polyline *ngIf="edge && isLine()"
+              [attr.points]="edge.getPointString()"
               style="stroke:rgb(0, 0, 0); stroke-width:2; fill:none;"
-              [attr.marker-end]="getFormatter()!.getEndMarker()"
-              [attr.marker-start]="getFormatter()!.getStartMarker()"
-              [attr.stroke-dasharray]="getFormatter()!.getLineStyleString()">
+              [attr.marker-end]="edge.getEndMarker()"
+              [attr.marker-start]="edge.getStartMarker()"
+              [attr.stroke-dasharray]="edge.getLineStyleString()">
 >
 </svg:polyline>
 <!-- Invisible, selectable to make the mouse down trigger easily accessible -->
-<svg:polyline *ngIf="formatterIsDefined() && isLine()"
-              [attr.points]="getFormatter()!.getPointString()"
+<svg:polyline *ngIf="edge && isLine()"
+              [attr.points]="edge.getPointString()"
               style="stroke:rgb(0, 0, 0); stroke-width:10; stroke-opacity: 0;  fill:none;"
               (mousedown)="handleMouseDown($event)"
 >
 </svg:polyline>
 
 <!-- Debugging ellipse around Arc middle position -->
-<svg:ellipse *ngIf="isArc() && formatterIsDefined()"
-             [attr.cx]="getFormatter()!.middlePositions[0].x"
-             [attr.cy]="getFormatter()!.middlePositions[0].y"
+<svg:ellipse *ngIf="isArc() && edge"
+             [attr.cx]="edge.middlePositions[0].x"
+             [attr.cy]="edge.middlePositions[0].y"
              cx="10"
              cy="10"
              rx="5"
@@ -40,25 +40,25 @@
 </svg:ellipse>
 
 <!-- Render labels if they exist -->
-<svg:g *ngIf="hasLabels">
-  <svg:g *ngIf="getStartLabel()"
-         label-component
-         [label]="getStartLabel()"
-         (labelChange)="setStartLabel($event)"
-         [formatter]="getStartLabelFormatterAndSetIfAbsent()">
-  </svg:g>
+<!--<svg:g *ngIf="hasLabels">-->
+  <!--<svg:g *ngIf="getStartLabel()"-->
+         <!--label-component-->
+         <!--[label]="getStartLabel()"-->
+         <!--(labelChange)="setStartLabel($event)"-->
+         <!--[formatter]="getStartLabelFormatterAndSetIfAbsent()">-->
+  <!--</svg:g>-->
 
-  <svg:g *ngIf="getMiddleLabel()"
-         label-component
-         [label]="getMiddleLabel()"
-         (labelChange)="setMiddleLabel($event)"
-         [formatter]="getMiddleLabelFormatterAndSetIfAbsent()">
-  </svg:g>
+  <!--<svg:g *ngIf="getMiddleLabel()"-->
+         <!--label-component-->
+         <!--[label]="getMiddleLabel()"-->
+         <!--(labelChange)="setMiddleLabel($event)"-->
+         <!--[formatter]="getMiddleLabelFormatterAndSetIfAbsent()">-->
+  <!--</svg:g>-->
 
-  <svg:g *ngIf="getEndLabel()"
+  <!--<svg:g *ngIf="getEndLabel()"-->
          label-component
          [label]="getEndLabel()"
          (labelChange)="setEndLabel($event)"
          [formatter]="getEndLabelFormatterAndSetIfAbsent()">
-  </svg:g>
-</svg:g>
+  <!--</svg:g>-->
+<!--</svg:g>-->

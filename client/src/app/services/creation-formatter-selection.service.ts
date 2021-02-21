@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
 import {Position} from "../../assets/serialisation/position";
-import {EdgeFormatter, EndStyle, LineType} from "../../assets/serialisation/edge";
+import { EndStyle, LineType} from "../../assets/serialisation/edge";
 
 @Injectable({
   providedIn: 'root'

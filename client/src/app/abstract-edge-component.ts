@@ -1,12 +1,10 @@
-import {EdgeFormatter, LineType} from "../assets/serialisation/edge";
+import {LineType} from "../assets/serialisation/edge";
 import {LabelFormatter} from "../assets/serialisation/label";
 import {SelectionService} from "./services/selection.service";
 import {Mode, ModeService} from "./services/mode.service";
 import {OnDestroy} from "@angular/core";
 
 export abstract class AbstractEdgeComponent {
-  public abstract getFormatter(): EdgeFormatter | undefined;
-  public abstract formatterIsDefined(): boolean;
   protected mode: Mode;
 
   protected constructor(protected selectionService: SelectionService,
@@ -29,18 +27,10 @@ export abstract class AbstractEdgeComponent {
 
 
   public isLine(): boolean {
-    if (this.formatterIsDefined()) {
-      return this.getFormatter()!.lineType == LineType.Line;
-    } else {
-      return false;
-    }
+    return true;
   }
 
   public isArc(): boolean {
-    if (this.formatterIsDefined()) {
-      return this.getFormatter()!.lineType == LineType.Arc;
-    } else {
-      return false;
-    }
+    return false;
   }
 }

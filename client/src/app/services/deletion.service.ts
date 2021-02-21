@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {Node} from "../../assets/serialisation/node/node";
 import {Diagram} from "../../assets/serialisation/diagram";
-import {Edge, EdgeFormatter} from "../../assets/serialisation/edge";
+import {Edge} from "../../assets/serialisation/edge";
 
 @Injectable({
   providedIn: "root"
@@ -58,25 +58,6 @@ export class DeletionService {
       throw new Error("Trying to delete an edge that can not be found in the list of edges!");
     } else {
       this.diagram.edges.splice(index, 1);
-    }
-  }
-
-  /**
-   * Delete an edge formatter from the diagram data structure and its component from the DOM.
-   * @throws Throws an error if the diagram is not set or if the edge formatter can not be found in the diagram..
-   * @param edgeFormatter EdgeFormatter to be deleted.
-   */
-  public deleteEdgeFormatter(edgeFormatter: EdgeFormatter) {
-    if (this.diagram === undefined) {
-      throw new Error("Trying to use deletion service whilst the diagram is undefined");
-    }
-
-    const index = this.diagram!.unstructuredEdges.indexOf(edgeFormatter);
-
-    if (index === -1) {
-      throw new Error("Trying to delete an edge that can not be found in the list of edges!");
-    } else {
-      this.diagram.unstructuredEdges.splice(index, 1);
     }
   }
 

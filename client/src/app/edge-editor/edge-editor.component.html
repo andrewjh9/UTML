@@ -23,7 +23,7 @@
   <div class="form-group row px-3">
     <label class="w-25 col-form-label">Line Style</label>
     <div class="w-75">
-      <select class="custom-select" [(ngModel)]="edge.formatter!.lineStyle">
+      <select class="custom-select" [(ngModel)]="edge!.lineStyle">
         <option [ngValue]="0">Filled</option>
         <option [ngValue]="1">Dotted</option>
         <option [ngValue]="2">Dashed</option>
@@ -34,7 +34,7 @@
   <div class="form-group row px-3">
     <label class="w-25 col-form-label">Start Style</label>
     <div class="w-75">
-      <select class="custom-select" [(ngModel)]="edge.formatter!.startStyle">
+      <select class="custom-select" [(ngModel)]="edge!.startStyle">
         <option [ngValue]="0">None</option>
         <option [ngValue]="1">Big Unfilled Arrow</option>
         <option [ngValue]="2">Filled Diamond</option>
@@ -47,7 +47,7 @@
   <div class="form-group row px-3">
     <label class="w-25 col-form-label">End Style</label>
     <div class="w-75">
-      <select class="custom-select" [(ngModel)]="edge.formatter!.endStyle">
+      <select class="custom-select" [(ngModel)]="edge!.endStyle">
         <option [ngValue]="0">None</option>
         <option [ngValue]="1">Small Filled Arrow</option>
         <option [ngValue]="2">Filled Diamond</option>

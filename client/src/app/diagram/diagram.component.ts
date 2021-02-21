@@ -1,6 +1,6 @@
 import {Position} from '../../assets/serialisation/position';
 import {AfterViewInit, Component} from '@angular/core';
-import {Edge, EdgeFormatter, LineType} from "../../assets/serialisation/edge";
+import {Edge, LineType} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
 import {RepositionService} from "../services/reposition.service";
 import {fsm} from "../../assets/serialisation/examples/fsm";
@@ -66,17 +66,17 @@ export class DiagramComponent implements AfterViewInit {
   handleDoubleClick(event: MouseEvent){
     if (this.mode === Mode.Create) {
       if (event.ctrlKey) {
-        let formatter = new EdgeFormatter(new Position(event.clientX, event.clientY),
-          new Position(event.clientX + 100, event.clientY + 100), undefined, undefined);
-        // for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
-        //   // @ts-ignore
-        //   formatter[key] = value;
+        // let formatter = new EdgeFormatter(new Position(event.clientX, event.clientY),
+        //   new Position(event.clientX + 100, event.clientY + 100), undefined, undefined);
+        // // for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
+        // //   // @ts-ignore
+        // //   formatter[key] = value;
+        // // }
+        // if (formatter.lineType === LineType.Arc) {
+        //   formatter.setDefaultMiddlePointOnArc();
         // }
-        if (formatter.lineType === LineType.Arc) {
-          formatter.setDefaultMiddlePointOnArc();
-        }
-
-        this.diagram.unstructuredEdges.push(formatter);
+        //
+        // this.diagram.unstructuredEdges.push(formatter);
       } else {
         // Todo: Refactor when we refactor the creationFormatterSelection
         // let nf: NodeFormatter = this.creationFormatterSelectionService.getSelectedNodeFormatter();

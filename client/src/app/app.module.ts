@@ -10,7 +10,7 @@ import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
 import {FormsModule} from "@angular/forms";
 import { LabelComponent } from './label/label.component';
 import {RepositionService} from "./services/reposition.service";
-import { NonStructuralEdgeComponent } from './non-structural-edge/non-structural-edge.component';
+// import { NonStructuralEdgeComponent } from './non-structural-edge/non-structural-edge.component';
 import {ModeSelectorComponent} from "./mode-selector/mode-selector.component";
 import {ModeService} from "./services/mode.service";
 import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.component';
@@ -20,7 +20,7 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
 import { CreationMenuComponent } from './creation-menu/creation-menu.component';
 import { NodeEditorComponent } from './node-editor/node-editor.component';
-import { UnstructuredEdgeEditorComponent } from './unstructured-edge-editor/unstructured-edge-editor.component';
+// import { UnstructuredEdgeEditorComponent } from './unstructured-edge-editor/unstructured-edge-editor.component';
 import { MoveMenuComponent } from './move-menu/move-menu.component';
 import { NodeDispatcherComponent } from './node-compontents/node-dispatcher/node-dispatcher.component';
 import { RectangleNodeComponent } from './node-compontents/rectangle-node/rectangle-node.component';
@@ -34,14 +34,14 @@ import { DiamondNodeComponent } from './node-compontents/diamond-node/diamond-no
     EdgeComponent,
     ArrowMarkerComponent,
     LabelComponent,
-    NonStructuralEdgeComponent,
+    // NonStructuralEdgeComponent,
     ModeSelectorComponent,
     NewEdgePreviewComponent,
     SelectedEditorComponent,
     EdgeEditorComponent,
     CreationMenuComponent,
     NodeEditorComponent,
-    UnstructuredEdgeEditorComponent,
+    // UnstructuredEdgeEditorComponent,
     MoveMenuComponent,
     NodeDispatcherComponent,
     RectangleNodeComponent,

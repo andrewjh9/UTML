@@ -1,15 +1,14 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Edge, EdgeFormatter} from "../../assets/serialisation/edge";
+import {Edge} from "../../assets/serialisation/edge";
 import {Node} from "../../assets/serialisation/node/node";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectionService {
-  private current?: Node | Edge | EdgeFormatter;
+  private current?: Node | Edge;
   public nodeEmitter: EventEmitter<Node> = new EventEmitter<Node>();
   public edgeEmitter: EventEmitter<Edge> = new EventEmitter<Edge>();
-  public edgeFormatterEmitter: EventEmitter<EdgeFormatter> = new EventEmitter<EdgeFormatter>();
 
 
   public setNode(value: Node): void {
@@ -20,10 +19,5 @@ export class SelectionService {
   public setEdge(value: Edge): void {
     this.current = value;
     this.edgeEmitter.emit(value);
-  }
-
-  public setEdgeFormatter(value: EdgeFormatter) {
-    this.current = value;
-    this.edgeFormatterEmitter.emit(value);
   }
 }

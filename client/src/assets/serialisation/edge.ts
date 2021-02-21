@@ -2,18 +2,12 @@ import {Position} from "./position";
 import {AttachmentDirection, Node} from "./node/node";
 import {LabelFormatter} from "./label";
 
-export interface Edge {
-  startNode: Node;
-  endNode: Node;
-  startLabel?: string;
-  endLabel?: string;
-  middleLabel?: string;
-  formatter?: EdgeFormatter;
-}
-
-export class EdgeFormatter {
+export class Edge {
   public startNode?: Node;
   public endNode?: Node;
+  public startLabel?: string;
+  public endLabel?: string;
+  public middleLabel?: string;
   public startPosition: Position | number;
   public endPosition: Position | number;
   private _middlePositions: Position[] = [];
@@ -30,8 +24,6 @@ export class EdgeFormatter {
               startNode: Node | undefined = undefined, endNode: Node | undefined = undefined) {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
-    this.startNode = startNode;
-    this.endNode = endNode;
   }
 
   get lineType(): LineType {
@@ -77,11 +69,11 @@ export class EdgeFormatter {
   // Note that accessors are not used here because because we want to deal with a Position from outside of the class,
   // but the positions are internally stored using Position | number
   public getStartPosition(): Position {
-    return EdgeFormatter.getPosition(this.startNode, this.startPosition);
+    return Edge.getPosition(this.startNode, this.startPosition);
   }
 
   public getEndPosition(): Position {
-    return EdgeFormatter.getPosition(this.endNode, this.endPosition);
+    return Edge.getPosition(this.endNode, this.endPosition);
   }
 
 
