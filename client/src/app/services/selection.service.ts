@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Edge, EdgeFormatter} from "../../assets/serialisation/edge";
-import {Node} from "../../assets/serialisation/node";
+import {Node} from "../../assets/serialisation/node/node";
 
 @Injectable({
   providedIn: 'root'

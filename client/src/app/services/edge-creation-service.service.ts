@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Deactivatable} from "./deactivatable";
-import {AttachmentDirection, Node} from "../../assets/serialisation/node";
+import {AttachmentDirection, Node} from "../../assets/serialisation/node/node";
 import {Position} from "../../assets/serialisation/position";
 import {Edge, EdgeFormatter, LineType} from "../../assets/serialisation/edge";
 import {CreationFormatterSelectionService} from "./creation-formatter-selection.service";
@@ -25,11 +25,11 @@ export class EdgeCreationService implements Deactivatable {
 
   constructor(private creationFormatterSelectionService: CreationFormatterSelectionService) { }
 
-  public activate(node: Node, attachment: AttachmentDirection) {
+  public activate(node: Node, attachment: number) {
     this.startNode = node;
     this.startAttachment = attachment;
-    this.endPreview = node.formatter!.getAttachmentPointPosition(attachment);
-    this.startPreview = node.formatter!.getAttachmentPointPosition(attachment);
+    this.endPreview = node.getPositionOfAttachment(attachment);
+    this.startPreview = node.getPositionOfAttachment(attachment);
   }
 
   public isActive() {
@@ -43,10 +43,10 @@ export class EdgeCreationService implements Deactivatable {
 
     let edge: Edge = {startNode: this.startNode, endNode: endNode}
     edge.formatter = new EdgeFormatter(this.startAttachment, endAttachment, this.startNode, endNode);
-    for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
-      // @ts-ignore
-      edge.formatter[key] = value;
-    }
+    // for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
+    //   // @ts-ignore
+    //   edge.formatter[key] = value;
+    // }
 
     // Arcs must have 1 middle point, so we add it if needed.
     if (edge.formatter.lineType === LineType.Arc) {

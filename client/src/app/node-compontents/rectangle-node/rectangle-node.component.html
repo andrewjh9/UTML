@@ -1,0 +1,15 @@
+<svg:rect *ngIf="node"
+          [attr.x]="node.position.x"
+          [attr.y]="node.position.y"
+          [attr.width]="node.width"
+          [attr.height]="node.height"
+          style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
+>
+
+</svg:rect>
+
+<!--
+          (mousedown)="handleMouseDown($event)"
+          (dblclick)="handleDoubleClick($event)"
+          [ngClass]="{'movable': isInMoveMode()}"
+-->

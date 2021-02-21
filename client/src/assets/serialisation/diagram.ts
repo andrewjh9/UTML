@@ -1,5 +1,5 @@
 import {Edge, EdgeFormatter} from "./edge";
-import {Node} from "./node";
+import {Node} from "./node/node";
 
 
 export interface Diagram {

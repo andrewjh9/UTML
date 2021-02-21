@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Position} from "../../assets/serialisation/position";
-import {AttachmentDirection, Node} from "../../assets/serialisation/node";
+import {AttachmentDirection, Node} from "../../assets/serialisation/node/node";
 import {Edge, EdgeFormatter, LineType} from "../../assets/serialisation/edge";
 import {BehaviorSubject} from "rxjs";
 import {Deactivatable} from "./deactivatable";
@@ -102,7 +102,7 @@ export class EdgeRepositionService implements Deactivatable {
         case Mode.EndPosition:
           for (let node of this.nodes!) {
             for (let direction: number = 0; direction < 8; direction++) {
-              let attachmentPosition = node.formatter!.getAttachmentPointPosition(direction as AttachmentDirection);
+              let attachmentPosition = node.getPositionOfAttachment(direction);
               if (Position.getDistance(attachmentPosition, newPosition) <= this.DISTANCE_THRESHOLD / 2) {
                 this.edge!.endNode = node;
                 this.edge!.formatter!.endPosition = direction as AttachmentDirection;
@@ -120,7 +120,7 @@ export class EdgeRepositionService implements Deactivatable {
         case Mode.StartPosition:
           for (let node of this.nodes!) {
             for (let direction: number = 0; direction < 8; direction++) {
-              let attachmentPosition = node.formatter!.getAttachmentPointPosition(direction as AttachmentDirection);
+              let attachmentPosition = node.getPositionOfAttachment(direction);
               if (Position.getDistance(attachmentPosition, newPosition) <= this.DISTANCE_THRESHOLD / 2) {
                 this.edge!.startNode = node;
                 this.edge!.formatter!.startPosition = direction as AttachmentDirection;

@@ -15,8 +15,9 @@
 
         <g *ngFor="let edge of diagram.edges; let i = index"
            edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
-        <g *ngFor="let node of diagram.nodes; let i = index"
-           node-component [(node)]="diagram.nodes[i]" (nodeChange)="diagram.nodes[i]=$event"></g>
+        <g node-dispatcher [nodes]="diagram.nodes"></g>
+        <!--<g *ngFor="let node of diagram.nodes; let i = index"-->
+           <!--node-component [(node)]="diagram.nodes[i]" (nodeChange)="diagram.nodes[i]=$event"></g>-->
 
         <g *ngFor="let formatter of diagram.unstructuredEdges" non-structural-edge [formatter]="formatter"></g>
 

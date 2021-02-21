@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DeletionService} from "../services/deletion.service";
-import {Node} from "../../assets/serialisation/node";
+import {Node} from "../../assets/serialisation/node/node";
 
 @Component({
   selector: 'app-node-editor',

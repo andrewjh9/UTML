@@ -1,5 +1,5 @@
 import {EventEmitter, Injectable} from "@angular/core";
-import {Node} from "../../assets/serialisation/node";
+import {Node} from "../../assets/serialisation/node/node";
 import {Diagram} from "../../assets/serialisation/diagram";
 import {Edge, EdgeFormatter} from "../../assets/serialisation/edge";
 

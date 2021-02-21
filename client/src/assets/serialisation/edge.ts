@@ -1,5 +1,5 @@
 import {Position} from "./position";
-import {AttachmentDirection, Node, NodeFormatter} from "./node";
+import {AttachmentDirection, Node} from "./node/node";
 import {LabelFormatter} from "./label";
 
 export interface Edge {
@@ -85,7 +85,6 @@ export class EdgeFormatter {
   }
 
 
-
   get startLabelFormatter(): LabelFormatter | undefined {
     return this._startLabelFormatter;
   }
@@ -94,7 +93,7 @@ export class EdgeFormatter {
     this._startLabelFormatter = value;
   }
 
-  get middleLabelFormatter(): LabelFormatter | undefined{
+  get middleLabelFormatter(): LabelFormatter | undefined {
     return this._middleLabelFormatter;
   }
 
@@ -102,7 +101,7 @@ export class EdgeFormatter {
     this._middleLabelFormatter = value;
   }
 
-  get endLabelFormatter(): LabelFormatter | undefined{
+  get endLabelFormatter(): LabelFormatter | undefined {
     return this._endLabelFormatter;
   }
 
@@ -125,9 +124,8 @@ export class EdgeFormatter {
       console.error("Trying to position an edge according to AttachmentDirection but node is not set.");
       return new Position(0, 0);
     } else {
-      let nodeFormatter: NodeFormatter | undefined = node.formatter;
-      if(nodeFormatter) {
-        return nodeFormatter.getAttachmentPointPosition(positionOrDirection as AttachmentDirection)
+      if (node) {
+        return node.getPositionOfAttachment(positionOrDirection)
       } else {
         // todo: error handling
         console.error("The node to which this edge is connected has no formatter!");
@@ -148,7 +146,7 @@ export class EdgeFormatter {
       }
       result += this.getEndPosition().toString();
       return result;
-    } else if (this.lineType == LineType.Arc){
+    } else if (this.lineType == LineType.Arc) {
       if (this.middlePositions.length != 1) {
         throw new Error(`An Arc typed edge should have exactly 1 middle position. Edge ${this} has
         ${this.middlePositions.length}.`);
@@ -161,18 +159,18 @@ export class EdgeFormatter {
       let B: number = Position.getDistance(middle, start);
       let C: number = Position.getDistance(start, end);
 
-      let angle: number = Math.acos((A*A + B*B - C*C)/(2*A*B));
+      let angle: number = Math.acos((A * A + B * B - C * C) / (2 * A * B));
 
       //calc radius of circle
-      let K: number = .5*A*B*Math.sin(angle);
-      let r: number = A*B*C/4/K;
-      r = Math.round(r*1000)/1000;
+      let K: number = .5 * A * B * Math.sin(angle);
+      let r: number = A * B * C / 4 / K;
+      r = Math.round(r * 1000) / 1000;
 
       //large arc flag
-      let laf: number = +(Math.PI/2 > angle);
+      let laf: number = +(Math.PI / 2 > angle);
 
       //sweep flag
-      let saf: number = +((end.x - start.x)*(middle.y - start.y) - (end.y - start.y)*(middle.x - start.x) < 0);
+      let saf: number = +((end.x - start.x) * (middle.y - start.y) - (end.y - start.y) * (middle.x - start.x) < 0);
 
       return ['M', start.x, start.y, 'A', r, r, 0, laf, saf, end.x, end.y].join(' ');
 
@@ -226,7 +224,7 @@ export class EdgeFormatter {
    * The result will be determined based upon the lineStyle field.
    */
   public getLineStyleString(): string {
-    switch(this.lineStyle) {
+    switch (this.lineStyle) {
       case LineStyle.Filled:
         return "none";
       case LineStyle.Dashed:

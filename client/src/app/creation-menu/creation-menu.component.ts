@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {CreationFormatterSelectionService} from "../services/creation-formatter-selection.service";
-import {NodeFormatter} from "../../assets/serialisation/node";
 
 @Component({
   selector: 'app-creation-menu',
@@ -8,31 +7,31 @@ import {NodeFormatter} from "../../assets/serialisation/node";
   styleUrls: ['./creation-menu.component.scss']
 })
 export class CreationMenuComponent {
-  JSON = JSON;
-  constructor(private creationFormatterSelectionService: CreationFormatterSelectionService) { }
-
-  public getAllNodeFormatters(): NodeFormatter[] {
-    return this.creationFormatterSelectionService.getAllNodeFormatters()
-  }
-
-  public getSelectedNodeFormatterIndex(): number {
-    return this.creationFormatterSelectionService.getCurrentNodeIndex();
-  }
-
-  public setNodeFormatterIndex(index: number): void {
-    this.creationFormatterSelectionService.setNodeFormatter(index);
-  }
-
-  public getAllEdgeProperties(): Object[] {
-    return this.creationFormatterSelectionService.getAllEdgeFormatterProperties()
-  }
-
-  public setEdgeFormatterIndex(index: number): void {
-    this.creationFormatterSelectionService.setEdgeFormatterProperty(index);
-  }
-
-  public getSelectedEdgeFormatterIndex(): number {
-    return this.creationFormatterSelectionService.getCurrentEdgeIndex();
-  }
-
+  // Todo: Refactor when we refactor the creationFormatterSelection
+  // JSON = JSON;
+  // constructor(private creationFormatterSelectionService: CreationFormatterSelectionService) { }
+  //
+  // public getAllNodeFormatters(): NodeFormatter[] {
+  //   return this.creationFormatterSelectionService.getAllNodeFormatters()
+  // }
+  //
+  // public getSelectedNodeFormatterIndex(): number {
+  //   return this.creationFormatterSelectionService.getCurrentNodeIndex();
+  // }
+  //
+  // public setNodeFormatterIndex(index: number): void {
+  //   this.creationFormatterSelectionService.setNodeFormatter(index);
+  // }
+  //
+  // public getAllEdgeProperties(): Object[] {
+  //   return this.creationFormatterSelectionService.getAllEdgeFormatterProperties()
+  // }
+  //
+  // public setEdgeFormatterIndex(index: number): void {
+  //   this.creationFormatterSelectionService.setEdgeFormatterProperty(index);
+  // }
+  //
+  // public getSelectedEdgeFormatterIndex(): number {
+  //   return this.creationFormatterSelectionService.getCurrentEdgeIndex();
+  // }
 }

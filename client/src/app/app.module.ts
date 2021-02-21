@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DiagramComponent } from './diagram/diagram.component';
-import { NodeComponent } from './node/node.component';
 import { EdgeComponent } from './edge/edge.component';
 import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
 import {FormsModule} from "@angular/forms";
@@ -23,12 +22,13 @@ import { CreationMenuComponent } from './creation-menu/creation-menu.component';
 import { NodeEditorComponent } from './node-editor/node-editor.component';
 import { UnstructuredEdgeEditorComponent } from './unstructured-edge-editor/unstructured-edge-editor.component';
 import { MoveMenuComponent } from './move-menu/move-menu.component';
+import { NodeDispatcherComponent } from './node-compontents/node-dispatcher/node-dispatcher.component';
+import { RectangleNodeComponent } from './node-compontents/rectangle-node/rectangle-node.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DiagramComponent,
-    NodeComponent,
     EdgeComponent,
     ArrowMarkerComponent,
     LabelComponent,
@@ -40,7 +40,9 @@ import { MoveMenuComponent } from './move-menu/move-menu.component';
     CreationMenuComponent,
     NodeEditorComponent,
     UnstructuredEdgeEditorComponent,
-    MoveMenuComponent
+    MoveMenuComponent,
+    NodeDispatcherComponent,
+    RectangleNodeComponent
   ],
     imports: [
         BrowserModule,
