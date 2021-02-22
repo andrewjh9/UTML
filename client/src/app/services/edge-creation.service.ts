@@ -3,7 +3,7 @@ import {Deactivatable} from "./deactivatable";
 import {AttachmentDirection, Node} from "../../assets/serialisation/node/node";
 import {Position} from "../../assets/serialisation/position";
 import {Edge, LineType} from "../../assets/serialisation/edge";
-import {CreationFormatterSelectionService} from "./creation-formatter-selection.service";
+import {CreationTypeSelectionService} from "./creation-type-selection.service";
 
 
 @Injectable({
@@ -23,7 +23,7 @@ export class EdgeCreationService implements Deactivatable {
   public startPreview?: Position;
   public newEdgeEmitter: EventEmitter<Edge> = new EventEmitter<Edge>();
 
-  constructor(private creationFormatterSelectionService: CreationFormatterSelectionService) { }
+  constructor(private creationFormatterSelectionService: CreationTypeSelectionService) { }
 
   public activate(node: Node, attachment: number) {
     this.startNode = node;

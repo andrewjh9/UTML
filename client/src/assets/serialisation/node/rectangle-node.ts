@@ -22,4 +22,8 @@ export class RectangleNode extends Node {
   getDeepCopy(): Node {
     return new RectangleNode(this.width, this.height, this.position.getDeepCopy());
   }
+
+  public getNodeTypeName(): string {
+    return "Rectangle";
+  }
 }

@@ -10,7 +10,7 @@ import {RectangleNode} from "../../assets/serialisation/node/rectangle-node";
 @Injectable({
   providedIn: 'root'
 })
-export class CreationFormatterSelectionService {
+export class CreationTypeSelectionService {
   private readonly nodeTypes: Node[];
   private currentNodeIndex: number;
 
@@ -19,9 +19,9 @@ export class CreationFormatterSelectionService {
 
   constructor() {
     this.nodeTypes = [
+      new RectangleNode(100, 100, new Position(0, 0)),
       new EllipseNode(100, 100, new Position(0, 0)),
       new DiamondNode(100, 100, new Position(0, 0)),
-      new RectangleNode(100, 100, new Position(0, 0)),
     ];
     this.currentNodeIndex = 0;
 
@@ -70,5 +70,9 @@ export class CreationFormatterSelectionService {
       throw new Error("The provided index is not validf");
     }
     this.currentNodeIndex = index;
+  }
+
+  getNodeTypeName(index: number) {
+    return this.nodeTypes[index].getNodeTypeName();
   }
 }

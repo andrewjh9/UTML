@@ -17,6 +17,8 @@ export abstract class Node {
 
   protected abstract getAllOffsets(): Position[];
 
+  abstract getNodeTypeName(): string;
+
   public getPositionOfAttachment(index: number): Position {
     return this.getAllAttachmentPoints()[index];
   }

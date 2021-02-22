@@ -8,7 +8,7 @@ import {EdgeRepositionService} from "../services/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {DeletionService} from "../services/deletion.service";
-import {CreationFormatterSelectionService} from "../services/creation-formatter-selection.service";
+import {CreationTypeSelectionService} from "../services/creation-type-selection.service";
 import {RectangleNode} from "../../assets/serialisation/node/rectangle-node";
 import {ad} from "../../assets/serialisation/examples/ad";
 import {Node} from "../../assets/serialisation/node/node";
@@ -27,7 +27,7 @@ export class DiagramComponent implements AfterViewInit {
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService,
               private modeService: ModeService, private edgeCreationService: EdgeCreationService,
               deletionService: DeletionService,
-              private creationTypeSelectionService: CreationFormatterSelectionService) {
+              private creationTypeSelectionService: CreationTypeSelectionService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
@@ -80,11 +80,10 @@ export class DiagramComponent implements AfterViewInit {
         // this.diagram.unstructuredEdges.push(formatter);
       } else {
         // Todo: Refactor when we refactor the creationFormatterSelection
-        // let nf: NodeFormatter = this.creationFormatterSelectionService.getSelectedNodeFormatter();
         // nf.position = new Position(event.clientX - nf.width / 2, event.clientY - nf.height / 2);
         // this.diagram.nodes.push({texts: [], formatter: nf});
         let newNode : Node= this.creationTypeSelectionService.getSelectedNodeType();
-        newNode.position = new Position(event.clientX - 50, event.clientY - 50);
+        newNode.position = new Position(event.clientX - newNode.width / 2, event.clientY - newNode.height / 2);;
         this.diagram.nodes.push(newNode);
       }
     }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {CreationFormatterSelectionService} from "../services/creation-formatter-selection.service";
+import {CreationTypeSelectionService} from "../services/creation-type-selection.service";
 import {Node} from "../../assets/serialisation/node/node";
 @Component({
   selector: 'app-creation-menu',
@@ -9,29 +9,33 @@ import {Node} from "../../assets/serialisation/node/node";
 export class CreationMenuComponent {
   // Todo: Refactor when we refactor the creationFormatterSelection
   JSON = JSON;
-  constructor(private creationFormatterSelectionService: CreationFormatterSelectionService) { }
+  constructor(private creationTypeSelectionService: CreationTypeSelectionService) { }
 
   public getAllNodeTypes(): Node[] {
-    return this.creationFormatterSelectionService.getAllNodeTypes()
+    return this.creationTypeSelectionService.getAllNodeTypes()
   }
 
-  public getSelectedNodeFormatterIndex(): number {
-    return this.creationFormatterSelectionService.getCurrentNodeIndex();
+  getNodeTypeNameFromIndex(index: number): string {
+    return this.creationTypeSelectionService.getNodeTypeName(index);
+  }
+
+  public getSelectedNodeTypeIndex(): number {
+    return this.creationTypeSelectionService.getCurrentNodeIndex();
   }
 
   public setNodeTypeIndex(index: number): void {
-    this.creationFormatterSelectionService.setNodeType(index);
+    this.creationTypeSelectionService.setNodeType(index);
   }
 
   public getAllEdgeProperties(): Object[] {
-    return this.creationFormatterSelectionService.getAllEdgeFormatterProperties()
+    return this.creationTypeSelectionService.getAllEdgeFormatterProperties()
   }
 
   public setEdgeFormatterIndex(index: number): void {
-    this.creationFormatterSelectionService.setEdgeFormatterProperty(index);
+    this.creationTypeSelectionService.setEdgeFormatterProperty(index);
   }
 
   public getSelectedEdgeFormatterIndex(): number {
-    return this.creationFormatterSelectionService.getCurrentEdgeIndex();
+    return this.creationTypeSelectionService.getCurrentEdgeIndex();
   }
 }

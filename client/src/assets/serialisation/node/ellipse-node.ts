@@ -19,4 +19,8 @@ export class EllipseNode extends Node {
     return new EllipseNode(this.width, this.height, this.position.getDeepCopy());
   }
 
+  public getNodeTypeName(): string {
+    return "Ellipse";
+  }
+
 }

@@ -20,7 +20,7 @@ export class DiamondNode extends PolylineNode {
     return new DiamondNode(this.width, this.height, this.position.getDeepCopy());
   }
 
-  getSVGPoints(): string {    
+  getSVGPoints(): string {
     let points: string[] = [
       new Position(this.position.x + this.width / 2, this.position.y),
       new Position(this.position.x + this.width, this.position.y + this.height / 2),
@@ -29,5 +29,9 @@ export class DiamondNode extends PolylineNode {
       new Position(this.position.x + this.width / 2, this.position.y)
     ].map((pos: Position) => pos.toString());
     return points.join();
+  }
+
+  public getNodeTypeName(): string {
+    return "Diamond";
   }
 }
