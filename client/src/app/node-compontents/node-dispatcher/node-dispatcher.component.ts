@@ -34,6 +34,9 @@ export class NodeDispatcherComponent {
   }
 
   isDiamond(node: Node): boolean {
+
     return node instanceof DiamondNode;
   }
+
+
 }
