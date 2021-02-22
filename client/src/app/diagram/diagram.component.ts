@@ -79,9 +79,6 @@ export class DiagramComponent implements AfterViewInit {
         //
         // this.diagram.unstructuredEdges.push(formatter);
       } else {
-        // Todo: Refactor when we refactor the creationFormatterSelection
-        // nf.position = new Position(event.clientX - nf.width / 2, event.clientY - nf.height / 2);
-        // this.diagram.nodes.push({texts: [], formatter: nf});
         let newNode : Node= this.creationTypeSelectionService.getSelectedNodeType();
         newNode.position = new Position(event.clientX - newNode.width / 2, event.clientY - newNode.height / 2);;
         this.diagram.nodes.push(newNode);
