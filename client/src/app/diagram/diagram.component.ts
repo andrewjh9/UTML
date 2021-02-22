@@ -11,6 +11,7 @@ import {DeletionService} from "../services/deletion.service";
 import {CreationFormatterSelectionService} from "../services/creation-formatter-selection.service";
 import {RectangleNode} from "../../assets/serialisation/node/rectangle-node";
 import {ad} from "../../assets/serialisation/examples/ad";
+import {Node} from "../../assets/serialisation/node/node";
 
 
 @Component({
@@ -26,7 +27,7 @@ export class DiagramComponent implements AfterViewInit {
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService,
               private modeService: ModeService, private edgeCreationService: EdgeCreationService,
               deletionService: DeletionService,
-              private creationFormatterSelectionService: CreationFormatterSelectionService) {
+              private creationTypeSelectionService: CreationFormatterSelectionService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
@@ -82,8 +83,9 @@ export class DiagramComponent implements AfterViewInit {
         // let nf: NodeFormatter = this.creationFormatterSelectionService.getSelectedNodeFormatter();
         // nf.position = new Position(event.clientX - nf.width / 2, event.clientY - nf.height / 2);
         // this.diagram.nodes.push({texts: [], formatter: nf});
-        this.diagram.nodes.push(new RectangleNode(100, 100,
-          new Position(event.clientX - 50, event.clientY - 50)));
+        let newNode : Node= this.creationTypeSelectionService.getSelectedNodeType();
+        newNode.position = new Position(event.clientX - 50, event.clientY - 50);
+        this.diagram.nodes.push(newNode);
       }
     }
   }
