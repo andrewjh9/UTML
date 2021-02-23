@@ -2,6 +2,7 @@ import {Position} from "../../assets/serialisation/position";
 // import {FormattedElement} from "./reposition.service";
 import {Injectable} from "@angular/core";
 import {Deactivatable} from "./deactivatable";
+import {Node} from "../../assets/serialisation/node/node";
 
 
 
@@ -10,65 +11,48 @@ import {Deactivatable} from "./deactivatable";
   providedIn: 'root'
 })
 export class ResizeService implements Deactivatable {
-  private formatter?: FormattedResizeElement;
+  private node?: Node;
   private startPosition?: Position;
-  private direction?: number = 0;
+  private resizePointIndex?: number;
   constructor() { }
 
   public isActive(): boolean {
-    return this.formatter !== undefined;
+    return this.node !== undefined;
   }
 
-  public activate(current: FormattedResizeElement, startPosition: Position): void {
-    this.formatter = current;
-    this.startPosition = startPosition;
+  public activate(current: Node, resizePointIndex: number): void {
+    this.node = current;
+    this.startPosition = current.position;
+    this.resizePointIndex = resizePointIndex;
   }
 
 
   public update(endPosition: Position): void {
-    if (this.formatter !== undefined && this.startPosition !== undefined) {
-      switch (this.direction) {
-        case 0:
-          this.formatter.height = this.formatter.height - (endPosition.y - this.formatter.position.y);
-          this.formatter.position.y = endPosition.y;
+    console.log(this.resizePointIndex)
+    if (this.node !== undefined && this.startPosition !== undefined) {
+      switch (this.resizePointIndex) {
+        case 0: // up
+          this.node.height = this.node.height - (endPosition.y - this.node.position.y);
+          this.node.position.y = endPosition.y;
           break;
-        case 1:
-          this.formatter.height = this.formatter.height - (endPosition.y - this.formatter.position.y);
-          this.formatter.position.y = endPosition.y;
-          this.formatter.width = endPosition.x - this.formatter.position.x;
+        case 1: //right
+          this.node.width = endPosition.x - this.node.position.x;
           break;
-        case 2:
-          this.formatter.width = endPosition.x - this.formatter.position.x;
+        case 2:  //down
+          this.node.height = endPosition.y - this.node.position.y;
           break;
-        case 3:
-          this.formatter.height = endPosition.y - this.formatter.position.y;
-          this.formatter.width = endPosition.x - this.formatter.position.x;
+        case 3: // left
+          this.node.width = this.node.width - (endPosition.x - this.node.position.x);
+          this.node.position.x = endPosition.x;
           break;
-        case 4:
-          this.formatter.height = endPosition.y - this.formatter.position.y;
-          break;
-        case 5:
-          this.formatter.height = endPosition.y - this.formatter.position.y;
-          this.formatter.width = this.formatter.width - (endPosition.x - this.formatter.position.x);
-          this.formatter.position.x = endPosition.x;
-          break;
-        case 6:
-          this.formatter.width = this.formatter.width - (endPosition.x - this.formatter.position.x);
-          this.formatter.position.x = endPosition.x;
-          break;
-        case 7:
-          this.formatter.width = this.formatter.width - (endPosition.x - this.formatter.position.x);
-          this.formatter.position.x = endPosition.x;
-          this.formatter.height = this.formatter.height - (endPosition.y - this.formatter.position.y);
-          this.formatter.position.y = endPosition.y;
-          break;
+
       }
 
     }
   }
 
   public deactivate(): void {
-    this.formatter = undefined;
+    this.node = undefined;
     this.startPosition = undefined;
   }
 }

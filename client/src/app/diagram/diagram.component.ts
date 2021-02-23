@@ -39,6 +39,7 @@ export class DiagramComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     if (this.diagram) {
+      // @ts-ignore
       this.edgeRepositionService.setNodes(this.diagram.nodes);
     }
   }
@@ -48,6 +49,8 @@ export class DiagramComponent implements AfterViewInit {
       this.repositionService.deactivate();
     } else if (this.edgeRepositionService.isActive()) {
       this.edgeRepositionService.deactivate()
+    } else if (this.resizeService.isActive()) {
+      this.resizeService.deactivate()
     }
   }
 

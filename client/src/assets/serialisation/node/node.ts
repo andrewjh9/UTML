@@ -31,11 +31,13 @@ export abstract class Node {
    return this.getAllOffsets().map(offset => Position.add(offset, this.position));
   }
 
-  /**
-   * TODO Reformat make resize points unique
-   */
+
   public getAllResizePoints(): Position[] {
-    return this.getAllAttachmentPoints();
+    return [ new Position(this.width / 2, 0),//Up
+      new Position(this.width, this.height / 2), //Right
+      new Position(this.width / 2, this.height), //Down
+      new Position(0, this.height / 2), // Left
+      ]
   }
 }
 

@@ -15,4 +15,8 @@ export abstract class ModeAwareComponent {
   public isInSelectMode(): boolean {
     return this.mode === Mode.Select;
   }
+
+  public isInMoveMode(): boolean {
+    return this.mode === Mode.Move;
+  }
 }
