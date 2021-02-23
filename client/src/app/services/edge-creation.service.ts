@@ -37,11 +37,11 @@ export class EdgeCreationService implements Deactivatable {
   }
 
   public setEnd(endNode: Node, endAttachment: AttachmentDirection) {
-    if ((this.startNode === undefined)|| (this.startAttachment === undefined)) {
-      throw new Error("Trying to set end of to be created edge while start is unset!");
+    if (!this.isActive()) {
+      throw new Error("Trying to set end whilst it is inactive!");
     }
 
-    let edge = new Edge(this.startAttachment, endAttachment, this.startNode, endNode);
+    let edge = new Edge(this.startAttachment!, endAttachment, this.startNode, endNode);
 
     for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
       // @ts-ignore

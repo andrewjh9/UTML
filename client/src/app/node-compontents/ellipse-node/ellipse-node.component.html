@@ -1,14 +1,14 @@
+<svg:ellipse *ngIf="node"
+             [attr.cx]="node!.position.x + node!.width / 2"
+             [attr.cy]="node!.position.y + node!.height / 2"
+             [attr.rx]="node!.width / 2"
+             [attr.ry]="node!.height / 2"
+             style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
+             (mousedown)="handleMouseDown($event)"
+>
+</svg:ellipse>
 
-  <svg:ellipse *ngIf="node"
-               [attr.cx]="node!.position.x + node!.width / 2"
-               [attr.cy]="node!.position.y + node!.height / 2"
-               [attr.rx]="node!.width / 2"
-               [attr.ry]="node!.height / 2"
-               style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.1;stroke-opacity:0.9"
-               (mousedown)="handleMouseDown($event)"
-  >
-  </svg:ellipse>
-
+<svg:g *ngIf="node && isInCreateMode()" clickable-attachment-points [node]="node"></svg:g>
 
 
 <!--

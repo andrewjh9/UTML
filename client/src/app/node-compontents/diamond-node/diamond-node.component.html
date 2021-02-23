@@ -4,6 +4,9 @@
               (mousedown)="handleMouseDown($event)"
 >
 </svg:polyline>
+
+<svg:g *ngIf="node && isInCreateMode()" clickable-attachment-points [node]="node"></svg:g>
+
 <!--
 
               (dblclick)="handleDoubleClick($event)"-->
