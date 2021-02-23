@@ -7,4 +7,8 @@ export abstract class ModeAwareComponent {
     this.mode = modeService.getLatestMode();
     modeService.modeObservable.subscribe(mode => this.mode = mode);
   }
+
+  public isInCreateMode(): boolean {
+    return this.mode === Mode.Create;
+  }
 }

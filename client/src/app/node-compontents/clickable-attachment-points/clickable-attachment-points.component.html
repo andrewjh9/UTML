@@ -1,0 +1,10 @@
+<svg:g *ngIf="node">
+  <svg:ellipse *ngFor="let point of node.getAllAttachmentPoints(); let i = index;"
+    [attr.cx]="point.x"
+    [attr.cy]="point.y"
+    rx="5"
+    ry="5"
+    style="fill:green;stroke:black;stroke-width:2;fill-opacity:1;stroke-opacity:0.9"
+    (mousedown)="handleClick($event, i);">
+  </svg:ellipse>
+</svg:g>

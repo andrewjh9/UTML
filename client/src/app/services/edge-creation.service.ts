@@ -43,6 +43,11 @@ export class EdgeCreationService implements Deactivatable {
 
     let edge = new Edge(this.startAttachment, endAttachment, this.startNode, endNode);
 
+    for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
+      // @ts-ignore
+      edge[key] = value;
+    }
+
     // Arcs must have 1 middle point, so we add it if needed.
     if (edge.lineType === LineType.Arc) {
       edge.setDefaultMiddlePointOnArc();

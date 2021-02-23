@@ -103,6 +103,14 @@ export class EdgeComponent extends AbstractEdgeComponent implements OnDestroy {
     }
   }
 
+  public isLine(): boolean {
+    return this.edge?.lineType === LineType.Line || false;
+  }
+
+  public isArc(): boolean {
+    return this.edge?.lineType === LineType.Arc || false;
+  }
+
   ngOnDestroy(): void {
     console.log("Edge component is being destroyed.")
   }

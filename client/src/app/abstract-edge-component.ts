@@ -24,13 +24,4 @@ export abstract class AbstractEdgeComponent {
   public abstract setStartLabel(label: string): void;
   public abstract setMiddleLabel(label: string): void;
   public abstract setEndLabel(label: string): void;
-
-
-  public isLine(): boolean {
-    return true;
-  }
-
-  public isArc(): boolean {
-    return false;
-  }
 }
