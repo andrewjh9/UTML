@@ -25,7 +25,7 @@ export class EdgeCreationService implements Deactivatable {
 
   constructor(private creationFormatterSelectionService: CreationTypeSelectionService) { }
 
-  public activate(node: Node, attachment: number) {
+  public setStart(node: Node, attachment: number) {
     this.startNode = node;
     this.startAttachment = attachment;
     this.endPreview = node.getPositionOfAttachment(attachment);

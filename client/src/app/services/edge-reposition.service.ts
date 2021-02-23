@@ -13,13 +13,13 @@ export class EdgeRepositionService implements Deactivatable {
   private position?: Position;
   private edge?: Edge;
   private nodes?: Node[];
-  private readonly DISTANCE_THRESHOLD: number = 50;
-  private mode: Mode = Mode.Inactive;
+  private readonly DISTANCE_THRESHOLD: number = 25;
+  private mode: RepositionMode = RepositionMode.Inactive;
 
   constructor() { }
 
   public isActive(): boolean {
-    return this.mode !== Mode.Inactive;
+    return this.mode !== RepositionMode.Inactive;
   }
 
   public activate(mousePosition: Position, edge: Edge): void {
@@ -29,32 +29,24 @@ export class EdgeRepositionService implements Deactivatable {
     for (let pointOnLine of edge.middlePositions) {
       if (Position.getDistance(pointOnLine, mousePosition) <= this.DISTANCE_THRESHOLD) {
         this.position = pointOnLine;
-        this.mode = Mode.FixedPosition;
+        this.mode = RepositionMode.FixedPosition;
         return;
       }
     }
 
     // Check if the point to be moved is either the start or end position.
     if (Position.getDistance(mousePosition, edge.getStartPosition()) <= this.DISTANCE_THRESHOLD) {
-      if (this.edge) {
-        this.mode = Mode.StartPosition;
-      } else {
-        this.mode = Mode.FixedPosition;
-        this.position = edge.startPosition as Position;
-      }
+      this.mode = RepositionMode.StartPosition;
       return;
-    } else if (Position.getDistance(mousePosition, edge.getEndPosition()) <= this.DISTANCE_THRESHOLD) {
-      if (this.edge) {
-        this.mode = Mode.EndPosition;
-      } else {
-        this.mode = Mode.FixedPosition;
-        this.position = edge.endPosition as Position;
-      }
+    }
+
+    if (Position.getDistance(mousePosition, edge.getEndPosition()) <= this.DISTANCE_THRESHOLD) {
+      this.mode = RepositionMode.EndPosition;
       return;
     }
 
     // Add a new point to the line. This only happens if we are not dealing with an Arc.
-    if (this.edge.lineType !== LineType.Arc) {
+    if (this.edge.lineType === LineType.Line) {
       let allPoints = this.edge.getAllPoints();
       let indexToBeInserted: number | undefined;
       for (let i = 0; i < allPoints.length - 1; i++) {
@@ -67,14 +59,22 @@ export class EdgeRepositionService implements Deactivatable {
       if (indexToBeInserted !== undefined) {
         this.edge!.middlePositions.splice(indexToBeInserted, 0, mousePosition);
         this.position = mousePosition;
-        this.mode = Mode.FixedPosition;
+        this.mode = RepositionMode.FixedPosition;
       }
-    } else if (edge?.lineType === LineType.Arc) {
+
+      return;
+    }
+
+    if (edge?.lineType === LineType.Arc) {
       this.edge.middlePositions[0].x = mousePosition.x;
       this.edge.middlePositions[0].y = mousePosition.y;
       this.position = edge.middlePositions[0];
-      this.mode = Mode.FixedPosition;
+      this.mode = RepositionMode.FixedPosition;
+      return;
     }
+
+    throw new Error("Trying to reposition an edge that is not a start, end or middle but also does not " +
+      "lie on a segment. This should be impossible");
   }
 
   private static liesOnSegment(point: Position, start: Position, end: Position): boolean {
@@ -93,65 +93,87 @@ export class EdgeRepositionService implements Deactivatable {
   }
 
   public update(newPosition: Position): void {
-    if (this.isActive()) {
-      switch (this.mode) {
-        case Mode.Inactive:
-          break;
-        case Mode.EndPosition:
-          for (let node of this.nodes!) {
-            for (let direction: number = 0; direction < 8; direction++) {
-              let attachmentPosition = node.getPositionOfAttachment(direction);
-              if (Position.getDistance(attachmentPosition, newPosition) <= this.DISTANCE_THRESHOLD / 2) {
-                this.edge!.endNode = node;
-                this.edge!.endPosition = direction as AttachmentDirection;
-                this.edge!.endNode = node;
-                return;
-              }
-            }
+    if (!this.isActive()) {
+      throw new Error("You are updating the reposition service even though it is not active!");
+    }
+
+    switch (this.mode) {
+      case RepositionMode.EndPosition:
+        for (let node of this.nodes!) {
+          let attachmentPoint = EdgeRepositionService.getAttachmentPoint(node, newPosition, this.DISTANCE_THRESHOLD);
+
+          if (attachmentPoint !== -1) {
+            this.edge!.endNode = node;
+            this.edge!.endPosition = attachmentPoint;
+            return;
           }
-          this.edge!.endPosition = newPosition;
-          break;
-        case Mode.FixedPosition:
-          this.position!.x = newPosition.x;
-          this.position!.y = newPosition.y;
-          break;
-        case Mode.StartPosition:
-          for (let node of this.nodes!) {
-            for (let direction: number = 0; direction < 8; direction++) {
-              let attachmentPosition = node.getPositionOfAttachment(direction);
-              if (Position.getDistance(attachmentPosition, newPosition) <= this.DISTANCE_THRESHOLD / 2) {
-                this.edge!.startNode = node;
-                this.edge!.startPosition = direction as AttachmentDirection;
-                this.edge!.startNode = node;
-                return;
-              }
-            }
+        }
+
+        this.edge!.endPosition = newPosition;
+        return;
+      case RepositionMode.FixedPosition:
+        this.position!.x = newPosition.x;
+        this.position!.y = newPosition.y;
+        return;
+      case RepositionMode.StartPosition:
+        for (let node of this.nodes!) {
+          let attachmentPoint = EdgeRepositionService.getAttachmentPoint(node, newPosition, this.DISTANCE_THRESHOLD);
+
+          if (attachmentPoint !== -1) {
+            this.edge!.startNode = node;
+            this.edge!.startPosition = attachmentPoint;
+            return;
           }
-          this.edge!.startPosition = newPosition;
-          break;
-      }
+        }
+
+        this.edge!.startPosition = newPosition;
+        return;
     }
   }
 
   public deactivate(): void {
     // This if statement checks if the new position of the middle position lies on the line segment
     // of the point before and after it. If it does we delete it.
-    if (this.mode == Mode.FixedPosition && this.position) {
+    if (this.mode == RepositionMode.FixedPosition && this.position) {
       let allPoints = this.edge!.getAllPoints();
       let foundIndex: number = allPoints.indexOf(this.position);
       if (0 < foundIndex && foundIndex < allPoints.length - 1) {
         if (EdgeRepositionService.liesOnSegment(this.position, allPoints[foundIndex - 1], allPoints[foundIndex + 1])) {
-
           // Remove the found index from the middle position array of the edge.
           // Since the allPoints contains the start and the middlePositions does not we subtract 1.
           this.edge!.middlePositions.splice(foundIndex - 1, 1);
-          console.log()
         }
       }
     }
+
     this.position = undefined;
     this.edge = undefined;
-    this.mode = Mode.Inactive;
+    this.mode = RepositionMode.Inactive;
+  }
+
+  /**
+   * Determine for a certain node on which attachmentPosition a given position lies.
+   * It can allow a certain error, as we can not expect users to be perfectly accurate.
+   * If no attachment point lies within the error, -1 is returned.
+   * @param node The node of which the attachmentPoints will be checked
+   * @param position The position which may lie on an attachment point.
+   * @param allowed_error The index of the attachment on which the given position approximately lies
+   *                      or -1 if it the position does not lie on any attachment points.
+   */
+  public static getAttachmentPoint(node: Node, position: Position, allowed_error: number): number {
+    let attachmentPoints = node.getAllAttachmentPoints();
+    for (let i = 0; i < attachmentPoints.length; i++) {
+      let attachmentPoint = attachmentPoints[i];
+      if (Position.getDistance(attachmentPoint, position) <= allowed_error) {
+        return i;
+      }
+    }
+
+    return -1;
+  }
+
+  public getRepositionMode(): RepositionMode {
+    return this.mode;
   }
 
   public setNodes(nodes: Node[]) {
@@ -159,9 +181,11 @@ export class EdgeRepositionService implements Deactivatable {
   }
 }
 
-enum Mode {
+export enum RepositionMode {
   Inactive,
   FixedPosition,
   StartPosition,
   EndPosition
 }
+
+
