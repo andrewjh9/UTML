@@ -26,6 +26,7 @@ import { NodeDispatcherComponent } from './node-compontents/node-dispatcher/node
 import { RectangleNodeComponent } from './node-compontents/rectangle-node/rectangle-node.component';
 import { EllipseNodeComponent } from './node-compontents/ellipse-node/ellipse-node.component';
 import { DiamondNodeComponent } from './node-compontents/diamond-node/diamond-node.component';
+import { ClickableAttachmentPointsComponent } from './node-compontents/clickable-attachment-points/clickable-attachment-points.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { DiamondNodeComponent } from './node-compontents/diamond-node/diamond-no
     NodeDispatcherComponent,
     RectangleNodeComponent,
     EllipseNodeComponent,
-    DiamondNodeComponent
+    DiamondNodeComponent,
+    ClickableAttachmentPointsComponent
   ],
     imports: [
         BrowserModule,

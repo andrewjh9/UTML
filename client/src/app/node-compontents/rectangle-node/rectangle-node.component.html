@@ -9,6 +9,7 @@
 
 </svg:rect>
 
+<svg:g *ngIf="node && isInCreateMode()" clickable-attachment-points [node]="node"></svg:g>
 <!--
           (mousedown)="handleMouseDown($event)"
           (dblclick)="handleDoubleClick($event)"
