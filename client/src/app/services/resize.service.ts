@@ -12,17 +12,16 @@ import {Deactivatable} from "./deactivatable";
 export class ResizeService implements Deactivatable {
   private formatter?: FormattedResizeElement;
   private startPosition?: Position;
-  private direction?: number;
+  private direction?: number = 0;
   constructor() { }
 
   public isActive(): boolean {
     return this.formatter !== undefined;
   }
 
-  public activate(current: FormattedResizeElement, startPosition: Position, direction: number): void {
+  public activate(current: FormattedResizeElement, startPosition: Position): void {
     this.formatter = current;
     this.startPosition = startPosition;
-    this.direction = direction;
   }
 
 

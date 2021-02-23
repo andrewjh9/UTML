@@ -27,6 +27,7 @@ import { RectangleNodeComponent } from './node-compontents/rectangle-node/rectan
 import { EllipseNodeComponent } from './node-compontents/ellipse-node/ellipse-node.component';
 import { DiamondNodeComponent } from './node-compontents/diamond-node/diamond-node.component';
 import { ClickableAttachmentPointsComponent } from './node-compontents/clickable-attachment-points/clickable-attachment-points.component';
+import {ClickableResizePointsComponent} from "./node-compontents/clickable-resize-points/clickable-resize-points.component";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { ClickableAttachmentPointsComponent } from './node-compontents/clickable
     RectangleNodeComponent,
     EllipseNodeComponent,
     DiamondNodeComponent,
-    ClickableAttachmentPointsComponent
+    ClickableAttachmentPointsComponent,
+    ClickableResizePointsComponent
   ],
     imports: [
         BrowserModule,

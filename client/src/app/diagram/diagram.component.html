@@ -3,13 +3,10 @@
     <div class="flex-grow-1">
       <svg width="1200"
            height="600"
-           (window:keydown)="handleKeyPressed($event)"
            (mouseup)="handleMouseUp($event)"
            (mousemove)="handleMouseMove($event)"
-           (dblclick)="handleDoubleClick($event)"
-      >
+           (dblclick)="handleDoubleClick($event)">
         <g new-edge-preview></g>
-
         <!--  Define markers-->
         <defs arrow-marker></defs>
 

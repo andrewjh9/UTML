@@ -3,13 +3,11 @@ import {AfterViewInit, Component} from '@angular/core';
 import {Edge, LineType} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
 import {RepositionService} from "../services/reposition.service";
-import {fsm} from "../../assets/serialisation/examples/fsm";
 import {EdgeRepositionService} from "../services/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {DeletionService} from "../services/deletion.service";
 import {CreationTypeSelectionService} from "../services/creation-type-selection.service";
-import {RectangleNode} from "../../assets/serialisation/node/rectangle-node";
 import {ad} from "../../assets/serialisation/examples/ad";
 import {Node} from "../../assets/serialisation/node/node";
 import {ResizeService} from "../services/resize.service";
@@ -27,9 +25,9 @@ export class DiagramComponent implements AfterViewInit {
 
   constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService,
               private modeService: ModeService, private edgeCreationService: EdgeCreationService,
-              deletionService: DeletionService,
-              private creationTypeSelectionService: CreationTypeSelectionService) {
-              deletionService: DeletionService, private resizeService: ResizeService) {
+              private deletionService: DeletionService,
+              private creationTypeSelectionService: CreationTypeSelectionService,
+              private resizeService: ResizeService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
@@ -91,21 +89,21 @@ export class DiagramComponent implements AfterViewInit {
 
   }
 
-  handleKeyPressed(event: KeyboardEvent): void {
-    // const SELECT_KEY = "1";
-    // const CREATE_KEY = "2";
-    // const MOVE_KEY = "3";
-    //
-    // switch (event.key) {
-    //   case SELECT_KEY :
-    //     this.modeService.setMode(Mode.Select);
-    //     break;
-    //   case CREATE_KEY:
-    //     this.modeService.setMode(Mode.Create);
-    //     break;
-    //   case MOVE_KEY:
-    //     this.modeService.setMode(Mode.Move);
-    //     break;
-    // }
-  }
+  // handleKeyPressed(event: KeyboardEvent): void {
+  //   // const SELECT_KEY = "1";
+  //   // const CREATE_KEY = "2";
+  //   // const MOVE_KEY = "3";
+  //   //
+  //   // switch (event.key) {
+  //   //   case SELECT_KEY :
+  //   //     this.modeService.setMode(Mode.Select);
+  //   //     break;
+  //   //   case CREATE_KEY:
+  //   //     this.modeService.setMode(Mode.Create);
+  //   //     break;
+  //   //   case MOVE_KEY:
+  //   //     this.modeService.setMode(Mode.Move);
+  //   //     break;
+  //   // }
+  // }
 }

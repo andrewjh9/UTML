@@ -30,6 +30,13 @@ export abstract class Node {
   public getAllAttachmentPoints(): Position[] {
    return this.getAllOffsets().map(offset => Position.add(offset, this.position));
   }
+
+  /**
+   * TODO Reformat make resize points unique
+   */
+  public getAllResizePoints(): Position[] {
+    return this.getAllAttachmentPoints();
+  }
 }
 
 export enum AttachmentDirection {
