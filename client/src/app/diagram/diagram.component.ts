@@ -12,6 +12,7 @@ import {CreationTypeSelectionService} from "../services/creation-type-selection.
 import {RectangleNode} from "../../assets/serialisation/node/rectangle-node";
 import {ad} from "../../assets/serialisation/examples/ad";
 import {Node} from "../../assets/serialisation/node/node";
+import {ResizeService} from "../services/resize.service";
 
 
 @Component({
@@ -28,6 +29,7 @@ export class DiagramComponent implements AfterViewInit {
               private modeService: ModeService, private edgeCreationService: EdgeCreationService,
               deletionService: DeletionService,
               private creationTypeSelectionService: CreationTypeSelectionService) {
+              deletionService: DeletionService, private resizeService: ResizeService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
@@ -61,6 +63,8 @@ export class DiagramComponent implements AfterViewInit {
       this.edgeRepositionService.update(position);
     } else if (this.edgeCreationService.isActive()) {
       this.edgeCreationService.endPreview = position;
+    } else if (this.resizeService.isActive()) {
+      this.resizeService.update(position);
     }
   }
 
@@ -84,6 +88,7 @@ export class DiagramComponent implements AfterViewInit {
         this.diagram.nodes.push(newNode);
       }
     }
+
   }
 
   handleKeyPressed(event: KeyboardEvent): void {
