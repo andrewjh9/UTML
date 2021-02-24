@@ -28,6 +28,7 @@ import { EllipseNodeComponent } from './node-compontents/ellipse-node/ellipse-no
 import { DiamondNodeComponent } from './node-compontents/diamond-node/diamond-node.component';
 import { ClickableAttachmentPointsComponent } from './node-compontents/clickable-attachment-points/clickable-attachment-points.component';
 import {ClickableResizePointsComponent} from "./node-compontents/clickable-resize-points/clickable-resize-points.component";
+import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import {ClickableResizePointsComponent} from "./node-compontents/clickable-resiz
     EllipseNodeComponent,
     DiamondNodeComponent,
     ClickableAttachmentPointsComponent,
-    ClickableResizePointsComponent
+    ClickableResizePointsComponent,
+    ExportDiagramComponent
   ],
     imports: [
         BrowserModule,
