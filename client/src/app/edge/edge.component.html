@@ -39,26 +39,26 @@
 
 </svg:ellipse>
 
-<!-- Render labels if they exist -->
-<!--<svg:g *ngIf="hasLabels">-->
-  <!--<svg:g *ngIf="getStartLabel()"-->
-         <!--label-component-->
-         <!--[label]="getStartLabel()"-->
-         <!--(labelChange)="setStartLabel($event)"-->
-         <!--[formatter]="getStartLabelFormatterAndSetIfAbsent()">-->
-  <!--</svg:g>-->
+ Render labels if they exist
+<svg:g *ngIf="hasLabels">
+  <svg:g *ngIf="getStartLabel()"
+         label-component
+         [label]="getStartLabel()"
+         (labelChange)="setStartLabel($event)"
+         [formatter]="getStartLabelFormatterAndSetIfAbsent()">
+  </svg:g>
 
-  <!--<svg:g *ngIf="getMiddleLabel()"-->
-         <!--label-component-->
-         <!--[label]="getMiddleLabel()"-->
-         <!--(labelChange)="setMiddleLabel($event)"-->
-         <!--[formatter]="getMiddleLabelFormatterAndSetIfAbsent()">-->
-  <!--</svg:g>-->
+  <svg:g *ngIf="getMiddleLabel()"
+         label-component
+         [label]="getMiddleLabel()"
+         (labelChange)="setMiddleLabel($event)"
+         [formatter]="getMiddleLabelFormatterAndSetIfAbsent()">
+  </svg:g>
 
-  <!--<svg:g *ngIf="getEndLabel()"-->
+  <svg:g *ngIf="getEndLabel()"
          label-component
          [label]="getEndLabel()"
          (labelChange)="setEndLabel($event)"
          [formatter]="getEndLabelFormatterAndSetIfAbsent()">
-  <!--</svg:g>-->
-<!--</svg:g>-->
+  </svg:g>
+</svg:g>
