@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {Position} from "../../assets/serialisation/position";
 import {Edge, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
 import {LabelFormatter} from "../../assets/serialisation/label";
-import {EdgeRepositionService} from "../services/edge-reposition.service";
+import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 import {AbstractEdgeComponent} from "../abstract-edge-component";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {Mode, ModeService} from "../services/mode.service";
@@ -96,7 +96,7 @@ export class EdgeComponent extends AbstractEdgeComponent implements OnDestroy {
       if (this.edge?.middlePositions) {
         // Todo: fix mouse positioning
         let mousePosition = new Position(event.clientX, event.clientY);
-        this.edgeRepositionService.activate(mousePosition, this.edge);
+        this.edgeRepositionService.activate(this.edge, mousePosition);
       }
     } else if (this.mode === Mode.Select && this.edge) {
       this.selectionService.setEdge(this.edge);

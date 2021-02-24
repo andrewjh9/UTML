@@ -4,7 +4,7 @@ import {Edge, LineType} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
 import {RepositionService} from "../services/reposition.service";
 import {fsm} from "../../assets/serialisation/examples/fsm";
-import {EdgeRepositionService} from "../services/edge-reposition.service";
+import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {DeletionService} from "../services/deletion.service";
