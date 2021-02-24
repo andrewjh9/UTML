@@ -42,6 +42,21 @@ export abstract class Node {
       new Position(0, this.height / 2), // Left
       ]
   }
+
+  public readonly styleObject: {
+    [key: string]: number | string,
+  } = {
+    'fill': 'green',
+    'stroke': 'black',
+    'stroke-width': 2,
+    'fill-opacity': 0.1,
+    'stroke-opacity': 0.9
+  };
+
+  public get styleKeys(): string[] {
+    return Object.keys(this.styleObject);
+  }
+
 }
 
 export enum AttachmentDirection {

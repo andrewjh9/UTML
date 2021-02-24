@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {EdgeRepositionService} from "./edge-reposition.service";
+import {EdgeRepositionService} from "./edge-reposition/edge-reposition.service";
 import {RepositionService} from "./reposition.service";
 import {Deactivatable} from "./deactivatable";
 import {EdgeCreationService} from "./edge-creation.service";

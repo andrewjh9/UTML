@@ -3,7 +3,8 @@ import {AfterViewInit, Component} from '@angular/core';
 import {Edge, LineType} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
 import {RepositionService} from "../services/reposition.service";
-import {EdgeRepositionService} from "../services/edge-reposition.service";
+import {fsm} from "../../assets/serialisation/examples/fsm";
+import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {DeletionService} from "../services/deletion.service";
@@ -89,24 +90,23 @@ export class DiagramComponent implements AfterViewInit {
         this.diagram.nodes.push(newNode);
       }
     }
-
   }
 
-  // handleKeyPressed(event: KeyboardEvent): void {
-  //   // const SELECT_KEY = "1";
-  //   // const CREATE_KEY = "2";
-  //   // const MOVE_KEY = "3";
-  //   //
-  //   // switch (event.key) {
-  //   //   case SELECT_KEY :
-  //   //     this.modeService.setMode(Mode.Select);
-  //   //     break;
-  //   //   case CREATE_KEY:
-  //   //     this.modeService.setMode(Mode.Create);
-  //   //     break;
-  //   //   case MOVE_KEY:
-  //   //     this.modeService.setMode(Mode.Move);
-  //   //     break;
-  //   // }
-  // }
+  handleKeyPressed(event: KeyboardEvent): void {
+    // const SELECT_KEY = "1";
+    // const CREATE_KEY = "2";
+    // const MOVE_KEY = "3";
+    //
+    // switch (event.key) {
+    //   case SELECT_KEY :
+    //     this.modeService.setMode(Mode.Select);
+    //     break;
+    //   case CREATE_KEY:
+    //     this.modeService.setMode(Mode.Create);
+    //     break;
+    //   case MOVE_KEY:
+    //     this.modeService.setMode(Mode.Move);
+    //     break;
+    // }
+  }
 }
