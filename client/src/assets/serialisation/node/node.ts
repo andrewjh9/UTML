@@ -4,15 +4,18 @@ export abstract class Node {
   public width: number;
   public height: number;
   public position: Position;
-  public texts: string[];
+  public text: string;
 
   protected constructor(width: number, height: number, position: Position) {
     this.width = width;
     this.height = height;
     this.position = position;
-    this.texts = [];
+    this.text = "";
   }
 
+  public getTextLines(): string[]{
+    return this.text.split("\\n");
+  }
   public abstract getDeepCopy(): Node;
 
   protected abstract getAllOffsets(): Position[];

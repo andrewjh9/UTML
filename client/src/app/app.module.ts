@@ -44,6 +44,7 @@ import { ExportDiagramComponent } from './export-diagram/export-diagram.componen
     EdgeEditorComponent,
     CreationMenuComponent,
     NodeEditorComponent,
+
     // UnstructuredEdgeEditorComponent,
     MoveMenuComponent,
     NodeDispatcherComponent,
@@ -59,7 +60,8 @@ import { ExportDiagramComponent } from './export-diagram/export-diagram.componen
         AppRoutingModule,
         HttpClientModule,
         FormsModule,
-        NgbModule
+        NgbModule,
+
     ],
   providers: [RepositionService, ModeService, DeletionService],
   bootstrap: [AppComponent]

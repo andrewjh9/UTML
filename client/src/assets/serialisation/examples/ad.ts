@@ -8,7 +8,7 @@ import {Edge} from "../edge";
 export let ad: Diagram;
 
 const node = new RectangleNode(100, 100, new Position(100, 100),);
-node.texts = ["test", 'test2', "test3"]
+node.text = "test \\n test 2"
 const node2 = new RectangleNode(100, 100, new Position(300, 100));
 
 const edge: Edge = new Edge(2, 6, node, node2);

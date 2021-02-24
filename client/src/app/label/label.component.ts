@@ -33,7 +33,7 @@ export class LabelComponent {
 
   lineBreakLabel() : string[]{
     if (this.label){
-      return  this.label.split("\\");
+      return  this.label.split("\\n");
     }
     return []
   }
