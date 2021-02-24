@@ -30,6 +30,21 @@ export abstract class Node {
   public getAllAttachmentPoints(): Position[] {
    return this.getAllOffsets().map(offset => Position.add(offset, this.position));
   }
+
+  public readonly styleObject: {
+    [key: string]: number | string,
+  } = {
+    'fill': 'green',
+    'stroke': 'black',
+    'stroke-width': 2,
+    'fill-opacity': 0.1,
+    'stroke-opacity': 0.9
+  };
+
+  public get styleKeys(): string[] {
+    return Object.keys(this.styleObject);
+  }
+
 }
 
 export enum AttachmentDirection {
