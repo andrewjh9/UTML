@@ -13,7 +13,7 @@ export abstract class Node {
     this.text = "";
   }
 
-  public getTextLines(): string[]{
+  public getTextLines(): string[] {
     return this.text.split("\\n");
   }
   public abstract getDeepCopy(): Node;

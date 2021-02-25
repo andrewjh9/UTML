@@ -1,18 +1,18 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractNodeComponent} from "../abstract-node-component";
-import {DiamondNode} from "../../../assets/serialisation/node/diamond-node";
+import {ClassNode} from "../../../assets/serialisation/node/class-node";
 import {Node} from "../../../assets/serialisation/node/node";
 import {RepositionService} from "../../services/reposition.service";
 import {ModeService} from "../../services/mode.service";
 import {SelectionService} from "../../services/selection.service";
 
 @Component({
-  selector: '[diamond-node]',
-  templateUrl: './diamond-node.component.html',
-  styleUrls: ['./diamond-node.component.scss']
+  selector: '[class-node]',
+  templateUrl: './class-node.component.html',
+  styleUrls: ['./class-node.component.scss']
 })
-export class DiamondNodeComponent extends AbstractNodeComponent {
-  @Input() node?: DiamondNode;
+export class ClassNodeComponent extends AbstractNodeComponent {
+  @Input() node?: ClassNode;
 
   constructor(repositionService: RepositionService,
               modeService: ModeService,
@@ -21,6 +21,7 @@ export class DiamondNodeComponent extends AbstractNodeComponent {
   }
 
   public getNode(): Node {
-    return this.node as Node;
+    return <Node> this.node;
   }
+
 }

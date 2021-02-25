@@ -3,6 +3,7 @@ import {Node} from "../../../assets/serialisation/node/node";
 import {RectangleNode} from "../../../assets/serialisation/node/rectangle-node";
 import {EllipseNode} from "../../../assets/serialisation/node/ellipse-node";
 import {DiamondNode} from "../../../assets/serialisation/node/diamond-node";
+import {ClassNode} from "../../../assets/serialisation/node/class-node";
 @Component({
   selector: '[node-dispatcher]',
   templateUrl: './node-dispatcher.component.html',
@@ -14,7 +15,7 @@ export class NodeDispatcherComponent {
   constructor() { }
 
   isRectangle(node: Node): boolean {
-    return node instanceof RectangleNode;
+    return node instanceof RectangleNode && !(node instanceof ClassNode);
   }
 
   castToRectangle(node: Node): RectangleNode {
@@ -34,9 +35,14 @@ export class NodeDispatcherComponent {
   }
 
   isDiamond(node: Node): boolean {
-
     return node instanceof DiamondNode;
   }
 
+  isClass(node: Node): boolean {
+    return node instanceof ClassNode;
+  }
 
+  castToClass(node: Node): ClassNode {
+    return <ClassNode> node;
+  }
 }

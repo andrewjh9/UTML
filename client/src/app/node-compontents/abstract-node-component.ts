@@ -12,7 +12,7 @@ export abstract class AbstractNodeComponent extends ModeAwareComponent {
     super(modeService);
   }
 
-  protected abstract getNode(): Node;
+  public abstract getNode(): Node;
 
 
   public handleMouseDown(event: MouseEvent) {

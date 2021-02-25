@@ -4,12 +4,14 @@ import {RectangleNode} from "../node/rectangle-node";
 import {EllipseNode} from "../node/ellipse-node";
 import {DiamondNode} from "../node/diamond-node";
 import {Edge} from "../edge";
+import {ForkRejoinNode} from "../node/fork-rejoin-node";
 
 export let ad: Diagram;
 
 const node = new RectangleNode(100, 100, new Position(100, 100),);
 node.text = "test \\n test 2"
 const node2 = new RectangleNode(100, 100, new Position(300, 100));
+const forkRejoin = new ForkRejoinNode(25, 300, new Position(200, 10));
 
 const edge: Edge = new Edge(2, 6, node, node2);
 edge.middleLabel = "abc";
@@ -59,4 +61,4 @@ const edge2: Edge = new Edge(new Position(200, 200), new Position(300, 300), und
 // ad = {nodes: [node, node2, node3], edges: []};
 
 // this.diagramString = JSON.stringify(this.diagram);
-ad = {nodes: [node, node2], edges: [edge, edge2]};
+ad = {nodes: [node, node2, forkRejoin], edges: [edge, edge2]};

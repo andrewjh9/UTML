@@ -8,9 +8,12 @@
 >
 </svg:ellipse>
 
-  <svg:g *ngIf="node && isInCreateMode()" clickable-attachment-points [node]="node"></svg:g>
+<svg:g *ngIf="node && isInCreateMode()" clickable-attachment-points [node]="node"></svg:g>
 
-  <svg:g *ngIf="node && isInSelectMode()" clickable-resize-points [node]="node"></svg:g>
+<svg:g *ngIf="node && isInSelectMode()" clickable-resize-points [node]="node"></svg:g>
+
+<svg:g basic-node-text [node]="getNode()"></svg:g>
+
 
 <!--
              [ngClass]="{'movable': isInMoveMode()}"

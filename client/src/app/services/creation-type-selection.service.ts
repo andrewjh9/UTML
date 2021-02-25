@@ -6,6 +6,7 @@ import {Node} from "../../assets/serialisation/node/node";
 import {DiamondNode} from "../../assets/serialisation/node/diamond-node";
 import {EllipseNode} from "../../assets/serialisation/node/ellipse-node";
 import {RectangleNode} from "../../assets/serialisation/node/rectangle-node";
+import {ForkRejoinNode} from "../../assets/serialisation/node/fork-rejoin-node";
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class CreationTypeSelectionService {
       new RectangleNode(100, 100, new Position(0, 0)),
       new EllipseNode(100, 100, new Position(0, 0)),
       new DiamondNode(100, 100, new Position(0, 0)),
+      new ForkRejoinNode(20, 300, new Position(0, 0)),
     ];
     this.currentNodeIndex = 0;
 

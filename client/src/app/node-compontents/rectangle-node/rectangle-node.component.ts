@@ -12,7 +12,7 @@ import {SelectionService} from "../../services/selection.service";
   styleUrls: ['./rectangle-node.component.scss']
 })
 export class RectangleNodeComponent extends AbstractNodeComponent {
-  @Input() node?: RectangleNode;
+  @Input() public node?: RectangleNode;
 
   constructor(repositionService: RepositionService,
               modeService: ModeService,
@@ -20,7 +20,7 @@ export class RectangleNodeComponent extends AbstractNodeComponent {
     super(repositionService, modeService, selectionService);
   }
 
-  protected getNode(): Node {
+  public getNode(): Node {
     return this.node as Node;
   }
 }

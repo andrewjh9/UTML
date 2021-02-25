@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" (keyup)="handleKeyPressed($event)">
   <div class="row d-flex" style="text-align: right; float:right;padding: 10px">
     <app-export-diagram></app-export-diagram>
   </div>
@@ -15,7 +15,6 @@
         <g new-edge-preview></g>
         <!--  Define markers-->
         <defs arrow-marker></defs>
-
         <g *ngFor="let edge of diagram.edges; let i = index"
            edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
         <g node-dispatcher [nodes]="diagram.nodes"></g>
@@ -26,7 +25,7 @@
 
       </svg>
     </div>
-    <div style="width: 500px">
+    <div style="width: 400px">
       <app-mode-selector></app-mode-selector>
       <app-selected-editor *ngIf="mode === Mode.Select"></app-selected-editor>
       <app-creation-menu *ngIf="mode === Mode.Create"></app-creation-menu>

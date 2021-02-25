@@ -1,0 +1,29 @@
+<svg:g *ngIf="node">
+  <svg:rect [attr.x]="node.position.x"
+            [attr.y]="node.position.y"
+            [attr.width]="node.width"
+            [attr.height]="node.height"
+            (mousedown)="handleMouseDown($event)"
+            [ngStyle]="node.styleObject"
+  >
+  </svg:rect>
+
+  <svg:g *ngIf="node && isInCreateMode()" clickable-attachment-points [node]="node"></svg:g>
+
+  <svg:g *ngIf="node && isInSelectMode()" clickable-resize-points [node]="node"></svg:g>
+
+  <svg:text *ngFor="let line of node.getTextLines(); let i = index;"
+            [attr.x]="node.position.x + node.width / 2"
+            [attr.y]="node.position.y + i * 24 + 20"
+            text-anchor="middle"
+            style="font-size: 16px">
+    {{line}}
+  </svg:text>
+
+  <svg:line [attr.x1]="node.position.x"
+            [attr.x2]="node.position.x + node.width"
+            [attr.y1]="node.position.y + (node.firstLine + 1) * 24"
+            [attr.y2]="node.position.y + (node.firstLine + 1) * 24"
+            style="stroke: black; stroke-width: 2px">
+  </svg:line>
+</svg:g>

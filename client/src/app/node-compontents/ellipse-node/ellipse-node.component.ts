@@ -20,7 +20,7 @@ export class EllipseNodeComponent extends AbstractNodeComponent {
     super(repositionService, modeService, selectionService);
   }
 
-  protected getNode(): Node {
+  public getNode(): Node {
     return this.node as Node;
   }
 }
