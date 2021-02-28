@@ -36,7 +36,7 @@
 //   // public handleMouseDown(event: MouseEvent) {
 //   //   if (this.mode === Mode.Move) {
 //   //     if (this.formatter) {
-//   //       // todo: fix mouse positioning.
+//   //       // todo: fix mouse Positioning.
 //   //       this.repositionService.activate(new Position(event.pageX, event.pageY), undefined, this.formatter);
 //   //     }
 //   //   } else if (this.mode === Mode.Select) {

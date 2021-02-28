@@ -94,7 +94,7 @@ export class EdgeComponent extends AbstractEdgeComponent implements OnDestroy {
   public handleMouseDown(event: MouseEvent): void {
     if (this.mode === Mode.Move) {
       if (this.edge?.middlePositions) {
-        // Todo: fix mouse positioning
+        // Todo: fix mouse Positioning
         let mousePosition = new Position(event.clientX, event.clientY);
         this.edgeRepositionService.activate(this.edge, mousePosition);
       }
