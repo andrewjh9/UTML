@@ -5,12 +5,14 @@ export abstract class Node {
   public height: number;
   public position: Position;
   public text: string;
+  public hasDoubleBorder: boolean;
 
   protected constructor(width: number, height: number, position: Position) {
     this.width = width;
     this.height = height;
     this.position = position;
     this.text = "";
+    this.hasDoubleBorder = false;
   }
 
   public getTextLines(): string[] {
