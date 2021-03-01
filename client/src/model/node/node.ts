@@ -1,5 +1,5 @@
 import {Position} from '../position';
-import {SerialisedNode} from "../../serialisation/serialised-node";
+import {SerialisedNode} from "../../serialisation/serialised-data-structures/serialised-node";
 
 export abstract class Node {
   public width: number;

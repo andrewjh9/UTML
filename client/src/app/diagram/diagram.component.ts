@@ -16,7 +16,7 @@ import {Node} from "../../model/node/node";
 import {ResizeService} from "../services/resize.service";
 import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
 import {ClassNode} from "../../model/node/class-node";
-import {deserialiseDiagram} from "../../serialisation/deserialise-diagram";
+import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
 
 
 @Component({

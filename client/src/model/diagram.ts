@@ -1,6 +1,6 @@
 import {Edge} from "./edge";
 import {Node} from "./node/node";
-import {SerialisedDiagram} from "../serialisation/serialised-diagram";
+import {SerialisedDiagram} from "../serialisation/serialised-data-structures/serialised-diagram";
 
 
 export class Diagram {
@@ -14,9 +14,25 @@ export class Diagram {
   }
 
   public serialise(): SerialisedDiagram {
+    let serialisedNodes = this.nodes.map((node) => node.serialise());
+    let serialisedEdges = this.edges.map((edge) => edge.serialise());
+
+    for (let edgeIndex = 0; edgeIndex < this.edges.length; edgeIndex++) {
+      let serialisedEdge = serialisedEdges[edgeIndex];
+      let actualEdge = this.edges[edgeIndex];
+
+      if (actualEdge.startNode) {
+        serialisedEdge.startNodeId = this.nodes.indexOf(actualEdge.startNode);
+      }
+
+      if (actualEdge.endNode) {
+        serialisedEdge.endNodeId = this.nodes.indexOf(actualEdge.endNode);
+      }
+    }
+    console.log(serialisedEdges)
     return {
-      nodes: this.nodes.map((node) => node.serialise()),
-      edges: this.edges.map((edge) => edge.serialise()),
+      edges: serialisedEdges,
+      nodes: serialisedNodes
     }
   }
 }

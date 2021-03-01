@@ -1,7 +1,7 @@
 import {Position} from "./position";
 import {Node} from "./node/node";
 import {Label} from "./label";
-import {SerialisedEdge} from "../serialisation/serialised-edge";
+import {SerialisedEdge} from "../serialisation/serialised-data-structures/serialised-edge";
 
 export class Edge {
   public startNode?: Node;
@@ -20,8 +20,10 @@ export class Edge {
   public middleLabel?: Label;
   public endLabel?: Label;
 
-  constructor(startPosition: Position | number, endPosition: Position | number,
-              startNode: Node | undefined = undefined, endNode: Node | undefined = undefined) {
+  constructor(startPosition: Position | number,
+              endPosition: Position | number,
+              startNode: Node | undefined = undefined,
+              endNode: Node | undefined = undefined) {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
     this.startNode = startNode;
@@ -199,7 +201,15 @@ export class Edge {
     return {
       startPosition: this.startPosition,
       endPosition: this.endPosition,
-    };
+      startLabel: this.startLabel?.serialise(),
+      middleLabel: this.middleLabel?.serialise(),
+      endLabel: this.endLabel?.serialise(),
+      startStyle: this.startStyle,
+      endStyle: this.endStyle,
+      lineStyle: this.lineStyle,
+      lineType: this.lineType,
+      middlePositions: this.middlePositions.map(p => p.serialise()),
+    }
   }
 }
 

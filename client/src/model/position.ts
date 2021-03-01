@@ -1,4 +1,4 @@
-import {SerialisedPosition} from "../serialisation/serialised-position";
+import {SerialisedPosition} from "../serialisation/serialised-data-structures/serialised-position";
 
 export class Position {
   constructor(public x: number, public y: number) {

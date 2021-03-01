@@ -1,10 +1,10 @@
-import {SerialisedNode} from "./serialised-node";
-import {Node} from "../model/node/node";
-import {RectangleNode} from "../model/node/rectangle-node";
+import {SerialisedNode} from "../serialised-data-structures/serialised-node";
+import {Node} from "../../model/node/node";
+import {RectangleNode} from "../../model/node/rectangle-node";
 import {deserialisePosition} from "./deserialise-position";
-import {Position} from "../model/position";
-import {EllipseNode} from "../model/node/ellipse-node";
-import {DiamondNode} from "../model/node/diamond-node";
+import {Position} from "../../model/position";
+import {EllipseNode} from "../../model/node/ellipse-node";
+import {DiamondNode} from "../../model/node/diamond-node";
 
 function deserialiseGeneric(serialisedNode: SerialisedNode, constructor: GenericNodeConstructor): Node {
   let result = new constructor(serialisedNode.width, serialisedNode.height,
