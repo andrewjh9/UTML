@@ -19,11 +19,11 @@ export class RepositionService implements Deactivatable {
     this.startPosition = startPosition;
   }
 
-  public update(endPosition: Position): void {
+  public update(mousePosition: Position): void {
     if (this.positionable !== undefined && this.startPosition !== undefined) {
-      let difference = Position.subtract(endPosition, this.startPosition);
+      let difference = Position.subtract(mousePosition, this.startPosition);
       this.positionable.position = Position.add(this.positionable.position, difference);
-      this.startPosition = endPosition;
+      this.startPosition = mousePosition;
     }
   }
 

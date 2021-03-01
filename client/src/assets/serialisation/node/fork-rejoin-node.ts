@@ -10,10 +10,10 @@ export class ForkRejoinNode extends RectangleNode {
 
   public getAllOffsets(): Position[] {
     let bigDimension = Math.max(this.width, this.height);
-    const POINT_AMOUNT = 4;
+    const POINT_AMOUNT = 5;
 
     let result: Position[] = [];
-    for (let offset = 0; offset <= bigDimension; offset += (bigDimension / POINT_AMOUNT)) {
+    for (let offset = 0; offset <= bigDimension; offset += (bigDimension / (POINT_AMOUNT - 1))) {
       if (this.width > this.height) {
         result.push(new Position(offset, 0), new Position(offset, this.height));
       } else {

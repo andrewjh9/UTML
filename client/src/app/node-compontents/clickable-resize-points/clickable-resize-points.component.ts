@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Node} from "../../../assets/serialisation/node/node";
 import {EdgeCreationService} from "../../services/edge-creation.service";
-import {FormattedResizeElement, ResizeService} from "../../services/resize.service";
+import {ResizeService} from "../../services/resize.service";
 import {Position} from "../../../assets/serialisation/position";
 
 @Component({

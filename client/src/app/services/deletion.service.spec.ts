@@ -23,7 +23,7 @@ describe('DeletionService ', () => {
     e1 = new Edge(0, 0, n1, n2);
     unknownEdge = new Edge(0, 0, n1, unknownNode);
     deletionService = new DeletionService;
-  })
+  });
 
   describe('without diagram set ', () => {
     it('should throw errors if deleteEdge is called', function () {
