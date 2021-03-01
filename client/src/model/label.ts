@@ -1,18 +1,11 @@
 import {Position} from "./position";
 
-export class LabelFormatter {
-  /** The center position of the label */
-  private _position: Position;
+export class Label {
+  public position: Position;
+  public value: string;
 
-  constructor(position: Position) {
-    this._position = position;
-  }
-
-  get position(): Position {
-    return this._position;
-  }
-
-  set position(value: Position) {
-    this._position = value;
+  constructor(position: Position, value: string) {
+    this.position = position;
+    this.value = value;
   }
 }

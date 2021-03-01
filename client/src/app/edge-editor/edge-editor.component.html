@@ -1,23 +1,32 @@
 <div class="w-100" *ngIf="edge">
   <div class="form-group row px-3">
     <label class="w-25 col-form-label">Start Label</label>
-    <div class="w-75">
-      <input class="w-100" type="text" [(ngModel)]="edge.startLabel">
+    <div class="w-75" *ngIf="edge.startLabel">
+      <input class="w-100" type="text" [(ngModel)]="edge.startLabel.value">
     </div>
+    <button class="w-75 btn btn-primary" *ngIf="!edge.startLabel" (click)="edge.addStartLabel()">
+      Add start label
+    </button>
   </div>
 
   <div class="form-group row px-3">
     <label class="w-25 col-form-label">Middle Label</label>
-    <div class="w-75">
-      <input class="w-100" type="text" [(ngModel)]="edge.middleLabel">
+    <div class="w-75" *ngIf="edge.middleLabel">
+      <input class="w-100" type="text" [(ngModel)]="edge.middleLabel.value">
     </div>
+    <button class="w-75 btn btn-primary" *ngIf="!edge.middleLabel" (click)="edge.addMiddleLabel()">
+      Add middle label
+    </button>
   </div>
 
   <div class="form-group row px-3">
     <label class="w-25 col-form-label">End Label</label>
-    <div class="w-75">
-      <input class="w-100" type="text" [(ngModel)]="edge.endLabel">
+    <div class="w-75" *ngIf="edge.endLabel">
+      <input class="w-100" type="text" [(ngModel)]="edge.endLabel.value">
     </div>
+    <button class="w-75 btn btn-primary" *ngIf="!edge.endLabel" (click)="edge.addEndLabel()">
+      Add end label
+    </button>
   </div>
 
   <div class="form-group row px-3">

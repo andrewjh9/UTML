@@ -5,16 +5,19 @@ import {EllipseNode} from "../node/ellipse-node";
 import {DiamondNode} from "../node/diamond-node";
 import {Edge} from "../edge";
 import {ForkRejoinNode} from "../node/fork-rejoin-node";
+import {Label} from "../label";
 
 export let ad: Diagram;
 
 const node = new RectangleNode(100, 100, new Position(100, 100),);
 node.text = "test \\n test 2"
-const node2 = new RectangleNode(100, 100, new Position(300, 100));
+const node2 = new RectangleNode(100, 100, new Position(500, 100));
 // const forkRejoin = new ForkRejoinNode(25, 300, new Position(200, 10));
 
 const edge: Edge = new Edge(2, 6, node, node2);
-edge.middleLabel = "abc";
+edge.addStartLabel('multi\\nline');
+edge.addMiddleLabel();
+edge.addEndLabel();
 const edge2: Edge = new Edge(new Position(200, 200), new Position(300, 300), undefined, undefined);
 
 // const node: Node = {
