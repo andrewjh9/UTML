@@ -1,17 +1,24 @@
 package nl.utwente.utml.model;
 
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
+
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Diagram {
-    private final UUID id;
-    private final String serializedDiagram;
+@Entity
+@Table(name = "diagrams")
+    public class Diagram implements Serializable {
 
-    public Diagram(UUID id, String serializedDiagram) {
-        this.id = id;
-        this.serializedDiagram = serializedDiagram;
-    }
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private String serializedDiagram;
 
-    public UUID getId() {
+
+
+    public Integer getId() {
         return id;
     }
 

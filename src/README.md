@@ -1,4 +1,11 @@
 
+
+##Serve angular
+Use the following commands build and to copy the angular into the backend:
+np -p build
+cp -r client/dist/client/ src/main/resources/static
+
+
 ##Database
 ###Development
 Run a postgres instance locally. Match the credentials with the ones in the development.json file. 

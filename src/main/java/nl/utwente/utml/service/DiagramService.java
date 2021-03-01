@@ -1,6 +1,7 @@
 package nl.utwente.utml.service;
 
 import nl.utwente.utml.dao.DiagramDao;
+import nl.utwente.utml.dao.IDiagramDao;
 import nl.utwente.utml.model.Diagram;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -9,17 +10,17 @@ import java.util.List;
 
 @Service
 public class DiagramService {
-    private final DiagramDao diagramDao;
+    private final DiagramDao IDiagramDao;
 
-    public DiagramService(@Qualifier("fakeDao") DiagramDao diagramDao) {
-        this.diagramDao = diagramDao;
+    public DiagramService(@Qualifier("diagramDao") DiagramDao IDiagramDao) {
+        this.IDiagramDao = IDiagramDao;
     }
 
-    public Diagram add(Diagram diagram) {
-        return diagramDao.add(diagram);
+    public void add(Diagram diagram) {
+        IDiagramDao.save(diagram);
     }
 
     public List<Diagram> getAll() {
-        return diagramDao.getAll();
+        return IDiagramDao.findAll();
     }
 }

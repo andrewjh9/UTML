@@ -12,7 +12,6 @@ import java.util.List;
 @RestController
 public class DiagramController {
     private final DiagramService diagramService;
-
     @Autowired
     public DiagramController(DiagramService diagramService) {
         this.diagramService = diagramService;
