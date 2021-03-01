@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {LabelFormatter} from "../../assets/serialisation/label";
-import {Position} from "../../assets/serialisation/position";
+import {LabelFormatter} from "../../model/label";
+import {Position} from "../../model/position";
 import {RepositionService} from "../services/reposition.service";
 import {SafeHtml} from "@angular/platform-browser";
 import {Mode, ModeService} from "../services/mode.service";

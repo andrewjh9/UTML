@@ -1,9 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Node} from "../../../assets/serialisation/node/node";
-import {RectangleNode} from "../../../assets/serialisation/node/rectangle-node";
-import {EllipseNode} from "../../../assets/serialisation/node/ellipse-node";
-import {DiamondNode} from "../../../assets/serialisation/node/diamond-node";
-import {ClassNode} from "../../../assets/serialisation/node/class-node";
+import {Node} from "../../../model/node/node";
+import {RectangleNode} from "../../../model/node/rectangle-node";
+import {EllipseNode} from "../../../model/node/ellipse-node";
+import {DiamondNode} from "../../../model/node/diamond-node";
+import {ClassNode} from "../../../model/node/class-node";
 @Component({
   selector: '[node-dispatcher]',
   templateUrl: './node-dispatcher.component.html',

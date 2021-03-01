@@ -1,5 +1,5 @@
-import {LineType} from "../assets/serialisation/edge";
-import {LabelFormatter} from "../assets/serialisation/label";
+import {LineType} from "../model/edge";
+import {LabelFormatter} from "../model/label";
 import {SelectionService} from "./services/selection.service";
 import {Mode, ModeService} from "./services/mode.service";
 import {OnDestroy} from "@angular/core";

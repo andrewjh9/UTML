@@ -1,21 +1,22 @@
-import {Position} from '../../assets/serialisation/position';
+import {Position} from '../../model/position';
 import {AfterViewInit, Component} from '@angular/core';
-import {Edge, LineType} from "../../assets/serialisation/edge";
-import {Diagram} from "../../assets/serialisation/diagram";
+import {Edge, LineType} from "../../model/edge";
+import {Diagram} from "../../model/diagram";
 import {RepositionService} from "../services/reposition.service";
-import {fsm} from "../../assets/serialisation/examples/fsm";
-import {cd} from "../../assets/serialisation/examples/cd";
+import {fsm} from "../../model/examples/fsm";
+import {cd} from "../../model/examples/cd";
 
 import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {DeletionService} from "../services/deletion.service";
 import {CreationTypeSelectionService} from "../services/creation-type-selection.service";
-import {ad} from "../../assets/serialisation/examples/ad";
-import {Node} from "../../assets/serialisation/node/node";
+import {ad} from "../../model/examples/ad";
+import {Node} from "../../model/node/node";
 import {ResizeService} from "../services/resize.service";
-import {ForkRejoinNode} from "../../assets/serialisation/node/fork-rejoin-node";
-import {ClassNode} from "../../assets/serialisation/node/class-node";
+import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
+import {ClassNode} from "../../model/node/class-node";
+import {deserialiseDiagram} from "../../serialisation/deserialise-diagram";
 
 
 @Component({
@@ -36,8 +37,8 @@ export class DiagramComponent implements AfterViewInit {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
-    // this.diagram = ad;
-    this.diagram = cd;
+    this.diagram = ad;
+    // this.diagram = cd;
     edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => this.diagram.edges.push(newEdge));
 
     deletionService.setDiagram(this.diagram);
@@ -76,6 +77,8 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleDoubleClick(event: MouseEvent){
+    console.log(JSON.stringify(this.diagram.serialise()));
+    this.diagram = deserialiseDiagram(this.diagram.serialise());
     if (this.mode === Mode.Create) {
       if (event.ctrlKey) {
         // let formatter = new EdgeFormatter(new Position(event.clientX, event.clientY),

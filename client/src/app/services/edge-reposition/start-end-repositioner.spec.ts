@@ -1,8 +1,8 @@
 import {StartEndRepositioner} from "./start-end-repositioner";
-import {Node} from "../../../assets/serialisation/node/node";
-import {RectangleNode} from "../../../assets/serialisation/node/rectangle-node";
-import {Position} from "../../../assets/serialisation/position";
-import {Edge} from "../../../assets/serialisation/edge";
+import {Node} from "../../../model/node/node";
+import {RectangleNode} from "../../../model/node/rectangle-node";
+import {Position} from "../../../model/position";
+import {Edge} from "../../../model/edge";
 import {EdgeRepositionService} from "./edge-reposition.service";
 
 describe('StartEndRepositioner ', function () {

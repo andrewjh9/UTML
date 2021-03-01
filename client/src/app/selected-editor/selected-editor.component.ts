@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
-import {Edge, LineStyle} from "../../assets/serialisation/edge";
-import {Node} from "../../assets/serialisation/node/node";
+import {Edge, LineStyle} from "../../model/edge";
+import {Node} from "../../model/node/node";
 import {SelectionService} from "../services/selection.service";
 import {DeletionService} from "../services/deletion.service";
 import {ModeService} from "../services/mode.service";

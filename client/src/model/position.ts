@@ -1,3 +1,5 @@
+import {SerialisedPosition} from "../serialisation/serialised-position";
+
 export class Position {
   constructor(public x: number, public y: number) {
   }
@@ -12,6 +14,13 @@ export class Position {
 
   public getDeepCopy(): Position {
     return new Position(this.x, this.y);
+  }
+
+  public serialise(): SerialisedPosition {
+    return {
+      x: this.x,
+      y: this.y
+    }
   }
 
   public static add(p1: Position, p2: Position): Position {

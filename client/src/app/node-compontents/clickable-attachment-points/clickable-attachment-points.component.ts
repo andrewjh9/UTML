@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Node} from "../../../assets/serialisation/node/node";
+import {Node} from "../../../model/node/node";
 import {EdgeCreationService} from "../../services/edge-creation.service";
 
 @Component({

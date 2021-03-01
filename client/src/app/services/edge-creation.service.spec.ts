@@ -1,9 +1,9 @@
 import {EdgeCreationService} from "./edge-creation.service";
 import {CreationTypeSelectionService} from "./creation-type-selection.service";
-import {RectangleNode} from "../../assets/serialisation/node/rectangle-node";
-import {Position} from "../../assets/serialisation/position";
-import {Node} from "../../assets/serialisation/node/node";
-import {Edge, LineType} from "../../assets/serialisation/edge";
+import {RectangleNode} from "../../model/node/rectangle-node";
+import {Position} from "../../model/position";
+import {Node} from "../../model/node/node";
+import {Edge, LineType} from "../../model/edge";
 
 describe("EdgeCreationService", () => {
   let edgeCreationService: EdgeCreationService;

@@ -1,8 +1,8 @@
-import {Position} from "../../assets/serialisation/position";
+import {Position} from "../../model/position";
 // import {FormattedElement} from "./reposition.service";
 import {Injectable} from "@angular/core";
 import {Deactivatable} from "./deactivatable";
-import {Node} from "../../assets/serialisation/node/node";
+import {Node} from "../../model/node/node";
 
 
 

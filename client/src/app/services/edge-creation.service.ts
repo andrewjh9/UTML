@@ -1,8 +1,8 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Deactivatable} from "./deactivatable";
-import {AttachmentDirection, Node} from "../../assets/serialisation/node/node";
-import {Position} from "../../assets/serialisation/position";
-import {Edge, LineType} from "../../assets/serialisation/edge";
+import {AttachmentDirection, Node} from "../../model/node/node";
+import {Position} from "../../model/position";
+import {Edge, LineType} from "../../model/edge";
 import {CreationTypeSelectionService} from "./creation-type-selection.service";
 
 

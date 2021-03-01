@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Position} from "../../../assets/serialisation/position";
-import {Node} from "../../../assets/serialisation/node/node";
-import {Edge, LineType} from "../../../assets/serialisation/edge";
+import {Position} from "../../../model/position";
+import {Node} from "../../../model/node/node";
+import {Edge, LineType} from "../../../model/edge";
 import {Deactivatable} from "../deactivatable";
 import {StartEndRepositioner} from "./start-end-repositioner";
 import {ArcMiddleRepositioner} from "./arc-middle-repositioner";

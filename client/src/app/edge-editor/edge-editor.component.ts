@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Edge} from "../../assets/serialisation/edge";
+import {Edge} from "../../model/edge";
 import {DeletionService} from "../services/deletion.service";
 
 @Component({

@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Edge} from "../../assets/serialisation/edge";
-import {Node} from "../../assets/serialisation/node/node";
+import {Edge} from "../../model/edge";
+import {Node} from "../../model/node/node";
 
 @Injectable({
   providedIn: 'root'

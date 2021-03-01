@@ -1,7 +1,7 @@
 import {EventEmitter, Injectable} from "@angular/core";
-import {Node} from "../../assets/serialisation/node/node";
-import {Diagram} from "../../assets/serialisation/diagram";
-import {Edge} from "../../assets/serialisation/edge";
+import {Node} from "../../model/node/node";
+import {Diagram} from "../../model/diagram";
+import {Edge} from "../../model/edge";
 
 @Injectable({
   providedIn: "root"

@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractNodeComponent} from "../abstract-node-component";
-import {EllipseNode} from "../../../assets/serialisation/node/ellipse-node";
-import {Node} from "../../../assets/serialisation/node/node";
+import {EllipseNode} from "../../../model/node/ellipse-node";
+import {Node} from "../../../model/node/node";
 import {RepositionService} from "../../services/reposition.service";
 import {ModeService} from "../../services/mode.service";
 import {SelectionService} from "../../services/selection.service";

@@ -1,4 +1,5 @@
 import {Position} from '../position';
+import {SerialisedNode} from "../../serialisation/serialised-node";
 
 export abstract class Node {
   public width: number;
@@ -18,10 +19,14 @@ export abstract class Node {
   public getTextLines(): string[] {
     return this.text.split("\\n");
   }
+
   public abstract getDeepCopy(): Node;
 
   protected abstract getAllOffsets(): Position[];
 
+  /**
+   * Returns the node type name. This is used for serialisation.
+   */
   abstract getNodeTypeName(): string;
 
   public getPositionOfAttachment(index: number): Position {
@@ -59,6 +64,16 @@ export abstract class Node {
     return Object.keys(this.styleObject);
   }
 
+  public serialise(): SerialisedNode {
+    return {
+      type: this.getNodeTypeName(),
+      width: this.width,
+      height: this.height,
+      position: this.position.serialise(),
+      text: this.text,
+      hasDoubleBorder: this.hasDoubleBorder
+    }
+  }
 }
 
 export enum AttachmentDirection {

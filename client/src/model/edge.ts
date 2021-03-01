@@ -1,6 +1,7 @@
 import {Position} from "./position";
-import {AttachmentDirection, Node} from "./node/node";
+import {Node} from "./node/node";
 import {LabelFormatter} from "./label";
+import {SerialisedEdge} from "../serialisation/serialised-edge";
 
 export class Edge {
   public startNode?: Node;
@@ -180,6 +181,13 @@ export class Edge {
     let middle = Position.multiply(0.5, Position.add(start, end));
     let position = Position.add(middle, Position.multiply(0.25, betweenPerpendicular))
     this.middlePositions.push(position);
+  }
+
+  public serialise(): SerialisedEdge {
+    return {
+      startPosition: this.startPosition,
+      endPosition: this.endPosition,
+    };
   }
 }
 

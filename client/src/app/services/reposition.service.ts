@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Position} from "../../assets/serialisation/position";
+import {Position} from "../../model/position";
 import {Deactivatable} from "./deactivatable";
 
 @Injectable({
