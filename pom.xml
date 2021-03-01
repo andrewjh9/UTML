@@ -15,6 +15,7 @@
 	<description>UTML Design Project</description>
 	<properties>
 		<java.version>11</java.version>
+		<start-class>nl.utwente.utml.UtmlApplication</start-class>
 	</properties>
 	<dependencies>
 		<dependency>

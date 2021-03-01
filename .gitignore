@@ -32,3 +32,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Credits ###
+development.json
+production.json
+.env
