@@ -5,6 +5,7 @@ import {RepositionService} from "../services/reposition.service";
 import {SafeHtml} from "@angular/platform-browser";
 import {Mode, ModeService} from "../services/mode.service";
 
+
 @Component({
   selector: '[label-component]',
   templateUrl: './label.component.html',
@@ -41,7 +42,7 @@ export class LabelComponent {
   public handleMouseDown(event: MouseEvent): void {
     if (this.isInMoveMode()) {
       if (this.formatter !== undefined) {
-        this.repositionService.activate(this.formatter, new Position(event.clientX, event.clientY));
+        this.repositionService.activate(this.formatter, new Position(event.clientX, event.clientY))
       }
     }
   }
