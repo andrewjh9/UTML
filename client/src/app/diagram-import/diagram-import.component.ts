@@ -23,9 +23,14 @@ export class DiagramImportComponent {
       alert("You have to upload a file first.");
     }
 
-    this.file?.text().then((diagramString: string) => {
-      let diagramJSON = JSON.parse(diagramString);
-      this.diagramEmitter.emit(deserialiseDiagram(diagramJSON as SerialisedDiagram));
-    });
+    this.file?.text()
+      .then((diagramString: string) => {
+        let diagramJSON = JSON.parse(diagramString);
+        let diagram = deserialiseDiagram(diagramJSON as SerialisedDiagram);
+        this.diagramEmitter.emit(diagram);
+      })
+      .catch(() => {
+        alert('The file you are trying to upload can not be converted to a diagram.');
+      });
   }
 }

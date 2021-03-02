@@ -21,11 +21,11 @@ export class Diagram {
       let serialisedEdge = serialisedEdges[edgeIndex];
       let actualEdge = this.edges[edgeIndex];
 
-      if (actualEdge.startNode) {
+      if (actualEdge.startNode !== undefined) {
         serialisedEdge.startNodeId = this.nodes.indexOf(actualEdge.startNode);
       }
 
-      if (actualEdge.endNode) {
+      if (actualEdge.endNode !== undefined) {
         serialisedEdge.endNodeId = this.nodes.indexOf(actualEdge.endNode);
       }
     }
