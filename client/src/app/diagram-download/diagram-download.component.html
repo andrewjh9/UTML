@@ -1,0 +1,5 @@
+<div *ngIf="diagram">
+  <a class="btn btn-outline-primary" title="Download JSON" [href]="diagram | jsonUri" download="your-diagram.json">
+    Download Serialised JSON
+  </a>
+</div>

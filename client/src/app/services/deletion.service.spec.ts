@@ -47,7 +47,7 @@ describe('DeletionService ', () => {
 
   describe('with diagram set ', () => {
     beforeEach(() => {
-      diagram = {nodes: [n1, n2], edges: [e1]}
+      diagram = new Diagram([n1, n2], [e1]);
       deletionService.setDiagram(diagram);
     });
 
@@ -78,5 +78,5 @@ describe('DeletionService ', () => {
         expect(true).toBeTrue();
       }
     });
-  })
+  });
 });

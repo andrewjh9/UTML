@@ -1,10 +1,8 @@
 import {Position} from '../../model/position';
 import {AfterViewInit, Component} from '@angular/core';
-import {Edge, LineType} from "../../model/edge";
+import {Edge} from "../../model/edge";
 import {Diagram} from "../../model/diagram";
 import {RepositionService} from "../services/reposition.service";
-import {fsm} from "../../model/examples/fsm";
-import {cd} from "../../model/examples/cd";
 
 import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
@@ -14,9 +12,8 @@ import {CreationTypeSelectionService} from "../services/creation-type-selection.
 import {ad} from "../../model/examples/ad";
 import {Node} from "../../model/node/node";
 import {ResizeService} from "../services/resize.service";
-import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
-import {ClassNode} from "../../model/node/class-node";
 import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
 
 @Component({
@@ -62,7 +59,6 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleMouseMove(event: MouseEvent) {
-    // let position = new Position(event.clientX, event.clientY);
     let position = new Position(event.pageX, event.pageY);
 
     if (this.repositionService.isActive()) {
@@ -77,8 +73,8 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleDoubleClick(event: MouseEvent){
-    console.log(JSON.stringify(this.diagram.serialise()));
-    this.diagram = deserialiseDiagram(this.diagram.serialise());
+    // console.log(JSON.stringify(this.diagram.serialise()));
+    // this.diagram = deserialiseDiagram(this.diagram.serialise());
     if (this.mode === Mode.Create) {
       if (event.ctrlKey) {
         // let formatter = new EdgeFormatter(new Position(event.clientX, event.clientY),
@@ -93,8 +89,8 @@ export class DiagramComponent implements AfterViewInit {
         //
         // this.diagram.unstructuredEdges.push(formatter);
       } else {
-        let newNode : Node= this.creationTypeSelectionService.getSelectedNodeType();
-        newNode.position = new Position(event.clientX - newNode.width / 2, event.clientY - newNode.height / 2);;
+        let newNode: Node = this.creationTypeSelectionService.getSelectedNodeType();
+        newNode.position = new Position(event.clientX - newNode.width / 2, event.clientY - newNode.height / 2);
         this.diagram.nodes.push(newNode);
       }
     }
@@ -104,8 +100,6 @@ export class DiagramComponent implements AfterViewInit {
     const SELECT_KEY = "1";
     const CREATE_KEY = "2";
     const MOVE_KEY = "3";
-    console.log(event.ctrlKey);
-    console.log(event.key);
 
     if (event.ctrlKey) {
       switch (event.key) {
@@ -120,5 +114,11 @@ export class DiagramComponent implements AfterViewInit {
           break;
       }
     }
+  }
+
+  setDiagram(diagram: Diagram) {
+    this.diagram = diagram;
+    this.deletionService.setDiagram(this.diagram);
+    this.edgeRepositionService.setNodes(this.diagram.nodes);
   }
 }

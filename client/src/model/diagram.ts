@@ -29,7 +29,6 @@ export class Diagram {
         serialisedEdge.endNodeId = this.nodes.indexOf(actualEdge.endNode);
       }
     }
-    console.log(serialisedEdges)
     return {
       edges: serialisedEdges,
       nodes: serialisedNodes

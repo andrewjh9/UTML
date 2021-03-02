@@ -29,6 +29,9 @@ import {ClickableResizePointsComponent} from "./node-compontents/clickable-resiz
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
 import { ClassNodeComponent } from './node-compontents/class-node/class-node.component';
 import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic-node-text.component';
+import { DiagramDownloadComponent } from './diagram-download/diagram-download.component';
+import { JsonUriPipe } from './json-uri.pipe';
+import { DiagramImportComponent } from './diagram-import/diagram-import.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +56,9 @@ import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic
     ExportDiagramComponent,
     ClassNodeComponent,
     BasicNodeTextComponent,
+    DiagramDownloadComponent,
+    JsonUriPipe,
+    DiagramImportComponent,
   ],
     imports: [
         BrowserModule,

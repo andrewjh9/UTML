@@ -1,7 +1,4 @@
 <div class="container-fluid" (keyup)="handleKeyPressed($event)">
-  <div class="row d-flex" style="text-align: right; float:right;padding: 10px">
-    <app-export-diagram></app-export-diagram>
-  </div>
   <div class="row d-flex">
     <div class="flex-grow-1">
       <svg width="1200"
@@ -30,3 +27,7 @@
 </div>
 
 <canvas id="canvas" viewbox></canvas>
+
+<app-diagram-download [diagram]="diagram"></app-diagram-download>
+<app-export-diagram></app-export-diagram>
+<app-diagram-import (diagramEmitter)="setDiagram($event)"></app-diagram-import>
