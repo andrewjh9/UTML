@@ -38,21 +38,10 @@ export function deserialiseEdge(serialisedEdge: SerialisedEdge): Edge {
   }
 
   // Add formatting
-  if (serialisedEdge.lineType) {
-    result.lineType = serialisedEdge.lineType;
-  }
-
-  if (serialisedEdge.lineStyle) {
-    result.lineStyle = serialisedEdge.lineStyle;
-  }
-
-  if (serialisedEdge.startStyle) {
-    result.startStyle = serialisedEdge.startStyle
-  }
-
-  if (serialisedEdge.endStyle) {
-    result.endStyle = serialisedEdge.endStyle
-  }
+  result.lineType = serialisedEdge.lineType;
+  result.lineStyle = serialisedEdge.lineStyle;
+  result.startStyle = serialisedEdge.startStyle;
+  result.endStyle = serialisedEdge.endStyle;
 
   result.middlePositions = serialisedEdge.middlePositions.map(p => deserialisePosition(p));
 

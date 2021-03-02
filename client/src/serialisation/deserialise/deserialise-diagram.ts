@@ -18,7 +18,5 @@ export function deserialiseDiagram(serialisedDiagram: SerialisedDiagram): Diagra
     }
   }
 
-  console.log(edges)
-
   return new Diagram(nodes, edges);
 }

@@ -8,3 +8,8 @@ export interface SerialisedNode {
   text: string;
   hasDoubleBorder: boolean;
 }
+
+export interface SerialisedClassNode extends SerialisedNode {
+  firstLine: number;
+  secondLine: number | undefined;
+}

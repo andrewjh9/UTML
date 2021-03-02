@@ -14,10 +14,10 @@ export interface SerialisedEdge {
   middleLabel?: SerialisedLabel;
   endLabel?: SerialisedLabel;
 
-  lineType?: LineType;
-  lineStyle?: LineStyle;
-  startStyle?: EndStyle;
-  endStyle?: EndStyle;
+  lineType: LineType;
+  lineStyle: LineStyle;
+  startStyle: EndStyle;
+  endStyle: EndStyle;
 
   middlePositions: SerialisedPosition[];
 }

@@ -14,6 +14,7 @@ import {Node} from "../../model/node/node";
 import {ResizeService} from "../services/resize.service";
 import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {cd} from "../../model/examples/cd";
 
 
 @Component({
@@ -34,8 +35,8 @@ export class DiagramComponent implements AfterViewInit {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
-    this.diagram = ad;
-    // this.diagram = cd;
+    // this.diagram = ad;
+    this.diagram = cd;
     edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => this.diagram.edges.push(newEdge));
 
     deletionService.setDiagram(this.diagram);

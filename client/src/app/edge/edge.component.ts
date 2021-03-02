@@ -16,7 +16,6 @@ import {ModeAwareComponent} from "../mode-aware-component";
 export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   @Input() edge?: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
-  public readonly hasLabels = true;
 
   constructor(private edgeRepositionService: EdgeRepositionService,
               modeService: ModeService,

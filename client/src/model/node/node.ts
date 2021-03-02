@@ -27,7 +27,7 @@ export abstract class Node {
   /**
    * Returns the node type name. This is used for serialisation.
    */
-  abstract getNodeTypeName(): string;
+  public abstract getNodeTypeName(): string;
 
   public getPositionOfAttachment(index: number): Position {
     return this.getAllAttachmentPoints()[index];
