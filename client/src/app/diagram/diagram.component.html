@@ -4,7 +4,6 @@
       <svg width="1200"
            height="600"
            viewBox="0 0 1200 600"
-           transform="scale(0.75)"
            (mouseup)="handleMouseUp($event)"
            (mousemove)="handleMouseMove($event)"
            (dblclick)="handleDoubleClick($event)"
@@ -32,3 +31,6 @@
 <app-diagram-download [diagram]="diagram"></app-diagram-download>
 <app-export-diagram></app-export-diagram>
 <app-diagram-import (diagramEmitter)="setDiagram($event)"></app-diagram-import>
+<button class="btn btn-outline-primary" (click)="undo()">Undo</button>
+<button class="btn btn-outline-primary" (click)="cache()">Cache</button>
+

@@ -1,5 +1,5 @@
 import {Position} from '../../model/position';
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, DoCheck, OnInit} from '@angular/core';
 import {Edge} from "../../model/edge";
 import {Diagram} from "../../model/diagram";
 import {RepositionService} from "../services/reposition.service";
@@ -15,6 +15,8 @@ import {ResizeService} from "../services/resize.service";
 import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {cd} from "../../model/examples/cd";
+import {CachingService} from "../services/caching.service";
+import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
 
 
 @Component({
@@ -31,7 +33,8 @@ export class DiagramComponent implements AfterViewInit {
               private modeService: ModeService, private edgeCreationService: EdgeCreationService,
               private deletionService: DeletionService,
               private creationTypeSelectionService: CreationTypeSelectionService,
-              private resizeService: ResizeService) {
+              private resizeService: ResizeService,
+              private cachingService: CachingService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
@@ -40,6 +43,9 @@ export class DiagramComponent implements AfterViewInit {
     edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => this.diagram.edges.push(newEdge));
 
     deletionService.setDiagram(this.diagram);
+
+    cachingService.add(this.diagram);
+    // Node.addAfterCallback(() => cachingService.add(this.diagram));
   }
 
   ngAfterViewInit() {
@@ -121,5 +127,17 @@ export class DiagramComponent implements AfterViewInit {
     this.diagram = diagram;
     this.deletionService.setDiagram(this.diagram);
     this.edgeRepositionService.setNodes(this.diagram.nodes);
+  }
+
+  undo() {
+    let cacheResult = this.cachingService.pop();
+    console.log(cacheResult);
+    if (cacheResult !== undefined) {
+      this.setDiagram(deserialiseDiagram(cacheResult as SerialisedDiagram));
+    }
+  }
+
+  cache() {
+    this.cachingService.add(this.diagram);
   }
 }

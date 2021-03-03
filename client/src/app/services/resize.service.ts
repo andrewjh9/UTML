@@ -4,9 +4,6 @@ import {Injectable} from "@angular/core";
 import {Deactivatable} from "./deactivatable";
 import {Node} from "../../model/node/node";
 
-
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -28,10 +25,11 @@ export class ResizeService implements Deactivatable {
 
 
   public update(endPosition: Position): void {
-    if (this.node !== undefined && this.startPosition !== undefined) {
+    if (!this.isActive()) {
       throw new Error('Calling update while the node and startPosition are undefined. ' +
         'Service was probably not activated.');
     }
+
     switch (this.resizePointIndex) {
       case 0: // up
         this.node!.height = this.node!.height - (endPosition.y - this.node!.position.y);
