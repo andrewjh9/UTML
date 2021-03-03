@@ -1,6 +1,6 @@
 import {RectangleNode} from "../../model/node/rectangle-node";
 import {Position} from "../../model/position";
-import {deserialiseGeneric, deserialiseNode} from "./deserialise-node";
+import {deserialiseNode} from "./deserialise-node";
 import {EllipseNode} from "../../model/node/ellipse-node";
 import {DiamondNode} from "../../model/node/diamond-node";
 

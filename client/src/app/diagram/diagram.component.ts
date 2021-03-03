@@ -15,7 +15,7 @@ import {ResizeService} from "../services/resize.service";
 import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {cd} from "../../model/examples/cd";
-import {CachingService} from "../services/caching.service";
+import {CachingService} from "../services/caching/caching.service";
 import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
 
 

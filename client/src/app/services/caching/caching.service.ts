@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
-import {Diagram} from "../../model/diagram";
+import {SerialisedDiagram} from "../../../serialisation/serialised-data-structures/serialised-diagram";
+import {Diagram} from "../../../model/diagram";
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,8 @@ export class CachingService {
     if (this.stack.length === 1) {
       return undefined;
     } else {
-      return this.stack.pop();
+      this.stack.pop();
+      return this.stack[this.stack.length - 1];
     }
   }
 }
