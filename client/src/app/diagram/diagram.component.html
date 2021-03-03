@@ -32,5 +32,7 @@
 <app-export-diagram></app-export-diagram>
 <app-diagram-import (diagramEmitter)="setDiagram($event)"></app-diagram-import>
 <button class="btn btn-outline-primary" (click)="undo()">Undo</button>
-<button class="btn btn-outline-primary" (click)="cache()">Cache</button>
+<button class="btn btn-outline-primary" (click)="redo()">Redo</button>
+<button class="btn btn-outline-primary" (click)="do()">Do</button>
+
 

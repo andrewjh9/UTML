@@ -89,6 +89,15 @@ export class SizeBoundDoublyLinkedList<T> {
   public getCurrentValue(): T {
     return this.current.value;
   }
+
+  // Todo: Implement an couple these to buttons
+  // public canUndo(): boolean {
+  //   return this.current.prev !== null;
+  // }
+  //
+  // public canRedo(): boolean {
+  //   return this.current.next !== null;
+  // }
 }
 
 class Node<T> {

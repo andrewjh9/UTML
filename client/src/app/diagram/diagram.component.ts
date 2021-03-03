@@ -44,7 +44,7 @@ export class DiagramComponent implements AfterViewInit {
 
     deletionService.setDiagram(this.diagram);
 
-    cachingService.add(this.diagram);
+    cachingService.do(this.diagram);
     // Node.addAfterCallback(() => cachingService.add(this.diagram));
   }
 
@@ -130,14 +130,28 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   undo() {
-    let cacheResult = this.cachingService.pop();
-    console.log(cacheResult);
-    if (cacheResult !== undefined) {
-      this.setDiagram(deserialiseDiagram(cacheResult as SerialisedDiagram));
+    let result = this.cachingService.undo();
+    if (result !== null) {
+      this.setDiagram(result as Diagram);
     }
   }
 
-  cache() {
-    this.cachingService.add(this.diagram);
+  redo() {
+    let result = this.cachingService.redo();
+    if (result !== null) {
+      this.setDiagram(result as Diagram);
+    }
+  }
+
+  do() {
+    this.cachingService.do(this.diagram);
+  }
+
+  public canUndo() {
+    return this.cachingService.canUndo;
+  }
+
+  public canRedo() {
+    return this.cachingService.canRedo;
   }
 }
