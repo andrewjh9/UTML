@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Position} from "../../assets/serialisation/position";
 import {Deactivatable} from "./deactivatable";
 import {SnapService} from "./snap.service";
+import {diff} from "ngx-bootstrap/chronos/moment/diff";
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import {SnapService} from "./snap.service";
 export class RepositionService implements Deactivatable {
   private positionable?: Positionable;
   private startPosition?: Position;
+  private difference?: Position;
 
   constructor(private snapService: SnapService) {}
 
@@ -19,16 +21,17 @@ export class RepositionService implements Deactivatable {
   public activate(current: Positionable, startPosition: Position): void {
     this.positionable = current;
     this.startPosition = startPosition;
-    this.snapService.activate(current, startPosition);
+    // this.snapService.activate(current, startPosition);
+    this.difference = Position.subtract(this.positionable.position, this.startPosition);
   }
 
   public update(mousePosition: Position): void {
-    if (this.positionable !== undefined && this.startPosition !== undefined) {
-      if (this.snapService.isActive()) {
-        this.snapService.update(mousePosition);
-      }
-      // let difference = Position.subtract(mousePosition, this.startPosition);
-      // this.positionable.position = Position.add(this.positionable.position, difference);
+    if (this.positionable !== undefined && this.startPosition !== undefined && this.difference !== undefined) {
+      // if (this.snapService.isActive()) {
+      let snappedPosition: Position = this.snapService.snap(Position.add(mousePosition, this.difference), 10);
+      // this.positionable.position = snappedPosition;
+      this.positionable.position = Position.add(mousePosition, this.difference)
+        // }
       this.startPosition = mousePosition;
     }
   }
@@ -36,7 +39,8 @@ export class RepositionService implements Deactivatable {
   public deactivate(): void {
     this.positionable = undefined;
     this.startPosition = undefined;
-    this.snapService.deactivate();
+    this.difference = undefined;
+    // this.snapService.deactivate();
   }
 }
 
