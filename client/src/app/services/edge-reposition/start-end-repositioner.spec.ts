@@ -47,7 +47,7 @@ describe('StartEndRepositioner ', function () {
       expect((edge.endPosition as Position).y).toEqual(pos.y);
     });
 
-    it('should snap to new attachment point on same node', function () {
+    it('should snapIfApplicable to new attachment point on same node', function () {
       const ATTACHMENT = 4;
       let pos = Position.add(origEnd.getPositionOfAttachment(ATTACHMENT), new Position(1, 1));
       repositioner.update(pos);
@@ -55,7 +55,7 @@ describe('StartEndRepositioner ', function () {
       expect(edge.endPosition).toEqual(ATTACHMENT);
     });
 
-    it('should snap to new attachment point on different node', function () {
+    it('should snapIfApplicable to new attachment point on different node', function () {
       const ATTACHMENT = 4;
       let pos = Position.add(newNode.getPositionOfAttachment(ATTACHMENT), new Position(1, 1));
       repositioner.update(pos);

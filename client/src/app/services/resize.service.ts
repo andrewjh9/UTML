@@ -3,6 +3,7 @@ import {Position} from "../../assets/serialisation/position";
 import {Injectable} from "@angular/core";
 import {Deactivatable} from "./deactivatable";
 import {Node} from "../../assets/serialisation/node/node";
+import {SnapService} from "./snap.service";
 
 
 
@@ -14,7 +15,7 @@ export class ResizeService implements Deactivatable {
   private node?: Node;
   private startPosition?: Position;
   private resizePointIndex?: number;
-  constructor() { }
+  constructor(private snapService: SnapService) { }
 
   public isActive(): boolean {
     return this.node !== undefined;
@@ -38,7 +39,7 @@ export class ResizeService implements Deactivatable {
         this.node!.position.y = endPosition.y;
         break;
       case 1: //right
-        this.node!.width = endPosition.x - this.node!.position.x;
+        this.node!.width = this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).x;
         break;
       case 2:  //down
         this.node!.height = endPosition.y - this.node!.position.y;

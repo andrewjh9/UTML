@@ -16,8 +16,8 @@ export class StartEndRepositioner {
 
   /**
    * Constructor for StartEndRepositioner
-   * @param nodes A list of all nodes in the diagram drawer. Used to snap to attachment points.
-   * @param snap_distance The distance within which a start/end position should snap to an attachment point.
+   * @param nodes A list of all nodes in the diagram drawer. Used to snapIfApplicable to attachment points.
+   * @param snap_distance The distance within which a start/end position should snapIfApplicable to an attachment point.
    */
   constructor(snap_distance: number) {
     this.SNAP_DISTANCE = snap_distance;

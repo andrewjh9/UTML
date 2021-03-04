@@ -28,9 +28,8 @@ export class RepositionService implements Deactivatable {
   public update(mousePosition: Position): void {
     if (this.positionable !== undefined && this.startPosition !== undefined && this.difference !== undefined) {
       // if (this.snapService.isActive()) {
-      let snappedPosition: Position = this.snapService.snap(Position.add(mousePosition, this.difference), 10);
-      // this.positionable.position = snappedPosition;
-      this.positionable.position = Position.add(mousePosition, this.difference)
+      let snappedPosition: Position = this.snapService.snapIfApplicable(Position.add(mousePosition, this.difference), 10);
+      this.positionable.position = snappedPosition;
         // }
       this.startPosition = mousePosition;
     }
