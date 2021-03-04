@@ -13,11 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class UtmlApplication {
 
-	@GetMapping("/test")
-	public String home() {
-		return "Hello World";
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(UtmlApplication.class, args);
 	}

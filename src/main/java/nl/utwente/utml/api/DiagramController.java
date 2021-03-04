@@ -24,6 +24,22 @@ public class DiagramController {
     }
 
     @GetMapping
+    public void getDiagram(@RequestBody long id){
+        diagramService.get(id);
+    }
+
+    @PutMapping
+    public void updateDiagram(@RequestBody Diagram diagram){
+        diagramService.update(diagram);
+    }
+
+    @DeleteMapping
+    public void deleteDiagram(@RequestBody long id){
+        diagramService.delete(id);
+    }
+
+
+    @GetMapping
     public List<Diagram> getAllPeople() {
         return diagramService.getAll();
     }
