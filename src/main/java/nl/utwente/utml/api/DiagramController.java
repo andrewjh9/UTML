@@ -3,6 +3,7 @@ package nl.utwente.utml.api;
 import nl.utwente.utml.model.Diagram;
 import nl.utwente.utml.service.DiagramService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

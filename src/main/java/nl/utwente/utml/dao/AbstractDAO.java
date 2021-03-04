@@ -1,5 +1,6 @@
 package nl.utwente.utml.dao;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public abstract class AbstractDAO< T extends Serializable>{
         return (T) getCurrentSession().get( clazz, id );
     }
     public List< T > findAll() {
-        return getCurrentSession()
+        return getSessionFactory().openSession()
                 .createQuery( "from " + clazz.getName() ).list();
     }
 
@@ -43,6 +44,15 @@ public abstract class AbstractDAO< T extends Serializable>{
     }
 
     protected final Session getCurrentSession(){
-        return sessionFactory.getCurrentSession();
+        Session session;
+
+        try {
+            session = sessionFactory.getCurrentSession();
+        } catch (HibernateException e) {
+            session = sessionFactory.openSession();
+        }
+        return session;
     }
+
+    protected SessionFactory getSessionFactory() { return sessionFactory;};
 }
