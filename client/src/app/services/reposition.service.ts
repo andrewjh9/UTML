@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Position} from "../../model/position";
 import {Deactivatable} from "./deactivatable";
+import {CachingService} from "./caching/caching.service";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import {Deactivatable} from "./deactivatable";
 export class RepositionService implements Deactivatable {
   private positionable?: Positionable;
   private startPosition?: Position;
-  constructor() { }
+  constructor(private cachingService: CachingService) { }
 
   public isActive(): boolean {
     return this.positionable !== undefined;
@@ -30,6 +31,7 @@ export class RepositionService implements Deactivatable {
   public deactivate(): void {
     this.positionable = undefined;
     this.startPosition = undefined;
+    this.cachingService.save();
   }
 }
 

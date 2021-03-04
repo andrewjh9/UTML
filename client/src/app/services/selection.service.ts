@@ -20,4 +20,10 @@ export class SelectionService {
     this.current = value;
     this.edgeEmitter.emit(value);
   }
+
+  public deselect(): void {
+    this.current = undefined;
+    this.nodeEmitter.emit(undefined);
+    this.edgeEmitter.emit(undefined);
+  }
 }

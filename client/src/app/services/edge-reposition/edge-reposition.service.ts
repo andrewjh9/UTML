@@ -6,6 +6,7 @@ import {Deactivatable} from "../deactivatable";
 import {StartEndRepositioner} from "./start-end-repositioner";
 import {ArcMiddleRepositioner} from "./arc-middle-repositioner";
 import {FixedPointRepositioner} from "./fixed-point-repositioner";
+import {CachingService} from "../caching/caching.service";
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,9 @@ export class EdgeRepositionService implements Deactivatable {
   public readonly arcMiddleRepositioner = new ArcMiddleRepositioner();
   public readonly fixedPointRepositioner = new FixedPointRepositioner();
   public readonly startEndRepositioner = new StartEndRepositioner(this.SNAP_DISTANCE);
+
+  constructor(private cachingService: CachingService) {
+  }
 
   /**
    * Activate the edge repositioner.
@@ -95,10 +99,13 @@ export class EdgeRepositionService implements Deactivatable {
   public deactivate() {
     if (this.fixedPointRepositioner.isActive()) {
       this.fixedPointRepositioner.deactivate();
+      this.cachingService.save();
     } else if (this.arcMiddleRepositioner.isActive()) {
       this.arcMiddleRepositioner.deactivate();
+      this.cachingService.save();
     } else if (this.startEndRepositioner.isActive()) {
       this.startEndRepositioner.deactivate();
+      this.cachingService.save();
     }
   }
 

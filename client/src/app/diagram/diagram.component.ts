@@ -17,6 +17,7 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {cd} from "../../model/examples/cd";
 import {CachingService} from "../services/caching/caching.service";
 import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
+import {SelectionService} from "../services/selection.service";
 
 
 @Component({
@@ -29,22 +30,28 @@ export class DiagramComponent implements AfterViewInit {
   mode: Mode;
   Mode = Mode;
 
-  constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService,
-              private modeService: ModeService, private edgeCreationService: EdgeCreationService,
+  constructor(private repositionService: RepositionService,
+              private edgeRepositionService: EdgeRepositionService,
+              private modeService: ModeService,
+              private edgeCreationService: EdgeCreationService,
               private deletionService: DeletionService,
               private creationTypeSelectionService: CreationTypeSelectionService,
               private resizeService: ResizeService,
-              private cachingService: CachingService) {
+              private cachingService: CachingService,
+              private selectionService: SelectionService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
     // this.diagram = ad;
     this.diagram = cd;
-    edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => this.diagram.edges.push(newEdge));
+    edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => {
+      this.diagram.edges.push(newEdge);
+      this.cachingService.save();
+    });
 
     deletionService.setDiagram(this.diagram);
 
-    cachingService.do(this.diagram);
+    cachingService.setDiagram(this.diagram);
     // Node.addAfterCallback(() => cachingService.add(this.diagram));
   }
 
@@ -99,6 +106,7 @@ export class DiagramComponent implements AfterViewInit {
         let newNode: Node = this.creationTypeSelectionService.getSelectedNodeType();
         newNode.position = new Position(event.clientX - newNode.width / 2, event.clientY - newNode.height / 2);
         this.diagram.nodes.push(newNode);
+        this.cachingService.save();
       }
     }
   }
@@ -127,6 +135,11 @@ export class DiagramComponent implements AfterViewInit {
     this.diagram = diagram;
     this.deletionService.setDiagram(this.diagram);
     this.edgeRepositionService.setNodes(this.diagram.nodes);
+    this.cachingService.setDiagram(diagram);
+    // We have to deselect the selected edge or node because when we undo/redo and action,
+    // a new diagram reference is created from the serialized version.
+    // If we leave the node/edge selected, it does not reference the actual instance inside the current diagram.
+    this.selectionService.deselect();
   }
 
   undo() {
@@ -144,14 +157,6 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   do() {
-    this.cachingService.do(this.diagram);
-  }
-
-  public canUndo() {
-    return this.cachingService.canUndo;
-  }
-
-  public canRedo() {
-    return this.cachingService.canRedo;
+    this.cachingService.save();
   }
 }

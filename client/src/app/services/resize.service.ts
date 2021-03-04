@@ -3,6 +3,7 @@ import {Position} from "../../model/position";
 import {Injectable} from "@angular/core";
 import {Deactivatable} from "./deactivatable";
 import {Node} from "../../model/node/node";
+import {CachingService} from "./caching/caching.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ResizeService implements Deactivatable {
   private node?: Node;
   private startPosition?: Position;
   private resizePointIndex?: number;
-  constructor() { }
+  constructor(private cachingService: CachingService) { }
 
   public isActive(): boolean {
     return this.node !== undefined;
@@ -51,5 +52,6 @@ export class ResizeService implements Deactivatable {
   public deactivate(): void {
     this.node = undefined;
     this.startPosition = undefined;
+    this.cachingService.save();
   }
 }

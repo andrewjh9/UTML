@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Edge} from "../../model/edge";
 import {DeletionService} from "../services/deletion.service";
+import {CachingService} from "../services/caching/caching.service";
 
 @Component({
   selector: 'app-edge-editor',
@@ -10,7 +11,8 @@ import {DeletionService} from "../services/deletion.service";
 export class EdgeEditorComponent {
   @Input() edge?: Edge;
 
-  constructor(private deletionService: DeletionService) {
+  constructor(private deletionService: DeletionService,
+              private cachingService: CachingService) {
   }
 
   delete(): void {
@@ -20,5 +22,9 @@ export class EdgeEditorComponent {
     } else {
       throw new Error("Trying to delete an edge from the edge edit menu whilst no edge is selected.");
     }
+  }
+
+  cache() {
+    this.cachingService.save();
   }
 }
