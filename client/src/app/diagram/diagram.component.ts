@@ -159,4 +159,18 @@ export class DiagramComponent implements AfterViewInit {
   do() {
     this.cachingService.save();
   }
+
+  restore() {
+    let result: null | string = localStorage.getItem(CachingService.LOCAL_STORAGE_KEY);
+    if (result === null) {
+      alert('No diagram stored in local storage');
+    } else {
+      try {
+        let diagram: Diagram = deserialiseDiagram(JSON.parse(result as string) as SerialisedDiagram);
+        this.setDiagram(diagram);
+      } catch (e) {
+        alert('Could not restore diagram from local storage');
+      }
+    }
+  }
 }

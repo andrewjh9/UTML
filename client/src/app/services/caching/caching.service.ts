@@ -8,6 +8,7 @@ import {deserialiseDiagram} from "../../../serialisation/deserialise/deserialise
   providedIn: 'root'
 })
 export class CachingService {
+  public static readonly LOCAL_STORAGE_KEY = 'diagram-cache';
   private readonly MAX_SIZE: number = 25;
   private list?: SizeBoundDoublyLinkedList<SerialisedDiagram>;
   private diagram?: Diagram;
@@ -26,11 +27,15 @@ export class CachingService {
 
   public save(): void {
     console.log('Caching');
+
     if (this.diagram === undefined || this.list === undefined) {
       throw new Error('You can not save whilst the diagram is not set!');
     }
 
-    this.list.add(this.diagram.serialise());
+    let serialisedDiagram = this.diagram.serialise();
+    localStorage.setItem(CachingService.LOCAL_STORAGE_KEY, JSON.stringify(serialisedDiagram));
+
+    this.list.add(serialisedDiagram);
     // Todo: Make it so similar changes are merged. I.e., typing a word into a node counts as one undo/redo action.
   }
 
