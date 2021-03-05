@@ -1,7 +1,4 @@
 <div class="container-fluid" (keyup)="handleKeyPressed($event)">
-  <div class="row d-flex" style="text-align: right; float:right;padding: 10px">
-    <app-export-diagram></app-export-diagram>
-  </div>
   <div class="row d-flex">
     <div class="flex-grow-1">
       <svg width="1200"
@@ -14,6 +11,9 @@
 
            id="diagram"
         >
+        <g sequence-diagram [diagram]="seq"></g>
+
+
         <g new-edge-preview></g>
         <!--  Define markers-->
         <defs arrow-marker></defs>
@@ -32,3 +32,14 @@
 </div>
 
 <canvas id="canvas" viewbox></canvas>
+
+<app-diagram-download [diagram]="diagram"></app-diagram-download>
+<app-export-diagram></app-export-diagram>
+<app-diagram-import (diagramEmitter)="setDiagram($event)"></app-diagram-import>
+<button class="btn btn-outline-primary" (click)="undo()">Undo</button>
+<button class="btn btn-outline-primary" (click)="redo()">Redo</button>
+<button class="btn btn-outline-primary" (click)="do()">Do</button>
+<button class="btn btn-outline-primary" (click)="restore()">Restore Local Storage</button>
+
+
+

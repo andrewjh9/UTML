@@ -1,12 +1,10 @@
-import {Position} from "../../assets/serialisation/position";
+import {Position} from "../../model/position";
 // import {FormattedElement} from "./reposition.service";
 import {Injectable} from "@angular/core";
 import {Deactivatable} from "./deactivatable";
-import {Node} from "../../assets/serialisation/node/node";
 import {SnapService} from "./snap.service";
-
-
-
+import {Node} from "../../model/node/node";
+import {CachingService} from "./caching/caching.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +13,7 @@ export class ResizeService implements Deactivatable {
   private node?: Node;
   private startPosition?: Position;
   private resizePointIndex?: number;
-  constructor(private snapService: SnapService) { }
+  constructor(private snapService: SnapService, private cachingService: CachingService) { }
 
   public isActive(): boolean {
     return this.node !== undefined;
@@ -29,10 +27,11 @@ export class ResizeService implements Deactivatable {
 
 
   public update(endPosition: Position): void {
-    if (this.node !== undefined && this.startPosition !== undefined) {
+    if (!this.isActive()) {
       throw new Error('Calling update while the node and startPosition are undefined. ' +
         'Service was probably not activated.');
     }
+
     switch (this.resizePointIndex) {
       case 0: // up
         this.node!.height = this.node!.height - (endPosition.y - this.node!.position.y);
@@ -54,5 +53,6 @@ export class ResizeService implements Deactivatable {
   public deactivate(): void {
     this.node = undefined;
     this.startPosition = undefined;
+    this.cachingService.save();
   }
 }

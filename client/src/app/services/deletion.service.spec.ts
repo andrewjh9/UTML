@@ -1,10 +1,10 @@
 import {DeletionService} from "./deletion.service";
-import {RectangleNode} from "../../assets/serialisation/node/rectangle-node";
-import {Position} from "../../assets/serialisation/position";
-import {Edge} from "../../assets/serialisation/edge";
-import {Node} from "../../assets/serialisation/node/node";
-import {Diagram} from "../../assets/serialisation/diagram";
-import {EllipseNode} from "../../assets/serialisation/node/ellipse-node";
+import {RectangleNode} from "../../model/node/rectangle-node";
+import {Position} from "../../model/position";
+import {Edge} from "../../model/edge";
+import {Node} from "../../model/node/node";
+import {Diagram} from "../../model/diagram";
+import {EllipseNode} from "../../model/node/ellipse-node";
 import {typeIsOrHasBaseType} from "tslint/lib/language/typeUtils";
 
 describe('DeletionService ', () => {
@@ -47,7 +47,7 @@ describe('DeletionService ', () => {
 
   describe('with diagram set ', () => {
     beforeEach(() => {
-      diagram = {nodes: [n1, n2], edges: [e1]}
+      diagram = new Diagram([n1, n2], [e1]);
       deletionService.setDiagram(diagram);
     });
 
@@ -78,5 +78,5 @@ describe('DeletionService ', () => {
         expect(true).toBeTrue();
       }
     });
-  })
+  });
 });

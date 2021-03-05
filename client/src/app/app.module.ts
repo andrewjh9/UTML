@@ -29,6 +29,12 @@ import {ClickableResizePointsComponent} from "./node-compontents/clickable-resiz
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
 import { ClassNodeComponent } from './node-compontents/class-node/class-node.component';
 import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic-node-text.component';
+import { DiagramDownloadComponent } from './diagram-download/diagram-download.component';
+import { JsonUriPipe } from './json-uri.pipe';
+import { DiagramImportComponent } from './diagram-import/diagram-import.component';
+import { LifelineComponent } from './lifeline/lifeline.component';
+import { SequenceDiagramComponent } from './sequence-diagram/sequence-diagram.component';
+import { SequenceEdgeComponent } from './sequence-edge/sequence-edge.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +59,12 @@ import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic
     ExportDiagramComponent,
     ClassNodeComponent,
     BasicNodeTextComponent,
+    DiagramDownloadComponent,
+    JsonUriPipe,
+    DiagramImportComponent,
+    LifelineComponent,
+    SequenceDiagramComponent,
+    SequenceEdgeComponent,
   ],
     imports: [
         BrowserModule,

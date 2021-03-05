@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Position} from "../../assets/serialisation/position";
+import {Position} from "../../model/position";
 import {Deactivatable} from "./deactivatable";
-import {SnapService} from "./snap.service";
-import {diff} from "ngx-bootstrap/chronos/moment/diff";
+import {CachingService} from "./caching/caching.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,7 @@ export class RepositionService implements Deactivatable {
   private startPosition?: Position;
   private difference?: Position;
 
-  constructor(private snapService: SnapService) {}
+  constructor(private snapService: SnapService, private cachingService: CachingService) { }
 
   public isActive(): boolean {
     return this.positionable !== undefined;
@@ -38,8 +37,7 @@ export class RepositionService implements Deactivatable {
   public deactivate(): void {
     this.positionable = undefined;
     this.startPosition = undefined;
-    this.difference = undefined;
-    // this.snapService.deactivate();
+    this.cachingService.save();
   }
 }
 

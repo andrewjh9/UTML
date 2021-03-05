@@ -1,5 +1,5 @@
-import {Position} from "../../../assets/serialisation/position";
-import {Edge} from "../../../assets/serialisation/edge";
+import {Position} from "../../../model/position";
+import {Edge} from "../../../model/edge";
 import {EdgeRepositionService} from "./edge-reposition.service";
 
 export class FixedPointRepositioner {

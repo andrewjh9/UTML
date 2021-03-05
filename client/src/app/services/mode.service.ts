@@ -24,7 +24,8 @@ export class ModeService {
   public readonly modeObservable: Observable<Mode> = new Observable<Mode>();
 
 
-  constructor(edgeRepositionService: EdgeRepositionService, repositionService: RepositionService,
+  constructor(edgeRepositionService: EdgeRepositionService,
+              repositionService: RepositionService,
               edgeCreationService: EdgeCreationService) {
     this.deactivatables = [edgeRepositionService, repositionService, edgeCreationService];
     this.mode = new BehaviorSubject<Mode>(Mode.Select);
@@ -37,8 +38,10 @@ export class ModeService {
    * @param mode New mode value
    */
   public setMode(mode: Mode): void {
-    this.mode.next(mode);
-    this.deactivatables.forEach(d => d.deactivate());
+    if (this.getLatestMode() !== mode) {
+      this.mode.next(mode);
+      this.deactivatables.forEach(d => d.deactivate());
+    }
   }
 
   /**

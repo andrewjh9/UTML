@@ -1,6 +1,6 @@
-import {Edge} from "../../../assets/serialisation/edge";
-import {Node} from "../../../assets/serialisation/node/node";
-import {Position} from "../../../assets/serialisation/position";
+import {Edge} from "../../../model/edge";
+import {Node} from "../../../model/node/node";
+import {Position} from "../../../model/position";
 
 /**
  * Class responsible for repositioning the start and end points of an edge.

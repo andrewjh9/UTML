@@ -1,6 +1,6 @@
 import {ArcMiddleRepositioner} from "./arc-middle-repositioner";
-import {Edge, LineType} from "../../../assets/serialisation/edge";
-import {Position} from "../../../assets/serialisation/position";
+import {Edge, LineType} from "../../../model/edge";
+import {Position} from "../../../model/position";
 
 describe('ArcMiddleRepositioner ', () => {
   let repositioner: ArcMiddleRepositioner;

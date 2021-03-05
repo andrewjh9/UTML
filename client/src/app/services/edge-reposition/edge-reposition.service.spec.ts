@@ -1,8 +1,8 @@
 import {EdgeRepositionService} from "./edge-reposition.service";
-import {RectangleNode} from "../../../assets/serialisation/node/rectangle-node";
-import {Position} from "../../../assets/serialisation/position";
-import {Node} from "../../../assets/serialisation/node/node";
-import {Edge, LineType} from "../../../assets/serialisation/edge";
+import {RectangleNode} from "../../../model/node/rectangle-node";
+import {Position} from "../../../model/position";
+import {Node} from "../../../model/node/node";
+import {Edge, LineType} from "../../../model/edge";
 
 describe('EdgeRepositionService ', () => {
   let edgeRepositionService: EdgeRepositionService;

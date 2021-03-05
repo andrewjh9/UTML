@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from "rxjs";
-import {Position} from "../../assets/serialisation/position";
-import { EndStyle, LineType} from "../../assets/serialisation/edge";
-import {Node} from "../../assets/serialisation/node/node";
-import {DiamondNode} from "../../assets/serialisation/node/diamond-node";
-import {EllipseNode} from "../../assets/serialisation/node/ellipse-node";
-import {RectangleNode} from "../../assets/serialisation/node/rectangle-node";
-import {ForkRejoinNode} from "../../assets/serialisation/node/fork-rejoin-node";
+import {Position} from "../../model/position";
+import { EndStyle, LineType} from "../../model/edge";
+import {Node} from "../../model/node/node";
+import {DiamondNode} from "../../model/node/diamond-node";
+import {EllipseNode} from "../../model/node/ellipse-node";
+import {RectangleNode} from "../../model/node/rectangle-node";
+import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
+import {ClassNode} from "../../model/node/class-node";
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class CreationTypeSelectionService {
       new EllipseNode(100, 100, new Position(0, 0)),
       new DiamondNode(100, 100, new Position(0, 0)),
       new ForkRejoinNode(20, 300, new Position(0, 0)),
+      new ClassNode(250, 100, new Position(0, 0))
     ];
     this.currentNodeIndex = 0;
 

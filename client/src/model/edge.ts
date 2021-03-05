@@ -1,35 +1,50 @@
 import {Position} from "./position";
-import {AttachmentDirection, Node} from "./node/node";
-import {LabelFormatter} from "./label";
+import {Node} from "./node/node";
+import {Label} from "./label";
+import {SerialisedEdge} from "../serialisation/serialised-data-structures/serialised-edge";
 
 export class Edge {
   public startNode?: Node;
   public endNode?: Node;
-  public startLabel?: string;
-  public endLabel?: string;
-  public middleLabel?: string;
+
   public startPosition: Position | number;
-  public endPosition: Position | number;
   public middlePositions: Position[] = [];
+  public endPosition: Position | number;
+
   public lineType: LineType = LineType.Line;
   public lineStyle: LineStyle = LineStyle.Filled;
   public startStyle: EndStyle = EndStyle.None;
   public endStyle: EndStyle = EndStyle.None;
-  public startLabelFormatter?: LabelFormatter;
-  public middleLabelFormatter?: LabelFormatter;
-  public endLabelFormatter?: LabelFormatter;
 
+  public startLabel?: Label;
+  public middleLabel?: Label;
+  public endLabel?: Label;
 
-  constructor(startPosition: Position | number, endPosition: Position | number,
-              startNode: Node | undefined = undefined, endNode: Node | undefined = undefined) {
+  constructor(startPosition: Position | number,
+              endPosition: Position | number,
+              startNode: Node | undefined = undefined,
+              endNode: Node | undefined = undefined) {
     this.startPosition = startPosition;
     this.endPosition = endPosition;
     this.startNode = startNode;
     this.endNode = endNode;
   }
 
-  // Note that accessors are not used here because because we want to deal with a Position from outside of the class,
-  // but the positions are internally stored using Position | number
+  public addStartLabel(value: string = 'start') {
+    this.startLabel = new Label(this.getStartPosition(), value);
+  }
+
+  public addMiddleLabel(value: string = 'middle') {
+    this.middleLabel = new Label(
+      Position.multiply(0.5, Position.add(this.getStartPosition(), this.getEndPosition())),
+      value
+    );
+  }
+
+  public addEndLabel(value: string = 'end') {
+    this.endLabel = new Label(this.getEndPosition(), value);
+  }
+
   public getStartPosition(): Position {
     return Edge.getPosition(this.startNode, this.startPosition);
   }
@@ -180,6 +195,21 @@ export class Edge {
     let middle = Position.multiply(0.5, Position.add(start, end));
     let position = Position.add(middle, Position.multiply(0.25, betweenPerpendicular))
     this.middlePositions.push(position);
+  }
+
+  public serialise(): SerialisedEdge {
+    return {
+      startPosition: this.startPosition,
+      endPosition: this.endPosition,
+      startLabel: this.startLabel?.serialise(),
+      middleLabel: this.middleLabel?.serialise(),
+      endLabel: this.endLabel?.serialise(),
+      startStyle: this.startStyle,
+      endStyle: this.endStyle,
+      lineStyle: this.lineStyle,
+      lineType: this.lineType,
+      middlePositions: this.middlePositions.map(p => p.serialise()),
+    }
   }
 }
 

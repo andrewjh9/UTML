@@ -39,26 +39,17 @@
 
 </svg:ellipse>
 
- Render labels if they exist
-<svg:g *ngIf="hasLabels">
-  <svg:g *ngIf="getStartLabel()"
-         label-component
-         [label]="getStartLabel()"
-         (labelChange)="setStartLabel($event)"
-         [formatter]="getStartLabelFormatterAndSetIfAbsent()">
-  </svg:g>
+<svg:g *ngIf="edge && edge?.startLabel"
+       label-component
+       [label]="edge.startLabel">
+</svg:g>
 
-  <svg:g *ngIf="getMiddleLabel()"
-         label-component
-         [label]="getMiddleLabel()"
-         (labelChange)="setMiddleLabel($event)"
-         [formatter]="getMiddleLabelFormatterAndSetIfAbsent()">
-  </svg:g>
+<svg:g *ngIf="edge && edge?.middleLabel"
+       label-component
+       [label]="edge.middleLabel">
+</svg:g>
 
-  <svg:g *ngIf="getEndLabel()"
-         label-component
-         [label]="getEndLabel()"
-         (labelChange)="setEndLabel($event)"
-         [formatter]="getEndLabelFormatterAndSetIfAbsent()">
-  </svg:g>
+<svg:g *ngIf="edge && edge?.endLabel"
+       label-component
+       [label]="edge.endLabel">
 </svg:g>

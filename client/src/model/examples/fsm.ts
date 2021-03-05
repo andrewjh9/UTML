@@ -50,4 +50,4 @@ export let fsm: Diagram;
 //   edges: [e1, e2],
 //   unstructuredEdges: [edgeFormatter]
 // }
-fsm = {edges: [], nodes: []};
+fsm = new Diagram();

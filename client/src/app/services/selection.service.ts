@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Edge} from "../../assets/serialisation/edge";
-import {Node} from "../../assets/serialisation/node/node";
+import {Edge} from "../../model/edge";
+import {Node} from "../../model/node/node";
 
 @Injectable({
   providedIn: 'root'
@@ -19,5 +19,11 @@ export class SelectionService {
   public setEdge(value: Edge): void {
     this.current = value;
     this.edgeEmitter.emit(value);
+  }
+
+  public deselect(): void {
+    this.current = undefined;
+    this.nodeEmitter.emit(undefined);
+    this.edgeEmitter.emit(undefined);
   }
 }

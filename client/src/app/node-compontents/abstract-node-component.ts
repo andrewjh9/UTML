@@ -1,8 +1,8 @@
 import {RepositionService} from "../services/reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
-import {Node} from "../../assets/serialisation/node/node";
-import {Position} from "../../assets/serialisation/position";
+import {Node} from "../../model/node/node";
+import {Position} from "../../model/position";
 import {ModeAwareComponent} from "../mode-aware-component";
 
 export abstract class AbstractNodeComponent extends ModeAwareComponent {

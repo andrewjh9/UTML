@@ -1,21 +1,22 @@
-import {Position} from '../../assets/serialisation/position';
-import {AfterViewInit, Component, HostListener} from '@angular/core';
-import {Edge, LineType} from "../../assets/serialisation/edge";
-import {Diagram} from "../../assets/serialisation/diagram";
+import {AfterViewInit, Component} from '@angular/core';
 import {RepositionService} from "../services/reposition.service";
-import {fsm} from "../../assets/serialisation/examples/fsm";
-import {cd} from "../../assets/serialisation/examples/cd";
 
 import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {DeletionService} from "../services/deletion.service";
 import {CreationTypeSelectionService} from "../services/creation-type-selection.service";
-import {ad} from "../../assets/serialisation/examples/ad";
-import {Node} from "../../assets/serialisation/node/node";
+import {ad} from "../../model/examples/ad";
+import {Node} from "../../model/node/node";
 import {ResizeService} from "../services/resize.service";
-import {ForkRejoinNode} from "../../assets/serialisation/node/fork-rejoin-node";
-import {ClassNode} from "../../assets/serialisation/node/class-node";
+import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {cd} from "../../model/examples/cd";
+import {CachingService} from "../services/caching/caching.service";
+import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
+import {SelectionService} from "../services/selection.service";
+import {Lifeline} from "../../model/sequence-diagram/lifeline";
+import {SequenceDiagram} from "../../model/sequence-diagram/sequence-diagram";
 
 
 @Component({
@@ -25,22 +26,35 @@ import {ClassNode} from "../../assets/serialisation/node/class-node";
 })
 export class DiagramComponent implements AfterViewInit {
   public diagram: Diagram;
+  seq = new SequenceDiagram();
+
   mode: Mode;
   Mode = Mode;
 
-  constructor(private repositionService: RepositionService, private edgeRepositionService: EdgeRepositionService,
-              private modeService: ModeService, private edgeCreationService: EdgeCreationService,
+  constructor(private repositionService: RepositionService,
+              private edgeRepositionService: EdgeRepositionService,
+              private modeService: ModeService,
+              private edgeCreationService: EdgeCreationService,
               private deletionService: DeletionService,
               private creationTypeSelectionService: CreationTypeSelectionService,
-              private resizeService: ResizeService) {
+              private resizeService: ResizeService,
+              private cachingService: CachingService,
+              private selectionService: SelectionService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
     // this.diagram = ad;
-    this.diagram = cd;
-    edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => this.diagram.edges.push(newEdge));
+    // this.diagram = cd;
+    this.diagram = new Diagram();
+    edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => {
+      this.diagram.edges.push(newEdge);
+      this.cachingService.save();
+    });
 
     deletionService.setDiagram(this.diagram);
+
+    cachingService.setDiagram(this.diagram);
+    // Node.addAfterCallback(() => cachingService.add(this.diagram));
   }
 
   ngAfterViewInit() {
@@ -61,7 +75,6 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleMouseMove(event: MouseEvent) {
-    // let position = new Position(event.clientX, event.clientY);
     let position = new Position(event.pageX, event.pageY);
     if (this.repositionService.isActive()) {
       this.repositionService.update(position);
@@ -75,6 +88,8 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleDoubleClick(event: MouseEvent){
+    // console.log(JSON.stringify(this.diagram.serialise()));
+    // this.diagram = deserialiseDiagram(this.diagram.serialise());
     if (this.mode === Mode.Create) {
       if (event.ctrlKey) {
         // let formatter = new EdgeFormatter(new Position(event.clientX, event.clientY),
@@ -92,6 +107,7 @@ export class DiagramComponent implements AfterViewInit {
         let newNode : Node= this.creationTypeSelectionService.getSelectedNodeType();
         newNode.position = new Position(event.clientX - newNode.width / 2, event.clientY - newNode.height / 2);
         this.diagram.nodes.push(newNode);
+        this.cachingService.save();
       }
     }
   }
@@ -100,8 +116,6 @@ export class DiagramComponent implements AfterViewInit {
     const SELECT_KEY = "1";
     const CREATE_KEY = "2";
     const MOVE_KEY = "3";
-    console.log(event.ctrlKey);
-    console.log(event.key);
 
     if (event.ctrlKey) {
       switch (event.key) {
@@ -114,6 +128,49 @@ export class DiagramComponent implements AfterViewInit {
         case MOVE_KEY:
           this.modeService.setMode(Mode.Move);
           break;
+      }
+    }
+  }
+
+  setDiagram(diagram: Diagram) {
+    this.diagram = diagram;
+    this.deletionService.setDiagram(this.diagram);
+    this.edgeRepositionService.setNodes(this.diagram.nodes);
+    this.cachingService.setDiagram(diagram);
+    // We have to deselect the selected edge or node because when we undo/redo and action,
+    // a new diagram reference is created from the serialized version.
+    // If we leave the node/edge selected, it does not reference the actual instance inside the current diagram.
+    this.selectionService.deselect();
+  }
+
+  undo() {
+    let result = this.cachingService.undo();
+    if (result !== null) {
+      this.setDiagram(result as Diagram);
+    }
+  }
+
+  redo() {
+    let result = this.cachingService.redo();
+    if (result !== null) {
+      this.setDiagram(result as Diagram);
+    }
+  }
+
+  do() {
+    this.cachingService.save();
+  }
+
+  restore() {
+    let result: null | string = localStorage.getItem(CachingService.LOCAL_STORAGE_KEY);
+    if (result === null) {
+      alert('No diagram stored in local storage');
+    } else {
+      try {
+        let diagram: Diagram = deserialiseDiagram(JSON.parse(result as string) as SerialisedDiagram);
+        this.setDiagram(diagram);
+      } catch (e) {
+        alert('Could not restore diagram from local storage');
       }
     }
   }
