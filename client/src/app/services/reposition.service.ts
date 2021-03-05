@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Position} from "../../model/position";
 import {Deactivatable} from "./deactivatable";
 import {CachingService} from "./caching/caching.service";
+import {SnapService} from "./snap.service";
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,7 @@ export class RepositionService implements Deactivatable {
   public deactivate(): void {
     this.positionable = undefined;
     this.startPosition = undefined;
+    this.difference = undefined;
     this.cachingService.save();
   }
 }

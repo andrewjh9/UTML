@@ -11,7 +11,7 @@ export class MoveMenuComponent implements OnInit {
   constructor(private snapService: SnapService) { }
 
   public activate(){
-    this.snapService.setActive(!this.snapService.isActive())
+    this.snapService.setSnapState(!this.snapService.isActive())
   }
 
   ngOnInit(): void {

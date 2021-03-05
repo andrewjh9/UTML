@@ -1,27 +1,22 @@
 import { Injectable } from '@angular/core';
-// import {Node} from "../../assets/serialisation/node/node";
-import {Position} from "../../assets/serialisation/position";
-// import {Positionable} from "./reposition.service";
+import {Position} from "../../model/position";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SnapService {
-
-  constructor() { }
-  private snappy: boolean = false;
+  private snapIsActive: boolean = false;
 
   public isActive(): boolean {
-     return this.snappy;
+     return this.snapIsActive;
   }
 
-  public setActive(snappy: boolean): void {
-    this.snappy = snappy;
+  public setSnapState(snapIsActive: boolean): void {
+    this.snapIsActive = snapIsActive;
   }
 
   public snapIfApplicable(position: Position, accuracy: number): Position {
-    console.log(this.snappy)
-    if (this.snappy) {
+    if (this.snapIsActive) {
       let corners: Position[] = [
         new Position(Math.floor(position.x/accuracy)*accuracy, Math.floor(position.y/accuracy)*accuracy),
         new Position(Math.ceil(position.x/accuracy)*accuracy, Math.floor(position.y/accuracy)*accuracy),
@@ -38,14 +33,5 @@ export class SnapService {
     } else {
       return position
     }
-
   }
-
-  // public deactivate(): void {
-  //   this.snappy = false;
-  // }
-}
-
-export interface Positionable {
-  position: Position;
 }
