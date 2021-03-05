@@ -7,10 +7,14 @@ import {deserialiseDiagram} from "../../../serialisation/deserialise/deserialise
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service responsible for caching changes to the diagram object to localStorage and the redo/undo data structure.
+ */
 export class CachingService {
+  /** Key of the serialised version of the diagram that is stored in local storage. */
   public static readonly LOCAL_STORAGE_KEY = 'diagram-cache';
   private readonly MAX_SIZE: number = 25;
-  private list?: SizeBoundDoublyLinkedList<SerialisedDiagram>;
+  private list: SizeBoundDoublyLinkedList<SerialisedDiagram>;
   private diagram?: Diagram;
 
   constructor() {
@@ -25,10 +29,12 @@ export class CachingService {
     this.diagram = diagram;
   }
 
+  /**
+   * Save the current version of the diagram to localStorage and the redo/undo structure.
+   * @throws Error if diagram is not set.
+   */
   public save(): void {
-    console.log('Caching');
-
-    if (this.diagram === undefined || this.list === undefined) {
+    if (this.diagram === undefined) {
       throw new Error('You can not save whilst the diagram is not set!');
     }
 
@@ -39,6 +45,10 @@ export class CachingService {
     // Todo: Make it so similar changes are merged. I.e., typing a word into a node counts as one undo/redo action.
   }
 
+  /**
+   * Return the previous diagram from the redo/undo data structure if possible.
+   * @returns the previous version of the diagram, null if not available.
+   */
   public undo(): Diagram | null {
     if (this.diagram === undefined || this.list === undefined) {
       throw new Error('You can not undo whilst the diagram is not set!');
@@ -52,6 +62,10 @@ export class CachingService {
     }
   }
 
+  /**
+   * Return the diagram version after the current version from the redo/undo data structure if possible.
+   * @returns the next version if possible, null if not.
+   */
   public redo(): Diagram | null {
     if (this.diagram === undefined || this.list === undefined) {
       throw new Error('You can not redo whilst the diagram is not set!');
