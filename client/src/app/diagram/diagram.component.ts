@@ -1,5 +1,5 @@
 import {Position} from '../../assets/serialisation/position';
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, HostListener} from '@angular/core';
 import {Edge, LineType} from "../../assets/serialisation/edge";
 import {Diagram} from "../../assets/serialisation/diagram";
 import {RepositionService} from "../services/reposition.service";
@@ -63,7 +63,6 @@ export class DiagramComponent implements AfterViewInit {
   handleMouseMove(event: MouseEvent) {
     // let position = new Position(event.clientX, event.clientY);
     let position = new Position(event.pageX, event.pageY);
-
     if (this.repositionService.isActive()) {
       this.repositionService.update(position);
     } else if (this.edgeRepositionService.isActive()) {
@@ -91,7 +90,7 @@ export class DiagramComponent implements AfterViewInit {
         // this.diagram.unstructuredEdges.push(formatter);
       } else {
         let newNode : Node= this.creationTypeSelectionService.getSelectedNodeType();
-        newNode.position = new Position(event.clientX - newNode.width / 2, event.clientY - newNode.height / 2);;
+        newNode.position = new Position(event.clientX - newNode.width / 2, event.clientY - newNode.height / 2);
         this.diagram.nodes.push(newNode);
       }
     }
