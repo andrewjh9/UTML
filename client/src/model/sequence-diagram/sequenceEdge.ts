@@ -1,6 +1,6 @@
 import {Lifeline} from "./lifeline";
 
-export class Edge {
+export class SequenceEdge {
   public start: Lifeline;
   public end: Lifeline;
 

@@ -32,6 +32,9 @@ import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic
 import { DiagramDownloadComponent } from './diagram-download/diagram-download.component';
 import { JsonUriPipe } from './json-uri.pipe';
 import { DiagramImportComponent } from './diagram-import/diagram-import.component';
+import { LifelineComponent } from './lifeline/lifeline.component';
+import { SequenceDiagramComponent } from './sequence-diagram/sequence-diagram.component';
+import { SequenceEdgeComponent } from './sequence-edge/sequence-edge.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +62,9 @@ import { DiagramImportComponent } from './diagram-import/diagram-import.componen
     DiagramDownloadComponent,
     JsonUriPipe,
     DiagramImportComponent,
+    LifelineComponent,
+    SequenceDiagramComponent,
+    SequenceEdgeComponent,
   ],
     imports: [
         BrowserModule,

@@ -9,6 +9,9 @@
            (dblclick)="handleDoubleClick($event)"
            id="diagram"
         >
+        <g sequence-diagram [diagram]="seq"></g>
+
+
         <g new-edge-preview></g>
         <!--  Define markers-->
         <defs arrow-marker></defs>

@@ -18,6 +18,8 @@ import {cd} from "../../model/examples/cd";
 import {CachingService} from "../services/caching/caching.service";
 import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
 import {SelectionService} from "../services/selection.service";
+import {Lifeline} from "../../model/sequence-diagram/lifeline";
+import {SequenceDiagram} from "../../model/sequence-diagram/sequence-diagram";
 
 
 @Component({
@@ -27,6 +29,8 @@ import {SelectionService} from "../services/selection.service";
 })
 export class DiagramComponent implements AfterViewInit {
   public diagram: Diagram;
+  seq = new SequenceDiagram();
+
   mode: Mode;
   Mode = Mode;
 
@@ -43,7 +47,8 @@ export class DiagramComponent implements AfterViewInit {
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
     // this.diagram = ad;
-    this.diagram = cd;
+    // this.diagram = cd;
+    this.diagram = new Diagram();
     edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => {
       this.diagram.edges.push(newEdge);
       this.cachingService.save();
