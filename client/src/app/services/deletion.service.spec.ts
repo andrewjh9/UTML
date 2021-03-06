@@ -6,6 +6,7 @@ import {Node} from "../../model/node/node";
 import {Diagram} from "../../model/diagram";
 import {EllipseNode} from "../../model/node/ellipse-node";
 import {typeIsOrHasBaseType} from "tslint/lib/language/typeUtils";
+import {CachingService} from "./caching/caching.service";
 
 describe('DeletionService ', () => {
   let deletionService: DeletionService;
@@ -17,12 +18,14 @@ describe('DeletionService ', () => {
   let diagram: Diagram;
 
   beforeEach(() => {
+    let cachingService = new CachingService();
+    cachingService.setDiagram(new Diagram());
     n1 = new RectangleNode(100, 100, new Position(0, 0));
     n2 = new RectangleNode(100, 100, new Position(200, 0));
     unknownNode = new EllipseNode(200, 200, new Position(500, 500));
     e1 = new Edge(0, 0, n1, n2);
     unknownEdge = new Edge(0, 0, n1, unknownNode);
-    deletionService = new DeletionService;
+    deletionService = new DeletionService(cachingService);
   });
 
   describe('without diagram set ', () => {

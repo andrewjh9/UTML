@@ -3,6 +3,8 @@ import {RectangleNode} from "../../../model/node/rectangle-node";
 import {Position} from "../../../model/position";
 import {Node} from "../../../model/node/node";
 import {Edge, LineType} from "../../../model/edge";
+import {CachingService} from "../caching/caching.service";
+import {Diagram} from "../../../model/diagram";
 
 describe('EdgeRepositionService ', () => {
   let edgeRepositionService: EdgeRepositionService;
@@ -14,7 +16,9 @@ describe('EdgeRepositionService ', () => {
   let middlePosition: Position;
 
   beforeEach(() => {
-    edgeRepositionService = new EdgeRepositionService();
+    let cachingService = new CachingService();
+    cachingService.setDiagram(new Diagram());
+    edgeRepositionService = new EdgeRepositionService(cachingService);
     n1 = new RectangleNode(100, 100, new Position(0, 0));
     n2 = new RectangleNode(100, 100, new Position(200, 0));
 

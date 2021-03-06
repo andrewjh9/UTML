@@ -120,7 +120,7 @@ export abstract class Node {
       ]
   }
 
-  public readonly styleObject: {
+  public styleObject: {
     [key: string]: number | string,
   } = {
     'fill': 'green',

@@ -2,6 +2,7 @@ import {Position} from "./position";
 import {Node} from "./node/node";
 import {Label} from "./label";
 import {SerialisedEdge} from "../serialisation/serialised-data-structures/serialised-edge";
+import {deserialiseEdge} from "../serialisation/deserialise/deserialise-edge";
 
 export class Edge {
   public startNode?: Node;
@@ -210,6 +211,21 @@ export class Edge {
       lineType: this.lineType,
       middlePositions: this.middlePositions.map(p => p.serialise()),
     }
+  }
+
+  public getDeepCopy(): Edge {
+    let result = new Edge(this.startPosition, this.endPosition, this.startNode, this.endNode);
+    result.middlePositions = this.middlePositions.map(pos => pos.getDeepCopy());
+
+
+    result.startLabel = this.startLabel?.getDeepCopy();
+    result.middleLabel = this.middleLabel?.getDeepCopy();
+    result.endLabel = this.endLabel?.getDeepCopy();
+    result.startStyle = this.startStyle;
+    result.endStyle = this.endStyle;
+    result.lineStyle = this.lineStyle;
+    result.lineType = this.lineType;
+    return result;
   }
 }
 

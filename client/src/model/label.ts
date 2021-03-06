@@ -1,5 +1,6 @@
 import {Position} from "./position";
 import {SerialisedLabel} from "../serialisation/serialised-data-structures/serialised-label";
+import {deserialiseLabel} from "../serialisation/deserialise/deserialise-label";
 
 export class Label {
   public position: Position;
@@ -15,5 +16,9 @@ export class Label {
       position: this.position.serialise(),
       value: this.value
     };
+  }
+
+  public getDeepCopy(): Label {
+    return deserialiseLabel(this.serialise());
   }
 }

@@ -14,14 +14,20 @@ export class SelectedEditorComponent {
   currentNode?: Node;
   currentEdge?: Edge;
 
-  constructor(private selectionService: SelectionService, private deletionService: DeletionService) {
-    selectionService.edgeEmitter.subscribe((edge: Edge) => {
-      this.setAllUndefined();
-      this.currentEdge = edge;
-    });
-    selectionService.nodeEmitter.subscribe((node: Node) => {
-      this.setAllUndefined();
-      this.currentNode = node;
+  constructor(selectionService: SelectionService, private deletionService: DeletionService) {
+    selectionService.selectedObservable.subscribe((selected: Node | Edge | undefined) => {
+      if (selected === undefined) {
+        this.currentNode = undefined;
+        this.currentEdge = undefined;
+      } else if (selected instanceof Node) {
+        this.currentNode = <Node> selected;
+        this.currentEdge = undefined;
+      } else if (selected instanceof Edge) {
+        this.currentEdge = <Edge> selected;
+        this.currentNode = undefined;
+      } else {
+        throw new Error('Somehow you broke the type system. Congratulations.');
+      }
     });
   }
 

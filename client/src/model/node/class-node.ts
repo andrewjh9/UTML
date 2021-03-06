@@ -19,6 +19,8 @@ export class ClassNode extends RectangleNode {
 
   public getDeepCopy(): Node {
     let result = new ClassNode(this.width, this.height, this.position.getDeepCopy());
+    result.text = this.text;
+    result.styleObject = this.styleObject;
     result.firstLine = this.firstLine;
     result.secondLine = this.secondLine;
     return result as Node;

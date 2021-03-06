@@ -1,29 +1,24 @@
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Edge} from "../../model/edge";
 import {Node} from "../../model/node/node";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectionService {
-  private current?: Node | Edge;
-  public nodeEmitter: EventEmitter<Node> = new EventEmitter<Node>();
-  public edgeEmitter: EventEmitter<Edge> = new EventEmitter<Edge>();
-
+  private readonly selected: BehaviorSubject<Node | Edge | undefined> = new BehaviorSubject<Node | Edge | undefined>(undefined);
+  public readonly selectedObservable = this.selected.asObservable();
 
   public setNode(value: Node): void {
-    this.current = value;
-    this.nodeEmitter.emit(value);
+    this.selected.next(value);
   }
 
   public setEdge(value: Edge): void {
-    this.current = value;
-    this.edgeEmitter.emit(value);
+    this.selected.next(value);
   }
 
   public deselect(): void {
-    this.current = undefined;
-    this.nodeEmitter.emit(undefined);
-    this.edgeEmitter.emit(undefined);
+    this.selected.next(undefined);
   }
 }

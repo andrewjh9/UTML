@@ -20,6 +20,7 @@ import {SequenceDiagram} from "../../model/sequence-diagram/sequence-diagram";
 import {Diagram} from "../../model/diagram";
 import {Edge} from "../../model/edge";
 import {Position} from "../../model/position";
+import {CopyPasteService} from "../services/copy-paste.service";
 
 
 @Component({
@@ -42,7 +43,8 @@ export class DiagramComponent implements AfterViewInit {
               private creationTypeSelectionService: CreationTypeSelectionService,
               private resizeService: ResizeService,
               private cachingService: CachingService,
-              private selectionService: SelectionService) {
+              private selectionService: SelectionService,
+              private copyPasteService: CopyPasteService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
@@ -57,6 +59,15 @@ export class DiagramComponent implements AfterViewInit {
     deletionService.setDiagram(this.diagram);
 
     cachingService.setDiagram(this.diagram);
+
+    copyPasteService.pasteEmitter.subscribe((nodeOrEdge: Node | Edge) => {
+      if (nodeOrEdge instanceof Node) {
+        this.diagram.nodes.push(nodeOrEdge as Node);
+      } else {
+        this.diagram.edges.push(nodeOrEdge as Edge);
+      }
+      this.cachingService.save();
+    });
     // Node.addAfterCallback(() => cachingService.add(this.diagram));
   }
 
@@ -176,5 +187,13 @@ export class DiagramComponent implements AfterViewInit {
         alert('Could not restore diagram from local storage');
       }
     }
+  }
+
+  copy() {
+    this.copyPasteService.doCopy();
+  }
+
+  paste() {
+    this.copyPasteService.doPaste();
   }
 }
