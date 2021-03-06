@@ -46,15 +46,23 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         return new HttpSessionManager();
     }
 
+    /**
+     * Order matters see:
+     * NOTE: https://rules.sonarsource.com/java/tag/spring/RSPEC-4601
+     * @param httpSecurity
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception
     {
         super.configure(httpSecurity);
-        httpSecurity.authorizeRequests()
-                .antMatchers("/api/diagram").hasRole("User")
-                .anyRequest().permitAll();
-        httpSecurity.csrf().disable();
+        httpSecurity.httpBasic().and().authorizeRequests()
+        .antMatchers("/js/**","/css/**","/images/**").permitAll()
+                .antMatchers("/teachers/**").hasRole(String.valueOf(Roles.TEACHER))
+        .antMatchers("/").permitAll()
+        .anyRequest().authenticated();
 
 
     }
+
 }

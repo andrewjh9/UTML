@@ -34,6 +34,10 @@ public class DiagramController {
         return diagramService.get(id);
     }
 
+    @GetMapping("/all")
+    public List<Diagram> getAllDiagrams(){
+        return diagramService.getAll();
+    }
     @PutMapping
     public void updateDiagram(@RequestBody Diagram diagram){
         diagramService.update(diagram);
@@ -49,8 +53,5 @@ public class DiagramController {
     {
         return (KeycloakSecurityContext) request.getAttribute(KeycloakSecurityContext.class.getName());
     }
-//    @GetMapping
-//    public List<Diagram> getAllDiagrams() {
-//        return diagramService.getAll();
-//    }
+
 }
