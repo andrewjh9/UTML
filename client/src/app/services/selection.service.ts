@@ -23,7 +23,6 @@ export class SelectionService {
 
     keyboardEventCallerService.addCallback(['Escape', 'keydown', 'any'], (event => {
       this.deselect();
-      alert("Escaping")
     }));
   }
 
