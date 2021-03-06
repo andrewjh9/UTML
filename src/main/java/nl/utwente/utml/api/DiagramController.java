@@ -2,10 +2,12 @@ package nl.utwente.utml.api;
 
 import nl.utwente.utml.model.Diagram;
 import nl.utwente.utml.service.DiagramService;
+import org.keycloak.KeycloakSecurityContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequestMapping("api/diagram")
@@ -13,9 +15,13 @@ import java.util.List;
 @RestController
 public class DiagramController {
     private final DiagramService diagramService;
+    private final HttpServletRequest request;
+
     @Autowired
-    public DiagramController(DiagramService diagramService) {
+    public DiagramController(DiagramService diagramService, HttpServletRequest request) {
         this.diagramService = diagramService;
+        this.request = request;
+
     }
 
     @PostMapping
@@ -24,8 +30,8 @@ public class DiagramController {
     }
 
     @GetMapping
-    public void getDiagram(@RequestBody long id){
-        diagramService.get(id);
+    public Diagram getDiagram(@RequestBody long id){
+        return diagramService.get(id);
     }
 
     @PutMapping
@@ -39,8 +45,12 @@ public class DiagramController {
     }
 
 
-    @GetMapping
-    public List<Diagram> getAllPeople() {
-        return diagramService.getAll();
+    private KeycloakSecurityContext getKeycloakSecurityContext()
+    {
+        return (KeycloakSecurityContext) request.getAttribute(KeycloakSecurityContext.class.getName());
     }
+//    @GetMapping
+//    public List<Diagram> getAllDiagrams() {
+//        return diagramService.getAll();
+//    }
 }
