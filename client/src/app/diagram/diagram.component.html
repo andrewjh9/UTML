@@ -1,9 +1,38 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" [ngStyle]="{height: NAV_HEIGHT}">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Open</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Save</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="copy()">Copy</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="paste()">Paste</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="undo()">Undo</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="redo()">Redo</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Settings</a>
+      </li>
+    </ul>
+  </div>
+
+</nav>
+
 <div class="container-fluid" (keyup)="handleKeyPressed($event)">
   <div class="row d-flex">
     <div class="flex-grow-1">
-      <svg width="1200"
-           height="600"
-           viewBox="0 0 1200 600"
+      <svg width="1920"
+           height="800"
+           viewBox="0 0 1920 800"
 
            (mouseup)="handleMouseUp($event)"
            (mousemove)="handleMouseMove($event)"
@@ -22,12 +51,12 @@
         <g node-dispatcher [nodes]="diagram.nodes"></g>
       </svg>
     </div>
-    <div style="width: 400px">
-      <app-mode-selector></app-mode-selector>
-      <app-selected-editor *ngIf="mode === Mode.Select"></app-selected-editor>
-      <app-creation-menu *ngIf="mode === Mode.Create"></app-creation-menu>
-      <app-move-menu *ngIf="mode === Mode.Move"></app-move-menu>
-    </div>
+<!--    <div style="width: 400px">-->
+<!--      <app-mode-selector></app-mode-selector>-->
+<!--      <app-selected-editor *ngIf="mode === Mode.Select"></app-selected-editor>-->
+<!--      <app-creation-menu *ngIf="mode === Mode.Create"></app-creation-menu>-->
+<!--      <app-move-menu *ngIf="mode === Mode.Move"></app-move-menu>-->
+<!--    </div>-->
   </div>
 </div>
 

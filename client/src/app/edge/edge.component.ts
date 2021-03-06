@@ -27,7 +27,7 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
     if (this.isInMoveMode()) {
       if (this.edge?.middlePositions) {
         // Todo: fix mouse Positioning
-        let mousePosition = new Position(event.clientX, event.clientY);
+        let mousePosition = new Position(event.clientX, event.clientY - 50);
         this.edgeRepositionService.activate(this.edge, mousePosition);
       }
     } else if (this.isInSelectMode() && this.edge) {

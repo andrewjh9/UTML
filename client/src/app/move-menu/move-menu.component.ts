@@ -10,7 +10,7 @@ export class MoveMenuComponent implements OnInit {
 
   constructor(private snapService: SnapService) { }
 
-  public activate(){
+  public activate() {
     this.snapService.setSnapState(!this.snapService.isActive())
   }
 

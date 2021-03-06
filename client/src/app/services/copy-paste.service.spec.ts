@@ -5,6 +5,9 @@ import {SelectionService} from "./selection.service";
 import {RectangleNode} from "../../model/node/rectangle-node";
 import {Position} from "../../model/position";
 import {Edge} from "../../model/edge";
+import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
+import {DeletionService} from "./deletion.service";
+import {CachingService} from "./caching/caching.service";
 
 describe('CopyPasteService', () => {
   let selectionService: SelectionService;
@@ -13,8 +16,8 @@ describe('CopyPasteService', () => {
   const EDGE = new Edge(new Position(100, 100), new Position(200, 200));
 
   beforeEach(() => {
-    selectionService = new SelectionService();
-    service = new CopyPasteService(selectionService);
+    selectionService = new SelectionService(new KeyboardEventCallerService(), new DeletionService(new CachingService()));
+    service = new CopyPasteService(selectionService, new KeyboardEventCallerService());
   });
 
   it('should be created', () => {

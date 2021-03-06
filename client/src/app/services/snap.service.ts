@@ -5,7 +5,7 @@ import {Position} from "../../model/position";
   providedIn: 'root'
 })
 export class SnapService {
-  private snapIsActive: boolean = false;
+  private snapIsActive: boolean = true;
 
   public isActive(): boolean {
      return this.snapIsActive;

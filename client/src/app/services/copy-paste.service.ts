@@ -4,6 +4,7 @@ import {Edge} from "../../model/edge";
 import {Node} from "../../model/node/node";
 import {KnownDeclaration} from "@angular/compiler-cli/src/ngtsc/reflection";
 import {Position} from "../../model/position";
+import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,22 @@ export class CopyPasteService {
   private selected: Node | Edge | undefined;
   public readonly pasteEmitter: EventEmitter<Node | Edge> = new EventEmitter<Node|Edge>();
 
-  constructor(selectionService: SelectionService) {
+  constructor(selectionService: SelectionService, keyboardEventCaller: KeyboardEventCallerService) {
     selectionService.selectedObservable.subscribe(selected => {
       this.selected = selected;
-    })
+    });
+
+    keyboardEventCaller.addCallback(['c', 'keydown', 'ctrl'], (ignored: KeyboardEvent) => {
+      if (this.copyIsAvailable()) {
+        this.doCopy();
+      }
+    });
+
+    keyboardEventCaller.addCallback(['v', 'keydown', 'ctrl'], (ignored: KeyboardEvent) => {
+      if (this.pasteIsAvailable()) {
+        this.doPaste();
+      }
+    });
   }
 
   public doCopy(): void {

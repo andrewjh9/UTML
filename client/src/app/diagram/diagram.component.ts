@@ -29,6 +29,8 @@ import {CopyPasteService} from "../services/copy-paste.service";
   styleUrls: ['./diagram.component.scss']
 })
 export class DiagramComponent implements AfterViewInit {
+  public static readonly NAV_HEIGHT = 50;
+  get NAV_HEIGHT() { return DiagramComponent.NAV_HEIGHT; }
   public diagram: Diagram;
   seq = new SequenceDiagram();
 
@@ -90,6 +92,7 @@ export class DiagramComponent implements AfterViewInit {
 
   handleMouseMove(event: MouseEvent) {
     let position = new Position(event.pageX, event.pageY);
+    position = Position.subtract(position, new Position(0, DiagramComponent.NAV_HEIGHT));
     if (this.repositionService.isActive()) {
       this.repositionService.update(position);
     } else if (this.edgeRepositionService.isActive()) {
@@ -102,28 +105,14 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleDoubleClick(event: MouseEvent){
-    // console.log(JSON.stringify(this.diagram.serialise()));
-    // this.diagram = deserialiseDiagram(this.diagram.serialise());
     if (this.mode === Mode.Create) {
-      if (event.ctrlKey) {
-        // let formatter = new EdgeFormatter(new Position(event.clientX, event.clientY),
-        //   new Position(event.clientX + 100, event.clientY + 100), undefined, undefined);
-        // // for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
-        // //   // @ts-ignore
-        // //   formatter[key] = value;
-        // // }
-        // if (formatter.lineType === LineType.Arc) {
-        //   formatter.setDefaultMiddlePointOnArc();
-        // }
-        //
-        // this.diagram.unstructuredEdges.push(formatter);
-      } else {
-        let newNode : Node= this.creationTypeSelectionService.getSelectedNodeType();
-        newNode.position = new Position(event.clientX - newNode.width / 2, event.clientY - newNode.height / 2);
-        this.diagram.nodes.push(newNode);
-        this.cachingService.save();
-      }
-    }
+      let newNode : Node= this.creationTypeSelectionService.getSelectedNodeType();
+      let mousePos = new Position(event.pageX, event.pageY);
+      mousePos = Position.subtract(mousePos, new Position(0, DiagramComponent.NAV_HEIGHT));
+      newNode.position = new Position(mousePos.x - newNode.width / 2, mousePos.y - newNode.height / 2);
+      this.diagram.nodes.push(newNode);
+      this.cachingService.save();
+   }
   }
 
   handleKeyPressed(event: KeyboardEvent): void {
