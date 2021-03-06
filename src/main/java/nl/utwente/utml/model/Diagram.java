@@ -18,7 +18,6 @@ import java.util.UUID;
     private String serializedDiagram;
 
 
-
     public Integer getId() {
         return id;
     }

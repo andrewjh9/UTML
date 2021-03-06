@@ -36,6 +36,8 @@ public class DiagramController {
 
     @GetMapping("/all")
     public List<Diagram> getAllDiagrams(){
+        System.out.println(getKeycloakSecurityContext().getIdToken().getEmail());
+
         return diagramService.getAll();
     }
     @PutMapping
