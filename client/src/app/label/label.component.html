@@ -1,14 +1,13 @@
-<svg:text *ngIf="formatter"
-          [attr.x]="formatter.position.x"
-          [attr.y]="formatter.position.y"
+<svg:text *ngIf="label"
+          [attr.x]="label.position.x"
+          [attr.y]="label.position.y"
           (mousedown)="handleMouseDown($event)"
           (dblclick)="handleDoubleClick($event)"
-          [ngClass]="{'Movable': isInMoveMode()}"
+          [ngClass]="{'movable': isInMoveMode()}"
           dominant-baseline="middle"
           text-anchor="middle"
-          font-family="Comic Sans MS, Helvetica, sans-serif"
-          class="movable">
-      <svg:tspan  *ngFor="let label_line of lineBreakLabel()"  [attr.x]= "formatter.position.x" dy="1.2em" >{{label_line}}</svg:tspan>
-
+          font-family="Comic Sans MS, Helvetica, sans-serif">
+      <svg:tspan *ngFor="let labelLine of lineBreakLabel()" [attr.x]="label.position.x" dy="1.2em">
+        {{labelLine}}
+      </svg:tspan>
 </svg:text>
-<svg:text>{{label}}</svg:text>

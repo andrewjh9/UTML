@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {EdgeRepositionService} from "./edge-reposition.service";
+import {EdgeRepositionService} from "./edge-reposition/edge-reposition.service";
 import {RepositionService} from "./reposition.service";
 import {Deactivatable} from "./deactivatable";
 import {EdgeCreationService} from "./edge-creation.service";
+import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +25,28 @@ export class ModeService {
   public readonly modeObservable: Observable<Mode> = new Observable<Mode>();
 
 
-  constructor(edgeRepositionService: EdgeRepositionService, repositionService: RepositionService,
-              edgeCreationService: EdgeCreationService) {
+  constructor(edgeRepositionService: EdgeRepositionService,
+              repositionService: RepositionService,
+              edgeCreationService: EdgeCreationService,
+              keyboardEventCallerService: KeyboardEventCallerService) {
     this.deactivatables = [edgeRepositionService, repositionService, edgeCreationService];
     this.mode = new BehaviorSubject<Mode>(Mode.Select);
     this.modeObservable = this.mode.asObservable();
+
+    keyboardEventCallerService.addCallback(['Control', "keydown", 'any'], (event => {
+      this.setMode(Mode.Create);
+    }));
+    keyboardEventCallerService.addCallback(['Control', "keyup", 'any'], (event => {
+      this.setMode(Mode.Select);
+    }));
+
+    keyboardEventCallerService.addCallback(['Shift', "keydown", 'any'], (event => {
+      this.setMode(Mode.Move);
+    }));
+    keyboardEventCallerService.addCallback(['Shift', "keyup", 'any'], (event => {
+      this.setMode(Mode.Select);
+    }));
+
   }
 
   /**
@@ -37,8 +55,10 @@ export class ModeService {
    * @param mode New mode value
    */
   public setMode(mode: Mode): void {
-    this.mode.next(mode);
-    this.deactivatables.forEach(d => d.deactivate());
+    if (this.getLatestMode() !== mode) {
+      this.mode.next(mode);
+      this.deactivatables.forEach(d => d.deactivate());
+    }
   }
 
   /**

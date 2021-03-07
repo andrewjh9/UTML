@@ -1,52 +1,41 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {LabelFormatter} from "../../assets/serialisation/label";
-import {Position} from "../../assets/serialisation/position";
+import {Component, Input} from '@angular/core';
+import {Label} from "../../model/label";
+import {Position} from "../../model/position";
 import {RepositionService} from "../services/reposition.service";
-import {SafeHtml} from "@angular/platform-browser";
-import {Mode, ModeService} from "../services/mode.service";
+import {ModeService} from "../services/mode.service";
+import {ModeAwareComponent} from "../mode-aware-component";
 
 @Component({
   selector: '[label-component]',
   templateUrl: './label.component.html',
   styleUrls: ['./label.component.scss']
 })
-export class LabelComponent {
-  @Input() formatter?: LabelFormatter;
-  @Input() label?: string;
-  @Output() labelChange: EventEmitter<string> = new EventEmitter<string>();
-  private mode: Mode;
+export class LabelComponent extends ModeAwareComponent {
+  @Input() label?: Label;
 
   constructor(private repositionService: RepositionService,
               modeService: ModeService) {
-    this.mode = modeService.getLatestMode();
-    modeService.modeObservable.subscribe(mode => this.mode = mode);
+    super(modeService);
   }
 
   handleDoubleClick($event: MouseEvent): void {
-    this.label = window.prompt("New label?") || this.label;
-    this.labelChange.emit(this.label);
-  }
-
-  getFormatter(): LabelFormatter | undefined {
-    return this.formatter;
+    if (this.label) {
+      this.label.value = window.prompt("New label?") || this.label.value;
+    }
   }
 
   lineBreakLabel() : string[]{
     if (this.label){
-      return  this.label.split("\\n");
+      return  this.label.value.split("\\n");
     }
-    return []
+    throw new Error("Somehow the application is trying to render a label which is undefined.");
   }
 
   public handleMouseDown(event: MouseEvent): void {
     if (this.isInMoveMode()) {
-      if (this.formatter !== undefined) {
-        this.repositionService.activate(this.formatter, new Position(event.clientX, event.clientY));
+      if (this.label !== undefined) {
+        this.repositionService.activate(this.label, new Position(event.clientX, event.clientY));
       }
     }
-  }
-
-  isInMoveMode(): boolean {
-    return this.mode === Mode.Move;
   }
 }

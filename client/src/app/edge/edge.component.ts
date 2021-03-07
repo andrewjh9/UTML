@@ -1,104 +1,36 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
-import {Position} from "../../assets/serialisation/position";
-import {Edge, EndStyle, LineStyle, LineType} from "../../assets/serialisation/edge";
-import {LabelFormatter} from "../../assets/serialisation/label";
-import {EdgeRepositionService} from "../services/edge-reposition.service";
-import {AbstractEdgeComponent} from "../abstract-edge-component";
+import {Position} from "../../model/position";
+import {Edge, EndStyle, LineStyle, LineType} from "../../model/edge";
+import {Label} from "../../model/label";
+import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
+import {ModeAwareComponent} from "../mode-aware-component";
 
 @Component({
   selector: '[edge-component]',
   templateUrl: './edge.component.html',
   styleUrls: ['./edge.component.scss'],
 })
-export class EdgeComponent extends AbstractEdgeComponent implements OnDestroy {
+export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   @Input() edge?: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
-  public readonly hasLabels = true;
 
   constructor(private edgeRepositionService: EdgeRepositionService,
-              modeService: ModeService, selectionService: SelectionService) {
-    super(selectionService, modeService);
-  }
-
-  getStartLabelFormatterAndSetIfAbsent(): LabelFormatter {
-    if (this.edge === undefined) {
-      console.error("Somehow the edge formatter is undefined.");
-      return new LabelFormatter(new Position(-1, -1));
-    }
-
-    if (this.edge.startLabelFormatter === undefined) {
-      this.edge.startLabelFormatter = new LabelFormatter(this.edge.getStartPosition());
-    }
-
-    return this.edge.startLabelFormatter;
-  }
-
-  getMiddleLabelFormatterAndSetIfAbsent(): LabelFormatter {
-    if (this.edge === undefined) {
-      console.error("Somehow the edge formatter is undefined.");
-      return new LabelFormatter(new Position(-1, -1));
-    }
-
-    if (this.edge.middleLabelFormatter === undefined) {
-      this.edge.middleLabelFormatter = new LabelFormatter(
-        Position.multiply(0.5, Position.add(this.edge.getStartPosition(), this.edge.getEndPosition())));
-    }
-
-    return this.edge.middleLabelFormatter;
-  }
-
-  getEndLabelFormatterAndSetIfAbsent(): LabelFormatter {
-    if (this.edge === undefined) {
-      console.error("Somehow the edge formatter is undefined.");
-      return new LabelFormatter(new Position(-1, -1));
-    }
-    if (this.edge.endLabelFormatter === undefined) {
-      this.edge.endLabelFormatter = new LabelFormatter(this.edge.getEndPosition());
-    }
-
-    return this.edge.endLabelFormatter;
-  }
-
-  public getStartLabel(): string | undefined {
-    return this.edge?.startLabel;
-  }
-
-  public setStartLabel(label: string) {
-    if (this.edge) {
-      this.edge.startLabel = label;
-    }
-  }
-
-  public getMiddleLabel(): string | undefined {
-    return this.edge?.middleLabel;
-  }
-
-  public setMiddleLabel(label: string) {
-    if (this.edge) {
-      this.edge.middleLabel = label;
-    }
-  }
-  public getEndLabel(): string | undefined {
-    return this.edge?.endLabel;
-  }
-
-  public setEndLabel(label: string) {
-    if (this.edge) {
-      this.edge.endLabel = label;
-    }
+              modeService: ModeService,
+              private selectionService: SelectionService) {
+    super(modeService);
   }
 
   public handleMouseDown(event: MouseEvent): void {
-    if (this.mode === Mode.Move) {
+    if (this.isInMoveMode()) {
       if (this.edge?.middlePositions) {
-        // Todo: fix mouse positioning
-        let mousePosition = new Position(event.clientX, event.clientY);
-        this.edgeRepositionService.activate(mousePosition, this.edge);
+        // Todo: fix mouse Positioning
+        let mousePosition = new Position(event.clientX, event.clientY - 50);
+        this.edgeRepositionService.activate(this.edge, mousePosition);
       }
-    } else if (this.mode === Mode.Select && this.edge) {
+    } else if (this.isInSelectMode() && this.edge) {
       this.selectionService.setEdge(this.edge);
     }
   }

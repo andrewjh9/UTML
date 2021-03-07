@@ -1,9 +1,10 @@
 import {RepositionService} from "../services/reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
-import {Node} from "../../assets/serialisation/node/node";
-import {Position} from "../../assets/serialisation/position";
+import {Node} from "../../model/node/node";
+import {Position} from "../../model/position";
 import {ModeAwareComponent} from "../mode-aware-component";
+import {DiagramComponent} from "../diagram/diagram.component";
 
 export abstract class AbstractNodeComponent extends ModeAwareComponent {
   protected constructor(private repositionService: RepositionService,
@@ -12,13 +13,12 @@ export abstract class AbstractNodeComponent extends ModeAwareComponent {
     super(modeService);
   }
 
-  protected abstract getNode(): Node;
-
+  public abstract getNode(): Node;
 
   public handleMouseDown(event: MouseEvent) {
     switch(this.mode) {
       case Mode.Move:
-        this.repositionService.activate(this.getNode(), new Position(event.clientX, event.clientY));
+        this.repositionService.activate(this.getNode(), new Position(event.clientX, event.clientY - DiagramComponent.NAV_HEIGHT));
         break;
       case Mode.Select:
         this.selectionService.setNode(this.getNode());

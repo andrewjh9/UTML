@@ -1,0 +1,14 @@
+<svg:g *ngIf="node">
+  <svg:text
+    [attr.x]="node.position.x"
+    [attr.y]="node.position.y "
+    [attr.width]="node.width"
+    [attr.height]="node.height"
+    style="text-align:center;"
+    dominant-baseline="middle"
+    text-anchor="middle"
+    font-family="Comic Sans MS, Helvetica, sans-serif"
+    class="movable">
+    <svg:tspan  *ngFor="let text_line of node.getTextLines()"  [attr.x]= "node.position.x + (node.width/2)" dy="1.2em" >{{text_line}}</svg:tspan>
+  </svg:text>
+</svg:g>

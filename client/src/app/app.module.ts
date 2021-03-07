@@ -10,7 +10,6 @@ import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
 import {FormsModule} from "@angular/forms";
 import { LabelComponent } from './label/label.component';
 import {RepositionService} from "./services/reposition.service";
-// import { NonStructuralEdgeComponent } from './non-structural-edge/non-structural-edge.component';
 import {ModeSelectorComponent} from "./mode-selector/mode-selector.component";
 import {ModeService} from "./services/mode.service";
 import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.component';
@@ -20,7 +19,6 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
 import { CreationMenuComponent } from './creation-menu/creation-menu.component';
 import { NodeEditorComponent } from './node-editor/node-editor.component';
-// import { UnstructuredEdgeEditorComponent } from './unstructured-edge-editor/unstructured-edge-editor.component';
 import { MoveMenuComponent } from './move-menu/move-menu.component';
 import { NodeDispatcherComponent } from './node-compontents/node-dispatcher/node-dispatcher.component';
 import { RectangleNodeComponent } from './node-compontents/rectangle-node/rectangle-node.component';
@@ -29,6 +27,14 @@ import { DiamondNodeComponent } from './node-compontents/diamond-node/diamond-no
 import { ClickableAttachmentPointsComponent } from './node-compontents/clickable-attachment-points/clickable-attachment-points.component';
 import {ClickableResizePointsComponent} from "./node-compontents/clickable-resize-points/clickable-resize-points.component";
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
+import { ClassNodeComponent } from './node-compontents/class-node/class-node.component';
+import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic-node-text.component';
+import { DiagramDownloadComponent } from './diagram-download/diagram-download.component';
+import { JsonUriPipe } from './json-uri.pipe';
+import { DiagramImportComponent } from './diagram-import/diagram-import.component';
+import { LifelineComponent } from './lifeline/lifeline.component';
+import { SequenceDiagramComponent } from './sequence-diagram/sequence-diagram.component';
+import { SequenceEdgeComponent } from './sequence-edge/sequence-edge.component';
 
 @NgModule({
   declarations: [
@@ -37,15 +43,12 @@ import { ExportDiagramComponent } from './export-diagram/export-diagram.componen
     EdgeComponent,
     ArrowMarkerComponent,
     LabelComponent,
-    // NonStructuralEdgeComponent,
     ModeSelectorComponent,
     NewEdgePreviewComponent,
     SelectedEditorComponent,
     EdgeEditorComponent,
     CreationMenuComponent,
     NodeEditorComponent,
-
-    // UnstructuredEdgeEditorComponent,
     MoveMenuComponent,
     NodeDispatcherComponent,
     RectangleNodeComponent,
@@ -53,7 +56,15 @@ import { ExportDiagramComponent } from './export-diagram/export-diagram.componen
     DiamondNodeComponent,
     ClickableAttachmentPointsComponent,
     ClickableResizePointsComponent,
-    ExportDiagramComponent
+    ExportDiagramComponent,
+    ClassNodeComponent,
+    BasicNodeTextComponent,
+    DiagramDownloadComponent,
+    JsonUriPipe,
+    DiagramImportComponent,
+    LifelineComponent,
+    SequenceDiagramComponent,
+    SequenceEdgeComponent,
   ],
     imports: [
         BrowserModule,

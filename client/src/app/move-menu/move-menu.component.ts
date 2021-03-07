@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {SnapService} from "../services/snap.service";
 
 @Component({
   selector: 'app-move-menu',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MoveMenuComponent implements OnInit {
 
-  constructor() { }
+  constructor(private snapService: SnapService) { }
+
+  public activate() {
+    this.snapService.setSnapState(!this.snapService.isActive())
+  }
 
   ngOnInit(): void {
   }

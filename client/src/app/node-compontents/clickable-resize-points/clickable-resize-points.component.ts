@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Node} from "../../../assets/serialisation/node/node";
+import {Node} from "../../../model/node/node";
 import {EdgeCreationService} from "../../services/edge-creation.service";
-import {FormattedResizeElement, ResizeService} from "../../services/resize.service";
-import {Position} from "../../../assets/serialisation/position";
+import {ResizeService} from "../../services/resize.service";
+import {Position} from "../../../model/position";
 
 @Component({
   selector: '[clickable-resize-points]',

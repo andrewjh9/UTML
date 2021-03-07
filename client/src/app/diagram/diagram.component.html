@@ -1,32 +1,57 @@
-<div class="container-fluid">
-  <div class="row d-flex" style="text-align: right; float:right;padding: 10px">
-    <app-export-diagram></app-export-diagram>
+<nav class="navbar navbar-expand-lg navbar-light bg-light" [ngStyle]="{height: NAV_HEIGHT}">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#">Open</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Save</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="copy()">Copy</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="paste()">Paste</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="undo()">Undo</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="redo()">Redo</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Settings</a>
+      </li>
+    </ul>
   </div>
+
+</nav>
+
+<div class="container-fluid" (keyup)="handleKeyPressed($event)">
   <div class="row d-flex">
     <div class="flex-grow-1">
       <svg width="1200"
-           height="600"
-           viewBox="0 0 1200 600"
+           height="800"
+           viewBox="0 0 1200 800"
+
            (mouseup)="handleMouseUp($event)"
            (mousemove)="handleMouseMove($event)"
            (dblclick)="handleDoubleClick($event)"
+
            id="diagram"
         >
+<!--        <g sequence-diagram [diagram]="seq"></g>-->
+
+
         <g new-edge-preview></g>
         <!--  Define markers-->
         <defs arrow-marker></defs>
-
         <g *ngFor="let edge of diagram.edges; let i = index"
            edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
         <g node-dispatcher [nodes]="diagram.nodes"></g>
-        <!--<g *ngFor="let node of diagram.nodes; let i = index"-->
-           <!--node-component [(node)]="diagram.nodes[i]" (nodeChange)="diagram.nodes[i]=$event"></g>-->
-
-        <!--<g *ngFor="let formatter of diagram.unstructuredEdges" non-structural-edge [formatter]="formatter"></g>-->
-
       </svg>
     </div>
-    <div style="width: 500px">
+    <div style="width: 400px">
       <app-mode-selector></app-mode-selector>
       <app-selected-editor *ngIf="mode === Mode.Select"></app-selected-editor>
       <app-creation-menu *ngIf="mode === Mode.Create"></app-creation-menu>
@@ -36,3 +61,17 @@
 </div>
 
 <canvas id="canvas" viewbox></canvas>
+
+<app-diagram-download [diagram]="diagram"></app-diagram-download>
+<app-export-diagram></app-export-diagram>
+<app-diagram-import (diagramEmitter)="setDiagram($event)"></app-diagram-import>
+<button class="btn btn-outline-primary" (click)="undo()">Undo</button>
+<button class="btn btn-outline-primary" (click)="redo()">Redo</button>
+<button class="btn btn-outline-primary" (click)="do()">Do</button>
+<button class="btn btn-outline-primary" (click)="restore()">Restore Local Storage</button>
+<button class="btn btn-outline-primary" (click)="copy()">Copy</button>
+<button class="btn btn-outline-primary" (click)="paste()">Paste</button>
+
+
+
+

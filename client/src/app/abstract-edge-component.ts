@@ -1,5 +1,5 @@
-import {LineType} from "../assets/serialisation/edge";
-import {LabelFormatter} from "../assets/serialisation/label";
+import {LineType} from "../model/edge";
+import {Label} from "../model/label";
 import {SelectionService} from "./services/selection.service";
 import {Mode, ModeService} from "./services/mode.service";
 import {OnDestroy} from "@angular/core";
@@ -12,16 +12,4 @@ export abstract class AbstractEdgeComponent {
     modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
   }
-
-  // Label stuff only relevant for structural component
-  public readonly abstract hasLabels: boolean;
-  public abstract getStartLabelFormatterAndSetIfAbsent(): LabelFormatter
-  public abstract getMiddleLabelFormatterAndSetIfAbsent(): LabelFormatter
-  public abstract getEndLabelFormatterAndSetIfAbsent(): LabelFormatter
-  public abstract getStartLabel(): string | undefined;
-  public abstract getMiddleLabel(): string | undefined;
-  public abstract getEndLabel(): string | undefined;
-  public abstract setStartLabel(label: string): void;
-  public abstract setMiddleLabel(label: string): void;
-  public abstract setEndLabel(label: string): void;
 }

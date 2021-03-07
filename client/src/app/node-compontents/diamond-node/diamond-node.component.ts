@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {AbstractNodeComponent} from "../abstract-node-component";
-import {DiamondNode} from "../../../assets/serialisation/node/diamond-node";
-import {Node} from "../../../assets/serialisation/node/node";
+import {DiamondNode} from "../../../model/node/diamond-node";
+import {Node} from "../../../model/node/node";
 import {RepositionService} from "../../services/reposition.service";
 import {ModeService} from "../../services/mode.service";
 import {SelectionService} from "../../services/selection.service";
@@ -20,7 +20,7 @@ export class DiamondNodeComponent extends AbstractNodeComponent {
     super(repositionService, modeService, selectionService);
   }
 
-  protected getNode(): Node {
+  public getNode(): Node {
     return this.node as Node;
   }
 }

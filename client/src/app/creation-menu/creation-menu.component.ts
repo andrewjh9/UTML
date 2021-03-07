@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {CreationTypeSelectionService} from "../services/creation-type-selection.service";
-import {Node} from "../../assets/serialisation/node/node";
+import {Node} from "../../model/node/node";
 @Component({
   selector: 'app-creation-menu',
   templateUrl: './creation-menu.component.html',

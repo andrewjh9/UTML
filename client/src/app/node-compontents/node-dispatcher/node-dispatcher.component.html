@@ -1,17 +1,7 @@
 <svg:g *ngFor="let node of nodes">
-  <svg:text
-            [attr.x]="node.position.x"
-            [attr.y]="node.position.y "
-            [attr.width]="node.width"
-            [attr.height]="node.height"
-            style="text-align:center;"
-            dominant-baseline="middle"
-            text-anchor="middle"
-            font-family="Comic Sans MS, Helvetica, sans-serif"
-            class="movable">
-        <svg:tspan  *ngFor="let text_line of node.getTextLines()"  [attr.x]= "node.position.x + (node.width/2)" dy="1.2em" >{{text_line}}</svg:tspan>
-  </svg:text>
+
   <svg:g *ngIf="isRectangle(node)" rectangle-node  [node]="castToRectangle(node)"></svg:g>
   <svg:g *ngIf="isEllipse(node)" ellipse-node  [node]="castToEllipse(node)"></svg:g>
   <svg:g *ngIf="isDiamond(node)" diamond-node  [node]="castToDiamond(node)"></svg:g>
+  <svg:g *ngIf="isClass(node)" class-node  [node]="castToClass(node)"></svg:g>
 </svg:g>

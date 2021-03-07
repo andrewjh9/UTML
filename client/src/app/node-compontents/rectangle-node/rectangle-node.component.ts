@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {RectangleNode} from "../../../assets/serialisation/node/rectangle-node";
+import {RectangleNode} from "../../../model/node/rectangle-node";
 import {AbstractNodeComponent} from "../abstract-node-component";
-import {Node} from "../../../assets/serialisation/node/node";
+import {Node} from "../../../model/node/node";
 import {RepositionService} from "../../services/reposition.service";
 import {ModeService} from "../../services/mode.service";
 import {SelectionService} from "../../services/selection.service";
@@ -12,7 +12,7 @@ import {SelectionService} from "../../services/selection.service";
   styleUrls: ['./rectangle-node.component.scss']
 })
 export class RectangleNodeComponent extends AbstractNodeComponent {
-  @Input() node?: RectangleNode;
+  @Input() public node?: RectangleNode;
 
   constructor(repositionService: RepositionService,
               modeService: ModeService,
@@ -20,7 +20,7 @@ export class RectangleNodeComponent extends AbstractNodeComponent {
     super(repositionService, modeService, selectionService);
   }
 
-  protected getNode(): Node {
+  public getNode(): Node {
     return this.node as Node;
   }
 }

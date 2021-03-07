@@ -1,7 +1,8 @@
 import {EventEmitter, Injectable} from "@angular/core";
-import {Node} from "../../assets/serialisation/node/node";
-import {Diagram} from "../../assets/serialisation/diagram";
-import {Edge} from "../../assets/serialisation/edge";
+import {Node} from "../../model/node/node";
+import {Diagram} from "../../model/diagram";
+import {Edge} from "../../model/edge";
+import {CachingService} from "./caching/caching.service";
 
 @Injectable({
   providedIn: "root"
@@ -13,6 +14,8 @@ import {Edge} from "../../assets/serialisation/edge";
  */
 export class DeletionService {
   private diagram?: Diagram;
+
+  constructor(private cachingService: CachingService) { }
 
   /**
    * Delete a node and any connected edges from the diagram data structure and its component from the DOM.
@@ -40,6 +43,8 @@ export class DeletionService {
     } else {
       this.diagram.nodes.splice(index, 1);
     }
+
+    this.cachingService.save();
   }
 
   /**
@@ -59,6 +64,8 @@ export class DeletionService {
     } else {
       this.diagram.edges.splice(index, 1);
     }
+
+    this.cachingService.save();
   }
 
   /**
