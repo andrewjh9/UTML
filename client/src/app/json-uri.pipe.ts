@@ -6,6 +6,7 @@ import {Diagram} from "../model/diagram";
   name: 'jsonUri',
   pure: false
 })
+// Todo: Optimize this.
 export class JsonUriPipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) {
   }

@@ -35,6 +35,7 @@ import { DiagramImportComponent } from './diagram-import/diagram-import.componen
 import { LifelineComponent } from './lifeline/lifeline.component';
 import { SequenceDiagramComponent } from './sequence-diagram/sequence-diagram.component';
 import { SequenceEdgeComponent } from './sequence-edge/sequence-edge.component';
+import { SelectedNodeHighlightComponent } from './node-compontents/selected-node-highlight/selected-node-highlight.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { SequenceEdgeComponent } from './sequence-edge/sequence-edge.component';
     LifelineComponent,
     SequenceDiagramComponent,
     SequenceEdgeComponent,
+    SelectedNodeHighlightComponent,
   ],
     imports: [
         BrowserModule,
