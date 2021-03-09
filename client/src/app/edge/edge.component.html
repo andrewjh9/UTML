@@ -1,9 +1,8 @@
 <!-- Arc Rendering -->
 <svg:path *ngIf="edge && isArc()"
           [attr.d]="edge.getPointString()"
-          stroke="black"
           fill="transparent"
-          style="stroke-width: 2"
+          [ngStyle]="styleObject"
           [attr.marker-end]="edge.getEndMarker()"
           [attr.marker-start]="edge.getStartMarker()"
           [attr.stroke-dasharray]="edge.getLineStyleString()"
@@ -13,7 +12,8 @@
 <!-- Line Rendering -->
 <svg:polyline *ngIf="edge && isLine()"
               [attr.points]="edge.getPointString()"
-              style="stroke:rgb(0, 0, 0); stroke-width:2; fill:none;"
+              [ngStyle]="styleObject"
+              fill="none"
               [attr.marker-end]="edge.getEndMarker()"
               [attr.marker-start]="edge.getStartMarker()"
               [attr.stroke-dasharray]="edge.getLineStyleString()">
@@ -26,18 +26,6 @@
               (mousedown)="handleMouseDown($event)"
 >
 </svg:polyline>
-
-<!-- Debugging ellipse around Arc middle position -->
-<svg:ellipse *ngIf="isArc() && edge"
-             [attr.cx]="edge.middlePositions[0].x"
-             [attr.cy]="edge.middlePositions[0].y"
-             cx="10"
-             cy="10"
-             rx="5"
-             ry="5"
-             style="fill:pink;stroke:black;stroke-width:2;fill-opacity:0.5;stroke-opacity:0.9">
-
-</svg:ellipse>
 
 <svg:g *ngIf="edge && edge?.startLabel"
        label-component
