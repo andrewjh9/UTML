@@ -27,7 +27,13 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
               private selectionService: SelectionService) {
     super(modeService);
     selectionService.selectedObservable.subscribe(value => {
-      this.isSelected = value === this.edge;
+      // this.edge can be undefined here because this update may be called before the component is fully set up.
+      if (this.edge === undefined) {
+        this.isSelected = false;
+      } else {
+        this.isSelected = value === this.edge;
+      }
+
       if (this.isSelected) {
         this.styleObject.stroke = 'red';
       } else {

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {RepositionService} from "../services/reposition.service";
 
 import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
@@ -184,5 +184,8 @@ export class DiagramComponent implements AfterViewInit {
 
   paste() {
     this.copyPasteService.doPaste();
+  }
+
+  handleMouseDown(event: any) {
   }
 }

@@ -7,6 +7,8 @@ import {Diagram} from "../../model/diagram";
 import {EllipseNode} from "../../model/node/ellipse-node";
 import {typeIsOrHasBaseType} from "tslint/lib/language/typeUtils";
 import {CachingService} from "./caching/caching.service";
+import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
+import {SelectionService} from "./selection.service";
 
 describe('DeletionService ', () => {
   let deletionService: DeletionService;
@@ -25,7 +27,7 @@ describe('DeletionService ', () => {
     unknownNode = new EllipseNode(200, 200, new Position(500, 500));
     e1 = new Edge(0, 0, n1, n2);
     unknownEdge = new Edge(0, 0, n1, unknownNode);
-    deletionService = new DeletionService(cachingService);
+    deletionService = new DeletionService(cachingService, new SelectionService(new KeyboardEventCallerService()), new KeyboardEventCallerService());
   });
 
   describe('without diagram set ', () => {

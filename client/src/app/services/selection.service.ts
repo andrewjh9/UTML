@@ -12,15 +12,7 @@ export class SelectionService {
   private readonly selected: BehaviorSubject<Node | Edge | undefined> = new BehaviorSubject<Node | Edge | undefined>(undefined);
   public readonly selectedObservable = this.selected.asObservable();
 
-  constructor(keyboardEventCallerService: KeyboardEventCallerService, deletionService: DeletionService) {
-    keyboardEventCallerService.addCallback(['Delete', 'keydown', 'any'], (event => {
-      if (this.selected.getValue() instanceof Node) {
-        deletionService.deleteNode(this.selected.getValue() as Node);
-      } else if (this.selected.getValue() instanceof Edge) {
-        deletionService.deleteEdge(this.selected.getValue() as Edge);
-      }
-    }));
-
+  constructor(keyboardEventCallerService: KeyboardEventCallerService) {
     keyboardEventCallerService.addCallback(['Escape', 'keydown', 'any'], (event => {
       this.deselect();
     }));

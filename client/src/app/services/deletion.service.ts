@@ -3,6 +3,8 @@ import {Node} from "../../model/node/node";
 import {Diagram} from "../../model/diagram";
 import {Edge} from "../../model/edge";
 import {CachingService} from "./caching/caching.service";
+import {SelectionService} from "./selection.service";
+import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 
 @Injectable({
   providedIn: "root"
@@ -14,8 +16,21 @@ import {CachingService} from "./caching/caching.service";
  */
 export class DeletionService {
   private diagram?: Diagram;
+  private selected: Edge | Node | undefined = undefined;
 
-  constructor(private cachingService: CachingService) { }
+  constructor(private cachingService: CachingService,
+              private selectionService: SelectionService,
+              keyboardEventCallerService: KeyboardEventCallerService) {
+    selectionService.selectedObservable.subscribe(value => this.selected = value);
+
+    keyboardEventCallerService.addCallback(['Delete', 'keydown', 'any'], (event => {
+      if (this.selected instanceof Node) {
+        this.deleteNode(this.selected as Node);
+      } else if (this.selected instanceof Edge) {
+        this.deleteEdge(this.selected as Edge);
+      }
+    }));
+  }
 
   /**
    * Delete a node and any connected edges from the diagram data structure and its component from the DOM.
@@ -37,13 +52,15 @@ export class DeletionService {
     })
 
     const index = this.diagram.nodes.indexOf(node);
-    console.log(`Deleting node with index ${index}.`);
     if (index === -1) {
       throw new Error("Trying to delete a node that can not be found in the list of nodes!");
     } else {
       this.diagram.nodes.splice(index, 1);
     }
 
+    if (node === this.selected) {
+      this.selectionService.deselect();
+    }
     this.cachingService.save();
   }
 
@@ -65,6 +82,9 @@ export class DeletionService {
       this.diagram.edges.splice(index, 1);
     }
 
+    if (edge === this.selected) {
+      this.selectionService.deselect();
+    }
     this.cachingService.save();
   }
 
