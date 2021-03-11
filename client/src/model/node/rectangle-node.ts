@@ -20,7 +20,10 @@ export class RectangleNode extends Node {
   }
 
   getDeepCopy(): Node {
-    return new RectangleNode(this.width, this.height, this.position.getDeepCopy());
+    let result =  new RectangleNode(this.width, this.height, this.position.getDeepCopy());
+    result.text = this.text;
+    result.hasDoubleBorder = this.hasDoubleBorder;
+    return result;
   }
 
   public getNodeTypeName(): string {

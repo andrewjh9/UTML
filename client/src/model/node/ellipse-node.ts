@@ -15,8 +15,11 @@ export class EllipseNode extends Node {
     ];
   }
 
-  getDeepCopy(): Node {
-    return new EllipseNode(this.width, this.height, this.position.getDeepCopy());
+  public getDeepCopy(): Node {
+    let result =  new EllipseNode(this.width, this.height, this.position.getDeepCopy());
+    result.text = this.text;
+    result.hasDoubleBorder = this.hasDoubleBorder;
+    return result;
   }
 
   public getNodeTypeName(): string {
