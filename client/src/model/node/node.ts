@@ -145,6 +145,11 @@ export abstract class Node {
       hasDoubleBorder: this._hasDoubleBorder
     }
   }
+
+  public abstract preview: string;
+  public static readonly PREVIEW_WIDTH = 216;
+  public static readonly DEFAULT_PREVIEW_HEIGHT = 50;
+
 }
 
 type nodeChangeCallback = (oldNode: Node, newNode: Node) => void;

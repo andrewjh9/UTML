@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
-import {Edge} from "../../model/edge";
+import {Edge, LineType} from "../../model/edge";
 import {Node} from "../../model/node/node";
 import {Position} from "../../model/position";
 import {BehaviorSubject, Observable} from "rxjs";
@@ -43,7 +43,7 @@ export class DragDropCreationService {
     } else {
       let edge = this.selected.getValue() as Edge;
       edge.startPosition = position;
-      const OFFSET = 50;
+      const OFFSET = 100;
       edge.endPosition = Position.add(new Position(OFFSET, OFFSET), position);
     }
   }
@@ -53,7 +53,12 @@ export class DragDropCreationService {
   }
 
   public create() {
-    this.createdEmitter.emit(this.selected.getValue());
+    let value = this.selected.getValue();
+    if (value instanceof Edge && (value as Edge).lineType === LineType.Arc) {
+      (value as Edge).middlePositions = [];
+      (value as Edge).setDefaultMiddlePointOnArc();
+    }
+    this.createdEmitter.emit(value);
     this.selected.next(undefined);
   }
 }
