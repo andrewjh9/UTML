@@ -14,7 +14,8 @@
             </div>
             <div class="w-100">
               <svg height="40" width="196">
-                <g edge-component [edge]="groups[diagramGroup].edges[edgeKey]"></g>
+                <svg:g *ngIf="isLine(groups[diagramGroup].edges[edgeKey])" line-render-component [edge]="groups[diagramGroup].edges[edgeKey]"></svg:g>
+                <svg:g *ngIf="isArc(groups[diagramGroup].edges[edgeKey])" arc-render-component [edge]="groups[diagramGroup].edges[edgeKey]"></svg:g>
               </svg>
             </div>
           </a>

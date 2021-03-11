@@ -1,24 +1,6 @@
-<!-- Arc Rendering -->
-<svg:path *ngIf="edge && isArc()"
-          [attr.d]="edge.getPointString()"
-          fill="transparent"
-          [ngStyle]="styleObject"
-          [attr.marker-end]="edge.getEndMarker()"
-          [attr.marker-start]="edge.getStartMarker()"
-          [attr.stroke-dasharray]="edge.getLineStyleString()"
-          (mousedown)="handleMouseDown($event)">
-</svg:path>
+<svg:g *ngIf="isLine()" line-render-component [edge]="edge!" [styleObject]="styleObject"></svg:g>
+<svg:g *ngIf="isArc()" arc-render-component [edge]="edge!" [styleObject]="styleObject" (mousedown)="handleMouseDown($event)"></svg:g>
 
-<!-- Line Rendering -->
-<svg:polyline *ngIf="edge && isLine()"
-              [attr.points]="edge.getPointString()"
-              [ngStyle]="styleObject"
-              fill="none"
-              [attr.marker-end]="edge.getEndMarker()"
-              [attr.marker-start]="edge.getStartMarker()"
-              [attr.stroke-dasharray]="edge.getLineStyleString()">
->
-</svg:polyline>
 <!-- Invisible, selectable to make the mouse down trigger easily accessible -->
 <svg:polyline *ngIf="edge && isLine()"
               [attr.points]="edge.getPointString()"

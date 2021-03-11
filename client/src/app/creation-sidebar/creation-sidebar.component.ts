@@ -93,6 +93,14 @@ export class CreationSidebarComponent {
   getSafePreview(groupKey: string, nodeKey: string): SafeHtml {
     return this.sanitizer.bypassSecurityTrustHtml(this.groups[groupKey].nodes[nodeKey].preview);
   }
+
+  isLine(edge: Edge): boolean {
+    return edge.lineType === LineType.Line;
+  }
+
+  isArc(edge: Edge): boolean {
+    return edge.lineType === LineType.Arc;
+  }
 }
 
 type DiagramTypeTemplate = {

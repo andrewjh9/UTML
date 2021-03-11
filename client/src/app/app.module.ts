@@ -38,11 +38,14 @@ import { SequenceEdgeComponent } from './sequence-edge/sequence-edge.component';
 import { SelectedNodeHighlightComponent } from './node-compontents/selected-node-highlight/selected-node-highlight.component';
 import { CreationSidebarComponent } from './creation-sidebar/creation-sidebar.component';
 import { DragDropPreviewComponent } from './drag-drop-preview/drag-drop-preview.component';
+import {LineRenderComponent} from "./edge/line-render/line-render.component";
+import { ArcRenderComponent } from './edge/edge-render/arc-render.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DiagramComponent,
+    LineRenderComponent,
     EdgeComponent,
     ArrowMarkerComponent,
     LabelComponent,
@@ -71,6 +74,7 @@ import { DragDropPreviewComponent } from './drag-drop-preview/drag-drop-preview.
     SelectedNodeHighlightComponent,
     CreationSidebarComponent,
     DragDropPreviewComponent,
+    ArcRenderComponent,
   ],
     imports: [
         BrowserModule,
