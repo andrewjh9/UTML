@@ -1,25 +1,7 @@
-<svg:rect *ngIf="node"
-          [attr.x]="node.position.x"
-          [attr.y]="node.position.y"
-          [attr.width]="node.width"
-          [attr.height]="node.height"
-          (mousedown)="handleMouseDown($event)"
-          [ngStyle]="node.styleObject"
->
-</svg:rect>
-
-<!-- Double border rendering if applicable. -->
-<svg:rect *ngIf="node && node?.hasDoubleBorder"
-          [attr.x]="node.position.x + 3"
-          [attr.y]="node.position.y + 3"
-          [attr.width]="node.width - 6"
-          [attr.height]="node.height - 6"
-          style="fill: none; fill-opacity: 0; stroke: black; stroke-opacity: 1"
->
-</svg:rect>
+<svg:g rectangle-node-render [node]="node!" (mousedown)="handleMouseDown($event)"></svg:g>
 
 <svg:g *ngIf="node && isInCreateMode()" clickable-attachment-points [node]="node"></svg:g>
 
 <svg:g *ngIf="node && isInSelectMode()" clickable-resize-points [node]="node"></svg:g>
 
-<svg:g basic-node-text [node]="getNode()"></svg:g>
+

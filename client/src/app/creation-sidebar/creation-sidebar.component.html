@@ -29,7 +29,20 @@
               <h6 class="mb-1 w-100 text-center">{{nodeKey}}</h6>
             </div>
             <div class="w-100">
-              <svg height="100" width="300" [innerHTML]="getSafePreview(diagramGroup, nodeKey)">
+              <svg [attr.height]="groups[diagramGroup].nodes[nodeKey].height + 2 * groups[diagramGroup].nodes[nodeKey].position.y"
+                   width="300">
+                <g *ngIf="toClassNode(groups[diagramGroup].nodes[nodeKey])"
+                   class-node-render
+                   [node]=(toClassNode(groups[diagramGroup].nodes[nodeKey]))!></g>
+                <g *ngIf="toRectangleNode(groups[diagramGroup].nodes[nodeKey])"
+                   rectangle-node-render
+                   [node]=(toRectangleNode(groups[diagramGroup].nodes[nodeKey]))!></g>
+                <g *ngIf="toDiamondNode(groups[diagramGroup].nodes[nodeKey])"
+                   diamond-node-render
+                   [node]=(toDiamondNode(groups[diagramGroup].nodes[nodeKey]))!></g>
+                <g *ngIf="toEllipseNode(groups[diagramGroup].nodes[nodeKey])"
+                   ellipse-node-render
+                   [node]=(toEllipseNode(groups[diagramGroup].nodes[nodeKey]))!></g>
               </svg>
             </div>
           </a>

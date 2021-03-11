@@ -40,6 +40,10 @@ import { CreationSidebarComponent } from './creation-sidebar/creation-sidebar.co
 import { DragDropPreviewComponent } from './drag-drop-preview/drag-drop-preview.component';
 import {LineRenderComponent} from "./edge/line-render/line-render.component";
 import { ArcRenderComponent } from './edge/edge-render/arc-render.component';
+import { ClassNodeRenderComponent } from './node-compontents/class-node/class-node-render/class-node-render.component';
+import { RectangleNodeRenderComponent } from './node-compontents/rectangle-node/rectangle-node-render/rectangle-node-render.component';
+import { EllipseNodeRenderComponent } from './node-compontents/ellipse-node/ellipse-node-render/ellipse-node-render.component';
+import { DiamondNodeRenderComponent } from './node-compontents/diamond-node/diamond-node-render/diamond-node-render.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +79,10 @@ import { ArcRenderComponent } from './edge/edge-render/arc-render.component';
     CreationSidebarComponent,
     DragDropPreviewComponent,
     ArcRenderComponent,
+    ClassNodeRenderComponent,
+    RectangleNodeRenderComponent,
+    EllipseNodeRenderComponent,
+    DiamondNodeRenderComponent,
   ],
     imports: [
         BrowserModule,

@@ -1,33 +1,5 @@
-<svg:ellipse *ngIf="node"
-             [attr.cx]="node!.position.x + node!.width / 2"
-             [attr.cy]="node!.position.y + node!.height / 2"
-             [attr.rx]="node!.width / 2"
-             [attr.ry]="node!.height / 2"
-             [ngStyle]="node!.styleObject"
-             (mousedown)="handleMouseDown($event)"
->
-</svg:ellipse>
-
-<!-- Double border if applicable -->
-<svg:ellipse *ngIf="node?.hasDoubleBorder"
-             [attr.cx]="node!.position.x + node!.width / 2"
-             [attr.cy]="node!.position.y + node!.height / 2"
-             [attr.rx]="node!.width / 2 - 6"
-             [attr.ry]="node!.height / 2 - 6"
-             style="fill:none;stroke:black;stroke-width:2;fill-opacity:0;stroke-opacity:0.9"
->
-</svg:ellipse>
+<svg:g ellipse-node-render [node]=node! (mousedown)="handleMouseDown($event)"></svg:g>
 
 <svg:g *ngIf="node && isInCreateMode()" clickable-attachment-points [node]="node"></svg:g>
 
 <svg:g *ngIf="node && isInSelectMode()" clickable-resize-points [node]="node"></svg:g>
-
-<svg:g basic-node-text [node]="getNode()"></svg:g>
-
-
-<!--
-             [ngClass]="{'movable': isInMoveMode()}"
-
-             (mousedown)="handleMouseDown($event)"
-             (dblclick)="handleDoubleClick($event)"
--->

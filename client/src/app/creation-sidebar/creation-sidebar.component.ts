@@ -7,6 +7,7 @@ import {RectangleNode} from "../../model/node/rectangle-node";
 import {DragDropCreationService} from "../services/drag-drop-creation.service";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {EllipseNode} from "../../model/node/ellipse-node";
+import {DiamondNode} from "../../model/node/diamond-node";
 
 @Component({
   selector: 'creation-sidebar',
@@ -28,7 +29,7 @@ export class CreationSidebarComponent {
 
   get groups(): {[key: string]: DiagramTypeTemplate} {
     let cd: DiagramTypeTemplate = {nodes: {}, edges: {}};
-    let classNode = new ClassNode(200, 100, new Position(0, 0));
+    let classNode = new ClassNode(186, 75, new Position(10, 2));
     let association = new Edge(new Position(10, 20), new Position(196, 20));
     let generalisation = new Edge(new Position(10, 20), new Position(196, 20));
     generalisation.endStyle = EndStyle.LargeUnfilledArrow;
@@ -40,8 +41,8 @@ export class CreationSidebarComponent {
     cd.edges['Generalisation'] = generalisation;
 
     let ad: DiagramTypeTemplate = {nodes: {}, edges: {}};
-    let activityNode = new RectangleNode(200, 100, new Position(0, 0));
-    activityNode.text = "Activity"
+    let activityNode = new RectangleNode(186, 50, new Position(10, 2));
+    activityNode.text = "Do Something"
     let arrow = new Edge(new Position(10, 20), new Position(196, 20));
     arrow.endStyle = EndStyle.SmallFilledArrow;
 
@@ -50,8 +51,11 @@ export class CreationSidebarComponent {
     ad.nodes['Activity'] = activityNode;
     cd.edges['Arrow'] = arrow;
 
-    let state = new EllipseNode(60, 60, new Position(0, 0));
-    let endState = new EllipseNode(60, 60, new Position(0, 0))
+    let state = new EllipseNode(100, 100, new Position(58, 2));
+    state.text = "s_0";
+    let endState = new EllipseNode(100, 100, new Position(58, 2));
+    endState.text = "s_end";
+
     endState.hasDoubleBorder = true;
     let arc = new Edge( new Position(10, 5), new Position( 196, 5));
     arc.lineType = LineType.Arc;
@@ -100,6 +104,22 @@ export class CreationSidebarComponent {
 
   isArc(edge: Edge): boolean {
     return edge.lineType === LineType.Arc;
+  }
+
+  toClassNode(node: Node): ClassNode | undefined {
+    return node instanceof ClassNode ? node as ClassNode : undefined;
+  }
+
+  toEllipseNode(node: Node): EllipseNode | undefined {
+    return node instanceof EllipseNode ? node as EllipseNode : undefined;
+  }
+
+  toRectangleNode(node: Node): RectangleNode | undefined {
+    return (node instanceof RectangleNode && !(node instanceof ClassNode)) ? node as RectangleNode : undefined;
+  }
+
+  toDiamondNode(node: Node): DiamondNode | undefined {
+    return node instanceof DiamondNode ? node as DiamondNode : undefined;
   }
 }
 
