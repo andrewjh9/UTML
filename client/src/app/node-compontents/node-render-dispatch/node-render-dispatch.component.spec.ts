@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CreationMenuComponent } from './creation-menu.component';
+import { NodeRenderDispatchComponent } from './node-render-dispatch.component';
 
-describe('CreationMenuComponent', () => {
-  let component: CreationMenuComponent;
-  let fixture: ComponentFixture<CreationMenuComponent>;
+describe('NodeRenderDispatchComponent', () => {
+  let component: NodeRenderDispatchComponent;
+  let fixture: ComponentFixture<NodeRenderDispatchComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CreationMenuComponent ]
+      declarations: [ NodeRenderDispatchComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreationMenuComponent);
+    fixture = TestBed.createComponent(NodeRenderDispatchComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

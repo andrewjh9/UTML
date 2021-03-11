@@ -14,8 +14,7 @@
             </div>
             <div class="w-100">
               <svg height="40" width="196">
-                <svg:g *ngIf="isLine(groups[diagramGroup].edges[edgeKey])" line-render-component [edge]="groups[diagramGroup].edges[edgeKey]"></svg:g>
-                <svg:g *ngIf="isArc(groups[diagramGroup].edges[edgeKey])" arc-render-component [edge]="groups[diagramGroup].edges[edgeKey]"></svg:g>
+                <svg:g edge-render-dispatch [edge]="groups[diagramGroup].edges[edgeKey]"/>
               </svg>
             </div>
           </a>
@@ -31,18 +30,7 @@
             <div class="w-100">
               <svg [attr.height]="groups[diagramGroup].nodes[nodeKey].height + 2 * groups[diagramGroup].nodes[nodeKey].position.y"
                    width="300">
-                <g *ngIf="toClassNode(groups[diagramGroup].nodes[nodeKey])"
-                   class-node-render
-                   [node]=(toClassNode(groups[diagramGroup].nodes[nodeKey]))!></g>
-                <g *ngIf="toRectangleNode(groups[diagramGroup].nodes[nodeKey])"
-                   rectangle-node-render
-                   [node]=(toRectangleNode(groups[diagramGroup].nodes[nodeKey]))!></g>
-                <g *ngIf="toDiamondNode(groups[diagramGroup].nodes[nodeKey])"
-                   diamond-node-render
-                   [node]=(toDiamondNode(groups[diagramGroup].nodes[nodeKey]))!></g>
-                <g *ngIf="toEllipseNode(groups[diagramGroup].nodes[nodeKey])"
-                   ellipse-node-render
-                   [node]=(toEllipseNode(groups[diagramGroup].nodes[nodeKey]))!></g>
+                <g node-render-dispatch [node]="groups[diagramGroup].nodes[nodeKey]"></g>
               </svg>
             </div>
           </a>

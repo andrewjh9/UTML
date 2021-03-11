@@ -17,7 +17,6 @@ import { SelectedEditorComponent } from './selected-editor/selected-editor.compo
 import {DeletionService} from "./services/deletion.service";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
-import { CreationMenuComponent } from './creation-menu/creation-menu.component';
 import { NodeEditorComponent } from './node-editor/node-editor.component';
 import { MoveMenuComponent } from './move-menu/move-menu.component';
 import { NodeDispatcherComponent } from './node-compontents/node-dispatcher/node-dispatcher.component';
@@ -44,6 +43,8 @@ import { ClassNodeRenderComponent } from './node-compontents/class-node/class-no
 import { RectangleNodeRenderComponent } from './node-compontents/rectangle-node/rectangle-node-render/rectangle-node-render.component';
 import { EllipseNodeRenderComponent } from './node-compontents/ellipse-node/ellipse-node-render/ellipse-node-render.component';
 import { DiamondNodeRenderComponent } from './node-compontents/diamond-node/diamond-node-render/diamond-node-render.component';
+import { EdgeRenderDispatchComponent } from './edge/edge-render-dispatch/edge-render-dispatch.component';
+import { NodeRenderDispatchComponent } from './node-compontents/node-render-dispatch/node-render-dispatch.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,6 @@ import { DiamondNodeRenderComponent } from './node-compontents/diamond-node/diam
     NewEdgePreviewComponent,
     SelectedEditorComponent,
     EdgeEditorComponent,
-    CreationMenuComponent,
     NodeEditorComponent,
     MoveMenuComponent,
     NodeDispatcherComponent,
@@ -83,6 +83,8 @@ import { DiamondNodeRenderComponent } from './node-compontents/diamond-node/diam
     RectangleNodeRenderComponent,
     EllipseNodeRenderComponent,
     DiamondNodeRenderComponent,
+    EdgeRenderDispatchComponent,
+    NodeRenderDispatchComponent,
   ],
     imports: [
         BrowserModule,

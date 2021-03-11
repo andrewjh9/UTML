@@ -15,6 +15,14 @@ export class DragDropPreviewComponent {
     dragDropCreationService.selectedObservable.subscribe(value => this.current = value);
   }
 
+  toEdge() {
+    return this.current instanceof Edge ? this.current as Edge : undefined;
+  }
+
+  toNode() {
+    return this.current instanceof Node ? this.current as Node : undefined;
+  }
+
   get x(): number {
     if (this.current === undefined) {
       return -1;

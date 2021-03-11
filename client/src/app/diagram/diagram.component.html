@@ -30,8 +30,7 @@
 <div class="container-fluid" (keyup)="handleKeyPressed($event)">
   <div class="row d-flex">
     <div class="flex-grow-1">
-      <svg #svg
-           width="1200"
+      <svg width="1200"
            height="800"
            viewBox="0 0 1200 800"
            (mousedown)="handleMouseDown($event)"
@@ -41,11 +40,8 @@
 
            id="diagram"
         >
-<!--        <g sequence-diagram [diagram]="seq"></g>-->
-
         <g drag-drop-preview></g>
         <g new-edge-preview></g>
-        <!--  Define markers-->
         <defs arrow-marker></defs>
         <g *ngFor="let edge of diagram.edges; let i = index"
            edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>

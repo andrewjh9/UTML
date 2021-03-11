@@ -1,7 +1,3 @@
-<svg:rect
-  *ngIf="current"
-  [attr.x]="x"
-  [attr.y]="y"
-  [attr.width]="width"
-  [attr.height]="height"
-></svg:rect>
+<svg:g *ngIf="toEdge()" edge-render-dispatch [edge]="toEdge()!"></svg:g>
+
+<svg:g *ngIf="toNode()" node-render-dispatch [node]="toNode()!"></svg:g>
