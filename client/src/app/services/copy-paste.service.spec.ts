@@ -16,8 +16,16 @@ describe('CopyPasteService', () => {
   const EDGE = new Edge(new Position(100, 100), new Position(200, 200));
 
   beforeEach(() => {
-    selectionService = new SelectionService(new KeyboardEventCallerService(), new DeletionService(new CachingService()));
-    service = new CopyPasteService(selectionService, new KeyboardEventCallerService());
+    TestBed.configureTestingModule({
+      imports: [
+      ],
+      providers: [
+        KeyboardEventCallerService,
+        SelectionService
+      ],
+    });
+    service = TestBed.inject(CopyPasteService);
+    selectionService = TestBed.inject(SelectionService)
   });
 
   it('should be created', () => {

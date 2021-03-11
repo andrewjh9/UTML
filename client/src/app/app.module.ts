@@ -36,6 +36,8 @@ import { LifelineComponent } from './lifeline/lifeline.component';
 import { SequenceDiagramComponent } from './sequence-diagram/sequence-diagram.component';
 import { SequenceEdgeComponent } from './sequence-edge/sequence-edge.component';
 import { SelectedNodeHighlightComponent } from './node-compontents/selected-node-highlight/selected-node-highlight.component';
+import { CreationSidebarComponent } from './creation-sidebar/creation-sidebar.component';
+import { DragDropPreviewComponent } from './drag-drop-preview/drag-drop-preview.component';
 
 @NgModule({
   declarations: [
@@ -67,6 +69,8 @@ import { SelectedNodeHighlightComponent } from './node-compontents/selected-node
     SequenceDiagramComponent,
     SequenceEdgeComponent,
     SelectedNodeHighlightComponent,
+    CreationSidebarComponent,
+    DragDropPreviewComponent,
   ],
     imports: [
         BrowserModule,

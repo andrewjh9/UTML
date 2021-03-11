@@ -21,6 +21,7 @@ import {Diagram} from "../../model/diagram";
 import {Edge} from "../../model/edge";
 import {Position} from "../../model/position";
 import {CopyPasteService} from "../services/copy-paste.service";
+import {DragDropCreationService} from "../services/drag-drop-creation.service";
 
 
 @Component({
@@ -46,7 +47,8 @@ export class DiagramComponent implements AfterViewInit {
               private resizeService: ResizeService,
               private cachingService: CachingService,
               private selectionService: SelectionService,
-              private copyPasteService: CopyPasteService) {
+              private copyPasteService: CopyPasteService,
+              private dragDropCreationService: DragDropCreationService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
@@ -70,6 +72,17 @@ export class DiagramComponent implements AfterViewInit {
       }
       this.cachingService.save();
     });
+
+    dragDropCreationService.createdEmitter.subscribe((edgeOrNode: Edge | Node) => {
+      if (edgeOrNode instanceof Edge) {
+        this.diagram.edges.push(edgeOrNode);
+      } else {
+        this.diagram.nodes.push(edgeOrNode);
+      }
+
+
+      this.cachingService.save();
+    })
     // Node.addAfterCallback(() => cachingService.add(this.diagram));
   }
 
@@ -87,6 +100,8 @@ export class DiagramComponent implements AfterViewInit {
       this.edgeRepositionService.deactivate()
     } else if (this.resizeService.isActive()) {
       this.resizeService.deactivate()
+    } else if (this.dragDropCreationService.isActive()) {
+      this.dragDropCreationService.create();
     }
   }
 
@@ -101,6 +116,8 @@ export class DiagramComponent implements AfterViewInit {
       this.edgeCreationService.endPreview = position;
     } else if (this.resizeService.isActive()) {
       this.resizeService.update(position);
+    } else if (this.dragDropCreationService.isActive()) {
+      this.dragDropCreationService.update(position);
     }
   }
 

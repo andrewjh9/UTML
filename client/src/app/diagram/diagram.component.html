@@ -43,7 +43,7 @@
         >
 <!--        <g sequence-diagram [diagram]="seq"></g>-->
 
-
+        <g drag-drop-preview></g>
         <g new-edge-preview></g>
         <!--  Define markers-->
         <defs arrow-marker></defs>
@@ -52,12 +52,13 @@
         <g node-dispatcher [nodes]="diagram.nodes"></g>
       </svg>
     </div>
-    <div style="width: 400px">
-      <app-mode-selector></app-mode-selector>
-      <app-selected-editor *ngIf="mode === Mode.Select"></app-selected-editor>
-      <app-creation-menu *ngIf="mode === Mode.Create"></app-creation-menu>
-      <app-move-menu *ngIf="mode === Mode.Move"></app-move-menu>
-    </div>
+    <creation-sidebar></creation-sidebar>
+<!--    <div style="width: 400px">-->
+<!--      <app-mode-selector></app-mode-selector>-->
+<!--      <app-selected-editor *ngIf="mode === Mode.Select"></app-selected-editor>-->
+<!--      <app-creation-menu *ngIf="mode === Mode.Create"></app-creation-menu>-->
+<!--      <app-move-menu *ngIf="mode === Mode.Move"></app-move-menu>-->
+<!--    </div>-->
   </div>
 </div>
 
