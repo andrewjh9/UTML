@@ -41,4 +41,8 @@ export class SelectionService {
   public getNode(): Node {
     return (this.selected.getValue() as Node)
   }
+
+  public getEdge(): Edge {
+    return (this.selected.getValue() as Edge)
+  }
 }

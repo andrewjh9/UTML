@@ -42,6 +42,7 @@ import { EdgeRenderDispatchComponent } from './edge/edge-render-dispatch/edge-re
 import { NodeRenderDispatchComponent } from './node-compontents/node-render-dispatch/node-render-dispatch.component';
 import {NodeComponent} from "./node-compontents/node-component";
 import { FormattingModalComponent } from './formatting-modal/formatting-modal.component';
+import { EdgeFormattingModalComponent } from './edge-formatting-modal/edge-formatting-modal.component';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,8 @@ import { FormattingModalComponent } from './formatting-modal/formatting-modal.co
     EdgeRenderDispatchComponent,
     NodeRenderDispatchComponent,
     NodeComponent,
-    FormattingModalComponent
+    FormattingModalComponent,
+    EdgeFormattingModalComponent
   ],
     imports: [
         BrowserModule,

@@ -6,7 +6,7 @@ import {Position} from "../../model/position";
 import {ModeAwareComponent} from "../mode-aware-component";
 import {DiagramComponent} from "../diagram/diagram.component";
 import {Component, Input} from "@angular/core";
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
 
 @Component({
