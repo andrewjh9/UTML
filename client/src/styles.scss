@@ -8,3 +8,10 @@
 .movable {
   cursor: pointer;
 }
+
+svg#diagram g g g g text {
+  user-select: none;
+}
+svg#diagram g g tspan {
+  user-select: none;
+}
