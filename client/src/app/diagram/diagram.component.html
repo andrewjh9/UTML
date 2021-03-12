@@ -1,0 +1,82 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light" [ngStyle]="{height: NAV_HEIGHT}">
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="upload()">Open</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Dropdown link
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="copy()">Copy</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="paste()">Paste</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="undo()">Undo</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="redo()">Redo</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Settings</a>
+      </li>
+    </ul>
+  </div>
+
+</nav>
+
+<div class="container-fluid" (keyup)="handleKeyPressed($event)">
+  <div class="row d-flex">
+    <div class="flex-grow-1">
+      <svg width="1200"
+           height="800"
+           viewBox="0 0 1200 800"
+           (mousedown)="handleMouseDown($event)"
+           (mouseup)="handleMouseUp($event)"
+           (mousemove)="handleMouseMove($event)"
+           (dblclick)="handleDoubleClick($event)"
+
+           id="diagram"
+      >
+        <g drag-drop-preview></g>
+        <g new-edge-preview></g>
+        <defs arrow-marker></defs>
+        <g *ngFor="let edge of diagram.edges; let i = index"
+           edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
+
+        <g *ngFor="let node of diagram.nodes" node-component [node]="node"/>
+        <g selected-node-highlight/>
+      </svg>
+    </div>
+    <creation-sidebar></creation-sidebar>
+    <!--    <div style="width: 400px">-->
+    <!--      <app-mode-selector></app-mode-selector>-->
+    <!--      <app-selected-editor *ngIf="mode === Mode.Select"></app-selected-editor>-->
+    <!--      <app-creation-menu *ngIf="mode === Mode.Create"></app-creation-menu>-->
+    <!--      <app-move-menu *ngIf="mode === Mode.Move"></app-move-menu>-->
+    <!--    </div>-->
+  </div>
+</div>
+<canvas id="canvas" viewbox></canvas>
+
+<app-diagram-download [diagram]="diagram"></app-diagram-download>
+<app-export-diagram></app-export-diagram>
+<button class="btn btn-outline-primary" (click)="undo()">Undo</button>
+<button class="btn btn-outline-primary" (click)="redo()">Redo</button>
+<button class="btn btn-outline-primary" (click)="do()">Do</button>
+<button class="btn btn-outline-primary" (click)="restore()">Restore Local Storage</button>
+<button class="btn btn-outline-primary" (click)="copy()">Copy</button>
+<button class="btn btn-outline-primary" (click)="paste()">Paste</button>
+
+
+
+
