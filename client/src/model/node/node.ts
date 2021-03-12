@@ -124,11 +124,11 @@ export abstract class Node {
   public styleObject: {
     [key: string]: number | string,
   } = {
-    'fill': 'black',
+    'fill': '#ffff00',
     'stroke': 'black',
     'stroke-width': 2,
-    'fill-opacity': 0,
-    'stroke-opacity': 0.75
+    'fill-opacity': 0.5,
+    'stroke-opacity': 0.75,
   };
 
   public get styleKeys(): string[] {

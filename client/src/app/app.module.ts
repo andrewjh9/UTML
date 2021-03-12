@@ -41,6 +41,7 @@ import { DiamondNodeRenderComponent } from './node-compontents/diamond-node/diam
 import { EdgeRenderDispatchComponent } from './edge/edge-render-dispatch/edge-render-dispatch.component';
 import { NodeRenderDispatchComponent } from './node-compontents/node-render-dispatch/node-render-dispatch.component';
 import {NodeComponent} from "./node-compontents/node-component";
+import { FormattingModalComponent } from './formatting-modal/formatting-modal.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import {NodeComponent} from "./node-compontents/node-component";
     DiamondNodeRenderComponent,
     EdgeRenderDispatchComponent,
     NodeRenderDispatchComponent,
-    NodeComponent
+    NodeComponent,
+    FormattingModalComponent
   ],
     imports: [
         BrowserModule,

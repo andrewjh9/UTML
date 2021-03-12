@@ -6,6 +6,8 @@ import {Position} from "../../model/position";
 import {ModeAwareComponent} from "../mode-aware-component";
 import {DiagramComponent} from "../diagram/diagram.component";
 import {Component, Input} from "@angular/core";
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
 
 @Component({
   templateUrl: './node.component.html',
@@ -18,7 +20,8 @@ export class NodeComponent extends ModeAwareComponent {
 
   constructor(private repositionService: RepositionService,
               modeService: ModeService,
-              private selectionService: SelectionService) {
+              private selectionService: SelectionService,
+              private _modalService: NgbModal) {
     super(modeService);
     selectionService.selectedObservable.subscribe(value => {
       this.isSelected = (this.node === undefined) ? false : value === this.node
@@ -36,5 +39,16 @@ export class NodeComponent extends ModeAwareComponent {
 
   public handleMouseLeave() {
     this.hoveringNearby = false;
+  }
+
+  public handleDoubleClick(event: MouseEvent) {
+    if (event.shiftKey) {
+      if (this.selectionService.isNode()) {
+        this._modalService.open(FormattingModalComponent)
+      }
+    } else {
+      //TODO implement change node text
+    }
+
   }
 }
