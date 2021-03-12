@@ -17,7 +17,7 @@ export class DragDropCreationService {
 
   constructor(keyboardEventCaller: KeyboardEventCallerService, private snapService: SnapService) {
     // Todo: Allow keyboard event caller to have multiple callbacks.
-    keyboardEventCaller.addCallback(['p', 'keydown', 'any'], (ignored) => this.cancel());
+    keyboardEventCaller.addCallback(['Escape', 'keydown', 'any'], (ignored) => this.cancel());
   }
 
   public isActive(): boolean {

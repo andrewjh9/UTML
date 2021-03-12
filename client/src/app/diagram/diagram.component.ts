@@ -83,7 +83,6 @@ export class DiagramComponent implements AfterViewInit {
 
       this.cachingService.save();
     })
-    // Node.addAfterCallback(() => cachingService.add(this.diagram));
   }
 
   ngAfterViewInit() {
@@ -102,6 +101,8 @@ export class DiagramComponent implements AfterViewInit {
       this.resizeService.deactivate()
     } else if (this.dragDropCreationService.isActive()) {
       this.dragDropCreationService.create();
+    } else if (this.edgeCreationService.isActive()) {
+      this.edgeCreationService.deactivate();
     }
   }
 
@@ -121,15 +122,7 @@ export class DiagramComponent implements AfterViewInit {
     }
   }
 
-  handleDoubleClick(event: MouseEvent){
-    if (this.mode === Mode.Create) {
-      let newNode : Node= this.creationTypeSelectionService.getSelectedNodeType();
-      let mousePos = new Position(event.pageX, event.pageY);
-      mousePos = Position.subtract(mousePos, new Position(0, DiagramComponent.NAV_HEIGHT));
-      newNode.position = new Position(mousePos.x - newNode.width / 2, mousePos.y - newNode.height / 2);
-      this.diagram.nodes.push(newNode);
-      this.cachingService.save();
-   }
+  handleDoubleClick(event: MouseEvent) {
   }
 
   handleKeyPressed(event: KeyboardEvent): void {

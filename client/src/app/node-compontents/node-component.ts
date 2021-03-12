@@ -20,7 +20,9 @@ export class NodeComponent extends ModeAwareComponent {
               modeService: ModeService,
               private selectionService: SelectionService) {
     super(modeService);
-    selectionService.selectedObservable.subscribe(value => this.isSelected = value === this.node)
+    selectionService.selectedObservable.subscribe(value => {
+      this.isSelected = (this.node === undefined) ? false : value === this.node
+    });
   }
 
   public handleMouseDown(event: MouseEvent) {
