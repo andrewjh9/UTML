@@ -23,6 +23,7 @@ public abstract class AbstractDAO< T extends Serializable>{
         return (T) getCurrentSession().get( clazz, id );
     }
     public List< T > findAll() {
+        System.out.println(clazz);
         return getSessionFactory().openSession()
                 .createQuery( "from " + clazz.getName() ).list();
     }

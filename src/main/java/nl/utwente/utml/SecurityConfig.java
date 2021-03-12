@@ -58,9 +58,9 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         super.configure(httpSecurity);
         httpSecurity.httpBasic().and().authorizeRequests()
         .antMatchers("/js/**","/css/**","/images/**").permitAll()
-                .antMatchers("/teachers/**").hasRole(String.valueOf(Roles.TEACHER))
-        .antMatchers("/").permitAll()
-        .anyRequest().authenticated();
+        .antMatchers("/teachers/**").hasRole(String.valueOf(Roles.TEACHER))
+        .antMatchers("/**").permitAll()
+                .anyRequest().authenticated();
 
 
     }

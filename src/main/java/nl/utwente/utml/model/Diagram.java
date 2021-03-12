@@ -17,6 +17,14 @@ import java.util.UUID;
     @JsonProperty("serializedDiagram")
     private String serializedDiagram;
 
+    @ManyToOne
+    @JoinColumn(name = "id")
+    @JsonProperty("userId")
+    private User owner;
+
+
+    @JsonProperty("shared")
+    private boolean shared;
 
     public Integer getId() {
         return id;
@@ -24,5 +32,13 @@ import java.util.UUID;
 
     public String getSerializedDiagram() {
         return serializedDiagram;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 }

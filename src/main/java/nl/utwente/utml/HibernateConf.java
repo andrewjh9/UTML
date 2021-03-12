@@ -15,6 +15,10 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class HibernateConf {
 
+    public static final String JDBC_URL = "jdbc:postgresql://localhost:5433/utml";
+    public static final String JDBC_USERNAME = "admin";
+    public static final String JDBC_PASSWORD = "admin";
+
     @Bean(name="entityManagerFactory")
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
@@ -31,9 +35,9 @@ public class HibernateConf {
         BasicDataSource dataSource = new BasicDataSource();
         //TODO fix make make not static
         dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5433/utml");
-        dataSource.setUsername("admin");
-        dataSource.setPassword("admin");
+        dataSource.setUrl(JDBC_URL);
+        dataSource.setUsername(JDBC_USERNAME);
+        dataSource.setPassword(JDBC_PASSWORD);
 
         return dataSource;
     }
