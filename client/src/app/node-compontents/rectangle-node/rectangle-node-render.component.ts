@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {RectangleNode} from "../../../../model/node/rectangle-node";
+import {RectangleNode} from "../../../model/node/rectangle-node";
 
 @Component({
   selector: '[rectangle-node-render]',

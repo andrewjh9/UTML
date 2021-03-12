@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ClassNode} from "../../../../model/node/class-node";
+import {ClassNode} from "../../../model/node/class-node";
 
 @Component({
   selector: '[class-node-render]',

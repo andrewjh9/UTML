@@ -1,0 +1,12 @@
+<svg:g (mouseenter)="handleMouseEnter()" (mouseleave)="handleMouseLeave()">
+  <svg:rect [attr.x]="node.position.x - 10"
+            [attr.y]="node.position.y - 10"
+            [attr.width]="node.width + 20"
+            [attr.height]="node.height + 20"
+            style="fill: black; stroke: black; stroke-opacity: 0.0; fill-opacity: 0.0;"
+  />
+
+  <svg:g node-render-dispatch [node]="node" (mousedown)="handleMouseDown($event)"/>
+
+  <svg:g *ngIf="hoveringNearby && !isSelected" clickable-attachment-points [node]="node"/>
+</svg:g>

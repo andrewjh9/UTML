@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {EllipseNode} from "../../../../model/node/ellipse-node";
+import {EllipseNode} from "../../../model/node/ellipse-node";
 
 @Component({
   selector: '[ellipse-node-render]',

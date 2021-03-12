@@ -45,7 +45,9 @@
         <defs arrow-marker></defs>
         <g *ngFor="let edge of diagram.edges; let i = index"
            edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
-        <g node-dispatcher [nodes]="diagram.nodes"></g>
+
+        <g *ngFor="let node of diagram.nodes" node-component [node]="node"/>
+        <g selected-node-highlight/>
       </svg>
     </div>
     <creation-sidebar></creation-sidebar>
@@ -57,7 +59,6 @@
 <!--    </div>-->
   </div>
 </div>
-
 <canvas id="canvas" viewbox></canvas>
 
 <app-diagram-download [diagram]="diagram"></app-diagram-download>

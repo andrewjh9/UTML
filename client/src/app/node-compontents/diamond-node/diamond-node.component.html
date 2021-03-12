@@ -1,7 +1,0 @@
-<svg:g diamond-node-render [node]="node!" (mousedown)="handleMouseDown($event)"></svg:g>
-
-<svg:g *ngIf="node && isInCreateMode()" clickable-attachment-points [node]="node"></svg:g>
-
-<svg:g *ngIf="node && isInSelectMode()" clickable-resize-points [node]="node"></svg:g>
-
-

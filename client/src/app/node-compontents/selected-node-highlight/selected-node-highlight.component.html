@@ -5,4 +5,6 @@
           [attr.width]="selectedNode!.width + 2"
           [attr.height]="selectedNode!.height + 2"
           style="fill: none; stroke-width: 1; stroke: red; stroke-opacity: 0.5; stroke-dasharray: 4;"
-></svg:rect>
+/>
+
+<svg:g *ngIf="selectedNode" clickable-resize-points [node]="selectedNode!"/>

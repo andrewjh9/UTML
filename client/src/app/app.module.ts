@@ -19,14 +19,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
 import { NodeEditorComponent } from './node-editor/node-editor.component';
 import { MoveMenuComponent } from './move-menu/move-menu.component';
-import { NodeDispatcherComponent } from './node-compontents/node-dispatcher/node-dispatcher.component';
-import { RectangleNodeComponent } from './node-compontents/rectangle-node/rectangle-node.component';
-import { EllipseNodeComponent } from './node-compontents/ellipse-node/ellipse-node.component';
-import { DiamondNodeComponent } from './node-compontents/diamond-node/diamond-node.component';
 import { ClickableAttachmentPointsComponent } from './node-compontents/clickable-attachment-points/clickable-attachment-points.component';
 import {ClickableResizePointsComponent} from "./node-compontents/clickable-resize-points/clickable-resize-points.component";
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
-import { ClassNodeComponent } from './node-compontents/class-node/class-node.component';
 import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic-node-text.component';
 import { DiagramDownloadComponent } from './diagram-download/diagram-download.component';
 import { JsonUriPipe } from './json-uri.pipe';
@@ -39,12 +34,13 @@ import { CreationSidebarComponent } from './creation-sidebar/creation-sidebar.co
 import { DragDropPreviewComponent } from './drag-drop-preview/drag-drop-preview.component';
 import {LineRenderComponent} from "./edge/line-render/line-render.component";
 import { ArcRenderComponent } from './edge/edge-render/arc-render.component';
-import { ClassNodeRenderComponent } from './node-compontents/class-node/class-node-render/class-node-render.component';
-import { RectangleNodeRenderComponent } from './node-compontents/rectangle-node/rectangle-node-render/rectangle-node-render.component';
-import { EllipseNodeRenderComponent } from './node-compontents/ellipse-node/ellipse-node-render/ellipse-node-render.component';
-import { DiamondNodeRenderComponent } from './node-compontents/diamond-node/diamond-node-render/diamond-node-render.component';
+import { ClassNodeRenderComponent } from './node-compontents/class-node/class-node-render.component';
+import { RectangleNodeRenderComponent } from './node-compontents/rectangle-node/rectangle-node-render.component';
+import { EllipseNodeRenderComponent } from './node-compontents/ellipse-node/ellipse-node-render.component';
+import { DiamondNodeRenderComponent } from './node-compontents/diamond-node/diamond-node-render.component';
 import { EdgeRenderDispatchComponent } from './edge/edge-render-dispatch/edge-render-dispatch.component';
 import { NodeRenderDispatchComponent } from './node-compontents/node-render-dispatch/node-render-dispatch.component';
+import {NodeComponent} from "./node-compontents/node-component";
 
 @NgModule({
   declarations: [
@@ -60,14 +56,9 @@ import { NodeRenderDispatchComponent } from './node-compontents/node-render-disp
     EdgeEditorComponent,
     NodeEditorComponent,
     MoveMenuComponent,
-    NodeDispatcherComponent,
-    RectangleNodeComponent,
-    EllipseNodeComponent,
-    DiamondNodeComponent,
     ClickableAttachmentPointsComponent,
     ClickableResizePointsComponent,
     ExportDiagramComponent,
-    ClassNodeComponent,
     BasicNodeTextComponent,
     DiagramDownloadComponent,
     JsonUriPipe,
@@ -85,6 +76,7 @@ import { NodeRenderDispatchComponent } from './node-compontents/node-render-disp
     DiamondNodeRenderComponent,
     EdgeRenderDispatchComponent,
     NodeRenderDispatchComponent,
+    NodeComponent
   ],
     imports: [
         BrowserModule,

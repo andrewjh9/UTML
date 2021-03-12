@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DiamondNode} from "../../../../model/node/diamond-node";
+import {DiamondNode} from "../../../model/node/diamond-node";
 
 @Component({
   selector: '[diamond-node-render]',
