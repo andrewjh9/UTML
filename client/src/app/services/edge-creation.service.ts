@@ -41,6 +41,10 @@ export class EdgeCreationService implements Deactivatable {
   }
 
   public setEnd(endNode: Node, endAttachment: AttachmentDirection) {
+    if (endNode === this.startNode && endAttachment === this.startAttachment) {
+      return this.deactivate();
+    }
+
     if (!this.isActive()) {
       throw new Error("Trying to set end whilst it is inactive!");
     }
