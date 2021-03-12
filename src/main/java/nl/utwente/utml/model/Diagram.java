@@ -1,12 +1,15 @@
 package nl.utwente.utml.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import nl.utwente.utml.Roles;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.security.access.annotation.Secured;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.UUID;
+
 
 @Entity
     public class Diagram implements Serializable {
@@ -17,10 +20,11 @@ import java.util.UUID;
     @JsonProperty("serializedDiagram")
     private String serializedDiagram;
 
-    @ManyToOne
-    @JoinColumn(name = "id")
+    @ManyToOne()
+    @JoinColumn(name = "userId")
     @JsonProperty("userId")
     private User owner;
+
 
 
     @JsonProperty("shared")

@@ -56,13 +56,12 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception
     {
         super.configure(httpSecurity);
+        httpSecurity.csrf().disable();
         httpSecurity.httpBasic().and().authorizeRequests()
         .antMatchers("/js/**","/css/**","/images/**").permitAll()
         .antMatchers("/teachers/**").hasRole(String.valueOf(Roles.TEACHER))
-        .antMatchers("/**").permitAll()
+        .antMatchers("/**").permitAll() //TODO remove !!!!!!!
                 .anyRequest().authenticated();
-
-
     }
 
 }
