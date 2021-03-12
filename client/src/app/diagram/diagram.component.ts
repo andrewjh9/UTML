@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {RepositionService} from "../services/reposition.service";
 
 import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
@@ -21,6 +21,7 @@ import {Diagram} from "../../model/diagram";
 import {Edge} from "../../model/edge";
 import {Position} from "../../model/position";
 import {CopyPasteService} from "../services/copy-paste.service";
+import {DragDropCreationService} from "../services/drag-drop-creation.service";
 
 
 @Component({
@@ -46,7 +47,8 @@ export class DiagramComponent implements AfterViewInit {
               private resizeService: ResizeService,
               private cachingService: CachingService,
               private selectionService: SelectionService,
-              private copyPasteService: CopyPasteService) {
+              private copyPasteService: CopyPasteService,
+              private dragDropCreationService: DragDropCreationService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
@@ -70,7 +72,17 @@ export class DiagramComponent implements AfterViewInit {
       }
       this.cachingService.save();
     });
-    // Node.addAfterCallback(() => cachingService.add(this.diagram));
+
+    dragDropCreationService.createdEmitter.subscribe((edgeOrNode: Edge | Node) => {
+      if (edgeOrNode instanceof Edge) {
+        this.diagram.edges.push(edgeOrNode);
+      } else {
+        this.diagram.nodes.push(edgeOrNode);
+      }
+
+
+      this.cachingService.save();
+    })
   }
 
   ngAfterViewInit() {
@@ -87,6 +99,10 @@ export class DiagramComponent implements AfterViewInit {
       this.edgeRepositionService.deactivate()
     } else if (this.resizeService.isActive()) {
       this.resizeService.deactivate()
+    } else if (this.dragDropCreationService.isActive()) {
+      this.dragDropCreationService.create();
+    } else if (this.edgeCreationService.isActive()) {
+      this.edgeCreationService.deactivate();
     }
   }
 
@@ -101,18 +117,12 @@ export class DiagramComponent implements AfterViewInit {
       this.edgeCreationService.endPreview = position;
     } else if (this.resizeService.isActive()) {
       this.resizeService.update(position);
+    } else if (this.dragDropCreationService.isActive()) {
+      this.dragDropCreationService.update(position);
     }
   }
 
-  handleDoubleClick(event: MouseEvent){
-    if (this.mode === Mode.Create) {
-      let newNode : Node= this.creationTypeSelectionService.getSelectedNodeType();
-      let mousePos = new Position(event.pageX, event.pageY);
-      mousePos = Position.subtract(mousePos, new Position(0, DiagramComponent.NAV_HEIGHT));
-      newNode.position = new Position(mousePos.x - newNode.width / 2, mousePos.y - newNode.height / 2);
-      this.diagram.nodes.push(newNode);
-      this.cachingService.save();
-   }
+  handleDoubleClick(event: MouseEvent) {
   }
 
   handleKeyPressed(event: KeyboardEvent): void {
@@ -184,5 +194,8 @@ export class DiagramComponent implements AfterViewInit {
 
   paste() {
     this.copyPasteService.doPaste();
+  }
+
+  handleMouseDown(event: any) {
   }
 }

@@ -4,6 +4,7 @@ import {AttachmentDirection, Node} from "../../model/node/node";
 import {Position} from "../../model/position";
 import {Edge, LineType} from "../../model/edge";
 import {CreationTypeSelectionService} from "./creation-type-selection.service";
+import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 
 
 @Injectable({
@@ -23,7 +24,10 @@ export class EdgeCreationService implements Deactivatable {
   public startPreview?: Position;
   public newEdgeEmitter: EventEmitter<Edge> = new EventEmitter<Edge>();
 
-  constructor(private creationFormatterSelectionService: CreationTypeSelectionService) { }
+  constructor(private creationFormatterSelectionService: CreationTypeSelectionService,
+              keyboardEventCallerService: KeyboardEventCallerService) {
+    keyboardEventCallerService.addCallback(['Escape', 'keydown', 'any'], (ignored) => this.deactivate())
+  }
 
   public setStart(node: Node, attachment: number) {
     this.startNode = node;
@@ -37,6 +41,10 @@ export class EdgeCreationService implements Deactivatable {
   }
 
   public setEnd(endNode: Node, endAttachment: AttachmentDirection) {
+    if (endNode === this.startNode && endAttachment === this.startAttachment) {
+      return this.deactivate();
+    }
+
     if (!this.isActive()) {
       throw new Error("Trying to set end whilst it is inactive!");
     }

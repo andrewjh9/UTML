@@ -120,14 +120,15 @@ export abstract class Node {
       ]
   }
 
+  // Be careful with settings the fill to none as that will cause the body of the node to not be clickable.
   public styleObject: {
     [key: string]: number | string,
   } = {
-    'fill': 'green',
+    'fill': 'black',
     'stroke': 'black',
     'stroke-width': 2,
-    'fill-opacity': 0.1,
-    'stroke-opacity': 0.9
+    'fill-opacity': 0,
+    'stroke-opacity': 0.75
   };
 
   public get styleKeys(): string[] {
@@ -144,6 +145,11 @@ export abstract class Node {
       hasDoubleBorder: this._hasDoubleBorder
     }
   }
+
+  public abstract preview: string;
+  public static readonly PREVIEW_WIDTH = 216;
+  public static readonly DEFAULT_PREVIEW_HEIGHT = 50;
+
 }
 
 type nodeChangeCallback = (oldNode: Node, newNode: Node) => void;

@@ -26,7 +26,7 @@ export class LabelComponent extends ModeAwareComponent {
 
   lineBreakLabel() : string[]{
     if (this.label){
-      return  this.label.value.split("\\n");
+      return this.label.value.split("\\n");
     }
     throw new Error("Somehow the application is trying to render a label which is undefined.");
   }

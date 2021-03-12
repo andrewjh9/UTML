@@ -20,10 +20,17 @@ export class RectangleNode extends Node {
   }
 
   getDeepCopy(): Node {
-    return new RectangleNode(this.width, this.height, this.position.getDeepCopy());
+    let result =  new RectangleNode(this.width, this.height, this.position.getDeepCopy());
+    result.text = this.text;
+    result.hasDoubleBorder = this.hasDoubleBorder;
+    return result;
   }
 
   public getNodeTypeName(): string {
     return "Rectangle";
   }
+
+  public preview: string = `<rect x="5" y="5" width="${Node.PREVIEW_WIDTH - 10}" height="${Node.DEFAULT_PREVIEW_HEIGHT - 10}"
+style="fill: none; stroke-width: 1; stroke: black">
+</rect>`;
 }

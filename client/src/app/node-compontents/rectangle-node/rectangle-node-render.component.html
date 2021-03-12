@@ -1,0 +1,19 @@
+<svg:g basic-node-text [node]="node"></svg:g>
+
+<svg:rect [attr.x]="node.position.x"
+          [attr.y]="node.position.y"
+          [attr.width]="node.width"
+          [attr.height]="node.height"
+          [ngStyle]="node.styleObject"
+>
+</svg:rect>
+
+<!-- Double border rendering if applicable. -->
+<svg:rect *ngIf="node.hasDoubleBorder"
+          [attr.x]="node.position.x + 3"
+          [attr.y]="node.position.y + 3"
+          [attr.width]="node.width - 6"
+          [attr.height]="node.height - 6"
+          style="fill: none; fill-opacity: 0; stroke: black; stroke-opacity: 1"
+>
+</svg:rect>
