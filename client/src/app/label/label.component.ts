@@ -34,7 +34,7 @@ export class LabelComponent extends ModeAwareComponent {
   public handleMouseDown(event: MouseEvent): void {
     if (this.isInMoveMode()) {
       if (this.label !== undefined) {
-        this.repositionService.activate(this.label, new Position(event.clientX, event.clientY));
+        this.repositionService.activate(this.label, new Position(event.clientX, event.clientY - 50));
       }
     }
   }

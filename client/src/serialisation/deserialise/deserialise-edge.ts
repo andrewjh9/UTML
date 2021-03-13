@@ -24,19 +24,6 @@ export function deserialiseEdge(serialisedEdge: SerialisedEdge): Edge {
 
   let result = new Edge(startPos, endPos);
 
-  // Add labels, if defined.
-  if (serialisedEdge.startLabel) {
-    result.startLabel = deserialiseLabel(serialisedEdge.startLabel);
-  }
-
-  if (serialisedEdge.middleLabel) {
-    result.middleLabel = deserialiseLabel(serialisedEdge.middleLabel);
-  }
-
-  if (serialisedEdge.endLabel) {
-    result.endLabel = deserialiseLabel(serialisedEdge.endLabel);
-  }
-
   // Add formatting
   result.lineType = serialisedEdge.lineType;
   result.lineStyle = serialisedEdge.lineStyle;
@@ -44,6 +31,22 @@ export function deserialiseEdge(serialisedEdge: SerialisedEdge): Edge {
   result.endStyle = serialisedEdge.endStyle;
 
   result.middlePositions = serialisedEdge.middlePositions.map(p => deserialisePosition(p));
+
+  // Add labels, if defined.
+  if (serialisedEdge.startLabel) {
+    result.startLabel = deserialiseLabel(serialisedEdge.startLabel);
+    result.startLabel.anchors = result.labelAnchors;
+  }
+
+  if (serialisedEdge.middleLabel) {
+    result.middleLabel = deserialiseLabel(serialisedEdge.middleLabel);
+    result.middleLabel.anchors = result.labelAnchors;
+  }
+
+  if (serialisedEdge.endLabel) {
+    result.endLabel = deserialiseLabel(serialisedEdge.endLabel);
+    result.endLabel.anchors = result.labelAnchors;
+  }
 
   return result;
 }
