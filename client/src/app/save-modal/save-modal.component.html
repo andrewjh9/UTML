@@ -6,10 +6,10 @@
 </div>
 <div class="modal-body">
   <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-6" (click)="modal.close('json export')">
       <app-json-icon (click)="exportAsJSON()" style="cursor: pointer"></app-json-icon>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" (click)="modal.close('png export')">
       <app-png-icon (click)="exportAsPNG()" style="cursor: pointer"></app-png-icon>
     </div>
   </div>

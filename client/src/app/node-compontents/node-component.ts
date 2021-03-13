@@ -17,7 +17,7 @@ export class NodeComponent extends ModeAwareComponent {
   @Input() node!: Node;
   hoveringNearby: boolean = false;
   isSelected: boolean = false;
-
+  inEditMode: boolean = false;
   constructor(private repositionService: RepositionService,
               modeService: ModeService,
               private selectionService: SelectionService,
@@ -47,7 +47,7 @@ export class NodeComponent extends ModeAwareComponent {
         this._modalService.open(FormattingModalComponent)
       }
     } else {
-      //TODO implement change node text
+      this.inEditMode = true;
     }
 
   }
