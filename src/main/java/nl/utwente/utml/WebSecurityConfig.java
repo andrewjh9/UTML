@@ -27,6 +27,7 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationFa
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 @Configuration
 @EnableWebSecurity
@@ -77,6 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         metadataGenerator.setKeyManager(keyManager);
         return metadataGenerator;
     }
+
 
     @Bean
     public SAMLProcessingFilter samlWebSSOProcessingFilter() throws Exception {

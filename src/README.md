@@ -2,8 +2,8 @@
 
 ##Serve angular
 Use the following commands build and to copy the angular into the backend:
-ng -p build
-cp -r client/dist/client/ src/main/resources/static
+npm run ng -p build
+cp -r client/dist/client/. src/main/resources/static
 
 ##Serving Local Host remotely 
 For dev and testing purposes you may wish to point your local host at a remote URL. 
@@ -39,3 +39,7 @@ containered application will be available at localhost:9000
 
 ### Serve frontend 
 Copy angular into spring boot
+
+
+### Generating a key for saml
+keytool -genkey -alias utmlsaml -keyalg RSA -sigalg SHA256withRSA -keysize 2048 -validity 3650 -keystore saml-keystore.jks
