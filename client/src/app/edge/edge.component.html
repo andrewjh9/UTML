@@ -1,4 +1,8 @@
-<svg:g edge-render-dispatch [edge]="edge!" (mousedown)="handleMouseDown($event)" [styleObject]="styleObject"/>
+<svg:g edge-render-dispatch
+       [edge]="edge!"
+       (mousedown)="handleMouseDown($event)"
+       (dblclick)="handleDoubleClick($event)"
+       [styleObject]="styleObject"/>
 
 <!-- Todo: Implement invisible, clickable overlay to make arcs easier to click on.
 Once done remove (mousedown) on render dispatch-->
@@ -7,7 +11,7 @@ Once done remove (mousedown) on render dispatch-->
               [attr.points]="edge.getPointString()"
               style="stroke:rgb(0, 0, 0); stroke-width:10; stroke-opacity: 0;  fill:none;"
               (mousedown)="handleMouseDown($event)"
->
+              (dblclick)="handleDoubleClick($event)">
 </svg:polyline>
 
 <svg:g *ngIf="edge && edge?.startLabel"
@@ -24,3 +28,20 @@ Once done remove (mousedown) on render dispatch-->
        label-component
        [label]="edge.endLabel">
 </svg:g>
+
+<ng-template #menuModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Node</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss(); save()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-edge-editor [edge]="this.edge"></app-edge-editor>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="delete()">Delete</button>
+
+    <button type="button" class="btn btn-outline-success" (click)="modal.close(); save()">Save</button>
+  </div>
+</ng-template>

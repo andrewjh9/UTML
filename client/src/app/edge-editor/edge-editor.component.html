@@ -2,9 +2,9 @@
   <div class="form-group row px-3">
     <label class="w-25 col-form-label">Start Label</label>
     <div class="w-75" *ngIf="edge.startLabel">
-      <input class="w-100" type="text" [(ngModel)]="edge.startLabel.value" (ngModelChange)="cache()">
+      <input class="w-100" type="text" [(ngModel)]="edge.startLabel.value">
     </div>
-    <button class="w-75 btn btn-primary" *ngIf="!edge.startLabel" (click)="edge.addStartLabel()"="cache()">
+    <button class="w-75 btn btn-primary" *ngIf="!edge.startLabel" (click)="edge.addStartLabel()">
       Add start label
     </button>
   </div>
@@ -12,7 +12,7 @@
   <div class="form-group row px-3">
     <label class="w-25 col-form-label">Middle Label</label>
     <div class="w-75" *ngIf="edge.middleLabel">
-      <input class="w-100" type="text" [(ngModel)]="edge.middleLabel.value" (ngModelChange)="cache()">
+      <input class="w-100" type="text" [(ngModel)]="edge.middleLabel.value">
     </div>
     <button class="w-75 btn btn-primary" *ngIf="!edge.middleLabel" (click)="edge.addMiddleLabel()">
       Add middle label
@@ -24,7 +24,7 @@
     <div class="w-75" *ngIf="edge.endLabel">
       <input class="w-100" type="text" [(ngModel)]="edge.endLabel.value">
     </div>
-    <button class="w-75 btn btn-primary" *ngIf="!edge.endLabel" (click)="edge.addEndLabel()" (ngModelChange)="cache()">
+    <button class="w-75 btn btn-primary" *ngIf="!edge.endLabel" (click)="edge.addEndLabel()">
       Add end label
     </button>
   </div>
@@ -32,7 +32,7 @@
   <div class="form-group row px-3">
     <label class="w-25 col-form-label">Line Style</label>
     <div class="w-75">
-      <select class="custom-select" [(ngModel)]="edge!.lineStyle" (ngModelChange)="cache()">
+      <select class="custom-select" [(ngModel)]="edge!.lineStyle">
         <option [ngValue]="0">Filled</option>
         <option [ngValue]="1">Dotted</option>
         <option [ngValue]="2">Dashed</option>
@@ -43,7 +43,7 @@
   <div class="form-group row px-3">
     <label class="w-25 col-form-label">Start Style</label>
     <div class="w-75">
-      <select class="custom-select" [(ngModel)]="edge!.startStyle" (ngModelChange)="cache()">
+      <select class="custom-select" [(ngModel)]="edge!.startStyle">
         <option [ngValue]="0">None</option>
         <option [ngValue]="1">Big Unfilled Arrow</option>
         <option [ngValue]="2">Filled Diamond</option>
@@ -56,7 +56,7 @@
   <div class="form-group row px-3">
     <label class="w-25 col-form-label">End Style</label>
     <div class="w-75">
-      <select class="custom-select" [(ngModel)]="edge!.endStyle" (ngModelChange)="cache()">
+      <select class="custom-select" [(ngModel)]="edge!.endStyle">
         <option [ngValue]="0">None</option>
         <option [ngValue]="1">Small Filled Arrow</option>
         <option [ngValue]="2">Filled Diamond</option>
@@ -65,6 +65,4 @@
       </select>
     </div>
   </div>
-
-  <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
 </div>
