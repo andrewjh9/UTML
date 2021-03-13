@@ -26,6 +26,8 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UploadModalComponent} from "../upload-modal/upload-modal.component";
 import {UploadService} from "../services/upload.service";
 import {SaveModalComponent} from "../save-modal/save-modal.component";
+import {Expression} from "@angular/compiler";
+import {ExportService} from "../services/export.service";
 
 @Component({
   selector: 'app-diagram',
@@ -53,9 +55,10 @@ export class DiagramComponent implements AfterViewInit {
               private copyPasteService: CopyPasteService,
               private dragDropCreationService: DragDropCreationService,
               private _modalservice: NgbModal,
-              private uploadService: UploadService) {
+              private uploadService: UploadService,
+              private exportService: ExportService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
-    this.uploadService.diagramEmitter.subscribe((diagram: Diagram) => this.diagram = diagram)
+    this.uploadService.diagramEmitter.subscribe((diagram: Diagram) => this.setDiagram(diagram))
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
     // this.diagram = ad;
@@ -207,6 +210,7 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   save() {
+    this.exportService.setDiagram(this.diagram);
     this._modalservice.open(SaveModalComponent)
   }
 
