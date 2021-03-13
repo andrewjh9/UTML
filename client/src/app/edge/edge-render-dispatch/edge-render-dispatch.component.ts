@@ -8,6 +8,10 @@ import {Edge, LineType} from "../../../model/edge";
 })
 export class EdgeRenderDispatchComponent {
   @Input() edge!: Edge;
+  @Input() styleObject?: {[key: string]: string | number} = {
+    'stroke': 'black',
+    'stroke-width': 2
+  };
 
   isLine() {
     return this.edge.lineType === LineType.Line;

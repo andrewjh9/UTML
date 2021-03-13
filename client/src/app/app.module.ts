@@ -17,7 +17,7 @@ import { SelectedEditorComponent } from './selected-editor/selected-editor.compo
 import {DeletionService} from "./services/deletion.service";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
-import { NodeEditorComponent } from './node-editor/node-editor.component';
+import { NodeEditorComponent } from './node-compontents/node-editor/node-editor.component';
 import { MoveMenuComponent } from './move-menu/move-menu.component';
 import { ClickableAttachmentPointsComponent } from './node-compontents/clickable-attachment-points/clickable-attachment-points.component';
 import {ClickableResizePointsComponent} from "./node-compontents/clickable-resize-points/clickable-resize-points.component";

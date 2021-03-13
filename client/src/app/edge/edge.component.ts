@@ -17,7 +17,7 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   @Input() edge?: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
   isSelected: boolean = false;
-  styleObject = {
+  styleObject: {[key: string]: string | number} = {
     'stroke': 'black',
     'stroke-width': 2
   }
