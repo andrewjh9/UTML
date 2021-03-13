@@ -44,6 +44,9 @@ import {NodeComponent} from "./node-compontents/node-component";
 import { FormattingModalComponent } from './formatting-modal/formatting-modal.component';
 import { EdgeFormattingModalComponent } from './edge-formatting-modal/edge-formatting-modal.component';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';
+import { SaveModalComponent } from './save-modal/save-modal.component';
+import { JsonIconComponent } from './icons/json-icon/json-icon.component';
+import { PngIconComponent } from './icons/png-icon/png-icon.component';
 
 @NgModule({
   declarations: [
@@ -82,7 +85,10 @@ import { UploadModalComponent } from './upload-modal/upload-modal.component';
     NodeComponent,
     FormattingModalComponent,
     EdgeFormattingModalComponent,
-    UploadModalComponent
+    UploadModalComponent,
+    SaveModalComponent,
+    JsonIconComponent,
+    PngIconComponent
   ],
     imports: [
         BrowserModule,

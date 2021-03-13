@@ -25,7 +25,7 @@ import {DragDropCreationService} from "../services/drag-drop-creation.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {UploadModalComponent} from "../upload-modal/upload-modal.component";
 import {UploadService} from "../services/upload.service";
-
+import {SaveModalComponent} from "../save-modal/save-modal.component";
 
 @Component({
   selector: 'app-diagram',
@@ -204,6 +204,10 @@ export class DiagramComponent implements AfterViewInit {
 
   upload() {
     this._modalservice.open(UploadModalComponent)
+  }
+
+  save() {
+    this._modalservice.open(SaveModalComponent)
   }
 
   handleMouseDown(event: MouseEvent) {
