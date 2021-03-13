@@ -1,7 +1,0 @@
-<svg:g *ngFor="let node of nodes">
-
-  <svg:g *ngIf="isRectangle(node)" rectangle-node  [node]="castToRectangle(node)"></svg:g>
-  <svg:g *ngIf="isEllipse(node)" ellipse-node  [node]="castToEllipse(node)"></svg:g>
-  <svg:g *ngIf="isDiamond(node)" diamond-node  [node]="castToDiamond(node)"></svg:g>
-  <svg:g *ngIf="isClass(node)" class-node  [node]="castToClass(node)"></svg:g>
-</svg:g>

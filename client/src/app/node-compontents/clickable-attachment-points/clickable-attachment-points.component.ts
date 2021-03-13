@@ -8,21 +8,20 @@ import {EdgeCreationService} from "../../services/edge-creation.service";
   styleUrls: ['./clickable-attachment-points.component.scss']
 })
 export class ClickableAttachmentPointsComponent {
-  @Input() node?: Node;
+  @Input() node!: Node;
 
   constructor(private edgeCreationService: EdgeCreationService) {
   }
 
-  handleClick($event: MouseEvent, attachmentPoint: number) {
-    if (this.node === undefined) {
-      throw new Error("You are clicking on clickable attachment points that have no associated node. " +
-        "This should be impossible");
+  handleMouseDown($event: MouseEvent, attachmentPoint: number) {
+    if (!this.edgeCreationService.isActive()) {
+      this.edgeCreationService.setStart(this.node, attachmentPoint);
     }
+  }
 
+  handleMouseUp($event: MouseEvent, attachmentPoint: number) {
     if (this.edgeCreationService.isActive()) {
       this.edgeCreationService.setEnd(this.node, attachmentPoint);
-    } else {
-      this.edgeCreationService.setStart(this.node, attachmentPoint);
     }
   }
 }

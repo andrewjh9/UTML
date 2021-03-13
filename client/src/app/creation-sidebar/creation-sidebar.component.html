@@ -1,0 +1,41 @@
+<div id="creation-side-bar" style="width: 300px" (mouseup)="handleMouseUp($event)">
+  <ngb-accordion>
+
+    <ngb-panel *ngFor="let diagramGroup of groupKeys" title="{{diagramGroup}}">
+      <ng-template ngbPanelContent>
+        <ul class="list-group">
+          <a href="#"
+             class="list-group-item list-group-item-action"
+             *ngFor="let edgeKey of Object.keys(groups[diagramGroup].edges)"
+             (mousedown)="handleMouseDown($event, groups[diagramGroup].edges[edgeKey])"
+             (dragstart)="false">
+            <div class="d-flex w-100 justify-content-between">
+              <h6 class="mb-1 w-100 text-center">{{edgeKey}}</h6>
+            </div>
+            <div class="w-100">
+              <svg height="40" width="196">
+                <svg:g edge-render-dispatch [edge]="groups[diagramGroup].edges[edgeKey]"/>
+              </svg>
+            </div>
+          </a>
+
+          <a href="#"
+             class="list-group-item list-group-item-action flex-column align-items-start"
+             *ngFor="let nodeKey of Object.keys(groups[diagramGroup].nodes)"
+             (mousedown)="handleMouseDown($event, groups[diagramGroup].nodes[nodeKey])"
+             (dragstart)="false">
+            <div class="d-flex w-100 justify-content-between text-center">
+              <h6 class="mb-1 w-100 text-center">{{nodeKey}}</h6>
+            </div>
+            <div class="w-100">
+              <svg [attr.height]="groups[diagramGroup].nodes[nodeKey].height + 2 * groups[diagramGroup].nodes[nodeKey].position.y"
+                   width="300">
+                <g node-render-dispatch [node]="groups[diagramGroup].nodes[nodeKey]"></g>
+              </svg>
+            </div>
+          </a>
+        </ul>
+      </ng-template>
+    </ngb-panel>
+  </ngb-accordion>
+</div>

@@ -1,0 +1,4 @@
+<svg:g *ngIf="isRectangle(node)" rectangle-node-render  [node]="castToRectangle(node)"></svg:g>
+<svg:g *ngIf="isEllipse(node)" ellipse-node-render  [node]="castToEllipse(node)"></svg:g>
+<svg:g *ngIf="isDiamond(node)" diamond-node-render  [node]="castToDiamond(node)"></svg:g>
+<svg:g *ngIf="isClass(node)" class-node-render  [node]="castToClass(node)"></svg:g>

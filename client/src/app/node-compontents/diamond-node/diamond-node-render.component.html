@@ -1,0 +1,12 @@
+<svg:polyline [attr.points]="node.getSVGPoints()"
+              [ngStyle]="node.styleObject"
+>
+</svg:polyline>
+
+<svg:polyline *ngIf=" node?.hasDoubleBorder"
+              [attr.points]="node.getBorderSVGPoints()"
+              style="fill:none;stroke:black;stroke-width:2;fill-opacity:0.0;stroke-opacity:0.9"
+>
+</svg:polyline>
+
+<svg:g basic-node-text [node]="node"></svg:g>
