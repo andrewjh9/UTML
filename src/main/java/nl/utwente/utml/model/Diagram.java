@@ -14,9 +14,11 @@ import java.util.UUID;
 @Entity
     public class Diagram implements Serializable {
 
+    public Diagram(){}
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     @JsonProperty("serializedDiagram")
     private String serializedDiagram;
 
@@ -30,12 +32,25 @@ import java.util.UUID;
     @JsonProperty("shared")
     private boolean shared;
 
-    public Integer getId() {
+
+    public Diagram(Long id, String serializedDiagram){
+        this.id = id;
+        this.serializedDiagram = serializedDiagram;
+    }
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
         return id;
     }
 
     public String getSerializedDiagram() {
         return serializedDiagram;
+    }
+
+    public void setSerializedDiagram(String serializedDiagram) {
+        this.serializedDiagram = serializedDiagram;
     }
 
     public User getOwner() {

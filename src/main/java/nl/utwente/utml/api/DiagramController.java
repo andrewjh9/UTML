@@ -1,10 +1,8 @@
 package nl.utwente.utml.api;
 
 import nl.utwente.utml.model.Diagram;
-import nl.utwente.utml.service.DiagramService;
-import org.keycloak.KeycloakSecurityContext;
+import nl.utwente.utml.service.IDiagramService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,39 +11,39 @@ import java.util.List;
 @RequestMapping("api/diagram")
 @CrossOrigin()
 @RestController
-public class DiagramController {
-    private final DiagramService diagramService;
+public class  DiagramController {
+    private final IDiagramService IDiagramService;
     private final HttpServletRequest request;
 
     @Autowired
-    public DiagramController(DiagramService diagramService, HttpServletRequest request) {
-        this.diagramService = diagramService;
+    public DiagramController(IDiagramService IDiagramService, HttpServletRequest request) {
+        this.IDiagramService = IDiagramService;
         this.request = request;
 
     }
 
     @PostMapping
     public void addDiagram(@RequestBody Diagram diagram) {
-        diagramService.add(diagram);
+        IDiagramService.add(diagram);
     }
 
     @GetMapping
     public Diagram getDiagram(@RequestBody long id){
-        return diagramService.get(id);
+        return IDiagramService.get(id);
     }
 
     @GetMapping("/all")
     public List<Diagram> getAllDiagrams(){
-        return diagramService.getAll();
+        return IDiagramService.getAll();
     }
-    @PutMapping
-    public void updateDiagram(@RequestBody Diagram diagram){
-        diagramService.update(diagram);
-    }
+//    @PutMapping
+//    public void updateDiagram(@RequestBody Diagram diagram){
+//        diagramService.update(diagram);
+//    }
 
     @DeleteMapping
     public void deleteDiagram(@RequestBody long id){
-        diagramService.delete(id);
+        IDiagramService.delete(id);
     }
 
 
