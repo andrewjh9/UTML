@@ -7,5 +7,15 @@ import {ClassNode} from "../../../model/node/class-node";
   styleUrls: ['./class-node-render.component.scss']
 })
 export class ClassNodeRenderComponent {
+
+  public inEditMode: boolean = false;
   @Input() node!: ClassNode;
+
+  constructor() {
+
+  }
+
+  edit() {
+    this.inEditMode = true;
+  }
 }

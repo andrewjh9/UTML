@@ -78,6 +78,8 @@ export abstract class Node {
     this.callAfterCallbacks();
   }
 
+
+
   protected constructor(width: number, height: number, position: Position) {
     this._width = width;
     this._height = height;

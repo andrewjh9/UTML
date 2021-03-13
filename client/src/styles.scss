@@ -1,17 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@import '~bootstrap/dist/css/bootstrap.css';
-
 * {
   box-sizing: border-box;
-}
-
-.movable {
-  cursor: pointer;
-}
-
-svg#diagram g g g g text {
-  user-select: none;
-}
-svg#diagram g g tspan {
-  user-select: none;
 }
