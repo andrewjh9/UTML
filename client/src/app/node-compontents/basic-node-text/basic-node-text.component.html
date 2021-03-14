@@ -9,6 +9,12 @@
     text-anchor="middle"
     font-family="Comic Sans MS, Helvetica, sans-serif"
     class="movable">
-    <svg:tspan  *ngFor="let text_line of node.getTextLines()"  [attr.x]= "node.position.x + (node.width/2)" dy="1.2em" >{{text_line}}</svg:tspan>
+<!--    <svg:g *ngIf="!node?.inEditMode">-->
+      <svg:tspan  *ngFor="let text_line of node.getTextLines()"  [attr.x]= "node.position.x + (node.width/2)" dy="1.2em" >{{text_line}}</svg:tspan>
+<!--    </svg:g>-->
+<!--    <svg:g *ngIf="node?.inEditMode">-->
+<!--      <svg:text *ngFor="let text_line of node.getTextLines()" contentEditable="true" [attr.x]= "node.position.x + (node.width/2)" dy="1.2em" >{{text_line}}</svg:text>-->
+<!--    </svg:g>-->
+
   </svg:text>
 </svg:g>

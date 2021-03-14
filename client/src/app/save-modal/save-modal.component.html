@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Save diagram as</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6" (click)="modal.close('json export')">
+      <app-json-icon (click)="exportAsJSON()" style="cursor: pointer"></app-json-icon>
+    </div>
+    <div class="col-md-6" (click)="modal.close('png export')">
+      <app-png-icon (click)="exportAsPNG()" style="cursor: pointer"></app-png-icon>
+    </div>
+  </div>
+
+</div>
+
+
+
+

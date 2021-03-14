@@ -7,6 +7,9 @@ import {EdgeCreationService} from "../services/edge-creation.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
 import {ModeAwareComponent} from "../mode-aware-component";
+import {EdgeFormattingModalComponent} from "../edge-formatting-modal/edge-formatting-modal.component";
+import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
+import {NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: '[edge-component]',
@@ -24,7 +27,8 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
 
   constructor(private edgeRepositionService: EdgeRepositionService,
               modeService: ModeService,
-              private selectionService: SelectionService) {
+              private selectionService: SelectionService,
+              private _modalService: NgbModal) {
     super(modeService);
     selectionService.selectedObservable.subscribe(value => {
       // this.edge can be undefined here because this update may be called before the component is fully set up.
@@ -51,6 +55,14 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
       }
     } else if (this.isInSelectMode() && this.edge) {
       this.selectionService.setEdge(this.edge);
+    }
+  }
+  //TODO Triggering does not work properly because of the mousedown
+  public handleDoubleClick(event: MouseEvent) {
+    if (event.shiftKey) {
+      if (this.selectionService.isEdge()) {
+        this._modalService.open(EdgeFormattingModalComponent)
+      }
     }
   }
 

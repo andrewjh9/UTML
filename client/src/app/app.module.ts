@@ -41,6 +41,12 @@ import { DiamondNodeRenderComponent } from './node-compontents/diamond-node/diam
 import { EdgeRenderDispatchComponent } from './edge/edge-render-dispatch/edge-render-dispatch.component';
 import { NodeRenderDispatchComponent } from './node-compontents/node-render-dispatch/node-render-dispatch.component';
 import {NodeComponent} from "./node-compontents/node-component";
+import { FormattingModalComponent } from './formatting-modal/formatting-modal.component';
+import { EdgeFormattingModalComponent } from './edge-formatting-modal/edge-formatting-modal.component';
+import { UploadModalComponent } from './upload-modal/upload-modal.component';
+import { SaveModalComponent } from './save-modal/save-modal.component';
+import { JsonIconComponent } from './icons/json-icon/json-icon.component';
+import { PngIconComponent } from './icons/png-icon/png-icon.component';
 
 @NgModule({
   declarations: [
@@ -76,7 +82,13 @@ import {NodeComponent} from "./node-compontents/node-component";
     DiamondNodeRenderComponent,
     EdgeRenderDispatchComponent,
     NodeRenderDispatchComponent,
-    NodeComponent
+    NodeComponent,
+    FormattingModalComponent,
+    EdgeFormattingModalComponent,
+    UploadModalComponent,
+    SaveModalComponent,
+    JsonIconComponent,
+    PngIconComponent
   ],
     imports: [
         BrowserModule,

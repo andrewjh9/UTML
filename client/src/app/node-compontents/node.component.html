@@ -1,4 +1,4 @@
-<svg:g (mouseenter)="handleMouseEnter()" (mouseleave)="handleMouseLeave()">
+<svg:g (mouseenter)="handleMouseEnter()" (mouseleave)="handleMouseLeave()" (dblclick)="handleDoubleClick($event)">
   <svg:rect [attr.x]="node.position.x - 10"
             [attr.y]="node.position.y - 10"
             [attr.width]="node.width + 20"

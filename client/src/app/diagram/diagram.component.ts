@@ -22,7 +22,12 @@ import {Edge} from "../../model/edge";
 import {Position} from "../../model/position";
 import {CopyPasteService} from "../services/copy-paste.service";
 import {DragDropCreationService} from "../services/drag-drop-creation.service";
-
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {UploadModalComponent} from "../upload-modal/upload-modal.component";
+import {UploadService} from "../services/upload.service";
+import {SaveModalComponent} from "../save-modal/save-modal.component";
+import {Expression} from "@angular/compiler";
+import {ExportService} from "../services/export.service";
 
 @Component({
   selector: 'app-diagram',
@@ -48,8 +53,12 @@ export class DiagramComponent implements AfterViewInit {
               private cachingService: CachingService,
               private selectionService: SelectionService,
               private copyPasteService: CopyPasteService,
-              private dragDropCreationService: DragDropCreationService) {
+              private dragDropCreationService: DragDropCreationService,
+              private _modalservice: NgbModal,
+              private uploadService: UploadService,
+              private exportService: ExportService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
+    this.uploadService.diagramEmitter.subscribe((diagram: Diagram) => this.setDiagram(diagram))
     this.mode = modeService.getLatestMode();
     // this.diagram = fsm;
     // this.diagram = ad;
@@ -196,6 +205,16 @@ export class DiagramComponent implements AfterViewInit {
     this.copyPasteService.doPaste();
   }
 
-  handleMouseDown(event: any) {
+  upload() {
+    this._modalservice.open(UploadModalComponent)
+  }
+
+  save() {
+    this.exportService.setDiagram(this.diagram);
+    this._modalservice.open(SaveModalComponent)
+  }
+
+  handleMouseDown(event: MouseEvent) {
+
   }
 }
