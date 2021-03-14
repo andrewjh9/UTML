@@ -7,7 +7,7 @@ export class ZoomService {
   private x: number = 0;
   private y: number = 0;
   private width: number = 1200;
-  private height: number = 600;
+  private height: number = 800;
   private currentZoomFactor: number = 1;
   private zoomStep: number = 1.1;
   private zoomExponent = 0;
