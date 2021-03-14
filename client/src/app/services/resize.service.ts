@@ -34,18 +34,19 @@ export class ResizeService implements Deactivatable {
 
     switch (this.resizePointIndex) {
       case 0: // up
-        this.node!.height = this.node!.height - (endPosition.y - this.node!.position.y);
-        this.node!.position.y = endPosition.y;
+
+        this.node!.height = Math.round((this.node!.height - this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).y)/10) * 10;
+        this.node!.position.y = this.snapService.snapIfApplicable(endPosition,10).y;
         break;
       case 1: //right
         this.node!.width = this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).x;
         break;
       case 2:  //down
-        this.node!.height = endPosition.y - this.node!.position.y;
+        this.node!.height = this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).y;
         break;
       case 3: // left
-        this.node!.width = this.node!.width - (endPosition.x - this.node!.position.x);
-        this.node!.position.x = endPosition.x;
+        this.node!.width = Math.round((this.node!.width - this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).x)/10) * 10;
+        this.node!.position.x = this.snapService.snapIfApplicable(endPosition,10).x;
         break;
     }
   }
