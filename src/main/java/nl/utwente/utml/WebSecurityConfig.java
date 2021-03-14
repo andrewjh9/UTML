@@ -36,7 +36,7 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class    WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-Controller    @Value("http://localhost:8080/saml/metadata")
+    @Value("http://localhost:8080/saml/metadata")
     private String samlAudience;
 
     @Autowired
@@ -137,6 +137,10 @@ Controller    @Value("http://localhost:8080/saml/metadata")
         http
                 .authorizeRequests()
                 .antMatchers("/user/**").authenticated();
+        http
+                .authorizeRequests()
+                .antMatchers("/diagram/user/**").authenticated();
+
         http
                 .logout()
                 .addLogoutHandler((request, response, authentication) -> {

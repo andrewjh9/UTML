@@ -1,8 +1,10 @@
 package nl.utwente.utml.service;
 
+import nl.utwente.utml.model.User;
 import nl.utwente.utml.repository.IDiagramRepository;
 import nl.utwente.utml.model.Diagram;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -17,6 +19,9 @@ public class DiagramServiceImpl implements IDiagramService {
     @Autowired
     private IDiagramRepository IDiagramRepository;
 
+    public List<Diagram> getAllUserDiagrams(long userId) {
+        return IDiagramRepository.findByOwner(userId);
+    }
 
     public void add(Diagram diagram) {
         this.IDiagramRepository.save(diagram);

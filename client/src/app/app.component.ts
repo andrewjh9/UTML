@@ -1,6 +1,9 @@
 import {AfterViewInit, Component, Renderer2} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {DownButton, KeyboardEventCallerService} from "./services/keyboard-event-caller.service";
+import axios from 'axios';
+
+
 
 @Component({
   selector: 'app-root',
@@ -8,6 +11,7 @@ import {DownButton, KeyboardEventCallerService} from "./services/keyboard-event-
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
+  public userName: string | undefined;
   constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService) {
   }
 
@@ -22,6 +26,8 @@ export class AppComponent implements AfterViewInit {
       let downButton = AppComponent.getDownButton(event);
       this.keyboardEventCallbackMap.executeCallbacks([event.key, "keyup", downButton], event);
     });
+
+    this.isLoggedIn();
   }
 
   private static getDownButton(event: KeyboardEvent): DownButton {
@@ -35,4 +41,9 @@ export class AppComponent implements AfterViewInit {
     }
     return downButton;
   }
+
+  private isLoggedIn() {
+    return axios.get('api/user/me').then(response => this.userName = response.data)
+  }
+
 }

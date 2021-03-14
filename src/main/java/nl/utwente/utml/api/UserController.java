@@ -1,8 +1,12 @@
 package nl.utwente.utml.api;
 
+import nl.utwente.utml.model.Diagram;
 import nl.utwente.utml.model.User;
 import nl.utwente.utml.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,11 +35,16 @@ public class UserController {
         return userServiceImpl.get(id);
     }
 
-    @GetMapping
-    public User getUser(){
-
-
+    @GetMapping("/me")
+    public Object getUser(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication instanceof AnonymousAuthenticationToken){
+            return null;
+        }
+       return (authentication.getPrincipal());
     }
+
+
 
     @GetMapping("/all")
     public List<User> getAllUsers(){

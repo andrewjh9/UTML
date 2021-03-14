@@ -3,6 +3,9 @@ package nl.utwente.utml.api;
 import nl.utwente.utml.model.Diagram;
 import nl.utwente.utml.service.IDiagramService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,10 +25,6 @@ public class  DiagramController {
 
     }
 
-    @PostMapping
-    public void addDiagram(@RequestBody Diagram diagram) {
-        IDiagramService.add(diagram);
-    }
 
     @GetMapping
     public Diagram getDiagram(@RequestBody long id){
@@ -40,6 +39,7 @@ public class  DiagramController {
 //    public void updateDiagram(@RequestBody Diagram diagram){
 //        diagramService.update(diagram);
 //    }
+
 
     @DeleteMapping
     public void deleteDiagram(@RequestBody long id){
