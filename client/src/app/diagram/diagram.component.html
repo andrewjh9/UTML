@@ -40,7 +40,8 @@
            (mouseup)="handleMouseUp($event)"
            (mousemove)="handleMouseMove($event)"
            (dblclick)="handleDoubleClick($event)"
-
+           (mousewheel)="zoom($event)"
+           (DOMMouseScroll)="zoomFirefox($event)"
            id="diagram"
       >
         <g drag-drop-preview></g>

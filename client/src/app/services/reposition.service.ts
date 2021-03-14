@@ -3,6 +3,7 @@ import {Position} from "../../model/position";
 import {Deactivatable} from "./deactivatable";
 import {CachingService} from "./caching/caching.service";
 import {SnapService} from "./snap.service";
+import {MousePositionTransformService} from "./mouse-position-transform.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,9 @@ export class RepositionService implements Deactivatable {
   private startPosition?: Position;
   private difference?: Position;
 
-  constructor(private snapService: SnapService, private cachingService: CachingService) { }
+  constructor(private snapService: SnapService,
+              private cachingService: CachingService,
+              private mousePositionTransformService : MousePositionTransformService) { }
 
   public isActive(): boolean {
     return this.positionable !== undefined;
@@ -21,13 +24,13 @@ export class RepositionService implements Deactivatable {
   public activate(current: Positionable, startPosition: Position): void {
     this.positionable = current;
     this.startPosition = startPosition;
-    // this.snapService.activate(current, startPosition);
-    this.difference = Position.subtract(this.positionable.position, this.startPosition);
+    this.difference = Position.subtract(
+      this.mousePositionTransformService.transformPosition(this.positionable.position),
+      this.startPosition);
   }
 
   public update(mousePosition: Position): void {
     if (this.positionable !== undefined && this.startPosition !== undefined && this.difference !== undefined) {
-      // if (this.snapService.isActive()) {
       let snappedPosition: Position = this.snapService.snapIfApplicable(Position.add(mousePosition, this.difference), 10);
       this.positionable.position = snappedPosition;
         // }
