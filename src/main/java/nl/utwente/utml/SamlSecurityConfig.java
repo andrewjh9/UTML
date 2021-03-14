@@ -23,6 +23,7 @@ import org.springframework.security.saml.processor.HTTPPostBinding;
 import org.springframework.security.saml.processor.HTTPRedirectDeflateBinding;
 import org.springframework.security.saml.processor.SAMLBinding;
 import org.springframework.security.saml.processor.SAMLProcessorImpl;
+import org.springframework.security.saml.storage.EmptyStorageFactory;
 import org.springframework.security.saml.util.VelocityFactory;
 import org.springframework.security.saml.websso.*;
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
@@ -62,9 +63,12 @@ public class SamlSecurityConfig {
             return new CustomSAMLAuthenticationProvider();
         }
 
+
         @Bean
         public SAMLContextProviderImpl contextProvider() {
-            return new SAMLContextProviderImpl();
+            SAMLContextProviderImpl samlContextProvider = new SAMLContextProviderImpl();
+            samlContextProvider.setStorageFactory(new EmptyStorageFactory());
+            return samlContextProvider;
         }
 
         @Bean

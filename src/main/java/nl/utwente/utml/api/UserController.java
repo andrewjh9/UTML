@@ -31,6 +31,12 @@ public class UserController {
         return userServiceImpl.get(id);
     }
 
+    @GetMapping
+    public User getUser(){
+
+
+    }
+
     @GetMapping("/all")
     public List<User> getAllUsers(){
 

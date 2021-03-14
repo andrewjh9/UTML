@@ -16,8 +16,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.saml.*;
+import org.springframework.security.saml.context.SAMLContextProviderImpl;
 import org.springframework.security.saml.key.KeyManager;
 import org.springframework.security.saml.metadata.*;
+import org.springframework.security.saml.storage.EmptyStorageFactory;
 import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,9 +34,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class    WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("nl:utwente:utml:sp")
+Controller    @Value("http://localhost:8080/saml/metadata")
     private String samlAudience;
 
     @Autowired
@@ -110,7 +112,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
     @Bean
     public MetadataGeneratorFilter metadataGeneratorFilter() {
         return new MetadataGeneratorFilter(metadataGenerator());
@@ -135,8 +136,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll();
         http
                 .authorizeRequests()
-                .antMatchers("/teacher/**").authenticated();
-
+                .antMatchers("/user/**").authenticated();
         http
                 .logout()
                 .addLogoutHandler((request, response, authentication) -> {
