@@ -14,8 +14,7 @@ export class RepositionService implements Deactivatable {
   private difference?: Position;
 
   constructor(private snapService: SnapService,
-              private cachingService: CachingService,
-              private mousePositionTransformService : MousePositionTransformService) { }
+              private cachingService: CachingService) { }
 
   public isActive(): boolean {
     return this.positionable !== undefined;
@@ -24,8 +23,7 @@ export class RepositionService implements Deactivatable {
   public activate(current: Positionable, startPosition: Position): void {
     this.positionable = current;
     this.startPosition = startPosition;
-    this.difference = Position.subtract(
-      this.mousePositionTransformService.transformPosition(this.positionable.position),
+    this.difference = Position.subtract(this.positionable.position,
       this.startPosition);
   }
 

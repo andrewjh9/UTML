@@ -17,4 +17,10 @@ export class MousePositionTransformService {
 
     return position;
   }
+
+  //without zoom factor
+  public simpleTransform(position: Position): Position {
+    position.y -= MENUBAROFFSET;
+    return position;
+  }
 }
