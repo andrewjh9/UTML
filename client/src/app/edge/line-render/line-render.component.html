@@ -1,5 +1,5 @@
 <svg:polyline [attr.points]="edge.getPointString()"
-              [ngStyle]="styleObject"
+              [ngStyle]="styleObject || {}"
               fill="none"
               [attr.marker-end]="edge.getEndMarker()"
               [attr.marker-start]="edge.getStartMarker()"

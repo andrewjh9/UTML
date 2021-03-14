@@ -7,5 +7,5 @@ import {Edge} from "../../../model/edge";
 })
 export class LineRenderComponent {
   @Input() edge!: Edge;
-  @Input() styleObject = {'stroke': 'black', 'stroke-width': 2};
+  @Input() styleObject?: {[key: string]: string | number};
 }

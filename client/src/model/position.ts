@@ -38,4 +38,8 @@ export class Position {
   public static getDistance(pos1: Position, pos2: Position): number {
     return this.subtract(pos1, pos2).getLength()
   }
+
+  public static zero(): Position {
+    return new Position(0, 0);
+  }
 }

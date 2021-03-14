@@ -6,7 +6,24 @@
             style="fill: black; stroke: black; stroke-opacity: 0.0; fill-opacity: 0.0;"
   />
 
-  <svg:g node-render-dispatch [node]="node" (mousedown)="handleMouseDown($event)"/>
+  <svg:g node-render-dispatch [node]="node" (mousedown)="handleMouseDown($event)" (dblclick)="handleDoubleClick($event)"/>
 
   <svg:g *ngIf="hoveringNearby && !isSelected" clickable-attachment-points [node]="node"/>
 </svg:g>
+
+<ng-template #menuModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Node</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click'); save()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-node-editor [node]="this.node"></app-node-editor>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-danger" (click)="delete()">Delete</button>
+
+    <button type="button" class="btn btn-outline-success" (click)="modal.close('Save click'); save()">Save</button>
+  </div>
+</ng-template>

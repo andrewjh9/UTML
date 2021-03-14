@@ -1,8 +1,7 @@
 import {Position} from "./position";
 import {Node} from "./node/node";
-import {Label} from "./label";
+import {EdgeLocation, Label, PositionCallback} from "./label";
 import {SerialisedEdge} from "../serialisation/serialised-data-structures/serialised-edge";
-import {deserialiseEdge} from "../serialisation/deserialise/deserialise-edge";
 
 export class Edge {
   public startNode?: Node;
@@ -32,18 +31,19 @@ export class Edge {
   }
 
   public addStartLabel(value: string = 'start') {
-    this.startLabel = new Label(this.getStartPosition(), value);
+    let offset = Position.subtract(this.getEndPosition(), this.getStartPosition());
+    offset = Position.multiply(20 / offset.getLength(), offset);
+    this.startLabel = new Label(value, EdgeLocation.START, offset, this.labelAnchors);
   }
 
   public addMiddleLabel(value: string = 'middle') {
-    this.middleLabel = new Label(
-      Position.multiply(0.5, Position.add(this.getStartPosition(), this.getEndPosition())),
-      value
-    );
+    this.middleLabel = new Label(value, EdgeLocation.MIDDLE, Position.zero(), this.labelAnchors);
   }
 
   public addEndLabel(value: string = 'end') {
-    this.endLabel = new Label(this.getEndPosition(), value);
+    let offset = Position.subtract(this.getStartPosition(), this.getEndPosition());
+    offset = Position.multiply(20 / offset.getLength(), offset);
+    this.endLabel = new Label(value, EdgeLocation.END, offset, this.labelAnchors);
   }
 
   public getStartPosition(): Position {
@@ -60,6 +60,30 @@ export class Edge {
     result.push(...this.middlePositions);
     result.push(this.getEndPosition());
     return result;
+  }
+
+  public get labelAnchors(): Array<PositionCallback> {
+    return [
+      () => this.getStartPosition(),
+      () => {
+        if (this.lineType === LineType.Arc) {
+          // todo @PLATON: What is the middle of the arc?
+          return this.middlePositions[0];
+        } else {
+          if (this.middlePositions.length === 0) {
+            return Position.multiply(0.5, Position.add(this.getStartPosition(), this.getEndPosition()));
+          } else if (this.middlePositions.length % 2 === 1) {
+            return this.middlePositions[Math.floor(this.middlePositions.length / 2)];
+          } else {
+            return Position.multiply(0.5, Position.add(
+              this.middlePositions[this.middlePositions.length / 2],
+              this.middlePositions[this.middlePositions.length / 2 - 1]
+            ));
+          }
+        }
+      },
+      () => this.getEndPosition(),
+    ];
   }
 
   private static getPosition(node: Node | undefined, positionOrDirection: Position | number) {
