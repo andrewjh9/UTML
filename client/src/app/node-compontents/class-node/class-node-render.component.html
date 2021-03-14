@@ -1,4 +1,4 @@
-<svg:rect (dblclick)="edit()"
+<svg:rect (dblclick)="activateEditMode()"
           [attr.x]="node.position.x"
           [attr.y]="node.position.y"
           [attr.width]="node.width"
@@ -7,7 +7,7 @@
 >
 </svg:rect>
 
-<svg:g *ngIf="!inEditMode">
+<svg:g *ngIf="!isInEditMode">
   <svg:text *ngFor="let line of node.getTextLines(); let i = index;"
             [attr.x]="node.position.x + node.width / 2"
             [attr.y]="node.position.y + i * 24 + 20"
@@ -17,15 +17,19 @@
   </svg:text>
 </svg:g>
 
-<svg:g *ngIf="inEditMode">
-  <svg:text *ngFor="let line of node.getTextLines(); let i = index;"
-            [attr.x]="node.position.x + node.width / 2"
-            [attr.y]="node.position.y + i * 24 + 20"
-            text-anchor="middle"
-            style="font-size: 16px"
-            content-editable>
-    {{line}}
-  </svg:text>
+<svg:g *ngIf="isInEditMode">
+  <foreignObject class="node"
+                 [attr.x]=node.position.x
+                 [attr.y]=node.position.y
+                 [attr.width]=node.width
+                 [attr.height]=node.height>
+    <body xmlns="http://www.w3.org/1999/xhtml">
+      <input *ngFor="let line of node.getTextLines(); let i = index;"
+             [attr.width]="node.width" type="text" [value]="line" style="outline: none;"
+             (change) = updateField(i)>
+    </body>
+    <button class="btn btn-primary" (click)="addLine()">Add line</button>
+  </foreignObject>
 </svg:g>
 
 <svg:line [attr.x1]="node.position.x"
