@@ -37,6 +37,7 @@ export class DragSelectionService {
     if (!this.isActive()) {
       throw new Error('Service should be activated before it\'s updated.');
     }
+
     this.selectionService.deselect();
     this._end = position;
 

@@ -15,7 +15,7 @@ export class SnapService {
     this.snapIsActive = snapIsActive;
   }
 
-  public snapIfApplicable(position: Position, accuracy: number): Position {
+  public snapIfApplicable(position: Position, accuracy: number = 10): Position {
     if (this.snapIsActive) {
       let corners: Position[] = [
         new Position(Math.floor(position.x/accuracy)*accuracy, Math.floor(position.y/accuracy)*accuracy),

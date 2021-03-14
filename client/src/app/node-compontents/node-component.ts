@@ -33,8 +33,10 @@ export class NodeComponent extends ModeAwareComponent {
   }
 
   public handleMouseDown(event: MouseEvent) {
-    this.selectionService.setNode(this.node);
-    this.repositionService.activate(this.node, new Position(event.clientX, event.clientY - DiagramComponent.NAV_HEIGHT));
+    if (!this.isSelected) {
+      this.selectionService.setNode(this.node);
+    }
+    this.repositionService.activate(new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT));
   }
 
   public handleMouseEnter() {
