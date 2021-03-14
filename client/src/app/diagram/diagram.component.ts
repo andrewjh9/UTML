@@ -28,6 +28,7 @@ import {UploadService} from "../services/upload.service";
 import {SaveModalComponent} from "../save-modal/save-modal.component";
 import {Expression} from "@angular/compiler";
 import {ExportService} from "../services/export.service";
+import {DragSelectionService} from "../services/drag-selection.service";
 
 @Component({
   selector: 'app-diagram',
@@ -54,9 +55,10 @@ export class DiagramComponent implements AfterViewInit {
               private selectionService: SelectionService,
               private copyPasteService: CopyPasteService,
               private dragDropCreationService: DragDropCreationService,
-              private _modalservice: NgbModal,
+              private modalService: NgbModal,
               private uploadService: UploadService,
-              private exportService: ExportService) {
+              private exportService: ExportService,
+              private dragSelectionService: DragSelectionService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.uploadService.diagramEmitter.subscribe((diagram: Diagram) => this.setDiagram(diagram))
     this.mode = modeService.getLatestMode();
@@ -91,7 +93,9 @@ export class DiagramComponent implements AfterViewInit {
 
 
       this.cachingService.save();
-    })
+    });
+
+    this.setDiagram(this.diagram);
   }
 
   ngAfterViewInit() {
@@ -112,6 +116,8 @@ export class DiagramComponent implements AfterViewInit {
       this.dragDropCreationService.create();
     } else if (this.edgeCreationService.isActive()) {
       this.edgeCreationService.deactivate();
+    } else if (this.dragSelectionService.isActive()) {
+      this.dragSelectionService.deactivate();
     }
   }
 
@@ -128,6 +134,8 @@ export class DiagramComponent implements AfterViewInit {
       this.resizeService.update(position);
     } else if (this.dragDropCreationService.isActive()) {
       this.dragDropCreationService.update(position);
+    } else if (this.dragSelectionService.isActive()) {
+      this.dragSelectionService.update(position);
     }
   }
 
@@ -159,6 +167,7 @@ export class DiagramComponent implements AfterViewInit {
     this.deletionService.setDiagram(this.diagram);
     this.edgeRepositionService.setNodes(this.diagram.nodes);
     this.cachingService.setDiagram(diagram);
+    this.dragSelectionService.diagram = diagram;
     // We have to deselect the selected edge or node because when we undo/redo and action,
     // a new diagram reference is created from the serialized version.
     // If we leave the node/edge selected, it does not reference the actual instance inside the current diagram.
@@ -206,15 +215,17 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   upload() {
-    this._modalservice.open(UploadModalComponent)
+    this.modalService.open(UploadModalComponent)
   }
 
   save() {
     this.exportService.setDiagram(this.diagram);
-    this._modalservice.open(SaveModalComponent)
+    this.modalService.open(SaveModalComponent)
   }
 
   handleMouseDown(event: MouseEvent) {
-
+    if (event.shiftKey) {
+      this.dragSelectionService.activate(new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT));
+    }
   }
 }

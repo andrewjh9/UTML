@@ -34,18 +34,13 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
               private cachingService: CachingService,
               private modalService: NgbModal) {
     super(modeService);
-    selectionService.selectedObservable.subscribe(value => {
-      // this.edge can be undefined here because this update may be called before the component is fully set up.
-      if (this.edge === undefined) {
-        this.isSelected = false;
-      } else {
-        this.isSelected = value === this.edge;
-      }
+    selectionService.selectedObservable.subscribe(selectedList => {
+      this.isSelected = selectedList.includes(this.edge);
 
       if (this.isSelected) {
-        this.styleObject.stroke = 'red';
+        this.styleObject['stroke'] = 'red';
       } else {
-        this.styleObject.stroke = 'black';
+        this.styleObject['stroke'] = 'black';
       }
     });
   }

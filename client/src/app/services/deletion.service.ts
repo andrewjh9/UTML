@@ -16,7 +16,7 @@ import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
  */
 export class DeletionService {
   private diagram?: Diagram;
-  private selected: Edge | Node | undefined = undefined;
+  private selected: Array<Edge | Node> = [];
 
   constructor(private cachingService: CachingService,
               private selectionService: SelectionService,
@@ -24,11 +24,13 @@ export class DeletionService {
     selectionService.selectedObservable.subscribe(value => this.selected = value);
 
     keyboardEventCallerService.addCallback(['Delete', 'keydown', 'any'], (event => {
-      if (this.selected instanceof Node) {
-        this.deleteNode(this.selected as Node);
-      } else if (this.selected instanceof Edge) {
-        this.deleteEdge(this.selected as Edge);
-      }
+      this.selected.forEach(selectedElem => {
+        if (selectedElem instanceof Node) {
+          this.deleteNode(selectedElem as Node);
+        } else if (selectedElem instanceof Edge) {
+          this.deleteEdge(selectedElem as Edge);
+        }
+      });
     }));
   }
 
@@ -42,14 +44,15 @@ export class DeletionService {
     if (this.diagram === undefined) {
       throw new Error("Trying to use deletion service whilst the diagram is undefined");
     }
-    let edgesToBeDeleted: Edge[] = this.diagram.edges.filter((edge: Edge) => {
-      return edge.startNode === node || edge.endNode === node;
-    });
 
-    edgesToBeDeleted.forEach((edge: Edge) => {
-      const index = this.diagram!.edges.indexOf(edge);
-      this.diagram!.edges.splice(index, 1);
-    })
+    this.diagram.edges.forEach(edge => {
+      if (edge.startNode === node) {
+        edge.startPosition = edge.getStartPosition();
+      }
+      if (edge.startNode === node) {
+        edge.endPosition = edge.getEndPosition();
+      }
+    });
 
     const index = this.diagram.nodes.indexOf(node);
     if (index === -1) {
@@ -58,7 +61,7 @@ export class DeletionService {
       this.diagram.nodes.splice(index, 1);
     }
 
-    if (node === this.selected) {
+    if (this.selected.includes(node)) {
       this.selectionService.deselect();
     }
     this.cachingService.save();
@@ -82,7 +85,7 @@ export class DeletionService {
       this.diagram.edges.splice(index, 1);
     }
 
-    if (edge === this.selected) {
+    if (this.selected.includes(edge)) {
       this.selectionService.deselect();
     }
     this.cachingService.save();

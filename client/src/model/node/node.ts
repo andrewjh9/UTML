@@ -126,7 +126,7 @@ export abstract class Node {
   public styleObject: {
     [key: string]: number | string,
   } = {
-    'fill': '#ffff00',
+    'fill': 'white',
     'stroke': 'black',
     'stroke-width': 2,
     'fill-opacity': 0.5,

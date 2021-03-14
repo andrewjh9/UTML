@@ -4,6 +4,8 @@ import {RectangleNode} from "../../model/node/rectangle-node";
 import {Position} from "../../model/position";
 import {Node} from "../../model/node/node";
 import {Edge, LineType} from "../../model/edge";
+import {TestBed} from "@angular/core/testing";
+import {DragSelectionService} from "./drag-selection.service";
 
 describe("EdgeCreationService", () => {
   let edgeCreationService: EdgeCreationService;
@@ -14,8 +16,8 @@ describe("EdgeCreationService", () => {
   const attachment2 = 2;
 
   beforeEach(() => {
-    creationFormatterSelectionService = new CreationTypeSelectionService();
-    edgeCreationService = new EdgeCreationService(creationFormatterSelectionService);
+    TestBed.configureTestingModule({});
+    edgeCreationService = TestBed.inject(EdgeCreationService);
 
     n1 = new RectangleNode(100, 100, new Position(0, 0));
     n2 = new RectangleNode(100, 100, new Position(100, 100));
@@ -57,21 +59,5 @@ describe("EdgeCreationService", () => {
     edgeCreationService.setStart(n1, attachment1);
     edgeCreationService.setEnd(n2, attachment2);
     expect(edgeCreationService.isActive()).toBeFalse();
-  });
-
-  it('adds middle point to arc', function () {
-    spyOn(creationFormatterSelectionService, 'getSelectedProperty').and.returnValue({
-      'lineType': LineType.Arc
-    });
-    spyOn(edgeCreationService.newEdgeEmitter, 'emit');
-
-    edgeCreationService.setStart(n1, attachment1);
-    edgeCreationService.setEnd(n2, attachment2);
-
-    let edge = new Edge(attachment1, attachment2, n1, n2);
-    edge.lineType = LineType.Arc;
-    edge.setDefaultMiddlePointOnArc();
-
-    expect(edgeCreationService.newEdgeEmitter.emit).toHaveBeenCalledWith(edge);
   });
 });

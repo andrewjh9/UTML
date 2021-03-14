@@ -15,7 +15,11 @@ export class SelectedEditorComponent {
   currentEdge?: Edge;
 
   constructor(selectionService: SelectionService, private deletionService: DeletionService) {
-    selectionService.selectedObservable.subscribe((selected: Node | Edge | undefined) => {
+    selectionService.selectedObservable.subscribe((selectedList: Array<Node | Edge>) => {
+      let selected = undefined;
+      if (selectedList.length > 0) {
+        selected = selectedList[0];
+      }
       if (selected === undefined) {
         this.currentNode = undefined;
         this.currentEdge = undefined;

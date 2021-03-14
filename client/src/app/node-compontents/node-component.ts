@@ -27,8 +27,8 @@ export class NodeComponent extends ModeAwareComponent {
               private deletionService: DeletionService,
               private cachingService: CachingService) {
     super(modeService);
-    selectionService.selectedObservable.subscribe(value => {
-      this.isSelected = (this.node === undefined) ? false : value === this.node
+    selectionService.selectedObservable.subscribe(selectedList => {
+      this.isSelected = selectedList.includes(this.node);
     });
   }
 

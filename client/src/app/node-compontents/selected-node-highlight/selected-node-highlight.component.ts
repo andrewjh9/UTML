@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SelectionService} from "../../services/selection.service";
 import {Node} from "../../../model/node/node";
+import {Edge} from "../../../model/edge";
 
 @Component({
   selector: '[selected-node-highlight]',
@@ -8,15 +9,11 @@ import {Node} from "../../../model/node/node";
   styleUrls: ['./selected-node-highlight.component.scss']
 })
 export class SelectedNodeHighlightComponent {
-  selectedNode?: Node = undefined;
+  selectedNodes: Array<Node> = [];
 
   constructor(private selectionService: SelectionService) {
-    selectionService.selectedObservable.subscribe(newValue => {
-      if (newValue instanceof Node) {
-        this.selectedNode = newValue as Node;
-      } else {
-        this.selectedNode = undefined;
-      }
+    selectionService.selectedObservable.subscribe(newList => {
+      this.selectedNodes = newList.filter(elem => elem instanceof Node).map(node => <Node> node);
     });
   }
 }
