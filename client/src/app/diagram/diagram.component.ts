@@ -28,6 +28,7 @@ import {UploadService} from "../services/upload.service";
 import {SaveModalComponent} from "../save-modal/save-modal.component";
 import {Expression} from "@angular/compiler";
 import {ExportService} from "../services/export.service";
+import {ZoomService} from "../zoom.service";
 
 @Component({
   selector: 'app-diagram',
@@ -56,7 +57,8 @@ export class DiagramComponent implements AfterViewInit {
               private dragDropCreationService: DragDropCreationService,
               private _modalservice: NgbModal,
               private uploadService: UploadService,
-              private exportService: ExportService) {
+              private exportService: ExportService,
+              private zoomSerivce: ZoomService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.uploadService.diagramEmitter.subscribe((diagram: Diagram) => this.setDiagram(diagram))
     this.mode = modeService.getLatestMode();
@@ -216,5 +218,23 @@ export class DiagramComponent implements AfterViewInit {
 
   handleMouseDown(event: MouseEvent) {
 
+  }
+
+
+  //TODO Why does the typing not work????? Should be wheelevent
+  zoom(event: any): void {
+    if (event.deltaY > 0) {
+      this.zoomSerivce.updateZoomFactor(true)
+    } else {
+      this.zoomSerivce.updateZoomFactor(false)
+    }
+  }
+//TODO Why does the typing not work????? Should be Dommousescroll
+  zoomFirefox(event: any): void {
+    if (event.detail > 0) {
+      this.zoomSerivce.updateZoomFactor(true)
+    } else {
+      this.zoomSerivce.updateZoomFactor(false)
+    }
   }
 }
