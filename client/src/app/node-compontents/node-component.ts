@@ -5,7 +5,11 @@ import {Node} from "../../model/node/node";
 import {Position} from "../../model/position";
 import {ModeAwareComponent} from "../mode-aware-component";
 import {DiagramComponent} from "../diagram/diagram.component";
-import {Component, Input} from "@angular/core";
+import {Component, ElementRef, Input, ViewChild} from "@angular/core";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {DeletionService} from "../services/deletion.service";
+import {CachingService} from "../services/caching/caching.service";
+import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
 
 @Component({
   templateUrl: './node.component.html',
@@ -18,7 +22,10 @@ export class NodeComponent extends ModeAwareComponent {
 
   constructor(private repositionService: RepositionService,
               modeService: ModeService,
-              private selectionService: SelectionService) {
+              private selectionService: SelectionService,
+              private modalService: NgbModal,
+              private deletionService: DeletionService,
+              private cachingService: CachingService) {
     super(modeService);
     selectionService.selectedObservable.subscribe(value => {
       this.isSelected = (this.node === undefined) ? false : value === this.node
@@ -36,5 +43,23 @@ export class NodeComponent extends ModeAwareComponent {
 
   public handleMouseLeave() {
     this.hoveringNearby = false;
+  }
+
+  public handleDoubleClick(event: MouseEvent) {
+    if (event.ctrlKey) {
+      if (this.selectionService.isNode()) {
+        this.modalService.open(FormattingModalComponent);
+      }
+    }
+
+  }
+
+  delete(): void {
+    this.modalService.dismissAll();
+    this.deletionService.deleteNode(this.node);
+  }
+
+  save(): void {
+    this.cachingService.save();
   }
 }

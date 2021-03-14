@@ -1,6 +1,8 @@
 import {SerialisedPosition} from "./serialised-position";
+import {EdgeLocation} from "../../model/label";
 
 export interface SerialisedLabel {
-  position: SerialisedPosition,
+  offset: SerialisedPosition,
+  edgeLocation: EdgeLocation;
   value: string
 }

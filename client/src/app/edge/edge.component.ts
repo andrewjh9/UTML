@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
 import {Position} from "../../model/position";
 import {Edge, EndStyle, LineStyle, LineType} from "../../model/edge";
 import {Label} from "../../model/label";
@@ -7,6 +7,11 @@ import {EdgeCreationService} from "../services/edge-creation.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
 import {ModeAwareComponent} from "../mode-aware-component";
+import {DeletionService} from "../services/deletion.service";
+import {CachingService} from "../services/caching/caching.service";
+import {EdgeFormattingModalComponent} from "../edge-formatting-modal/edge-formatting-modal.component";
+import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: '[edge-component]',
@@ -14,17 +19,20 @@ import {ModeAwareComponent} from "../mode-aware-component";
   styleUrls: ['./edge.component.scss'],
 })
 export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
-  @Input() edge?: Edge;
+  @Input() edge!: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
   isSelected: boolean = false;
-  styleObject = {
+  styleObject: {[key: string]: string | number} = {
     'stroke': 'black',
     'stroke-width': 2
   }
 
   constructor(private edgeRepositionService: EdgeRepositionService,
               modeService: ModeService,
-              private selectionService: SelectionService) {
+              private selectionService: SelectionService,
+              private deletionService: DeletionService,
+              private cachingService: CachingService,
+              private modalService: NgbModal) {
     super(modeService);
     selectionService.selectedObservable.subscribe(value => {
       // this.edge can be undefined here because this update may be called before the component is fully set up.
@@ -53,6 +61,14 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
       this.selectionService.setEdge(this.edge);
     }
   }
+  //TODO Triggering does not work properly because of the mousedown
+  public handleDoubleClick(event: MouseEvent) {
+    if (event.ctrlKey) {
+      if (this.selectionService.isEdge()) {
+        this.modalService.open(EdgeFormattingModalComponent)
+      }
+    }
+  }
 
   public isLine(): boolean {
     return this.edge?.lineType === LineType.Line || false;
@@ -64,5 +80,14 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     console.log("Edge component is being destroyed.")
+  }
+
+  delete() {
+    this.modalService.dismissAll();
+    this.deletionService.deleteEdge(this.edge);
+  }
+
+  save() {
+    this.cachingService.save();
   }
 }

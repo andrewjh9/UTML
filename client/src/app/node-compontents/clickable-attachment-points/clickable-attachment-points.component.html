@@ -3,7 +3,8 @@
   [attr.cy]="point.y"
   rx="5"
   ry="5"
-  style="fill:green;stroke:black;stroke-width:2;fill-opacity:1;stroke-opacity:0.9"
+  style="fill:green;stroke:black;stroke-width:2;fill-opacity:1;stroke-opacity:0.9;z-index:100;"
   (mouseup)="handleMouseUp($event, i)"
-  (mousedown)="handleMouseDown($event, i)">
+  (mousedown)="handleMouseDown($event, i)"
+  (click)="handleMouseDown($event, i)">
 </svg:ellipse>

@@ -1,7 +1,7 @@
 <svg:path *ngIf="edge"
           [attr.d]="edge.getPointString()"
           fill="none"
-          [ngStyle]="styleObject"
+          [ngStyle]="styleObject || {}"
           [attr.marker-end]="edge.getEndMarker()"
           [attr.marker-start]="edge.getStartMarker()"
           [attr.stroke-dasharray]="edge.getLineStyleString()">

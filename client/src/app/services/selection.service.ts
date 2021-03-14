@@ -29,4 +29,20 @@ export class SelectionService {
   public deselect(): void {
     this.selected.next(undefined);
   }
+
+  public isNode(): boolean {
+    return this.selected.getValue() instanceof Node;
+  }
+
+  public isEdge(): boolean {
+    return this.selected.getValue() instanceof Edge;
+  }
+
+  public getNode(): Node {
+    return (this.selected.getValue() as Node)
+  }
+
+  public getEdge(): Edge {
+    return (this.selected.getValue() as Edge)
+  }
 }

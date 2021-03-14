@@ -1,4 +1,8 @@
-<svg:g edge-render-dispatch [edge]="edge!" (mousedown)="handleMouseDown($event)"/>
+<svg:g edge-render-dispatch
+       [edge]="edge!"
+       (mousedown)="handleMouseDown($event)"
+       (dblclick)="handleDoubleClick($event)"
+       [styleObject]="styleObject"/>
 
 <!-- Todo: Implement invisible, clickable overlay to make arcs easier to click on.
 Once done remove (mousedown) on render dispatch-->
@@ -7,6 +11,7 @@ Once done remove (mousedown) on render dispatch-->
               [attr.points]="edge.getPointString()"
               style="stroke:rgb(0, 0, 0); stroke-width:10; stroke-opacity: 0;  fill:none;"
               (mousedown)="handleMouseDown($event)"
+              (dblclick)="handleDoubleClick($event)"
 >
 </svg:polyline>
 
