@@ -9,10 +9,9 @@ import {SelectionService} from "../services/selection.service";
 import {ModeAwareComponent} from "../mode-aware-component";
 import {DeletionService} from "../services/deletion.service";
 import {CachingService} from "../services/caching/caching.service";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {EdgeFormattingModalComponent} from "../edge-formatting-modal/edge-formatting-modal.component";
 import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
-import {NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: '[edge-component]',
@@ -20,7 +19,7 @@ import {NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./edge.component.scss'],
 })
 export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
-  @Input() edge?: Edge;
+  @Input() edge!: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
   isSelected: boolean = false;
   styleObject: {[key: string]: string | number} = {
@@ -64,7 +63,7 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   }
   //TODO Triggering does not work properly because of the mousedown
   public handleDoubleClick(event: MouseEvent) {
-    if (event.shiftKey) {
+    if (event.ctrlKey) {
       if (this.selectionService.isEdge()) {
         this.modalService.open(EdgeFormattingModalComponent)
       }

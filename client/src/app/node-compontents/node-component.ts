@@ -46,7 +46,7 @@ export class NodeComponent extends ModeAwareComponent {
   }
 
   public handleDoubleClick(event: MouseEvent) {
-    if (event.shiftKey) {
+    if (event.ctrlKey) {
       if (this.selectionService.isNode()) {
         this.modalService.open(FormattingModalComponent);
       }
