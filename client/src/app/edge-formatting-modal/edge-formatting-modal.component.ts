@@ -13,10 +13,14 @@ import {CachingService} from "../services/caching/caching.service";
 export class EdgeFormattingModalComponent {
   public edge?: Edge;
   constructor(public modal: NgbActiveModal,
-              private selectionService: SelectionService,
+              selectionService: SelectionService,
               private deletionService: DeletionService,
               private cachingService: CachingService) {
-    this.edge = this.selectionService.getEdge()
+    selectionService.selectedObservable.subscribe(selectedList => {
+      if (selectedList.length === 1 && selectedList[0] instanceof Edge) {
+        this.edge = <Edge> selectedList[0];
+      }
+    });
   }
 
   delete(): void {

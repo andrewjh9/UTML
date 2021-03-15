@@ -18,7 +18,7 @@ export class RepositionService implements Deactivatable {
               private cachingService: CachingService,
               selectionService: SelectionService) {
     selectionService.selectedObservable.subscribe(selectedList => {
-      this.selectedNodes = selectedList.filter(n => n instanceof Node).map(n => <Node> n)
+      this.selectedNodes = selectedList.filter(n => n instanceof Node).map(n => <Node> n);
     });
   }
 

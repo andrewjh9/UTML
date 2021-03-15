@@ -47,6 +47,7 @@ import { UploadModalComponent } from './upload-modal/upload-modal.component';
 import { SaveModalComponent } from './save-modal/save-modal.component';
 import { JsonIconComponent } from './icons/json-icon/json-icon.component';
 import { PngIconComponent } from './icons/png-icon/png-icon.component';
+import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-preview.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { PngIconComponent } from './icons/png-icon/png-icon.component';
     UploadModalComponent,
     SaveModalComponent,
     JsonIconComponent,
-    PngIconComponent
+    PngIconComponent,
+    DragSelectPreviewComponent
   ],
     imports: [
         BrowserModule,

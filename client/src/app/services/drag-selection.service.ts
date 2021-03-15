@@ -9,7 +9,7 @@ import {Position} from "../../model/position";
 /**
  * The drag selection service allow for click and drag selection of nodes and edges.
  * Nodes are selected if they are fully inside the selection area.
- * Todo: Edges are selected if both their end and start point lie in the selected area.
+ * Edges are selected if both their end and start point lie in the selected area.
  */
 export class DragSelectionService {
   private _start?: Position;

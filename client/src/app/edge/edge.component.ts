@@ -56,11 +56,12 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
       this.selectionService.setEdge(this.edge);
     }
   }
-  //TODO Triggering does not work properly because of the mousedown
+
   public handleDoubleClick(event: MouseEvent) {
+    this.selectionService.setEdge(this.edge);
     if (event.ctrlKey) {
       if (this.selectionService.isEdge()) {
-        this.modalService.open(EdgeFormattingModalComponent)
+        this.modalService.open(EdgeFormattingModalComponent);
       }
     }
   }
