@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ClassNode} from "../../../model/node/class-node";
 import {EditService} from "../../services/edit.service";
+import {KeyboardEventCallerService} from "../../services/keyboard-event-caller.service";
 
 @Component({
   selector: '[class-node-render]',
@@ -11,16 +12,19 @@ export class ClassNodeRenderComponent {
   public isInEditMode: boolean = false;
   @Input() node!: ClassNode;
 
-  constructor(public editService: EditService) {
+  constructor(public editService: EditService,
+              private keyboardEventCallerService: KeyboardEventCallerService) {
   }
 
   addLine() {
     this.editService.addField()
   }
 
-  updateField(index: number) {
-//TODO fixxxxxx
+  setActive(index: number) {
+    this.editService.setActive(index)
   }
+
+
 
   activateEditMode() {
     if (this.node) {
@@ -28,6 +32,4 @@ export class ClassNodeRenderComponent {
       this.editService.activate(this.node);
     }
   }
-
-
 }
