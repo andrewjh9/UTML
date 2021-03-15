@@ -17,7 +17,8 @@ import {DiamondNode} from "../../model/node/diamond-node";
 export class CreationSidebarComponent {
   public static readonly WIDTH: number = 200;
 
-  constructor(private dragDropCreationService: DragDropCreationService, private sanitizer: DomSanitizer) {
+  constructor(private dragDropCreationService: DragDropCreationService,
+              private sanitizer: DomSanitizer) {
 
   }
 
