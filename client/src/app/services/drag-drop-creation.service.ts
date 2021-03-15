@@ -55,6 +55,11 @@ export class DragDropCreationService {
       edge.startPosition = position;
       const OFFSET = 100;
       edge.endPosition = Position.add(new Position(OFFSET, OFFSET), position);
+
+      if (edge.lineType === LineType.Arc) {
+        edge.middlePositions = [];
+        edge.setDefaultMiddlePointOnArc();
+      }
     }
   }
 

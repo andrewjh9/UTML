@@ -48,6 +48,7 @@ import { SaveModalComponent } from './save-modal/save-modal.component';
 import { JsonIconComponent } from './icons/json-icon/json-icon.component';
 import { PngIconComponent } from './icons/png-icon/png-icon.component';
 import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-preview.component';
+import { SelectionSidebarComponent } from './selection-sidebar/selection-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-pr
     SaveModalComponent,
     JsonIconComponent,
     PngIconComponent,
-    DragSelectPreviewComponent
+    DragSelectPreviewComponent,
+    SelectionSidebarComponent
   ],
     imports: [
         BrowserModule,
