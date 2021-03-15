@@ -11,7 +11,7 @@ import axios from 'axios';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  public userName: string | undefined;
+  public userFullName: string | undefined;
   constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService) {
   }
 
@@ -43,7 +43,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   private isLoggedIn() {
-    return axios.get('api/user/me').then(response => this.userName = response.data)
+    return axios.get('/me').then(response => this.userFullName = response.data)
   }
 
 }

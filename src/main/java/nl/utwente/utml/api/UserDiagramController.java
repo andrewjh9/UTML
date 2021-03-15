@@ -18,10 +18,10 @@ import java.util.List;
 @RestController
 public class UserDiagramController {
 
-    @GetMapping()
-    public List<Diagram> getUserDiagrams(@RequestBody long userId){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        authentication.getPrincipal();
-        System.out.println(authentication.getPrincipal());
-    }
+//    @GetMapping()
+//    public List<Diagram> getUserDiagrams(@RequestBody long userId){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        authentication.getPrincipal();
+//        System.out.println(authentication.getPrincipal());
+//    }
 }
