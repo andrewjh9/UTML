@@ -90,9 +90,9 @@ export class EdgeRepositionService implements Deactivatable {
     if (this.fixedPointRepositioner.isActive()) {
       this.fixedPointRepositioner.update(this.snapService.snapIfApplicable(position,5));
     } else if (this.arcMiddleRepositioner.isActive()) {
-      this.arcMiddleRepositioner.update(position);
+      this.arcMiddleRepositioner.update(this.snapService.snapIfApplicable(position, 5));
     } else if (this.startEndRepositioner.isActive()) {
-      this.startEndRepositioner.update(this.snapService.snapIfApplicable(position,20));
+      this.startEndRepositioner.update(this.snapService.snapIfApplicable(position,5));
     } else {
       throw new Error('Updating whilst no repositioner is active.');
     }
