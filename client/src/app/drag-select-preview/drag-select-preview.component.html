@@ -1,1 +1,6 @@
-<p>drag-select-preview works!</p>
+<svg:rect *ngIf="visible"
+          [attr.x]="startX"
+          [attr.y]="startY"
+          [attr.width]="endX - startX"
+          [attr.height]="endY - startY"
+          style="fill: red; fill-opacity: 0.1; stroke: darkred; stroke-opacity: 0.5"/>

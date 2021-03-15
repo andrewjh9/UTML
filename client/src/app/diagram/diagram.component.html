@@ -51,6 +51,7 @@
 
         <g *ngFor="let node of diagram.nodes" node-component [node]="node"/>
         <g selected-node-highlight/>
+        <g drag-select-preview/>
       </svg>
     </div>
     <creation-sidebar></creation-sidebar>
