@@ -35,11 +35,12 @@ export class NodeComponent extends ModeAwareComponent {
   }
 
   public handleMouseDown(event: MouseEvent) {
+    // If the node is already selected, we do not want to select it again.
+    // This is because there are multiple selected nodes sometimes
+    // and this allows you to move multiple at the same time.
     if (!this.isSelected) {
       this.selectionService.setNode(this.node);
     }
-    this.repositionService.activate(new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT));
-    this.selectionService.setNode(this.node);
     this.repositionService.activate(this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY)));
   }
 
@@ -57,7 +58,6 @@ export class NodeComponent extends ModeAwareComponent {
         this.modalService.open(FormattingModalComponent);
       }
     }
-
   }
 
   delete(): void {

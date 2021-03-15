@@ -1,53 +1,54 @@
-<svg:rect
-          [attr.x]="node.position.x"
-          [attr.y]="node.position.y"
-          [attr.width]="node.width"
-          [attr.height]="node.height"
-          [ngStyle]="node.styleObject"
->
-</svg:rect>
+<svg:g (dblclick)="activateEditMode()">
+  <svg:rect
+            [attr.x]="node.position.x"
+            [attr.y]="node.position.y"
+            [attr.width]="node.width"
+            [attr.height]="node.height"
+            [ngStyle]="node.styleObject"
+  >
+  </svg:rect>
 
-<svg:rect *ngIf="isInEditMode" (click)="addLine()"
-          [attr.x]="node.position.x"
-          [attr.y]="node.position.y + node.height + 10"
-          [attr.width]="node.width"
-          [attr.height]="24"
-          [ngStyle]="node.styleObject">
+  <svg:rect *ngIf="isInEditMode" (click)="addLine()"
+            [attr.x]="node.position.x"
+            [attr.y]="node.position.y + node.height + 10"
+            [attr.width]="node.width"
+            [attr.height]="24"
+            [ngStyle]="node.styleObject">
 
-</svg:rect>
-<svg:g>
-  <svg:text *ngIf="isInEditMode" (click)="addLine()"
-  text-anchor="middle" style="font-size: 16px"
-            [attr.x]="node.position.x + node.width / 2"
-            [attr.y]="node.position.y + node.height + 28">add line</svg:text>
+  </svg:rect>
+  <svg:g>
+    <svg:text *ngIf="isInEditMode" (click)="addLine()"
+    text-anchor="middle" style="font-size: 16px"
+              [attr.x]="node.position.x + node.width / 2"
+              [attr.y]="node.position.y + node.height + 28">add line</svg:text>
+  </svg:g>
+
+
+  <svg:g *ngIf="!isInEditMode">
+    <svg:text *ngFor="let line of node.getTextLines(); let i = index;"
+              [attr.x]="node.position.x + node.width / 2"
+              [attr.y]="node.position.y + i * 24 + 20"
+              text-anchor="middle"
+              style="font-size: 16px">
+      {{line}}
+    </svg:text>
+  </svg:g>
+
+  <svg:g *ngIf="isInEditMode">
+    <svg:text *ngFor="let line of node.getTextLines(); let i = index;"
+              [attr.x]="node.position.x + node.width / 2"
+              [attr.y]="node.position.y + i * 24 + 20"
+              text-anchor="middle"
+              style="font-size: 16px"
+              (click)="setActive(i)">
+      {{line}}
+    </svg:text>
+  </svg:g>
+
+  <svg:line [attr.x1]="node.position.x"
+            [attr.x2]="node.position.x + node.width"
+            [attr.y1]="node.position.y + (node.firstLine + 1) * 24"
+            [attr.y2]="node.position.y + (node.firstLine + 1) * 24"
+            style="stroke: black; stroke-width: 2px">
+  </svg:line>
 </svg:g>
-
-
-<svg:g *ngIf="!isInEditMode">
-  <svg:text *ngFor="let line of node.getTextLines(); let i = index;"
-            [attr.x]="node.position.x + node.width / 2"
-            [attr.y]="node.position.y + i * 24 + 20"
-            text-anchor="middle"
-            style="font-size: 16px">
-    {{line}}
-  </svg:text>
-</svg:g>
-
-<svg:g *ngIf="isInEditMode">
-  <svg:text *ngFor="let line of node.getTextLines(); let i = index;"
-            [attr.x]="node.position.x + node.width / 2"
-            [attr.y]="node.position.y + i * 24 + 20"
-            text-anchor="middle"
-            style="font-size: 16px"
-            (click)="setActive(i)">
-    {{line}}
-  </svg:text>
-</svg:g>
-
-<svg:line [attr.x1]="node.position.x"
-          [attr.x2]="node.position.x + node.width"
-          [attr.y1]="node.position.y + (node.firstLine + 1) * 24"
-          [attr.y2]="node.position.y + (node.firstLine + 1) * 24"
-          style="stroke: black; stroke-width: 2px">
-</svg:line>
-

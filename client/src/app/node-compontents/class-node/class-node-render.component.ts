@@ -12,8 +12,12 @@ export class ClassNodeRenderComponent {
   public isInEditMode: boolean = false;
   @Input() node!: ClassNode;
 
-  constructor(public editService: EditService,
-              private keyboardEventCallerService: KeyboardEventCallerService) {
+  constructor(private editService: EditService,
+              keyboardEventCallerService: KeyboardEventCallerService) {
+    keyboardEventCallerService.addCallback(['Escape', "keydown", 'any'], (ignored) => {
+      this.isInEditMode = false;
+      editService.deactivate();
+    });
   }
 
   addLine() {
@@ -23,8 +27,6 @@ export class ClassNodeRenderComponent {
   setActive(index: number) {
     this.editService.setActive(index)
   }
-
-
 
   activateEditMode() {
     if (this.node) {
