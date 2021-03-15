@@ -5,6 +5,7 @@ import {Deactivatable} from "./deactivatable";
 import {SnapService} from "./snap.service";
 import {Node} from "../../model/node/node";
 import {CachingService} from "./caching/caching.service";
+import {MousePositionTransformService} from "./mouse-position-transform.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,9 @@ export class ResizeService implements Deactivatable {
   private node?: Node;
   private startPosition?: Position;
   private resizePointIndex?: number;
-  constructor(private snapService: SnapService, private cachingService: CachingService) { }
+  constructor(private snapService: SnapService,
+              private cachingService: CachingService,
+              private mousePositionTransformService: MousePositionTransformService) { }
 
   public isActive(): boolean {
     return this.node !== undefined;
@@ -34,7 +37,6 @@ export class ResizeService implements Deactivatable {
 
     switch (this.resizePointIndex) {
       case 0: // up
-
         this.node!.height = Math.round((this.node!.height - this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).y)/10) * 10;
         this.node!.position.y = this.snapService.snapIfApplicable(endPosition,10).y;
         break;

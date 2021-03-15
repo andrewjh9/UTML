@@ -29,6 +29,8 @@ import {SaveModalComponent} from "../save-modal/save-modal.component";
 import {Expression} from "@angular/compiler";
 import {ExportService} from "../services/export.service";
 import {DragSelectionService} from "../services/drag-selection.service";
+import {ZoomService} from "../services/zoom.service";
+import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 
 @Component({
   selector: 'app-diagram',
@@ -58,7 +60,9 @@ export class DiagramComponent implements AfterViewInit {
               private modalService: NgbModal,
               private uploadService: UploadService,
               private exportService: ExportService,
-              private dragSelectionService: DragSelectionService) {
+              private dragSelectionService: DragSelectionService,
+              public zoomSerivce: ZoomService,
+              private mousePositionTransformService: MousePositionTransformService) {
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
     this.uploadService.diagramEmitter.subscribe((diagram: Diagram) => this.setDiagram(diagram))
     this.mode = modeService.getLatestMode();
@@ -122,8 +126,7 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleMouseMove(event: MouseEvent) {
-    let position = new Position(event.pageX, event.pageY);
-    position = Position.subtract(position, new Position(0, DiagramComponent.NAV_HEIGHT));
+    let position = this.mousePositionTransformService.transformPosition(new Position(event.pageX, event.pageY));
     if (this.repositionService.isActive()) {
       this.repositionService.update(position);
     } else if (this.edgeRepositionService.isActive()) {
@@ -226,6 +229,25 @@ export class DiagramComponent implements AfterViewInit {
   handleMouseDown(event: MouseEvent) {
     if (event.shiftKey) {
       this.dragSelectionService.activate(new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT));
+    }
+
+  }
+
+
+  //TODO Why does the typing not work????? Should be wheelevent
+  zoom(event: any): void {
+    if (event.deltaY > 0) {
+      this.zoomSerivce.updateZoomFactor(true)
+    } else {
+      this.zoomSerivce.updateZoomFactor(false)
+    }
+  }
+//TODO Why does the typing not work????? Should be Dommousescroll
+  zoomFirefox(event: any): void {
+    if (event.detail > 0) {
+      this.zoomSerivce.updateZoomFactor(true)
+    } else {
+      this.zoomSerivce.updateZoomFactor(false)
     }
   }
 }

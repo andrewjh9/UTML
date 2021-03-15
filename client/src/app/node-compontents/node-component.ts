@@ -10,6 +10,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DeletionService} from "../services/deletion.service";
 import {CachingService} from "../services/caching/caching.service";
 import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
+import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 
 @Component({
   templateUrl: './node.component.html',
@@ -25,7 +26,8 @@ export class NodeComponent extends ModeAwareComponent {
               private selectionService: SelectionService,
               private modalService: NgbModal,
               private deletionService: DeletionService,
-              private cachingService: CachingService) {
+              private cachingService: CachingService,
+              private mousePositionTransformService: MousePositionTransformService) {
     super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.node);
@@ -37,6 +39,9 @@ export class NodeComponent extends ModeAwareComponent {
       this.selectionService.setNode(this.node);
     }
     this.repositionService.activate(new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT));
+    this.selectionService.setNode(this.node);
+    this.repositionService.activate(this.node,
+      this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY)));
   }
 
   public handleMouseEnter() {
