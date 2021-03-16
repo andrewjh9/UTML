@@ -7,6 +7,7 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin()
 @RestController
 public class BaseController {
     @GetMapping("/me")
@@ -18,5 +19,10 @@ public class BaseController {
         }
         return null;
     }
+
+//    @RequestMapping(value = "/diagram/**")
+//    public String index() {
+//        return "index.html";
+//    }
 
 }

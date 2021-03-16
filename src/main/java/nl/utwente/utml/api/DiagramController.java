@@ -59,7 +59,7 @@ public class  DiagramController {
     }
 
 
-    @PostMapping
+    @PutMapping
     public void update(@RequestBody Diagram diagram){
         if(diagram.getId() != null) {
             diagramService.update(diagram);
