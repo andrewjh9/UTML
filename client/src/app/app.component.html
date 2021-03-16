@@ -1,3 +1,11 @@
-<a *ngIf="userFullName == null" class="nav-link" href="/login">login</a>
-<p *ngIf="userFullName != null">Welcome {{this.userFullName}}</p>
+<a *ngIf="userFullName == '' " class="nav-link" href="/login">login</a>
+<p *ngIf="userFullName != ''">Welcome {{this.userFullName}}</p>
+<a *ngIf="userFullName != ''" class="nav-link" (click)="this.saveDiagramRemote()" >Save Diagram Remote</a>
+<a *ngIf="userFullName != ''" class="nav-link" (click)="this.getUserDiagrams()" >Get Diagrams</a>
+
+<ul class="list-group" *ngIf="userFullName != ''">
+  <li  *ngFor="let diagram of this.userDiagrams" class="list-group-item" >
+    {{ diagram }}
+  </li>
+</ul>
 <router-outlet></router-outlet>

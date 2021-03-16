@@ -17,15 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
 public class UtmlApplication  {
 
-	@GetMapping("/me")
-	public Object getUser(){
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (authentication.getPrincipal() instanceof OidcUser) {
-			OidcUser principal = ((OidcUser) authentication.getPrincipal());
-			return principal.getUserInfo().getFullName();
-		}
-		return null;
-	}
+
 
 	public static void main(String[] args) {
 		SpringApplication.run(UtmlApplication.class, args);

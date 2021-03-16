@@ -12,6 +12,7 @@ import java.util.UUID;
 
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames={"name", "userEmail"})})
     public class Diagram implements Serializable {
 
     public Diagram(){}
@@ -22,12 +23,12 @@ import java.util.UUID;
     @JsonProperty("serializedDiagram")
     private String serializedDiagram;
 
-    @ManyToOne()
-    @JoinColumn(name = "userId")
-    @JsonProperty("userId")
-    private User owner;
+    @JsonProperty("userEmail")
+    private String userEmail;
 
 
+    @JsonProperty("diagramName")
+    private String name;
 
     @JsonProperty("shared")
     private boolean shared;
@@ -53,11 +54,11 @@ import java.util.UUID;
         this.serializedDiagram = serializedDiagram;
     }
 
-    public User getOwner() {
-        return owner;
+    public String getOwnerEmail() {
+        return userEmail;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setOwner(String userEmail) {
+        this.userEmail = userEmail;
     }
 }

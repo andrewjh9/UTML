@@ -2,6 +2,7 @@ import {AfterViewInit, Component, Renderer2} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {DownButton, KeyboardEventCallerService} from "./services/keyboard-event-caller.service";
 import axios from 'axios';
+import {Diagram} from "../model/diagram";
 
 
 
@@ -12,6 +13,7 @@ import axios from 'axios';
 })
 export class AppComponent implements AfterViewInit {
   public userFullName: string | undefined;
+  public userDiagrams: Diagram[] | undefined;
   constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService) {
   }
 
@@ -44,6 +46,16 @@ export class AppComponent implements AfterViewInit {
 
   private isLoggedIn() {
     return axios.get('/me').then(response => this.userFullName = response.data)
+  }
+
+  public saveDiagramRemote(){
+    return axios.post('/api/diagram/',{serializedDiagram:"diagram"}).then(response => this.userFullName = response.data)
+
+  }
+
+  public getUserDiagrams(){
+    return axios.get('/api/diagram/all/me').then(response => this.userDiagrams = response.data)
+
   }
 
 }
