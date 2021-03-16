@@ -4,6 +4,8 @@ import {RectangleNode} from "../../../model/node/rectangle-node";
 import {ClassNode} from "../../../model/node/class-node";
 import {EllipseNode} from "../../../model/node/ellipse-node";
 import {DiamondNode} from "../../../model/node/diamond-node";
+import {HourglassNode} from "../../../model/node/hourglass-node";
+import {ActorNode} from "../../../model/node/actor-node";
 
 @Component({
   selector: '[node-render-dispatch]',
@@ -14,15 +16,16 @@ export class NodeRenderDispatchComponent {
   @Input() node!: Node
 
   isRectangle(node: Node): boolean {
-    return node instanceof RectangleNode && !(node instanceof ClassNode);
+    return node instanceof RectangleNode && !(node instanceof ClassNode) && !(node instanceof HourglassNode)
+      && !(node instanceof ActorNode);
   }
 
   castToRectangle(node: Node): RectangleNode {
-    return <RectangleNode> node;
+    return <RectangleNode>node;
   }
 
   castToEllipse(node: Node): EllipseNode {
-    return <EllipseNode> node;
+    return <EllipseNode>node;
   }
 
   isEllipse(node: Node): boolean {
@@ -30,7 +33,7 @@ export class NodeRenderDispatchComponent {
   }
 
   castToDiamond(node: Node): DiamondNode {
-    return <DiamondNode> node;
+    return <DiamondNode>node;
   }
 
   isDiamond(node: Node): boolean {
@@ -42,6 +45,22 @@ export class NodeRenderDispatchComponent {
   }
 
   castToClass(node: Node): ClassNode {
-    return <ClassNode> node;
+    return <ClassNode>node;
+  }
+
+  isHourglass(node: Node): boolean {
+    return node instanceof HourglassNode;
+  }
+
+  castToHourglass(node: Node): HourglassNode {
+    return <HourglassNode>node;
+  }
+
+  isActor(node: Node): boolean {
+    return node instanceof ActorNode;
+  }
+
+  castToActor(node: Node): ActorNode {
+    return <ActorNode>node;
   }
 }

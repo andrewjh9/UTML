@@ -49,6 +49,8 @@ import { JsonIconComponent } from './icons/json-icon/json-icon.component';
 import { PngIconComponent } from './icons/png-icon/png-icon.component';
 import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-preview.component';
 import { SelectionSidebarComponent } from './selection-sidebar/selection-sidebar.component';
+import { HourglassNodeRenderComponent } from './node-compontents/hourglass-node/hourglass-node-render.component';
+import { ActorNodeRenderComponent } from './node-compontents/actor-node/actor-node-render.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +94,9 @@ import { SelectionSidebarComponent } from './selection-sidebar/selection-sidebar
     JsonIconComponent,
     PngIconComponent,
     DragSelectPreviewComponent,
-    SelectionSidebarComponent
+    SelectionSidebarComponent,
+    HourglassNodeRenderComponent,
+    ActorNodeRenderComponent
   ],
     imports: [
         BrowserModule,
