@@ -6,7 +6,7 @@
             style="fill: black; stroke: black; stroke-opacity: 0.0; fill-opacity: 0.0;"
   />
 
-  <svg:g node-render-dispatch [node]="node" (mousedown)="handleMouseDown($event)"/>
+  <svg:g node-render-dispatch [node]="node" (mousedown)="handleMouseDown($event)" (dblclick)="handleDoubleClick($event)"/>
 
   <svg:g *ngIf="hoveringNearby && !isSelected" clickable-attachment-points [node]="node"/>
 </svg:g>

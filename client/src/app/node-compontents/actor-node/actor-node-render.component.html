@@ -1,0 +1,9 @@
+<svg:ellipse [attr.cx]="node.position.x + node.width / 2"
+             [attr.cy]="node.position.y + node.width / 4"
+             [attr.rx]="ellipseRadius"
+             [attr.ry]="ellipseRadius"
+             style="fill: black; stroke: black; stroke-width: 2 stroke-opacity: 0.75; fill-opacity: 0.25"
+/>
+
+
+<svg:path [attr.d]="armsPath + spinePath + leftLegPath + rightLegPath" [ngStyle]="pathStyle"/>

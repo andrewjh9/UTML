@@ -1,0 +1,21 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Upload serialized diagram</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="col-md-4"></div>
+  <div class="col-md-12">
+    <input id="upload-button" class="form-control" type="file" (change)="onChange($event)">
+  </div>
+
+</div>
+<div class="modal-footer">
+  <button type="button" ngbAutofocus class="btn btn-light" (click)="modal.close('Ok click')">Cancel</button>
+  <div (click)="onClick()">
+    <button type="button" ngbAutofocus class="btn btn-primary" (click)="modal.close('Ok click')">Upload</button>
+  </div>
+</div>
+
+

@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Advanced node formatting</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div *ngIf="node">
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label">Width</label>
+      <div class="w-75">
+        <input class="w-100" type="number" [(ngModel)]="node.width" (ngModelChange)="cache()">
+      </div>
+    </div>
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label">Height</label>
+      <div class="w-75">
+        <input class="w-100" type="number" [(ngModel)]="node.height" (ngModelChange)="cache()">
+      </div>
+    </div>
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label" >Node Text</label>
+      <div class="w-75">
+        <input matInput matTextareaAutosize class="w-70" [(ngModel)]="node.text" (ngModelChange)="cache()"/> <label class="30">('\n' = new line)</label>
+      </div>
+    </div>
+
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label" >Double Border</label>
+      <div class="w-75">
+        <input type="checkbox" [(ngModel)]="node.hasDoubleBorder" (ngModelChange)="cache()"></div>
+    </div>
+
+
+<!--    <div  class="form-group row px-3" *ngFor="let key of node.styleKeys">-->
+<!--      <label class="w-25 col-form-label">{{key}}</label>-->
+<!--      <div class="w-75">-->
+<!--        <input class="w-100" type="text" [(ngModel)]="node.styleObject[key]" (ngModelChange)="cache()">-->
+<!--      </div>-->
+<!--    </div>-->
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label">Color</label>
+      <div class="w-75">
+        <input type="color" class="w-100" [(ngModel)]="node.styleObject['fill']">
+      </div>
+    </div>
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label">Opacity</label>
+      <div class="w-75">
+        <input type="range" class="w-100" min="0" max="1" step=0.05 [(ngModel)]="node.styleObject['fill-opacity']" >
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <div (click)="modal.close('Ok click')">
+    <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+  </div>
+  <button type="button" ngbAutofocus class="btn btn-primary" (click)="modal.close('Ok click')">Save</button>
+</div>
+
+

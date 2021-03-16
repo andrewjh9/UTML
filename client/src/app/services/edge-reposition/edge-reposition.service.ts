@@ -7,6 +7,8 @@ import {StartEndRepositioner} from "./start-end-repositioner";
 import {ArcMiddleRepositioner} from "./arc-middle-repositioner";
 import {FixedPointRepositioner} from "./fixed-point-repositioner";
 import {CachingService} from "../caching/caching.service";
+import {SnapService} from "../snap.service";
+import {DiagramContainerService} from "../diagram-container.service";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +30,10 @@ export class EdgeRepositionService implements Deactivatable {
   public readonly fixedPointRepositioner = new FixedPointRepositioner();
   public readonly startEndRepositioner = new StartEndRepositioner(this.SNAP_DISTANCE);
 
-  constructor(private cachingService: CachingService) {
+  constructor(private cachingService: CachingService,
+              private snapService: SnapService,
+              diagramContainerService: DiagramContainerService) {
+    diagramContainerService.diagramObservable.subscribe(diagram => this.setNodes(diagram.nodes));
   }
 
   /**
@@ -86,11 +91,11 @@ export class EdgeRepositionService implements Deactivatable {
    */
   public update(position: Position) {
     if (this.fixedPointRepositioner.isActive()) {
-      this.fixedPointRepositioner.update(position);
+      this.fixedPointRepositioner.update(this.snapService.snapIfApplicable(position,5));
     } else if (this.arcMiddleRepositioner.isActive()) {
-      this.arcMiddleRepositioner.update(position);
+      this.arcMiddleRepositioner.update(this.snapService.snapIfApplicable(position, 5));
     } else if (this.startEndRepositioner.isActive()) {
-      this.startEndRepositioner.update(position);
+      this.startEndRepositioner.update(this.snapService.snapIfApplicable(position,5));
     } else {
       throw new Error('Updating whilst no repositioner is active.');
     }
@@ -114,7 +119,7 @@ export class EdgeRepositionService implements Deactivatable {
    * @param nodes Reference to the list of nodes. Note that if the reference used by the diagram is updated,
    *              this one must be updated too.
    */
-  public setNodes(nodes: Node[]): void {
+  private setNodes(nodes: Node[]): void {
     this.startEndRepositioner.setNodes(nodes);
   }
 
@@ -134,7 +139,6 @@ export class EdgeRepositionService implements Deactivatable {
     let baseVector: number[] = this.matrixVectorMult(rotationMatrix, [actualSegment.x, actualSegment.y]);
     let transformedPoint: number[] = this.matrixVectorMult(rotationMatrix, [ourSegment.x, ourSegment.y]);
     return (Math.abs(transformedPoint[1]) < 10 && (transformedPoint[0] >= 0) && (transformedPoint[0] <= baseVector[0]));
-
   }
 
   private static matrixVectorMult(matrix: number[][], vector: number[]): number[] {

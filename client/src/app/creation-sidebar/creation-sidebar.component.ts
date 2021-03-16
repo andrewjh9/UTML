@@ -8,6 +8,8 @@ import {DragDropCreationService} from "../services/drag-drop-creation.service";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 import {EllipseNode} from "../../model/node/ellipse-node";
 import {DiamondNode} from "../../model/node/diamond-node";
+import {HourglassNode} from "../../model/node/hourglass-node";
+import {ActorNode} from "../../model/node/actor-node";
 
 @Component({
   selector: 'creation-sidebar',
@@ -17,7 +19,8 @@ import {DiamondNode} from "../../model/node/diamond-node";
 export class CreationSidebarComponent {
   public static readonly WIDTH: number = 200;
 
-  constructor(private dragDropCreationService: DragDropCreationService, private sanitizer: DomSanitizer) {
+  constructor(private dragDropCreationService: DragDropCreationService,
+              private sanitizer: DomSanitizer) {
 
   }
 
@@ -49,6 +52,8 @@ export class CreationSidebarComponent {
     classNode.text = 'ClassName  \\n fieldName: type';
 
     ad.nodes['Activity'] = activityNode;
+    ad.nodes['Hourglass'] = new HourglassNode(40, 80, new Position(84, 10));
+    ad.nodes['Actor'] = new ActorNode(40, 80, new Position(84, 10));
     cd.edges['Arrow'] = arrow;
 
     let state = new EllipseNode(100, 100, new Position(58, 2));
@@ -66,6 +71,7 @@ export class CreationSidebarComponent {
     fsm.nodes['End State'] = endState;
     fsm.edges['Arrow'] = arrow;
     fsm.edges['Arc'] = arc;
+
 
     return {
       'Class Diagram': cd,

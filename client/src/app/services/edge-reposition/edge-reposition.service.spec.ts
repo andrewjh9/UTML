@@ -5,6 +5,8 @@ import {Node} from "../../../model/node/node";
 import {Edge, LineType} from "../../../model/edge";
 import {CachingService} from "../caching/caching.service";
 import {Diagram} from "../../../model/diagram";
+import {TestBed} from "@angular/core/testing";
+import {DragDropCreationService} from "../drag-drop-creation.service";
 
 describe('EdgeRepositionService ', () => {
   let edgeRepositionService: EdgeRepositionService;
@@ -16,9 +18,10 @@ describe('EdgeRepositionService ', () => {
   let middlePosition: Position;
 
   beforeEach(() => {
-    let cachingService = new CachingService();
+    TestBed.configureTestingModule({});
+    edgeRepositionService = TestBed.inject(EdgeRepositionService)
+    let cachingService = TestBed.inject(CachingService);
     cachingService.setDiagram(new Diagram());
-    edgeRepositionService = new EdgeRepositionService(cachingService);
     n1 = new RectangleNode(100, 100, new Position(0, 0));
     n2 = new RectangleNode(100, 100, new Position(200, 0));
 

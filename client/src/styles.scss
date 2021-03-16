@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
-.movable {
+.movable{
+  cursor: pointer;
+}
+
+.clickable {
   cursor: pointer;
 }

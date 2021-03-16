@@ -1,10 +1,12 @@
 <!--We offset the selection border to avoid overlap with the actual border of the element as this causes weird rendering. -->
-<svg:rect *ngIf="selectedNode"
-          [attr.x]="selectedNode!.position.x - 1"
-          [attr.y]="selectedNode!.position.y - 1"
-          [attr.width]="selectedNode!.width + 2"
-          [attr.height]="selectedNode!.height + 2"
-          style="fill: none; stroke-width: 1; stroke: red; stroke-opacity: 0.5; stroke-dasharray: 4;"
-/>
+<svg:g *ngFor="let node of selectedNodes">
+  <svg:rect
+            [attr.x]="node.position.x - 1"
+            [attr.y]="node.position.y - 1"
+            [attr.width]="node.width + 2"
+            [attr.height]="node!.height + 2"
+            style="fill: none; stroke-width: 1; stroke: red; stroke-opacity: 0.5; stroke-dasharray: 4;"
+  />
 
-<svg:g *ngIf="selectedNode" clickable-resize-points [node]="selectedNode!"/>
+  <svg:g clickable-resize-points [node]="node"/>
+</svg:g>

@@ -1,0 +1,85 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-title">Advanced node formatting</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+
+  <div class="w-100" *ngIf="edge">
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label">Start Label</label>
+      <div class="w-75" *ngIf="edge.startLabel">
+        <input class="w-100" type="text" [(ngModel)]="edge.startLabel.value">
+      </div>
+      <button class="w-75 btn btn-primary" *ngIf="!edge.startLabel" (click)="edge.addStartLabel()">
+      Add start label
+      </button>
+    </div>
+
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label">Middle Label</label>
+      <div class="w-75" *ngIf="edge.middleLabel">
+        <input class="w-100" type="text" [(ngModel)]="edge.middleLabel.value">
+      </div>
+      <button class="w-75 btn btn-primary" *ngIf="!edge.middleLabel" (click)="edge.addMiddleLabel()">
+        Add middle label
+      </button>
+    </div>
+
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label">End Label</label>
+      <div class="w-75" *ngIf="edge.endLabel">
+        <input class="w-100" type="text" [(ngModel)]="edge.endLabel.value">
+      </div>
+      <button class="w-75 btn btn-primary" *ngIf="!edge.endLabel" (click)="edge.addEndLabel()">
+        Add end label
+      </button>
+    </div>
+
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label">Line Style</label>
+      <div class="w-75">
+        <select class="custom-select" [(ngModel)]="edge!.lineStyle" (ngModelChange)="cache()">
+          <option [ngValue]="0">Filled</option>
+          <option [ngValue]="1">Dotted</option>
+          <option [ngValue]="2">Dashed</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label">Start Style</label>
+      <div class="w-75">
+        <select class="custom-select" [(ngModel)]="edge!.startStyle" (ngModelChange)="cache()">
+          <option [ngValue]="0">None</option>
+          <option [ngValue]="1">Big Unfilled Arrow</option>
+          <option [ngValue]="2">Filled Diamond</option>
+          <option [ngValue]="3">Unfilled Diamond</option>
+          <option [ngValue]="4">Small Filled Arrow</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row px-3">
+      <label class="w-25 col-form-label">End Style</label>
+      <div class="w-75">
+        <select class="custom-select" [(ngModel)]="edge!.endStyle" (ngModelChange)="cache()">
+          <option [ngValue]="0">None</option>
+          <option [ngValue]="1">Small Filled Arrow</option>
+          <option [ngValue]="2">Filled Diamond</option>
+          <option [ngValue]="3">Unfilled Diamond</option>
+          <option [ngValue]="4">Big Unfilled Arrow</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div class="modal-footer">
+  <div (click)="modal.close('Ok click')">
+    <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+  </div>
+  <button type="button" ngbAutofocus class="btn btn-primary" (click)="modal.close('Ok click')">Save</button>
+</div>
+

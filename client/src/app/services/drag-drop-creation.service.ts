@@ -28,8 +28,16 @@ export class DragDropCreationService {
     if (this.isActive()) {
       throw new Error('Trying to activate the DragDropCreationService but it already is active.');
     }
-
-    this.selected.next(prototype.getDeepCopy());
+    let copy = prototype.getDeepCopy();
+    if (copy instanceof Node) {
+      let node = copy as Node;
+      node.position = new Position(-node.width, -node.height);
+    } else {
+      let edge = copy as Edge;
+      edge.startPosition = new Position(-100, -100);
+      edge.endPosition = Position.zero();
+    }
+    this.selected.next(copy.getDeepCopy());
   }
 
   public update(position: Position): void {
@@ -39,12 +47,19 @@ export class DragDropCreationService {
     }
 
     if (this.selected.getValue() instanceof Node) {
-      (this.selected.getValue() as Node).position = position;
+      let node = this.selected.getValue() as Node;
+      // Calculations to make the mouse the center of the object, in stead of the top-right.
+      node.position = Position.subtract(position, new Position(node.width / 2, node.height / 2));
     } else {
       let edge = this.selected.getValue() as Edge;
       edge.startPosition = position;
       const OFFSET = 100;
       edge.endPosition = Position.add(new Position(OFFSET, OFFSET), position);
+
+      if (edge.lineType === LineType.Arc) {
+        edge.middlePositions = [];
+        edge.setDefaultMiddlePointOnArc();
+      }
     }
   }
 

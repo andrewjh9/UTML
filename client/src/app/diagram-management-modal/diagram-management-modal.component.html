@@ -1,0 +1,81 @@
+<div class="modal-header text-center">
+  <h4 class="modal-title" id="modal-title">Diagram Management</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="d-flex flex-row">
+    <div class="flex-grow-1">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Last Modified</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dbEntry of dbEntries; index as i"
+            (click)="selectedIndex = i" class="clickable"
+            [ngClass]="{selected: i === selectedIndex}">
+          <td>{{dbEntry.title}}</td>
+          <td>{{dbEntry.lastModified | date:'dd/MM/yyyy'}}</td>
+          <td><button class="btn btn-secondary" (click)="triggerEditModal()">Edit</button></td>
+          <td><button class="btn btn-info" (click)="toggleVisibility()">{{dbEntry.visible ? '  visible' : 'invisible'}}</button></td>
+          <td><button class="btn btn-danger" (click)="triggerDeleteModal()">Delete</button></td>
+
+          <!--        <td><ngb-highlight [result]="country.area | number" [term]="filter.value"></ngb-highlight></td>-->
+  <!--        <td><ngb-highlight [result]="country.population | number" [term]="filter.value"></ngb-highlight></td>-->
+        </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="border-left">
+      <svg width="500" height="500">
+        <g *ngIf="selectedDiagram" [diagram]="selectedDiagram!" diagram-preview ></g>
+      </svg>
+    </div>
+  </div>
+
+
+</div>
+<div class="modal-footer">
+  <button type="button"
+          ngbAutofocus
+          class="btn btn-outline-primary"
+          (click)="modal.close('Ok click'); setDiagram()">
+    Import Diagram
+  </button>
+</div>
+
+<ng-template #deleteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title text-danger">Delete {{dbEntries[selectedIndex].title}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>Are you sure you want to delete {{dbEntries[selectedIndex].title}}?</div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.close()">Cancel</button>
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close(); delete()">Delete</button>
+  </div>
+</ng-template>
+
+<ng-template #editModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Edit Title</h4>
+  </div>
+  <div class="modal-body">
+    <input class="form-control" [(ngModel)]="dbEntries[selectedIndex].title" type="text">
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-success" (click)="modal.close(); updateChanges();">Save</button>
+  </div>
+</ng-template>

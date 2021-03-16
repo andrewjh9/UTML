@@ -17,7 +17,7 @@ import { SelectedEditorComponent } from './selected-editor/selected-editor.compo
 import {DeletionService} from "./services/deletion.service";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
-import { NodeEditorComponent } from './node-editor/node-editor.component';
+import { NodeEditorComponent } from './node-compontents/node-editor/node-editor.component';
 import { MoveMenuComponent } from './move-menu/move-menu.component';
 import { ClickableAttachmentPointsComponent } from './node-compontents/clickable-attachment-points/clickable-attachment-points.component';
 import {ClickableResizePointsComponent} from "./node-compontents/clickable-resize-points/clickable-resize-points.component";
@@ -41,6 +41,18 @@ import { DiamondNodeRenderComponent } from './node-compontents/diamond-node/diam
 import { EdgeRenderDispatchComponent } from './edge/edge-render-dispatch/edge-render-dispatch.component';
 import { NodeRenderDispatchComponent } from './node-compontents/node-render-dispatch/node-render-dispatch.component';
 import {NodeComponent} from "./node-compontents/node-component";
+import { FormattingModalComponent } from './formatting-modal/formatting-modal.component';
+import { EdgeFormattingModalComponent } from './edge-formatting-modal/edge-formatting-modal.component';
+import { UploadModalComponent } from './upload-modal/upload-modal.component';
+import { SaveModalComponent } from './save-modal/save-modal.component';
+import { JsonIconComponent } from './icons/json-icon/json-icon.component';
+import { PngIconComponent } from './icons/png-icon/png-icon.component';
+import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-preview.component';
+import { SelectionSidebarComponent } from './selection-sidebar/selection-sidebar.component';
+import { HourglassNodeRenderComponent } from './node-compontents/hourglass-node/hourglass-node-render.component';
+import { ActorNodeRenderComponent } from './node-compontents/actor-node/actor-node-render.component';
+import { DiagramManagementModalComponent } from './diagram-management-modal/diagram-management-modal.component';
+import { DiagramPreviewComponent } from './diagram-preview/diagram-preview.component';
 import { UserComponent } from './user/user.component';
 
 @NgModule({
@@ -78,7 +90,20 @@ import { UserComponent } from './user/user.component';
     EdgeRenderDispatchComponent,
     NodeRenderDispatchComponent,
     NodeComponent,
-    UserComponent
+    UserComponent,
+    NodeComponent,
+    FormattingModalComponent,
+    EdgeFormattingModalComponent,
+    UploadModalComponent,
+    SaveModalComponent,
+    JsonIconComponent,
+    PngIconComponent,
+    DragSelectPreviewComponent,
+    SelectionSidebarComponent,
+    HourglassNodeRenderComponent,
+    ActorNodeRenderComponent,
+    DiagramManagementModalComponent,
+    DiagramPreviewComponent
   ],
     imports: [
         BrowserModule,

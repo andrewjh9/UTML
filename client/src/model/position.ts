@@ -38,4 +38,20 @@ export class Position {
   public static getDistance(pos1: Position, pos2: Position): number {
     return this.subtract(pos1, pos2).getLength()
   }
+
+  public static zero(): Position {
+    return new Position(0, 0);
+  }
+
+  /**
+   * Determines whether some given position lies between two other positions.
+   * @param start The start of the area you want to check the middle to be in.
+   * @param middle The position for which you want to check whether it lies between.
+   * @param end TThe end of the area you want to check the middle to be in.
+   * @returns true if the position lies inbetween, false otherwise.
+   */
+  public static liesBetween(start: Position, middle: Position, end: Position): boolean {
+    return ((start.x <= middle.x) && (middle.x <= end.x)) || ((end.x <= middle.x) && (middle.x <= start.x)) &&
+      ((start.y <= middle.y) && (middle.y <= end.y)) || ((end.y <= middle.y) && (middle.y <= start.y));
+  }
 }
