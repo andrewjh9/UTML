@@ -1,5 +1,5 @@
-<div class="modal-header">
-  <h4 class="modal-title" id="modal-title">Advanced node formatting</h4>
+<div class="modal-header text-center">
+  <h4 class="modal-title" id="modal-title">Diagram Management</h4>
   <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -54,7 +54,7 @@
 
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title text-danger" id="modal-basic-title">Delete {{dbEntries[selectedIndex].title}}</h4>
+    <h4 class="modal-title text-danger">Delete {{dbEntries[selectedIndex].title}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -70,7 +70,7 @@
 
 <ng-template #editModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title text-danger" id="modal-basic-title">Delete {{dbEntries[selectedIndex].title}}</h4>
+    <h4 class="modal-title">Edit Title</h4>
   </div>
   <div class="modal-body">
     <input class="form-control" [(ngModel)]="dbEntries[selectedIndex].title" type="text">
