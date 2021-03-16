@@ -10,8 +10,8 @@ import {Position} from "../../../model/position";
 export class ActorNodeRenderComponent {
   @Input() node!: ActorNode;
   pathStyle = {
-    'stroke': 'red',
-    'stroke-width:': 2,
+    'stroke': 'black',
+    'stroke-width': 2,
     'fill': 'none',
     'stroke-opacity': 0.75
   };
