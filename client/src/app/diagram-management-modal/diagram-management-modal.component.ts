@@ -9,6 +9,7 @@ import {cd} from "../../model/examples/cd";
 import {fsm} from "../../model/examples/fsm";
 import {Diagram} from "../../model/diagram";
 import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
+import {DiagramContainerService} from "../services/diagram-container.service";
 
 @Component({
   selector: 'app-diagram-management-modal',
@@ -23,7 +24,8 @@ export class DiagramManagementModalComponent {
     return this.selectedIndex === -1 ? undefined : deserialiseDiagram(this.dbEntries[this.selectedIndex].serialisedDiagram);
   }
 
-  constructor(public modal: NgbActiveModal) {
+  constructor(public modal: NgbActiveModal,
+              private diagramContainer: DiagramContainerService) {
     this.dbEntries = [
       {
         id: 1,
@@ -38,6 +40,12 @@ export class DiagramManagementModalComponent {
         serialisedDiagram: fsm.serialise()
       },
     ];
+  }
+
+  setDiagram() {
+    if (this.selectedIndex !== -1) {
+      this.diagramContainer.set(deserialiseDiagram(this.dbEntries[this.selectedIndex].serialisedDiagram));
+    }
   }
 }
 

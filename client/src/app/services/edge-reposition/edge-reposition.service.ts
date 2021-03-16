@@ -8,6 +8,7 @@ import {ArcMiddleRepositioner} from "./arc-middle-repositioner";
 import {FixedPointRepositioner} from "./fixed-point-repositioner";
 import {CachingService} from "../caching/caching.service";
 import {SnapService} from "../snap.service";
+import {DiagramContainerService} from "../diagram-container.service";
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,9 @@ export class EdgeRepositionService implements Deactivatable {
   public readonly startEndRepositioner = new StartEndRepositioner(this.SNAP_DISTANCE);
 
   constructor(private cachingService: CachingService,
-              private snapService: SnapService) {
+              private snapService: SnapService,
+              diagramContainerService: DiagramContainerService) {
+    diagramContainerService.diagramObservable.subscribe(diagram => this.setNodes(diagram.nodes));
   }
 
   /**
@@ -116,7 +119,7 @@ export class EdgeRepositionService implements Deactivatable {
    * @param nodes Reference to the list of nodes. Note that if the reference used by the diagram is updated,
    *              this one must be updated too.
    */
-  public setNodes(nodes: Node[]): void {
+  private setNodes(nodes: Node[]): void {
     this.startEndRepositioner.setNodes(nodes);
   }
 

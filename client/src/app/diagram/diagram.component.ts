@@ -32,6 +32,7 @@ import {DragSelectionService} from "../services/drag-selection.service";
 import {ZoomService} from "../services/zoom.service";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
+import {DiagramContainerService} from "../services/diagram-container.service";
 
 @Component({
   selector: 'app-diagram',
@@ -47,7 +48,8 @@ export class DiagramComponent implements AfterViewInit {
   mode: Mode;
   Mode = Mode;
 
-  constructor(private repositionService: RepositionService,
+  constructor(private diagramContainer: DiagramContainerService,
+              private repositionService: RepositionService,
               private edgeRepositionService: EdgeRepositionService,
               private modeService: ModeService,
               private edgeCreationService: EdgeCreationService,
@@ -64,21 +66,16 @@ export class DiagramComponent implements AfterViewInit {
               private dragSelectionService: DragSelectionService,
               public zoomSerivce: ZoomService,
               private mousePositionTransformService: MousePositionTransformService) {
+    this.diagram = diagramContainer.get();
+    diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
+
     this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
-    this.uploadService.diagramEmitter.subscribe((diagram: Diagram) => this.setDiagram(diagram))
     this.mode = modeService.getLatestMode();
-    // this.diagram = fsm;
-    // this.diagram = ad;
-    this.diagram = cd;
-    // this.diagram = new Diagram();
+
     edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => {
       this.diagram.edges.push(newEdge);
       this.cachingService.save();
     });
-
-    deletionService.setDiagram(this.diagram);
-
-    cachingService.setDiagram(this.diagram);
 
     copyPasteService.pasteEmitter.subscribe((nodeOrEdge: Node | Edge) => {
       if (nodeOrEdge instanceof Node) {
@@ -96,11 +93,8 @@ export class DiagramComponent implements AfterViewInit {
         this.diagram.nodes.push(edgeOrNode);
       }
 
-
       this.cachingService.save();
     });
-
-    this.setDiagram(this.diagram);
   }
 
   ngAfterViewInit() {
@@ -166,29 +160,17 @@ export class DiagramComponent implements AfterViewInit {
     }
   }
 
-  setDiagram(diagram: Diagram) {
-    this.diagram = diagram;
-    this.deletionService.setDiagram(this.diagram);
-    this.edgeRepositionService.setNodes(this.diagram.nodes);
-    this.cachingService.setDiagram(diagram);
-    this.dragSelectionService.diagram = diagram;
-    // We have to deselect the selected edge or node because when we undo/redo and action,
-    // a new diagram reference is created from the serialized version.
-    // If we leave the node/edge selected, it does not reference the actual instance inside the current diagram.
-    this.selectionService.deselect();
-  }
-
   undo() {
     let result = this.cachingService.undo();
     if (result !== null) {
-      this.setDiagram(result as Diagram);
+      this.diagramContainer.set(result as Diagram);
     }
   }
 
   redo() {
     let result = this.cachingService.redo();
     if (result !== null) {
-      this.setDiagram(result as Diagram);
+      this.diagramContainer.set(result as Diagram);
     }
   }
 
@@ -203,7 +185,7 @@ export class DiagramComponent implements AfterViewInit {
     } else {
       try {
         let diagram: Diagram = deserialiseDiagram(JSON.parse(result as string) as SerialisedDiagram);
-        this.setDiagram(diagram);
+        this.diagramContainer.set(diagram);
       } catch (e) {
         alert('Could not restore diagram from local storage');
       }

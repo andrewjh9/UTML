@@ -3,6 +3,7 @@ import {SerialisedDiagram} from "../../../serialisation/serialised-data-structur
 import {Diagram} from "../../../model/diagram";
 import {SizeBoundDoublyLinkedList} from "./SizeBoundDoublyLinkedList";
 import {deserialiseDiagram} from "../../../serialisation/deserialise/deserialise-diagram";
+import {DiagramContainerService} from "../diagram-container.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +15,13 @@ export class CachingService {
   /** Key of the serialised version of the diagram that is stored in local storage. */
   public static readonly LOCAL_STORAGE_KEY = 'diagram-cache';
   private readonly MAX_SIZE: number = 25;
-  private list: SizeBoundDoublyLinkedList<SerialisedDiagram>;
-  private diagram?: Diagram;
+  private readonly list: SizeBoundDoublyLinkedList<SerialisedDiagram>;
+  private diagram: Diagram;
 
-  constructor() {
-    this.list = new SizeBoundDoublyLinkedList<SerialisedDiagram>(this.MAX_SIZE, (new Diagram()).serialise());
-  }
-
-  /**
-   * Sets the diagram for future use and saves the state of the diagram at the moment of setting.
-   * @param diagram Reference to the diagram to be cached when save() is called.
-   */
-  public setDiagram(diagram: Diagram) {
-    this.diagram = diagram;
+  constructor(diagramContainerService: DiagramContainerService) {
+    this.diagram = diagramContainerService.get();
+    diagramContainerService.diagramObservable.subscribe(diagram => this.diagram = diagram);
+    this.list = new SizeBoundDoublyLinkedList<SerialisedDiagram>(this.MAX_SIZE, this.diagram.serialise());
   }
 
   /**
