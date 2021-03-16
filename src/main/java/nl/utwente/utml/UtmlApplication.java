@@ -12,11 +12,13 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-@RestController
 @SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
 public class UtmlApplication  {
 
+//	@RequestMapping("/diagram/{id}")
+//	public String diagrams() {
+//		return "index.html";
+//	}
 
 
 	public static void main(String[] args) {

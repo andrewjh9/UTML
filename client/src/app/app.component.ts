@@ -3,6 +3,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {DownButton, KeyboardEventCallerService} from "./services/keyboard-event-caller.service";
 import axios from 'axios';
 import {Diagram} from "../model/diagram";
+import {ActivatedRoute, Router, RoutesRecognized} from "@angular/router";
+import {Subscription} from "rxjs";
 
 
 
@@ -14,7 +16,20 @@ import {Diagram} from "../model/diagram";
 export class AppComponent implements AfterViewInit {
   public userFullName: string | undefined;
   public userDiagrams: Diagram[] | undefined;
-  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService) {
+  private loadDiagramId: Number | undefined;
+
+  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    // @ts-ignore
+    this.router.events.subscribe(val => {
+      if (val instanceof RoutesRecognized) {
+        // @ts-ignore
+        this.loadDiagramId = val.state.root.firstChild.params;
+      }
+    });
+
   }
 
   ngAfterViewInit(): void {
@@ -57,5 +72,7 @@ export class AppComponent implements AfterViewInit {
     return axios.get('/api/diagram/all/me').then(response => this.userDiagrams = response.data)
 
   }
+
+
 
 }
