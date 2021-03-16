@@ -51,6 +51,8 @@ import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-pr
 import { SelectionSidebarComponent } from './selection-sidebar/selection-sidebar.component';
 import { HourglassNodeRenderComponent } from './node-compontents/hourglass-node/hourglass-node-render.component';
 import { ActorNodeRenderComponent } from './node-compontents/actor-node/actor-node-render.component';
+import { DiagramManagementModalComponent } from './diagram-management-modal/diagram-management-modal.component';
+import { DiagramPreviewComponent } from './diagram-preview/diagram-preview.component';
 
 @NgModule({
   declarations: [
@@ -96,7 +98,9 @@ import { ActorNodeRenderComponent } from './node-compontents/actor-node/actor-no
     DragSelectPreviewComponent,
     SelectionSidebarComponent,
     HourglassNodeRenderComponent,
-    ActorNodeRenderComponent
+    ActorNodeRenderComponent,
+    DiagramManagementModalComponent,
+    DiagramPreviewComponent
   ],
     imports: [
         BrowserModule,

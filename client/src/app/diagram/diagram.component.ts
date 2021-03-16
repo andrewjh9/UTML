@@ -31,6 +31,7 @@ import {ExportService} from "../services/export.service";
 import {DragSelectionService} from "../services/drag-selection.service";
 import {ZoomService} from "../services/zoom.service";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
+import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
 
 @Component({
   selector: 'app-diagram',
@@ -249,5 +250,9 @@ export class DiagramComponent implements AfterViewInit {
     } else {
       this.zoomSerivce.updateZoomFactor(false)
     }
+  }
+
+  openDiagramManagementModal() {
+    this.modalService.open(DiagramManagementModalComponent, {size: 'xl'});
   }
 }
