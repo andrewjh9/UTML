@@ -11,5 +11,6 @@ import java.util.List;
 @Transactional
 public interface IDiagramRepository extends JpaRepository< Diagram, Long> {
     List<Diagram> findByUserEmail(String email);
-    List<Diagram> findBySharedTrue();
+    List<Diagram> findByVisibleTrue();
+
 }

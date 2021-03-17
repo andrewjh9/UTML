@@ -20,9 +20,4 @@ public class BaseController {
         return null;
     }
 
-//    @RequestMapping(value = "/diagram/**")
-//    public String index() {
-//        return "index.html";
-//    }
-
 }

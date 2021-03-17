@@ -29,7 +29,6 @@ export class AppComponent implements AfterViewInit {
         this.loadDiagramId = val.state.root.firstChild.params;
       }
     });
-
   }
 
   ngAfterViewInit(): void {
@@ -61,16 +60,6 @@ export class AppComponent implements AfterViewInit {
 
   private isLoggedIn() {
     return axios.get('/me').then(response => this.userFullName = response.data)
-  }
-
-  public saveDiagramRemote(){
-    return axios.post('/api/diagram/',{serializedDiagram:"diagram"}).then(response => this.userFullName = response.data)
-
-  }
-
-  public getUserDiagrams(){
-    return axios.get('/api/diagram/all/me').then(response => this.userDiagrams = response.data)
-
   }
 
 

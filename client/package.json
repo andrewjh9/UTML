@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "deploy-dev": "npm run build2 && npm run copy",
+    "copy": "cd .. cp -r client/dist/client/. src/main/resources/static ",
     "start": "ng serve",
+    "build2": "sudo ng -p build",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

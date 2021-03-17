@@ -24,7 +24,7 @@
           <td>{{dbEntry.title}}</td>
           <td>{{dbEntry.lastModified | date:'dd/MM/yyyy'}}</td>
           <td><button class="btn btn-secondary" (click)="triggerEditModal()">Edit</button></td>
-          <td><button class="btn btn-info" (click)="toggleVisibility()">{{dbEntry.visible ? '  visible' : 'invisible'}}</button></td>
+          <td><button class="btn btn-info" (click)="toggleVisibility()">{{dbEntry.visible ? '  Visible' : 'Invisible'}}</button></td>
           <td><button class="btn btn-danger" (click)="triggerDeleteModal()">Delete</button></td>
 
           <!--        <td><ngb-highlight [result]="country.area | number" [term]="filter.value"></ngb-highlight></td>-->
@@ -54,13 +54,13 @@
 
 <ng-template #deleteModal let-modal>
   <div class="modal-header">
-    <h4 class="modal-title text-danger">Delete {{dbEntries[selectedIndex].title}}</h4>
+    <h4 class="modal-title text-danger" *ngIf="dbEntries">Delete {{dbEntries[selectedIndex].title}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="modal.dismiss()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-    <div>Are you sure you want to delete {{dbEntries[selectedIndex].title}}?</div>
+    <div *ngIf="dbEntries">Are you sure you want to delete {{dbEntries[selectedIndex].title}}?</div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-secondary" (click)="modal.close()">Cancel</button>
@@ -73,7 +73,7 @@
     <h4 class="modal-title">Edit Title</h4>
   </div>
   <div class="modal-body">
-    <input class="form-control" [(ngModel)]="dbEntries[selectedIndex].title" type="text">
+    <input class="form-control"*ngIf="dbEntries"  [(ngModel)]="dbEntries[selectedIndex].title" type="text">
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-success" (click)="modal.close(); updateChanges();">Save</button>

@@ -2,7 +2,9 @@ package nl.utwente.utml.api;
 
 import nl.utwente.utml.model.Diagram;
 import nl.utwente.utml.service.IDiagramService;
+import org.hibernate.annotations.ParamDef;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -56,6 +58,18 @@ public class  DiagramController {
     @DeleteMapping
     public void deleteDiagram(@RequestBody long id){
         diagramService.delete(id);
+    }
+
+
+    @GetMapping("/visible")
+    public void toggleVisibility(@RequestParam long id){
+        if(diagramService.userOwner(id, getUserEmail())){
+            diagramService.toggleVisible(id);
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, "User doesn't own diagram");
+        }
+
     }
 
 

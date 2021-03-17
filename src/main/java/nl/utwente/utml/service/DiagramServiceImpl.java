@@ -27,7 +27,7 @@ public class DiagramServiceImpl implements IDiagramService {
     }
 
     public List<Diagram> getAllVisible() {
-        return diagramRepository.findBySharedTrue();
+        return diagramRepository.findByVisibleTrue();
     }
 
     public void delete(long id) {
@@ -40,5 +40,17 @@ public class DiagramServiceImpl implements IDiagramService {
 
     public void update(Diagram diagram){
         this.diagramRepository.save(diagram);
+    }
+
+    @Override
+    public void toggleVisible(long id) {
+        Diagram diagram = this.diagramRepository.getOne(id);
+        diagram.toggleVisible();
+        this.diagramRepository.save(diagram);
+    }
+
+    @Override
+    public boolean userOwner(long id, String email) {
+        return this.diagramRepository.getOne(id).getOwnerEmail().equals(email);
     }
 }

@@ -5,8 +5,10 @@ import {deserialiseNode} from "./deserialise-node";
 import {deserialiseEdge} from "./deserialise-edge";
 
 export function deserialiseDiagram(serialisedDiagram: SerialisedDiagram): Diagram {
-  let nodes = serialisedDiagram.nodes.map(n => deserialiseNode(n));
-  let edges = serialisedDiagram.edges.map(e => deserialiseEdge(e));
+  // @ts-ignore
+  let nodes = JSON.parse(serialisedDiagram).nodes.map(n => deserialiseNode(n));
+  // @ts-ignore
+  let edges = JSON.parse(serialisedDiagram).edges.map(e => deserialiseEdge(e));
 
   for (let i = 0; i < edges.length; i++) {
     if (serialisedDiagram.edges[i].startNodeId !== undefined) {

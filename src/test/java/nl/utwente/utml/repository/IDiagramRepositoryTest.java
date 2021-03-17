@@ -31,9 +31,9 @@ public class IDiagramRepositoryTest {
         entityManager.flush();
         assertEquals(2, IDiagramRepository.findAll().size());
         assertEquals(1, IDiagramRepository.findAll().stream().filter(d ->
-                d.getSerializedDiagram().equals(toBeAdded1.getSerializedDiagram())).toArray().length);
+                d.getSerialisedDiagram().equals(toBeAdded1.getSerialisedDiagram())).toArray().length);
         assertEquals(1,  IDiagramRepository.findAll().stream().filter(d ->
-                d.getSerializedDiagram().equals(toBeAdded2.getSerializedDiagram())).toArray().length);
+                d.getSerialisedDiagram().equals(toBeAdded2.getSerialisedDiagram())).toArray().length);
     }
 
     @Test
@@ -45,7 +45,7 @@ public class IDiagramRepositoryTest {
         if (diagram.isEmpty()) {
             fail();
         }
-        assertEquals(content, diagram.get().getSerializedDiagram());
+        assertEquals(content, diagram.get().getSerialisedDiagram());
     }
 
     @Test
