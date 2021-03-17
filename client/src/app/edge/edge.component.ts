@@ -12,6 +12,7 @@ import {CachingService} from "../services/caching/caching.service";
 import {EdgeFormattingModalComponent} from "../edge-formatting-modal/edge-formatting-modal.component";
 import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 
 @Component({
   selector: '[edge-component]',
@@ -32,7 +33,8 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
               private selectionService: SelectionService,
               private deletionService: DeletionService,
               private cachingService: CachingService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal,
+              private mousePositionTransformService: MousePositionTransformService) {
     super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.edge);
@@ -48,8 +50,7 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   public handleMouseDown(event: MouseEvent): void {
     if (this.isInMoveMode()) {
       if (this.edge?.middlePositions) {
-        // Todo: fix mouse Positioning
-        let mousePosition = new Position(event.clientX, event.clientY - 50);
+        let mousePosition = this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY));
         this.edgeRepositionService.activate(this.edge, mousePosition);
       }
     } else if (this.isInSelectMode() && this.edge) {

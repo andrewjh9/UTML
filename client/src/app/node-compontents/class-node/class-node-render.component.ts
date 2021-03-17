@@ -25,11 +25,11 @@ export class ClassNodeRenderComponent {
   }
 
   setActive(index: number) {
-    this.editService.setActive(index)
+    this.editService.setActive(index, false)
   }
 
   activateEditMode() {
-    if (this.node) {
+    if (this.node && !this.editService.isActive()) {
       this.isInEditMode = true;
       this.editService.activate(this.node);
     }

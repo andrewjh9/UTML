@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {Position} from "../../model/position";
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +25,18 @@ export class ZoomService {
   public updateZoomFactor(zoomIn: boolean): void{
     if (zoomIn) {
       this.zoomExponent--;
-
     } else {
       this.zoomExponent++;
     }
     this.currentZoomFactor = Math.pow(this.zoomStep, this.zoomExponent);
+  }
+
+  public setXY(x: number, y: number) {
+    this.x += x;
+    this.y += y;
+  }
+
+  public getXY(): Position {
+    return new Position(this.x, this.y);
   }
 }
