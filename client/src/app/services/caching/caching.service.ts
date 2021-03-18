@@ -4,6 +4,7 @@ import {Diagram} from "../../../model/diagram";
 import {SizeBoundDoublyLinkedList} from "./SizeBoundDoublyLinkedList";
 import {deserialiseDiagram} from "../../../serialisation/deserialise/deserialise-diagram";
 import {DiagramContainerService} from "../diagram-container.service";
+import {LocalStorageService} from "./local-storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,8 @@ export class CachingService {
   private readonly list: SizeBoundDoublyLinkedList<SerialisedDiagram>;
   private diagram: Diagram;
 
-  constructor(diagramContainerService: DiagramContainerService) {
+  constructor(diagramContainerService: DiagramContainerService,
+              private localStorageService: LocalStorageService) {
     this.diagram = diagramContainerService.get();
     diagramContainerService.diagramObservable.subscribe(diagram => this.diagram = diagram);
     this.list = new SizeBoundDoublyLinkedList<SerialisedDiagram>(this.MAX_SIZE, this.diagram.serialise());
@@ -34,8 +36,7 @@ export class CachingService {
     }
 
     let serialisedDiagram = this.diagram.serialise();
-    localStorage.setItem(CachingService.LOCAL_STORAGE_KEY, JSON.stringify(serialisedDiagram));
-
+    this.localStorageService.save();
     this.list.add(serialisedDiagram);
     // Todo: Make it so similar changes are merged. I.e., typing a word into a node counts as one undo/redo action.
   }

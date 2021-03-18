@@ -25,15 +25,13 @@
               <thead>
               <tr>
                 <th scope="col">ID</th>
-                <th scope="col">Last Modified</th>
                 <th scope="col"></th>
               </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>100</td>
-                <td>11/11/1111</td>
-                <td class="icon"><button class="btn btn-outline-danger text-center" style="width: 50px">
+              <tr *ngFor="let pair of keyDiagramPairs; let i = index;" (click)="setLocalStorageDiagram(i)">
+                <td>{{pair[0]}}</td>
+                <td class="icon"><button class="btn btn-outline-danger text-center" style="width: 50px" (click)=removeLocalStorage(i)>
                   <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
                 </button></td>
               </tr>

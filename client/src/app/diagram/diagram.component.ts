@@ -32,6 +32,7 @@ import {ZoomService} from "../services/zoom.service";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
 import {DiagramContainerService} from "../services/diagram-container.service";
+import {LocalStorageService} from "../services/caching/local-storage.service";
 
 @Component({
   selector: 'app-diagram',
@@ -63,6 +64,7 @@ export class DiagramComponent implements AfterViewInit {
               private uploadService: UploadService,
               private dragSelectionService: DragSelectionService,
               public zoomSerivce: ZoomService,
+              private localStorageService: LocalStorageService,
               private mousePositionTransformService: MousePositionTransformService) {
     this.diagram = diagramContainer.get();
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
@@ -99,6 +101,8 @@ export class DiagramComponent implements AfterViewInit {
     if (this.diagram) {
       // @ts-ignore
       this.edgeRepositionService.setNodes(this.diagram.nodes);
+
+      this.localStorageService.setup();
     }
   }
 

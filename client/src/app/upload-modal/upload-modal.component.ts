@@ -7,6 +7,7 @@ import {UploadService} from "../services/upload.service";
 import { DOCUMENT } from '@angular/common'
 import {DiagramContainerService} from "../services/diagram-container.service";
 import {fsm} from "../../model/examples/fsm";
+import {LocalStorageService} from "../services/caching/local-storage.service";
 
 @Component({
   selector: 'app-upload-modal',
@@ -19,7 +20,8 @@ export class UploadModalComponent {
   active: number = 1;
 
   constructor(public modal: NgbActiveModal,
-              private diagramContainer: DiagramContainerService) { }
+              private diagramContainer: DiagramContainerService,
+              private localStorageService: LocalStorageService) { }
 
   onChange(event: any) {
     this.file = event!.target!.files[0];
@@ -39,5 +41,17 @@ export class UploadModalComponent {
       .catch(() => {
         alert('The file you are trying to upload can not be converted to a diagram.');
       });
+  }
+
+  get keyDiagramPairs() {
+    return this.localStorageService.getKeyDiagramPairs();
+  }
+
+  setLocalStorageDiagram(index: number) {
+    this.selectedDiagram = this.keyDiagramPairs[index][1];
+  }
+
+  removeLocalStorage(index: number) {
+    this.localStorageService.removeKey(this.keyDiagramPairs[index][0])
   }
 }
