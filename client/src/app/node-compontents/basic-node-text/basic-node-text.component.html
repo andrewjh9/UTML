@@ -1,19 +1,17 @@
-<svg:g *ngIf="node">
-  <svg:text
-    [attr.x]="node.position.x"
-    [attr.y]="node.position.y "
-    [attr.width]="node.width"
-    [attr.height]="node.height"
-    font-family="sans-serif"
-    [attr.font-size]="FONT_SIZE"
-    class="movable">
-      <svg:tspan
-        *ngFor="let textLine of node.getTextLines(); let i = index;"
-        [attr.x]="centerX"
-        [attr.y]="getY(i)"
-        dominant-baseline="middle"
-        text-anchor="middle">
-          {{textLine}}
-      </svg:tspan>
-  </svg:text>
-</svg:g>
+<svg:text
+  [attr.x]="node.position.x"
+  [attr.y]="node.position.y "
+  [attr.width]="node.width"
+  [attr.height]="node.height"
+  font-family="sans-serif"
+  [attr.font-size]="FONT_SIZE"
+  class="movable">
+    <svg:tspan
+      *ngFor="let textLine of node.getTextLines(); let i = index;"
+      [attr.x]="centerX"
+      [attr.y]="getY(i)"
+      dominant-baseline="middle"
+      text-anchor="middle">
+        {{textLine}}
+    </svg:tspan>
+</svg:text>

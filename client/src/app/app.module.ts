@@ -53,6 +53,7 @@ import { HourglassNodeRenderComponent } from './node-compontents/hourglass-node/
 import { ActorNodeRenderComponent } from './node-compontents/actor-node/actor-node-render.component';
 import { DiagramManagementModalComponent } from './diagram-management-modal/diagram-management-modal.component';
 import { DiagramPreviewComponent } from './diagram-preview/diagram-preview.component';
+import { BelowTextNodeComponent } from './node-compontents/below-text-node/below-text-node.component';
 
 @NgModule({
   declarations: [
@@ -100,7 +101,8 @@ import { DiagramPreviewComponent } from './diagram-preview/diagram-preview.compo
     HourglassNodeRenderComponent,
     ActorNodeRenderComponent,
     DiagramManagementModalComponent,
-    DiagramPreviewComponent
+    DiagramPreviewComponent,
+    BelowTextNodeComponent
   ],
     imports: [
         BrowserModule,
