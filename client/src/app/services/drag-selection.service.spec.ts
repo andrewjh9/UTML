@@ -6,6 +6,7 @@ import {RectangleNode} from "../../model/node/rectangle-node";
 import {Edge} from "../../model/edge";
 import {Diagram} from "../../model/diagram";
 import {SelectionService} from "./selection.service";
+import {DiagramContainerService} from "./diagram-container.service";
 
 describe('DragSelectionService', () => {
   let service: DragSelectionService;
@@ -13,9 +14,11 @@ describe('DragSelectionService', () => {
   const ALWAYS_CONTAINED_NODE = new RectangleNode(100, 100, new Position(10, 10));
   const PARTIALLY_CONTAINED = new RectangleNode(100, 100, new Position(200, 100));
   const EDGE = new Edge(2, 6, ALWAYS_CONTAINED_NODE, PARTIALLY_CONTAINED);
+  let diagramContainer: DiagramContainerService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
+    diagramContainer = TestBed.inject(DiagramContainerService);
     service = TestBed.inject(DragSelectionService);
     selectionService = TestBed.inject(SelectionService);
     spyOn(selectionService, 'add');
@@ -39,7 +42,7 @@ describe('DragSelectionService', () => {
   });
 
   it('should contain nodes within selection', function () {
-    service.diagram = new Diagram([ALWAYS_CONTAINED_NODE, PARTIALLY_CONTAINED], [EDGE]);
+    diagramContainer.set(new Diagram([ALWAYS_CONTAINED_NODE, PARTIALLY_CONTAINED], [EDGE]));
 
     service.activate(new Position(0, 0));
     service.update(new Position(110, 110));
@@ -47,7 +50,7 @@ describe('DragSelectionService', () => {
   });
 
   it('should not contain partially contained nodes', function () {
-    service.diagram = new Diagram([ALWAYS_CONTAINED_NODE, PARTIALLY_CONTAINED], [EDGE]);
+    diagramContainer.set(new Diagram([ALWAYS_CONTAINED_NODE, PARTIALLY_CONTAINED], [EDGE]));
 
     service.activate(new Position(0, 0));
     service.update(new Position(210, 110));

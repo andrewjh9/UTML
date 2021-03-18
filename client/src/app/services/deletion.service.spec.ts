@@ -9,9 +9,12 @@ import {typeIsOrHasBaseType} from "tslint/lib/language/typeUtils";
 import {CachingService} from "./caching/caching.service";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {SelectionService} from "./selection.service";
+import {TestBed} from "@angular/core/testing";
+import {DiagramContainerService} from "./diagram-container.service";
 
 describe('DeletionService ', () => {
   let deletionService: DeletionService;
+  let diagramContainer: DiagramContainerService;
   let n1: Node;
   let n2: Node;
   let unknownNode: Node;
@@ -20,14 +23,14 @@ describe('DeletionService ', () => {
   let diagram: Diagram;
 
   beforeEach(() => {
-    let cachingService = new CachingService();
-    cachingService.setDiagram(new Diagram());
+    TestBed.configureTestingModule({});
     n1 = new RectangleNode(100, 100, new Position(0, 0));
     n2 = new RectangleNode(100, 100, new Position(200, 0));
     unknownNode = new EllipseNode(200, 200, new Position(500, 500));
     e1 = new Edge(0, 0, n1, n2);
     unknownEdge = new Edge(0, 0, n1, unknownNode);
-    deletionService = new DeletionService(cachingService, new SelectionService(new KeyboardEventCallerService()), new KeyboardEventCallerService());
+    deletionService = TestBed.inject(DeletionService);
+    diagramContainer = TestBed.inject(DiagramContainerService);
   });
 
   describe('without diagram set ', () => {
@@ -53,7 +56,7 @@ describe('DeletionService ', () => {
   describe('with diagram set ', () => {
     beforeEach(() => {
       diagram = new Diagram([n1, n2], [e1]);
-      deletionService.setDiagram(diagram);
+      diagramContainer.set(diagram);
     });
 
     it('should correctly remove a node', function () {
