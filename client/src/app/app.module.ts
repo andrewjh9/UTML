@@ -54,6 +54,8 @@ import { ActorNodeRenderComponent } from './node-compontents/actor-node/actor-no
 import { DiagramManagementModalComponent } from './diagram-management-modal/diagram-management-modal.component';
 import { DiagramPreviewComponent } from './diagram-preview/diagram-preview.component';
 import { BelowTextNodeComponent } from './node-compontents/below-text-node/below-text-node.component';
+import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {faEdit, faEye, faEyeSlash, faSave, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
 
 @NgModule({
   declarations: [
@@ -110,9 +112,13 @@ import { BelowTextNodeComponent } from './node-compontents/below-text-node/below
         HttpClientModule,
         FormsModule,
         NgbModule,
-
+        FontAwesomeModule
     ],
   providers: [RepositionService, ModeService, DeletionService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave);
+  }
+}

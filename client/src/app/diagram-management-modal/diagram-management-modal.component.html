@@ -23,9 +23,16 @@
             [ngClass]="{selected: i === selectedIndex}">
           <td>{{dbEntry.title}}</td>
           <td>{{dbEntry.lastModified | date:'dd/MM/yyyy'}}</td>
-          <td><button class="btn btn-secondary" (click)="triggerEditModal()">Edit</button></td>
-          <td><button class="btn btn-info" (click)="toggleVisibility()">{{dbEntry.visible ? '  visible' : 'invisible'}}</button></td>
-          <td><button class="btn btn-danger" (click)="triggerDeleteModal()">Delete</button></td>
+          <td class="icon"><button class="btn btn-outline-secondary text-center" style="width: 50px" (click)="triggerEditModal()">
+            <fa-icon [icon]="['far', 'edit']"></fa-icon>
+          </button></td>
+          <td class="icon"><button class="btn btn-outline-info text-center" style="width: 50px" (click)="toggleVisibility()">
+            <fa-icon *ngIf="dbEntry.visible" [icon]="['far', 'eye']"></fa-icon>
+            <fa-icon *ngIf="!dbEntry.visible" [icon]="['far', 'eye-slash']"></fa-icon>
+          </button></td>
+          <td class="icon"><button class="btn btn-outline-danger text-center" style="width: 50px" (click)="triggerDeleteModal()">
+            <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
+          </button></td>
 
           <!--        <td><ngb-highlight [result]="country.area | number" [term]="filter.value"></ngb-highlight></td>-->
   <!--        <td><ngb-highlight [result]="country.population | number" [term]="filter.value"></ngb-highlight></td>-->
