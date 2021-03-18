@@ -32,6 +32,8 @@ export class ClassNodeRenderComponent {
     if (this.node && !this.editService.isActive()) {
       this.isInEditMode = true;
       this.editService.activate(this.node);
+    } else if (this.node == this.editService.getNode()) {
+      this.editService.addField();
     }
   }
 }

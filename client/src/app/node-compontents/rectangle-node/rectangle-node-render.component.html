@@ -1,4 +1,4 @@
-<svg:g basic-node-text [node]="node"></svg:g>
+<svg:g basic-node-text [node]="node" (dblclick)="activateEditMode()"></svg:g>
 
 <svg:rect [attr.x]="node.position.x"
           [attr.y]="node.position.y"

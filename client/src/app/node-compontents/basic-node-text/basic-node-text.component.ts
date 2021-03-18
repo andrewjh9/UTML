@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Node} from "../../../model/node/node";
+import {EditService} from "../../services/edit.service";
 
 @Component({
   selector: '[basic-node-text]',
@@ -8,4 +9,17 @@ import {Node} from "../../../model/node/node";
 })
 export class BasicNodeTextComponent {
   @Input() node?: Node;
+
+  constructor(private editService: EditService) {
+
+  }
+
+
+
+  setActive(index: number) {
+    if (this.editService.isActive()) {
+      this.editService.setActive(index, false)
+    }
+
+  }
 }

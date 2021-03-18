@@ -127,4 +127,8 @@ export class EditService {
     this.isInEditMode = false;
     this.activeIndex = undefined;
   }
+
+  public getNode(): Node {
+    return this.node!
+  }
 }

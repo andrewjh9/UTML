@@ -1,10 +1,13 @@
-<svg:ellipse [attr.cx]="node!.position.x + node!.width / 2"
-             [attr.cy]="node!.position.y + node!.height / 2"
-             [attr.rx]="node!.width / 2"
-             [attr.ry]="node!.height / 2"
-             [ngStyle]="node!.styleObject"
->
-</svg:ellipse>
+<svg:g (dblclick)="activateEditMode()">
+  <svg:ellipse [attr.cx]="node!.position.x + node!.width / 2"
+               [attr.cy]="node!.position.y + node!.height / 2"
+               [attr.rx]="node!.width / 2"
+               [attr.ry]="node!.height / 2"
+               [ngStyle]="node!.styleObject"
+  >
+  </svg:ellipse>
+</svg:g>
+
 
 <!-- Double border if applicable -->
 <svg:ellipse *ngIf="node?.hasDoubleBorder"
