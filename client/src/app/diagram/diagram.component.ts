@@ -27,7 +27,6 @@ import {UploadModalComponent} from "../upload-modal/upload-modal.component";
 import {UploadService} from "../services/upload.service";
 import {SaveModalComponent} from "../save-modal/save-modal.component";
 import {Expression} from "@angular/compiler";
-import {ExportService} from "../services/export.service";
 import {DragSelectionService} from "../services/drag-selection.service";
 import {ZoomService} from "../services/zoom.service";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
@@ -62,7 +61,6 @@ export class DiagramComponent implements AfterViewInit {
               private dragDropCreationService: DragDropCreationService,
               private modalService: NgbModal,
               private uploadService: UploadService,
-              private exportService: ExportService,
               private dragSelectionService: DragSelectionService,
               public zoomSerivce: ZoomService,
               private mousePositionTransformService: MousePositionTransformService) {
@@ -201,12 +199,11 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   upload() {
-    this.modalService.open(UploadModalComponent)
+    this.modalService.open(UploadModalComponent, {size: 'xl'});
   }
 
   save() {
-    this.exportService.setDiagram(this.diagram);
-    this.modalService.open(SaveModalComponent)
+    this.modalService.open(SaveModalComponent);
   }
 
   handleMouseDown(event: MouseEvent) {

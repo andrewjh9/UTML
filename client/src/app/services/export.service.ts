@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
 import {Diagram} from "../../model/diagram";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {DiagramContainerService} from "./diagram-container.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExportService {
-  private diagram?: Diagram;
+  private diagram: Diagram;
   private downloadJsonHref?: SafeUrl;
-  constructor(private sanitizer: DomSanitizer) { }
 
-  public setDiagram(diagram: Diagram): void {
-    this.diagram = diagram;
+  public filename: string = 'yourDiagram';
+
+  constructor(diagramContainer: DiagramContainerService) {
+    this.diagram = diagramContainer.get();
+    diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
   }
 
   public exportAsPNG(): void {
@@ -41,7 +44,7 @@ export class ExportService {
             .toDataURL('image/png')
             .replace('image/png', 'image/octet-stream');
 
-          this.triggerDownload("your-diagram-picture", imgURI, "png");
+          this.triggerDownload(this.filename, imgURI, "png");
           document!.querySelector('canvas')!.remove();
         } else{
           new Error("The diagram has disappeared");
@@ -52,11 +55,9 @@ export class ExportService {
   }
 
   public exportAsJSON() {
-    if (this.diagram) {
-      let theJSON = JSON.stringify(this.diagram?.serialise());
-      let uri: string = "data:text/json;charset=UTF-8," + encodeURIComponent(theJSON)
-      this.triggerDownload("your-diagram-serialised", uri, "json")
-    }
+    let theJSON = JSON.stringify(this.diagram?.serialise());
+    let uri: string = "data:text/json;charset=UTF-8," + encodeURIComponent(theJSON)
+    this.triggerDownload(this.filename, uri, "utml")
   }
 
   private triggerDownload(name: string, uri: string, extension: string) {
