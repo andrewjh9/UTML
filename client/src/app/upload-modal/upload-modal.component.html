@@ -1,21 +1,88 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-title">Upload serialized diagram</h4>
+  <h4 class="modal-title" id="modal-title">Open Diagram</h4>
   <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-  <div class="col-md-4"></div>
-  <div class="col-md-12">
-    <input id="upload-button" class="form-control" type="file" (change)="onChange($event)">
-  </div>
+  <div class="flex-row d-flex">
 
+    <div class="flex-grow-1 mr-2">
+      <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+          <a ngbNavLink>Upload File</a>
+          <ng-template ngbNavContent>
+              <div class>
+                <p>Upload a <code>.utml</code> file to resume the diagram creation process.</p>
+                <input id="upload-button" class="form-control form-control-file" type="file" (change)="onChange($event)">
+              </div>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="2">
+          <a ngbNavLink>Browser Cache</a>
+          <ng-template ngbNavContent>
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col"></th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let pair of keyDiagramPairs; let i = index;" (click)="setLocalStorageDiagram(i)">
+                <td>{{pair[0]}}</td>
+                <td class="icon"><button class="btn btn-outline-danger text-center" style="width: 50px" (click)=removeLocalStorage(i)>
+                  <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
+                </button></td>
+              </tr>
+              </tbody>
+            </table>
+          </ng-template>
+        </li>
+        <li [ngbNavItem]="3">
+          <a ngbNavLink>URL</a>
+          <ng-template ngbNavContent>
+            <p>Type in the URL of the diagram you want to open.</p>
+            <input type="text" class="form-control form-text">
+          </ng-template>
+        </li>
+      </ul>
+
+      <div [ngbNavOutlet]="nav" class="mt-2"></div>
+<!--      <div class="border-bottom pb-2">-->
+<!--        <h5>Open from file</h5>-->
+<!--        <p>Upload a <code>.utml</code> file to resume the diagram creation process.</p>-->
+<!--        <input id="upload-button" class="form-control form-control-file" type="file" (change)="onChange($event)">-->
+<!--      </div>-->
+
+<!--      <div>-->
+<!--        <h5 class="p-1">Open from Browser Storage</h5>-->
+<!--        <table class="table">-->
+<!--          <tr>-->
+<!--            <th>ID</th>-->
+<!--            <th>Last Modified</th>-->
+<!--            <th></th>-->
+<!--          </tr>-->
+<!--          <tr>-->
+<!--            <td>5</td>-->
+<!--            <td>09/11/2020</td>-->
+<!--            <td><button class="btn btn-outline-danger"><fa-icon [icon]="['far', 'trash-alt']"></fa-icon></button></td>-->
+<!--          </tr>-->
+<!--        </table>-->
+<!--      </div>-->
+    </div>
+
+    <div class="preview-container border-left">
+      <svg width="500" height="700">
+        <g *ngIf="selectedDiagram" diagram-preview [diagram]="selectedDiagram!"></g>
+      </svg>
+    </div>
+
+  </div>
 </div>
 <div class="modal-footer">
-  <button type="button" ngbAutofocus class="btn btn-light" (click)="modal.close('Ok click')">Cancel</button>
+  <button type="button" class="btn btn-outline-secondary" (click)="modal.close('Ok click')">Cancel</button>
   <div (click)="onClick()">
-    <button type="button" ngbAutofocus class="btn btn-primary" (click)="modal.close('Ok click')">Upload</button>
+    <button type="button" class="btn btn-outline-primary" (click)="modal.close('Ok click')">Open</button>
   </div>
 </div>
-
-

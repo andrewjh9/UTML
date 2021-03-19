@@ -10,6 +10,7 @@ import {EllipseNode} from "../../model/node/ellipse-node";
 import {DiamondNode} from "../../model/node/diamond-node";
 import {HourglassNode} from "../../model/node/hourglass-node";
 import {ActorNode} from "../../model/node/actor-node";
+import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
 
 @Component({
   selector: 'creation-sidebar',
@@ -54,6 +55,7 @@ export class CreationSidebarComponent {
     ad.nodes['Activity'] = activityNode;
     ad.nodes['Hourglass'] = new HourglassNode(40, 80, new Position(84, 10));
     ad.nodes['Actor'] = new ActorNode(40, 80, new Position(84, 10));
+    ad.nodes['Fork/Rejoin'] = new ForkRejoinNode(200, 20, new Position(8, 0));
     cd.edges['Arrow'] = arrow;
 
     let state = new EllipseNode(100, 100, new Position(58, 2));

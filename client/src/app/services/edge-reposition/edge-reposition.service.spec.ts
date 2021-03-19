@@ -21,7 +21,6 @@ describe('EdgeRepositionService ', () => {
     TestBed.configureTestingModule({});
     edgeRepositionService = TestBed.inject(EdgeRepositionService)
     let cachingService = TestBed.inject(CachingService);
-    cachingService.setDiagram(new Diagram());
     n1 = new RectangleNode(100, 100, new Position(0, 0));
     n2 = new RectangleNode(100, 100, new Position(200, 0));
 

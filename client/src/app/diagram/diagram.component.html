@@ -1,37 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light" [ngStyle]="{height: NAV_HEIGHT}">
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="upload()">Open</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="save()">Save</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="copy()">Copy</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="paste()">Paste</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="undo()">Undo</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="redo()">Redo</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Settings</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="openDiagramManagementModal()">Teacher</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+<div (keyup)="handleKeyPressed($event)">
+  <app-nav-bar></app-nav-bar>
 
-<div class="container-fluid" (keyup)="handleKeyPressed($event)">
   <div class="row d-flex">
-<!--    <app-selection-sidebar></app-selection-sidebar>-->
     <div class="flex-grow-1">
       <svg width="1200"
            height="800"
@@ -40,8 +10,6 @@
            (mouseup)="handleMouseUp($event)"
            (mousemove)="handleMouseMove($event)"
            (dblclick)="handleDoubleClick($event)"
-           (mousewheel)="zoom($event)"
-           (DOMMouseScroll)="zoomFirefox($event)"
            id="diagram"
       >
         <g drag-drop-preview></g>
@@ -58,11 +26,13 @@
     <creation-sidebar></creation-sidebar>
   </div>
 </div>
+
 <canvas id="canvas" viewbox></canvas>
 <!--<button class="btn btn-outline-primary" (click)="do()">Do</button>-->
 <!--<button class="btn btn-outline-primary" (click)="restore()">Restore Local Storage</button>-->
 
 
-
+<!--<span *ngFor="let x of greekNumbers()" [innerHTML]="x">-->
+<!--</span>-->
 
 

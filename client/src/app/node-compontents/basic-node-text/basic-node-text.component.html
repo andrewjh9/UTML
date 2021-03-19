@@ -1,20 +1,18 @@
-<svg:g *ngIf="node">
-  <svg:text
-    [attr.x]="node.position.x"
-    [attr.y]="node.position.y "
-    [attr.width]="node.width"
-    [attr.height]="node.height"
-    style="text-align:center;"
-    dominant-baseline="middle"
-    text-anchor="middle"
-    font-family="Comic Sans MS, Helvetica, sans-serif"
-    class="movable">
-<!--    <svg:g *ngIf="!node?.inEditMode">-->
-      <svg:tspan  *ngFor="let text_line of node.getTextLines()"  [attr.x]= "node.position.x + (node.width/2)" dy="1.2em" >{{text_line}}</svg:tspan>
-<!--    </svg:g>-->
-<!--    <svg:g *ngIf="node?.inEditMode">-->
-<!--      <svg:text *ngFor="let text_line of node.getTextLines()" contentEditable="true" [attr.x]= "node.position.x + (node.width/2)" dy="1.2em" >{{text_line}}</svg:text>-->
-<!--    </svg:g>-->
-
-  </svg:text>
-</svg:g>
+<svg:text
+  [attr.x]="node.position.x"
+  [attr.y]="node.position.y "
+  [attr.width]="node.width"
+  [attr.height]="node.height"
+  font-family="sans-serif"
+  [attr.font-size]="FONT_SIZE"
+  class="movable">
+    <svg:tspan
+      *ngFor="let textLine of node.getTextLines(); let i = index;"
+      [attr.x]="centerX"
+      [attr.y]="getY(i)"
+      dominant-baseline="middle"
+      text-anchor="middle"
+      (click)="setActive(i)">
+        {{textLine}}
+    </svg:tspan>
+</svg:text>

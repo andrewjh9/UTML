@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {DiamondNode} from "../../../model/node/diamond-node";
+import {EditService} from "../../services/edit.service";
 
 @Component({
   selector: '[diamond-node-render]',
@@ -8,4 +9,5 @@ import {DiamondNode} from "../../../model/node/diamond-node";
 })
 export class DiamondNodeRenderComponent {
   @Input() node!: DiamondNode;
+
 }

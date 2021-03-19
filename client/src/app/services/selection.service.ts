@@ -4,6 +4,7 @@ import {Node} from "../../model/node/node";
 import {BehaviorSubject} from "rxjs";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {DeletionService} from "./deletion.service";
+import {DiagramContainerService} from "./diagram-container.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,10 +13,15 @@ export class SelectionService {
   private readonly selected: BehaviorSubject<Array<Node | Edge>> = new BehaviorSubject<Array<Node | Edge>>([]);
   public readonly selectedObservable = this.selected.asObservable();
 
-  constructor(keyboardEventCallerService: KeyboardEventCallerService) {
+  constructor(keyboardEventCallerService: KeyboardEventCallerService,
+              diagramContainerService: DiagramContainerService) {
     keyboardEventCallerService.addCallback(['Escape', 'keydown', 'any'], (event => {
       this.deselect();
     }));
+
+    // When the diagram reference is updated, the references to nodes and edges are too.
+    // Therefore our selected objects may be de-synced. To prevent de-sync bugs,  we simply deselect.
+    diagramContainerService.diagramObservable.subscribe(ignored => this.deselect());
   }
 
   public add(value: Node | Edge): void {

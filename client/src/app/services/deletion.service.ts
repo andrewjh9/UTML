@@ -5,6 +5,7 @@ import {Edge} from "../../model/edge";
 import {CachingService} from "./caching/caching.service";
 import {SelectionService} from "./selection.service";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
+import {EditService} from "./edit.service";
 import {DiagramContainerService} from "./diagram-container.service";
 
 @Injectable({
@@ -22,7 +23,8 @@ export class DeletionService {
   constructor(private cachingService: CachingService,
               private selectionService: SelectionService,
               keyboardEventCallerService: KeyboardEventCallerService,
-              diagramContainerService: DiagramContainerService) {
+              diagramContainerService: DiagramContainerService,
+              editService: EditService) {
     this.diagram = diagramContainerService.get();
     diagramContainerService.diagramObservable.subscribe(d => this.diagram = d);
     selectionService.selectedObservable.subscribe(value => this.selected = value);
@@ -30,7 +32,9 @@ export class DeletionService {
     keyboardEventCallerService.addCallback(['Delete', 'keydown', 'any'], (event => {
       this.selected.forEach(selectedElem => {
         if (selectedElem instanceof Node) {
-          this.deleteNode(selectedElem as Node);
+          if (!editService.isActive()) {
+            this.deleteNode(selectedElem as Node);
+          }
         } else if (selectedElem instanceof Edge) {
           this.deleteEdge(selectedElem as Edge);
         }

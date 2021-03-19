@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DiagramPreviewComponent } from './diagram-preview.component';
+import {Diagram} from "../../model/diagram";
 
 describe('DiagramPreviewComponent', () => {
   let component: DiagramPreviewComponent;
@@ -16,6 +17,7 @@ describe('DiagramPreviewComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DiagramPreviewComponent);
     component = fixture.componentInstance;
+    component.diagram = new Diagram();
     fixture.detectChanges();
   });
 

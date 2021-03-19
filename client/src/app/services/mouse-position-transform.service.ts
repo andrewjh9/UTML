@@ -12,9 +12,19 @@ export class MousePositionTransformService {
 
   public transformPosition(position: Position): Position {
     position.y -= MENUBAROFFSET;
+
     position.x *= this.zoomService.getCurrentZoomFactor();
     position.y *= this.zoomService.getCurrentZoomFactor();
+    position.x += this.zoomService.getXY().x;
+    position.y += this.zoomService.getXY().y;
 
+    return position;
+  }
+
+  public transFormZoomAndMenubar(position: Position): Position {
+    position.y -= MENUBAROFFSET;
+    position.x *= this.zoomService.getCurrentZoomFactor();
+    position.y *= this.zoomService.getCurrentZoomFactor();
     return position;
   }
 
@@ -23,4 +33,5 @@ export class MousePositionTransformService {
     position.y -= MENUBAROFFSET;
     return position;
   }
+
 }

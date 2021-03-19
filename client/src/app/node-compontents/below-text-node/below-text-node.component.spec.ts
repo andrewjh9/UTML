@@ -1,24 +1,24 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { BasicNodeTextComponent } from './basic-node-text.component';
+import { BelowTextNodeComponent } from './below-text-node.component';
 import {RectangleNode} from "../../../model/node/rectangle-node";
 import {Position} from "../../../model/position";
 
-describe('BasicNodeTextComponent', () => {
-  let component: BasicNodeTextComponent;
-  let fixture: ComponentFixture<BasicNodeTextComponent>;
+describe('BelowTextNodeComponent', () => {
+  let component: BelowTextNodeComponent;
+  let fixture: ComponentFixture<BelowTextNodeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BasicNodeTextComponent ]
+      declarations: [ BelowTextNodeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(BasicNodeTextComponent);
+    fixture = TestBed.createComponent(BelowTextNodeComponent);
     component = fixture.componentInstance;
-    component.node = new RectangleNode(100, 100, Position.zero());
+    component.node = new RectangleNode(100, 100, Position.zero())
     fixture.detectChanges();
   });
 

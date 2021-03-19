@@ -14,6 +14,7 @@ import {FormattingModalComponent} from "../formatting-modal/formatting-modal.com
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ZoomService} from "../services/zoom.service";
 import {DiagramComponent} from "../diagram/diagram.component";
+import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 
 @Component({
   selector: '[edge-component]',
@@ -28,6 +29,7 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
     'stroke': 'black',
     'stroke-width': 2
   }
+  cursor: 'pointer' | 'move' = 'pointer';
 
   constructor(private edgeRepositionService: EdgeRepositionService,
               modeService: ModeService,
@@ -35,25 +37,28 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
               private deletionService: DeletionService,
               private cachingService: CachingService,
               private modalService: NgbModal,
-              private zoomService: ZoomService) {
+              private mousePositionTransformService: MousePositionTransformService) {
     super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.edge);
 
       if (this.isSelected) {
         this.styleObject['stroke'] = 'red';
+        this.cursor = 'move';
       } else {
         this.styleObject['stroke'] = 'black';
+        this.cursor = 'pointer';
       }
     });
   }
 
   public handleMouseDown(event: MouseEvent): void {
-    if (!this.isSelected) {
+    let position = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
+    if (this.isSelected) {
+      this.edgeRepositionService.activate(this.edge, position);
+    } else {
       this.selectionService.setEdge(this.edge);
     }
-    // Todo: Change this to work with zooming.
-    this.edgeRepositionService.activate(this.edge, new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT));
   }
 
   public handleDoubleClick(event: MouseEvent) {
@@ -61,6 +66,19 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
     if (event.ctrlKey) {
       if (this.selectionService.isEdge()) {
         this.modalService.open(EdgeFormattingModalComponent);
+      }
+    } else {
+      // Todo: do mouse transformation.
+      let mousePosition = new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT);
+      const DISTANCE_THRESHOLD = 25;
+      if (Position.getDistance(mousePosition, this.edge.getStartPosition()) <= DISTANCE_THRESHOLD
+        && this.edge.startLabel === undefined) {
+        this.edge.addStartLabel();
+      } else if (Position.getDistance(mousePosition, this.edge.getEndPosition()) <= DISTANCE_THRESHOLD
+        && this.edge.endLabel === undefined) {
+        this.edge.addEndLabel();
+      } else if (this.edge.middleLabel === undefined) {
+        this.edge.addMiddleLabel();
       }
     }
   }
@@ -80,9 +98,5 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   delete() {
     this.modalService.dismissAll();
     this.deletionService.deleteEdge(this.edge);
-  }
-
-  save() {
-    this.cachingService.save();
   }
 }

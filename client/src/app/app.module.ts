@@ -53,6 +53,20 @@ import { HourglassNodeRenderComponent } from './node-compontents/hourglass-node/
 import { ActorNodeRenderComponent } from './node-compontents/actor-node/actor-node-render.component';
 import { DiagramManagementModalComponent } from './diagram-management-modal/diagram-management-modal.component';
 import { DiagramPreviewComponent } from './diagram-preview/diagram-preview.component';
+import { BelowTextNodeComponent } from './node-compontents/below-text-node/below-text-node.component';
+import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {faEdit, faEye, faEyeSlash, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
+import {
+  faCopy,
+  faFolderOpen,
+  faPaste,
+  faRedo,
+  faSave,
+  faSearchMinus,
+  faSearchPlus,
+  faUndo
+} from "@fortawesome/free-solid-svg-icons";
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { UserComponent } from './user/user.component';
 
 @NgModule({
@@ -103,7 +117,9 @@ import { UserComponent } from './user/user.component';
     HourglassNodeRenderComponent,
     ActorNodeRenderComponent,
     DiagramManagementModalComponent,
-    DiagramPreviewComponent
+    DiagramPreviewComponent,
+    BelowTextNodeComponent,
+    NavBarComponent
   ],
     imports: [
         BrowserModule,
@@ -111,9 +127,14 @@ import { UserComponent } from './user/user.component';
         HttpClientModule,
         FormsModule,
         NgbModule,
-
+        FontAwesomeModule
     ],
   providers: [RepositionService, ModeService, DeletionService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen,
+      faSearchMinus, faSearchPlus);
+  }
+}
