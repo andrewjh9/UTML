@@ -5,6 +5,7 @@ import {SizeBoundDoublyLinkedList} from "./SizeBoundDoublyLinkedList";
 import {deserialiseDiagram} from "../../../serialisation/deserialise/deserialise-diagram";
 import {DiagramContainerService} from "../diagram-container.service";
 import {LocalStorageService} from "./local-storage.service";
+import {KeyboardEventCallerService} from "../keyboard-event-caller.service";
 
 @Injectable({
   providedIn: 'root'
@@ -20,10 +21,25 @@ export class CachingService {
   private diagram: Diagram;
 
   constructor(diagramContainerService: DiagramContainerService,
-              private localStorageService: LocalStorageService) {
+              private localStorageService: LocalStorageService,
+              keyboardEventCallerService: KeyboardEventCallerService) {
     this.diagram = diagramContainerService.get();
     diagramContainerService.diagramObservable.subscribe(diagram => this.diagram = diagram);
     this.list = new SizeBoundDoublyLinkedList<SerialisedDiagram>(this.MAX_SIZE, this.diagram.serialise());
+
+    keyboardEventCallerService.addCallback(['z', 'keydown', 'ctrl'], (ignored) => {
+      let result = this.undo();
+      if (result !== null) {
+        diagramContainerService.set(result!);
+      }
+    });
+
+    keyboardEventCallerService.addCallback(['y', 'keydown', 'ctrl'], (ignored) => {
+      let result = this.redo();
+      if (result !== null) {
+        diagramContainerService.set(result!);
+      }
+    });
   }
 
   /**
@@ -31,6 +47,7 @@ export class CachingService {
    * @throws Error if diagram is not set.
    */
   public save(): void {
+    console.log('Caching')
     if (this.diagram === undefined) {
       throw new Error('You can not save whilst the diagram is not set!');
     }

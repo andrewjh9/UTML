@@ -99,8 +99,4 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
     this.modalService.dismissAll();
     this.deletionService.deleteEdge(this.edge);
   }
-
-  save() {
-    this.cachingService.save();
-  }
 }

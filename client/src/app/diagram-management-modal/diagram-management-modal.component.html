@@ -23,16 +23,27 @@
               [ngClass]="{selected: i === selectedIndex}">
             <td>{{dbEntry.title}}</td>
             <td>{{dbEntry.lastModified | date:'dd/MM/yyyy'}}</td>
-            <td class="icon"><button class="btn btn-outline-secondary text-center" style="width: 50px" (click)="triggerEditModal()">
-              <fa-icon [icon]="['far', 'edit']"></fa-icon>
-            </button></td>
-            <td class="icon"><button class="btn btn-outline-info text-center" style="width: 50px" (click)="toggleVisibility()">
-              <fa-icon *ngIf="dbEntry.visible" [icon]="['far', 'eye']"></fa-icon>
-              <fa-icon *ngIf="!dbEntry.visible" [icon]="['far', 'eye-slash']"></fa-icon>
-            </button></td>
-            <td class="icon"><button class="btn btn-outline-danger text-center" style="width: 50px" (click)="triggerDeleteModal()">
-              <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
-            </button></td>
+            <td class="icon">
+              <button class="btn btn-outline-secondary text-center" style="width: 50px" (click)="triggerEditModal()"
+                      ngbTooltip="Edit Title" placement="top">
+                <fa-icon [icon]="['far', 'edit']"></fa-icon>
+              </button>
+            </td>
+            <td class="icon">
+              <button class="btn btn-outline-info text-center"
+                      style="width: 50px"
+                      (click)="toggleVisibility()"
+                      ngbTooltip="Visibility" placement="top">
+                <fa-icon *ngIf="dbEntry.visible" [icon]="['far', 'eye']"></fa-icon>
+                <fa-icon *ngIf="!dbEntry.visible" [icon]="['far', 'eye-slash']"></fa-icon>
+              </button>
+            </td>
+            <td class="icon">
+              <button class="btn btn-outline-danger text-center" style="width: 50px" (click)="triggerDeleteModal()"
+                      ngbTooltip="Delete" placement="top">
+                <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
