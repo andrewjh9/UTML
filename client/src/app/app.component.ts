@@ -13,6 +13,9 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.renderer.listen('window', 'keydown', (event: KeyboardEvent) => {
+      if (event.key == "Backspace") {
+        event.preventDefault();
+      }
       console.log(event.key);
       let downButton = AppComponent.getDownButton(event);
       this.keyboardEventCallbackMap.executeCallbacks([event.key, "keydown", downButton], event);

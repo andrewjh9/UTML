@@ -14,6 +14,7 @@ import {FormattingModalComponent} from "../formatting-modal/formatting-modal.com
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {ZoomService} from "../services/zoom.service";
 import {DiagramComponent} from "../diagram/diagram.component";
+import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 
 @Component({
   selector: '[edge-component]',
@@ -36,7 +37,7 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
               private deletionService: DeletionService,
               private cachingService: CachingService,
               private modalService: NgbModal,
-              private zoomService: ZoomService) {
+              private mousePositionTransformService: MousePositionTransformService) {
     super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.edge);
@@ -52,6 +53,7 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   }
 
   public handleMouseDown(event: MouseEvent): void {
+    // Todo: ADd mouse position transform
     if (this.isSelected) {
       this.edgeRepositionService.activate(this.edge, new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT));
     }

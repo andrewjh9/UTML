@@ -11,7 +11,8 @@
       [attr.x]="centerX"
       [attr.y]="getY(i)"
       dominant-baseline="middle"
-      text-anchor="middle">
+      text-anchor="middle"
+      (click)="setActive(i)">
         {{textLine}}
     </svg:tspan>
 </svg:text>

@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Node} from "../../../model/node/node";
+import {EditService} from "../../services/edit.service";
 
 @Component({
   selector: '[basic-node-text]',
@@ -8,8 +9,9 @@ import {Node} from "../../../model/node/node";
 })
 export class BasicNodeTextComponent {
   @Input() node!: Node;
-
   readonly FONT_SIZE = 16;
+
+  constructor(private editService: EditService) {}
 
   get lineAmount(): number {
     return this.node!.getTextLines().length;
@@ -28,14 +30,11 @@ export class BasicNodeTextComponent {
     const EVEN_ODD_OFFSET = this.lineAmount % 2 === 0 ? this.FONT_SIZE / 2 : 0;
     let offset = lineIndex - CENTER_INDEX;
     return this.centerY + (offset * this.FONT_SIZE) + EVEN_ODD_OFFSET;
-    // if (this.lineAmount % 2 === 1) {
-    //   const CENTER_INDEX = Math.floor(this.lineAmount / 2);
-    //   let offset = lineIndex - CENTER_INDEX;
-    //   return this.centerY + (offset * this.FONT_SIZE);
-    // } else {
-    //   const CENTER_INDEX = Math.floor(this.lineAmount / 2);
-    //   let offset = lineIndex - CENTER_INDEX;
-    //   return this.centerY + (offset * this.FONT_SIZE) + this.FONT_SIZE / 2;
-    // }
+  }
+
+  setActive(index: number) {
+    if (this.editService.isActive()) {
+      this.editService.setActiveTextLine(index, false)
+    }
   }
 }

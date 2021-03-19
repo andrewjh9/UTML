@@ -33,6 +33,7 @@ import {MousePositionTransformService} from "../services/mouse-position-transfor
 import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
 import {DiagramContainerService} from "../services/diagram-container.service";
 import {LocalStorageService} from "../services/caching/local-storage.service";
+import {LensOffsetService} from "../services/lens-offset.service";
 
 @Component({
   selector: 'app-diagram',
@@ -65,7 +66,8 @@ export class DiagramComponent implements AfterViewInit {
               private dragSelectionService: DragSelectionService,
               public zoomSerivce: ZoomService,
               private localStorageService: LocalStorageService,
-              private mousePositionTransformService: MousePositionTransformService) {
+              private mousePositionTransformService: MousePositionTransformService,
+              private lensOffsetService: LensOffsetService) {
     this.diagram = diagramContainer.get();
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
 
@@ -119,23 +121,28 @@ export class DiagramComponent implements AfterViewInit {
       this.edgeCreationService.deactivate();
     } else if (this.dragSelectionService.isActive()) {
       this.dragSelectionService.deactivate();
+    } else if (this.lensOffsetService.isActive()) {
+      this.lensOffsetService.deactivate();
     }
   }
 
   handleMouseMove(event: MouseEvent) {
     let position = this.mousePositionTransformService.transformPosition(new Position(event.pageX, event.pageY));
+    let pos = this.mousePositionTransformService.transFormZoomAndMenubar(new Position(event.pageX, event.pageY))
     if (this.repositionService.isActive()) {
-      this.repositionService.update(position);
+      this.repositionService.update(position); //works
     } else if (this.edgeRepositionService.isActive()) {
-      this.edgeRepositionService.update(position);
+      this.edgeRepositionService.update(position); //works
     } else if (this.edgeCreationService.isActive()) {
-      this.edgeCreationService.endPreview = position;
+      this.edgeCreationService.endPreview = position; //works
     } else if (this.resizeService.isActive()) {
-      this.resizeService.update(position);
+      this.resizeService.update(position); //works
     } else if (this.dragDropCreationService.isActive()) {
-      this.dragDropCreationService.update(position);
+      this.dragDropCreationService.update(position); //works
     } else if (this.dragSelectionService.isActive()) {
-      this.dragSelectionService.update(position);
+      this.dragSelectionService.update(position); //idk
+    } else if (this.lensOffsetService.isActive()) {
+      this.lensOffsetService.update(pos); //works
     }
   }
 
@@ -177,28 +184,19 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleMouseDown(event: MouseEvent) {
+    let thisPosition = this.mousePositionTransformService.simpleTransform(new Position(event.x, event.y));
+    //TODO is this the correct position?, call the correct function.
     if (event.shiftKey) {
-      this.dragSelectionService.activate(new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT));
+      this.dragSelectionService.activate(thisPosition);
+    } else if (event.ctrlKey) {
+      this.lensOffsetService.activate(this.mousePositionTransformService.transFormZoomAndMenubar(new Position(event.x, event.y)));
     }
-
   }
 
 
   //TODO Why does the typing not work????? Should be wheelevent
-  zoom(event: any): void {
-    if (event.deltaY > 0) {
-      this.zoomSerivce.updateZoomFactor(true)
-    } else {
-      this.zoomSerivce.updateZoomFactor(false)
-    }
-  }
-//TODO Why does the typing not work????? Should be Dommousescroll
-  zoomFirefox(event: any): void {
-    if (event.detail > 0) {
-      this.zoomSerivce.updateZoomFactor(true)
-    } else {
-      this.zoomSerivce.updateZoomFactor(false)
-    }
+  zoom(zoomIn: boolean): void {
+    this.zoomSerivce.updateZoomFactor(zoomIn);
   }
 
   greekNumbers() {

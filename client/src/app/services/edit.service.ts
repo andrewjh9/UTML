@@ -24,13 +24,16 @@ export class EditService {
   public activate(node: Node) {
     this.node = node;
     this.isInEditMode = true;
+    this.setActiveTextLine(0, false);
   }
 
-  public setActive(index: number) {
+  public setActiveTextLine(index: number, previousDeleted: boolean) {
     console.log(index);
-    console.log(this.activeIndex)
+    console.log(this.activeIndex);
     if (this.activeIndex != index){
-      this.removeBar(this.activeIndex);
+      if (!previousDeleted){
+        this.removeBar(this.activeIndex);
+      }
       this.activeIndex = index;
       let currentText: string[] = this.node!.getTextLines();
       currentText[index] += "|";
@@ -47,7 +50,8 @@ export class EditService {
       let currentText: string[] = this.node!.getTextLines();
       let newFieldDefaultText = "New field";
       currentText.push(newFieldDefaultText);
-     this.setTextToNode(currentText)
+      this.setTextToNode(currentText);
+      this.setActiveTextLine(currentText.length - 1, false);
     }
   }
 
@@ -62,21 +66,34 @@ export class EditService {
           "|" + currentText[index].split("|")[1];
       } else if (text == "ArrowLeft") {
         let arr: string[] = currentText[index].split("|");
-        currentText[index] = this.swapFirstAndLastAndAppend(arr[0], "|" + arr[1])
+        currentText[index] = this.swapFirstAndLastAndAppend(arr[0], "|" + arr[1]);
       } else if (text == "ArrowRight") {
         let arr: string[] = currentText[index].split("|");
-        currentText[index] = this.swapFirstAndLastAndAppend(arr[0] + "|", arr[1])
+        currentText[index] = this.swapFirstAndLastAndAppend(arr[0] + "|", arr[1]);
       }
       this.setTextToNode(currentText);
       if (text == "ArrowUp") {
         if (this.activeIndex! > 0) {
-          this.setActive(this.activeIndex! - 1);
+          this.setActiveTextLine(this.activeIndex! - 1, false);
         }
       } else if (text == "ArrowDown") {
         if (this.activeIndex! < this.node!.getTextLines().length - 1) {
-          this.setActive(this.activeIndex! + 1);
+          this.setActiveTextLine(this.activeIndex! + 1, false);
         }
+      } else if (text == "Delete") {
+        this.deleteLine();
       }
+    }
+  }
+
+  private deleteLine() {
+    let currentText = this.node!.getTextLines();
+    if (currentText.length > 1 && this.activeIndex != 0) {
+      console.log(currentText);
+      currentText.splice(this.activeIndex!, 1);
+      console.log(currentText);
+      this.setTextToNode(currentText);
+      this.setActiveTextLine(this.activeIndex! - 1, true);
     }
   }
 
@@ -100,13 +117,19 @@ export class EditService {
   private removeBar(index: number | undefined): void {
     if (index !== undefined) {
       let currentText = this.node!.getTextLines();
-      currentText[index] = currentText[index].slice(0, -1);
+      currentText[index!] = currentText[index].replace("|", "");
       this.setTextToNode(currentText);
     }
   }
 
   public deactivate(): void {
+    this.removeBar(this.activeIndex);
     this.node = undefined;
     this.isInEditMode = false;
+    this.activeIndex = undefined;
+  }
+
+  public getNode(): Node {
+    return this.node!
   }
 }

@@ -18,7 +18,6 @@ export class ExportService {
   }
 
   public exportAsPNG(): void {
-
     let svg :HTMLElement | null = document.getElementById('diagram');
     let canvas = document.querySelector('canvas');
 
@@ -27,12 +26,12 @@ export class ExportService {
       let data = (new XMLSerializer()).serializeToString(svg);
       let DOMURL = window.URL || window.webkitURL || window;
       let img = new Image();
-      img.width = 1200;
-      img.height = 600 ;
+      img.width = 1200 * 2;
+      img.height = 800 * 2;
       // @ts-ignore
       let svgSize = svg.viewBox.baseVal;
-      canvas.width = svgSize.width;
-      canvas.height = svgSize.height;
+      canvas.width = svgSize.width * 2;
+      canvas.height = svgSize.height * 2;
       let svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
       let url = DOMURL.createObjectURL(svgBlob);
       img.onload = () => {
