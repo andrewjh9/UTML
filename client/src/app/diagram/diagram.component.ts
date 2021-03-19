@@ -47,7 +47,8 @@ export class DiagramComponent implements AfterViewInit {
   mode: Mode;
   Mode = Mode;
 
-  constructor(private diagramContainer: DiagramContainerService,
+  constructor(private sanitizer: DomSanitizer,
+              private diagramContainer: DiagramContainerService,
               private repositionService: RepositionService,
               private edgeRepositionService: EdgeRepositionService,
               private modeService: ModeService,
@@ -198,5 +199,13 @@ export class DiagramComponent implements AfterViewInit {
     } else {
       this.zoomSerivce.updateZoomFactor(false)
     }
+  }
+
+  greekNumbers() {
+    let result = [];
+    for (let x = 945; x <= 969; x++) {
+      result.push(this.sanitizer.bypassSecurityTrustHtml('&#x0' + x.toString(16) + ';'));
+    }
+    return result;
   }
 }
