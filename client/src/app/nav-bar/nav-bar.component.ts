@@ -17,6 +17,7 @@ import {ZoomService} from "../services/zoom.service";
 })
 export class NavBarComponent {
   get NAV_HEIGHT() { return DiagramComponent.NAV_HEIGHT; }
+  isAuthenticated = true;
 
   constructor(private modalService: NgbModal,
               private copyPasteService: CopyPasteService,
@@ -65,5 +66,17 @@ export class NavBarComponent {
   zoomOut() {
     this.zoomService.updateZoomFactor(false);
 
+  }
+
+  help() {
+
+  }
+
+  settings() {
+
+  }
+
+  login() {
+    this.isAuthenticated = !this.isAuthenticated;
   }
 }

@@ -12,6 +12,8 @@ import {CachingService} from "../services/caching/caching.service";
 })
 export class FormattingModalComponent {
   public node?: Node;
+  @ViewChild('nodeText') nodeTextElemRef!: ElementRef;
+
   constructor(public modal: NgbActiveModal,
               private selectionService: SelectionService,
               private deletionService: DeletionService,

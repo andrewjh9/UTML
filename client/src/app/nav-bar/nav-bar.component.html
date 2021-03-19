@@ -41,12 +41,30 @@
           <fa-icon [icon]="['fas', 'search-plus']"></fa-icon>
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Settings</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#" (click)="openDiagramManagementModal()">Teacher</a>
-      </li>
     </ul>
   </div>
+
+  <ul class="navbar-nav ml-auto pb-0 pt-0">
+    <li class="nav-item" *ngIf="isAuthenticated">
+      <a class="nav-link" href="#" (click)="openDiagramManagementModal()" ngbTooltip="Manage Diagrams" placement="bottom">
+        <fa-icon [icon]="['fas', 'tasks']"></fa-icon>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" (click)="login()" ngbTooltip="Login" placement="bottom">
+        <fa-icon *ngIf="isAuthenticated" [icon]="['fas', 'user']"></fa-icon>
+        <fa-icon *ngIf="!isAuthenticated" [icon]="['fas', 'user-slash']"></fa-icon>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" (click)="settings()" ngbTooltip="Settings" placement="bottom">
+        <fa-icon [icon]="['fas', 'cog']"></fa-icon>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" (click)="help()" ngbTooltip="Help" placement="bottom">
+        <fa-icon [icon]="['fas', 'question']"></fa-icon>
+      </a>
+    </li>
+  </ul>
 </nav>

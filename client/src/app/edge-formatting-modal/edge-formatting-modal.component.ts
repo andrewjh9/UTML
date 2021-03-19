@@ -12,6 +12,7 @@ import {CachingService} from "../services/caching/caching.service";
 })
 export class EdgeFormattingModalComponent {
   public edge?: Edge;
+
   constructor(public modal: NgbActiveModal,
               selectionService: SelectionService,
               private deletionService: DeletionService,
