@@ -14,12 +14,9 @@ export class BasicNodeTextComponent {
 
   }
 
-
-
   setActive(index: number) {
     if (this.editService.isActive()) {
-      this.editService.setActive(index, false)
+      this.editService.setActiveTextLine(index, false)
     }
-
   }
 }

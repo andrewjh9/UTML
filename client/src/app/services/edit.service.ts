@@ -24,10 +24,10 @@ export class EditService {
   public activate(node: Node) {
     this.node = node;
     this.isInEditMode = true;
-    this.setActive(0, false);
+    this.setActiveTextLine(0, false);
   }
 
-  public setActive(index: number, previousDeleted: boolean) {
+  public setActiveTextLine(index: number, previousDeleted: boolean) {
     console.log(index);
     console.log(this.activeIndex);
     if (this.activeIndex != index){
@@ -50,7 +50,8 @@ export class EditService {
       let currentText: string[] = this.node!.getTextLines();
       let newFieldDefaultText = "New field";
       currentText.push(newFieldDefaultText);
-     this.setTextToNode(currentText)
+      this.setTextToNode(currentText);
+      this.setActiveTextLine(currentText.length - 1, false);
     }
   }
 
@@ -73,11 +74,11 @@ export class EditService {
       this.setTextToNode(currentText);
       if (text == "ArrowUp") {
         if (this.activeIndex! > 0) {
-          this.setActive(this.activeIndex! - 1, false);
+          this.setActiveTextLine(this.activeIndex! - 1, false);
         }
       } else if (text == "ArrowDown") {
         if (this.activeIndex! < this.node!.getTextLines().length - 1) {
-          this.setActive(this.activeIndex! + 1, false);
+          this.setActiveTextLine(this.activeIndex! + 1, false);
         }
       } else if (text == "Delete") {
         this.deleteLine();
@@ -92,7 +93,7 @@ export class EditService {
       currentText.splice(this.activeIndex!, 1);
       console.log(currentText);
       this.setTextToNode(currentText);
-      this.setActive(this.activeIndex! - 1, true);
+      this.setActiveTextLine(this.activeIndex! - 1, true);
     }
   }
 

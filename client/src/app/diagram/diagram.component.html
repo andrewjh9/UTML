@@ -23,6 +23,12 @@
         <a class="nav-link" href="#">Settings</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" href="#" (click)="zoom(true)">Zoom in</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="zoom(false)">Zoom out</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/teacher">Teacher</a>
       </li>
     </ul>
@@ -39,8 +45,6 @@
            (mouseup)="handleMouseUp($event)"
            (mousemove)="handleMouseMove($event)"
            (dblclick)="handleDoubleClick($event)"
-           (mousewheel)="zoom($event)"
-           (DOMMouseScroll)="zoomFirefox($event)"
            id="diagram"
       >
         <g drag-drop-preview></g>

@@ -12,7 +12,7 @@ export class ClassNodeRenderComponent {
   public isInEditMode: boolean = false;
   @Input() node!: ClassNode;
 
-  constructor(private editService: EditService,
+  constructor(public editService: EditService,
               keyboardEventCallerService: KeyboardEventCallerService) {
     keyboardEventCallerService.addCallback(['Escape', "keydown", 'any'], (ignored) => {
       this.isInEditMode = false;
@@ -20,20 +20,7 @@ export class ClassNodeRenderComponent {
     });
   }
 
-  addLine() {
-    this.editService.addField()
-  }
-
   setActive(index: number) {
-    this.editService.setActive(index, false)
-  }
-
-  activateEditMode() {
-    if (this.node && !this.editService.isActive()) {
-      this.isInEditMode = true;
-      this.editService.activate(this.node);
-    } else if (this.node == this.editService.getNode()) {
-      this.editService.addField();
-    }
+      this.editService.setActiveTextLine(index, false)
   }
 }

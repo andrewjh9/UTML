@@ -10,7 +10,10 @@
     font-family="Comic Sans MS, Helvetica, sans-serif"
     class="movable">
 <!--    <svg:g *ngIf="!node?.inEditMode">-->
-      <svg:tspan  *ngFor="let text_line of node.getTextLines(); let i = index"  [attr.x]= "node.position.x + (node.width/2)" dy="1.2em" (click)="setActive(i)">{{text_line}}</svg:tspan>
+    <svg:g>
+      <svg:tspan  *ngFor="let text_line of node.getTextLines(); let i = index"  (click)="setActive(i)" [attr.x]= "node.position.x + (node.width/2)" dy="1.2em" >{{text_line}}</svg:tspan>
+    </svg:g>
+
 <!--    </svg:g>-->
 <!--    <svg:g *ngIf="node?.inEditMode">-->
 <!--      <svg:text *ngFor="let text_line of node.getTextLines()" contentEditable="true" [attr.x]= "node.position.x + (node.width/2)" dy="1.2em" >{{text_line}}</svg:text>-->

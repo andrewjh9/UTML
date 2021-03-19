@@ -246,19 +246,12 @@ export class DiagramComponent implements AfterViewInit {
 
 
   //TODO Why does the typing not work????? Should be wheelevent
-  zoom(event: any): void {
-    if (event.deltaY > 0) {
+  zoom(zoomIn: boolean): void {
+    if (zoomIn) {
       this.zoomSerivce.updateZoomFactor(true)
     } else {
       this.zoomSerivce.updateZoomFactor(false)
     }
   }
-  //TODO Why does the typing not work????? Should be Dommousescroll
-  zoomFirefox(event: any): void {
-    if (event.detail > 0) {
-      this.zoomSerivce.updateZoomFactor(true)
-    } else {
-      this.zoomSerivce.updateZoomFactor(false)
-    }
-  }
+
 }
