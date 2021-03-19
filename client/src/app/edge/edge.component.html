@@ -7,15 +7,17 @@ Once done remove (mousedown) on render dispatch-->
 <!-- Invisible, selectable to make the mouse down trigger easily accessible -->
 <svg:polyline *ngIf="edge && isLine()"
               [attr.points]="edge.getPointString()"
-              style="stroke:rgb(0, 0, 0); stroke-width:10; stroke-opacity: 0;  fill:none;"
+              style="stroke:rgb(0, 0, 0); stroke-width:15; stroke-opacity: 0;  fill:none;"
               (mousedown)="handleMouseDown($event)"
-              (dblclick)="handleDoubleClick($event)"/>
+              (dblclick)="handleDoubleClick($event)"
+              [ngStyle]="{'cursor': cursor}"/>
 <svg:path *ngIf="edge && isArc()"
           [attr.d]="edge.getPointString()"
           fill="none"
-          style="stroke-width: 10; stroke: black; stroke-opacity: 0"
+          style="stroke-width: 15; stroke: black; stroke-opacity: 0"
           (mousedown)="handleMouseDown($event)"
-          (dblclick)="handleDoubleClick($event)"/>
+          (dblclick)="handleDoubleClick($event)"
+          [ngStyle]="{'cursor': cursor}"/>
 
 
 <svg:g *ngIf="edge && edge?.startLabel"

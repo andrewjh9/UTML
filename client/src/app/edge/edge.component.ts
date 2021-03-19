@@ -28,6 +28,7 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
     'stroke': 'black',
     'stroke-width': 2
   }
+  cursor: 'pointer' | 'move' = 'pointer';
 
   constructor(private edgeRepositionService: EdgeRepositionService,
               modeService: ModeService,
@@ -42,18 +43,22 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
 
       if (this.isSelected) {
         this.styleObject['stroke'] = 'red';
+        this.cursor = 'move';
       } else {
         this.styleObject['stroke'] = 'black';
+        this.cursor = 'pointer';
       }
     });
   }
 
   public handleMouseDown(event: MouseEvent): void {
+    if (this.isSelected) {
+      this.edgeRepositionService.activate(this.edge, new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT));
+    }
+
     if (!this.isSelected) {
       this.selectionService.setEdge(this.edge);
     }
-    // Todo: Change this to work with zooming.
-    this.edgeRepositionService.activate(this.edge, new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT));
   }
 
   public handleDoubleClick(event: MouseEvent) {
@@ -61,6 +66,19 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
     if (event.ctrlKey) {
       if (this.selectionService.isEdge()) {
         this.modalService.open(EdgeFormattingModalComponent);
+      }
+    } else {
+      // Todo: do mouse transformation.
+      let mousePosition = new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT);
+      const DISTANCE_THRESHOLD = 25;
+      if (Position.getDistance(mousePosition, this.edge.getStartPosition()) <= DISTANCE_THRESHOLD
+        && this.edge.startLabel === undefined) {
+        this.edge.addStartLabel();
+      } else if (Position.getDistance(mousePosition, this.edge.getEndPosition()) <= DISTANCE_THRESHOLD
+        && this.edge.endLabel === undefined) {
+        this.edge.addEndLabel();
+      } else if (this.edge.middleLabel === undefined) {
+        this.edge.addMiddleLabel();
       }
     }
   }

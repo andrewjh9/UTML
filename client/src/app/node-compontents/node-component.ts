@@ -44,14 +44,6 @@ export class NodeComponent extends ModeAwareComponent {
     this.repositionService.activate(this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY)));
   }
 
-  public handleMouseEnter() {
-    this.hoveringNearby = true;
-  }
-
-  public handleMouseLeave() {
-    this.hoveringNearby = false;
-  }
-
   public handleDoubleClick(event: MouseEvent) {
     if (event.ctrlKey) {
       if (this.selectionService.isNode()) {

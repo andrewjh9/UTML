@@ -40,7 +40,7 @@ import {LocalStorageService} from "../services/caching/local-storage.service";
   styleUrls: ['./diagram.component.scss']
 })
 export class DiagramComponent implements AfterViewInit {
-  public static readonly NAV_HEIGHT = 50;
+  public static readonly NAV_HEIGHT = 56;
   get NAV_HEIGHT() { return DiagramComponent.NAV_HEIGHT; }
   public diagram: Diagram;
   seq = new SequenceDiagram();
