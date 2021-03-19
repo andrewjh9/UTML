@@ -55,6 +55,26 @@
       </button>
     </div>
 
+    <hr>
+
+    <div class="w-100 d-flex flex-row m-2">
+      <div class="flex-grow-0 mr-2" style="line-height: 40px">Select Label: </div>
+      <div class="btn-group btn-group-toggle flex-grow-1" style="height: 40px;" ngbRadioGroup name="radioBasic" [(ngModel)]="selectedLabel">
+        <label ngbButtonLabel class="btn-outline-secondary flex-grow-1">
+          <input ngbButton type="radio" value="start"> Start
+        </label>
+        <label ngbButtonLabel class="btn-outline-secondary flex-grow-1">
+          <input ngbButton type="radio" value="middle"> Middle
+        </label>
+        <label ngbButtonLabel class="btn-outline-secondary flex-grow-1">
+          <input ngbButton type="radio" value="end"> End
+        </label>
+      </div>
+    </div>
+    <app-special-character-selector (clickChar)="handleClickedChar($event)"></app-special-character-selector>
+
+    <hr>
+
     <div class="form-group row px-3">
       <label class="w-25 col-form-label">Line Style</label>
       <div class="w-75">
@@ -92,7 +112,6 @@
       </div>
     </div>
   </div>
-
 </div>
 <div class="modal-footer">
   <div (click)="modal.close('Ok click')">
@@ -101,7 +120,7 @@
     </button>
   </div>
   <button type="button" ngbAutofocus class="btn btn-success" (click)="modal.close('Ok click')">
-    Save <fa-icon [icon]="['far', 'save']"></fa-icon>
+    Save <fa-icon [icon]="['fas', 'save']"></fa-icon>
   </button>
 </div>
 

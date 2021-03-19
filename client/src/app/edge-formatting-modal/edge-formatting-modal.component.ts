@@ -12,6 +12,7 @@ import {CachingService} from "../services/caching/caching.service";
 })
 export class EdgeFormattingModalComponent {
   public edge?: Edge;
+  selectedLabel: 'start' | 'middle' | 'end' = 'start';
 
   constructor(public modal: NgbActiveModal,
               selectionService: SelectionService,
@@ -48,6 +49,32 @@ export class EdgeFormattingModalComponent {
         break;
       case "end":
         this.edge.endLabel = undefined;
+        break;
+    }
+  }
+
+  handleClickedChar(char: string) {
+    switch (this.selectedLabel) {
+      case "start":
+        if (this.edge?.startLabel) {
+          this.edge.startLabel.value += char;
+        } else {
+          this.edge?.addStartLabel(char);
+        }
+        break;
+      case "middle":
+        if (this.edge?.middleLabel) {
+          this.edge.middleLabel.value += char;
+        } else {
+          this.edge?.addMiddleLabel(char);
+        }
+        break;
+      case "end":
+        if (this.edge?.endLabel) {
+          this.edge.endLabel.value += char;
+        } else {
+          this.edge?.addEndLabel(char);
+        }
         break;
     }
   }

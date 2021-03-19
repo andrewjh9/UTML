@@ -192,18 +192,4 @@ export class DiagramComponent implements AfterViewInit {
       this.lensOffsetService.activate(this.mousePositionTransformService.transFormZoomAndMenubar(new Position(event.x, event.y)));
     }
   }
-
-
-  //TODO Why does the typing not work????? Should be wheelevent
-  zoom(zoomIn: boolean): void {
-    this.zoomSerivce.updateZoomFactor(zoomIn);
-  }
-
-  greekNumbers() {
-    let result = [];
-    for (let x = 8714; x < 8724; x++) {
-      result.push(this.sanitizer.bypassSecurityTrustHtml('&#x0' + x.toString(16) + ';'));
-    }
-    return result;
-  }
 }
