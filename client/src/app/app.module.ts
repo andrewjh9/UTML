@@ -56,7 +56,16 @@ import { DiagramPreviewComponent } from './diagram-preview/diagram-preview.compo
 import { BelowTextNodeComponent } from './node-compontents/below-text-node/below-text-node.component';
 import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {faEdit, faEye, faEyeSlash, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
-import {faCopy, faFolderOpen, faPaste, faRedo, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
+import {
+  faCopy,
+  faFolderOpen,
+  faPaste,
+  faRedo,
+  faSave,
+  faSearchMinus,
+  faSearchPlus,
+  faUndo
+} from "@fortawesome/free-solid-svg-icons";
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @NgModule({
@@ -122,6 +131,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen);
+    library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen,
+      faSearchMinus, faSearchPlus);
   }
 }

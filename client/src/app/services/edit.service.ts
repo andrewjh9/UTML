@@ -11,8 +11,10 @@ export class EditService {
   private node?: Node;
   private renderer: Renderer2;
   private activeIndex?: number;
-  constructor(private keyboardEventCallerService: KeyboardEventCallerService,
+  constructor(keyboardEventCallerService: KeyboardEventCallerService,
               rendererFactory: RendererFactory2) {
+    keyboardEventCallerService.addCallback(['Escape', "keydown", 'any'], (ignored) => this.deactivate());
+
     this.renderer = rendererFactory.createRenderer(null, null);
     this.renderer.listen('window', 'keydown', (event: KeyboardEvent) => {
       if (this.isActive()) {

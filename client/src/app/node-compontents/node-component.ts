@@ -43,12 +43,19 @@ export class NodeComponent extends ModeAwareComponent {
     // and this allows you to move multiple at the same time.
     if (!this.isSelected) {
       this.selectionService.setNode(this.node);
+    } else {
+      this.repositionService.activate(this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY)));
     }
-    this.repositionService.activate(this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY)));
   }
 
   public handleDoubleClick(event: MouseEvent) {
+    if (this.repositionService.isActive()) {
+      this.repositionService.deactivate();
+    }
+
     if (event.ctrlKey) {
+      this.editService.deactivate();
+
       if (this.selectionService.isNode()) {
         this.modalService.open(FormattingModalComponent);
       }

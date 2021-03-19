@@ -1,6 +1,7 @@
 import {AfterViewInit, Component, Renderer2} from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import {DownButton, KeyboardEventCallerService} from "./services/keyboard-event-caller.service";
+import {EditService} from "./services/edit.service";
 
 @Component({
   selector: 'app-root',
@@ -8,15 +9,16 @@ import {DownButton, KeyboardEventCallerService} from "./services/keyboard-event-
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService) {
+  constructor(private renderer: Renderer2,
+              private keyboardEventCallbackMap: KeyboardEventCallerService,
+              private editService: EditService) {
   }
 
   ngAfterViewInit(): void {
     this.renderer.listen('window', 'keydown', (event: KeyboardEvent) => {
-      if (event.key == "Backspace") {
+      if (event.key == "Backspace" && this.editService.isActive()) {
         event.preventDefault();
       }
-      console.log(event.key);
       let downButton = AppComponent.getDownButton(event);
       this.keyboardEventCallbackMap.executeCallbacks([event.key, "keydown", downButton], event);
     });

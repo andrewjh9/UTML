@@ -53,12 +53,10 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   }
 
   public handleMouseDown(event: MouseEvent): void {
-    // Todo: ADd mouse position transform
+    let position = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
     if (this.isSelected) {
-      this.edgeRepositionService.activate(this.edge, new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT));
-    }
-
-    if (!this.isSelected) {
+      this.edgeRepositionService.activate(this.edge, position);
+    } else {
       this.selectionService.setEdge(this.edge);
     }
   }

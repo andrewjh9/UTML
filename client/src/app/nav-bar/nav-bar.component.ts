@@ -8,6 +8,7 @@ import {CachingService} from "../services/caching/caching.service";
 import {DiagramContainerService} from "../services/diagram-container.service";
 import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
 import {DiagramComponent} from "../diagram/diagram.component";
+import {ZoomService} from "../services/zoom.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -20,7 +21,8 @@ export class NavBarComponent {
   constructor(private modalService: NgbModal,
               private copyPasteService: CopyPasteService,
               private cachingService: CachingService,
-              private diagramContainer: DiagramContainerService) { }
+              private diagramContainer: DiagramContainerService,
+              private zoomService: ZoomService) { }
 
   copy() {
     this.copyPasteService.doCopy();
@@ -54,5 +56,14 @@ export class NavBarComponent {
 
   openDiagramManagementModal() {
     this.modalService.open(DiagramManagementModalComponent, {size: 'xl'});
+  }
+
+  zoomIn() {
+    this.zoomService.updateZoomFactor(true);
+  }
+
+  zoomOut() {
+    this.zoomService.updateZoomFactor(false);
+
   }
 }
