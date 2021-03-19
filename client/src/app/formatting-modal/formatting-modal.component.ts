@@ -33,6 +33,12 @@ export class FormattingModalComponent {
   cache() {
     this.cachingService.save();
   }
+
+  addChar(char: string) {
+    if (this.node) {
+      this.node.text += char;
+    }
+  }
 }
 
 

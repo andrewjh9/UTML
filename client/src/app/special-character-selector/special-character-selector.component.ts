@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-special-character-selector',
@@ -6,20 +6,19 @@ import {Component, ElementRef, Input, OnInit} from '@angular/core';
   styleUrls: ['./special-character-selector.component.scss']
 })
 export class SpecialCharacterSelectorComponent {
-  @Input() characters!: string;
-  @Input() target!: ElementRef;
+  @Output() clickChar: EventEmitter<string> = new EventEmitter<string>();
+  active: number = 1;
 
-  get charArray() {
-    let result = [];
-    for (let i = 0; i < this.characters.length; i++) {
-      result.push(this.characters.charAt(i));
-    }
-    return result;
-  }
+  readonly LC_GREEK1 = 'αβγδεζηθικλμν';
+  readonly LC_GREEK2 = 'ξοπρςστυφχψω';
+  readonly UC_GREEK1 = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝ';
+  readonly UC_GREEK2 = 'ΞΟΠΡΣΤΥΦΧΨΩ';
+  readonly MATH1 = '∀∁∂∃∄∅∆∇∈∉'
+  readonly MATH2 = '∊∋∌∍∎∏∐∑−∓';
 
   constructor() { }
 
   handleClick(char: string) {
-    this.target.nativeElement.value += char;
+    this.clickChar.emit(char);
   }
 }

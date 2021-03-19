@@ -69,6 +69,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { SpecialCharacterSelectorComponent } from './special-character-selector/special-character-selector.component';
+import { SpecialCharacterRowComponent } from './special-character-row/special-character-row.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import { SpecialCharacterSelectorComponent } from './special-character-selector/
     DiagramPreviewComponent,
     BelowTextNodeComponent,
     NavBarComponent,
-    SpecialCharacterSelectorComponent
+    SpecialCharacterSelectorComponent,
+    SpecialCharacterRowComponent
   ],
     imports: [
         BrowserModule,

@@ -1,0 +1,8 @@
+<div class="d-flex btn-group" role="group" aria-label="Basic example">
+  <a *ngFor="let char of charArray"
+     type="button"
+     class="btn btn-outline-secondary flex-grow-1 mb-1"
+     (click)="callback(char)">
+    {{char}}
+  </a>
+</div>

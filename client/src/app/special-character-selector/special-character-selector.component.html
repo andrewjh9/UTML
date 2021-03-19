@@ -1,8 +1,28 @@
-<div class="d-flex w-100 btn-group" role="group" aria-label="Basic example">
-  <a *ngFor="let char of charArray"
-          type="button"
-          class="btn btn-outline-secondary flex-grow-1 mb-1"
-          (click)="handleClick(char)">
-    {{char}}
-  </a>
+<div class="w-100">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>Lowercase Greek</a>
+      <ng-template ngbNavContent>
+        <special-character-row [characters]="LC_GREEK1" [charEmitter]="clickChar"></special-character-row>
+        <special-character-row [characters]="LC_GREEK2" [charEmitter]="clickChar"></special-character-row>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>Uppercase Greek</a>
+      <ng-template ngbNavContent>
+        <div>
+          <special-character-row [characters]="UC_GREEK1" [charEmitter]="clickChar"></special-character-row>
+          <special-character-row [characters]="UC_GREEK2" [charEmitter]="clickChar"></special-character-row>
+        </div>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="3">
+      <a ngbNavLink>Mathematics</a>
+      <ng-template ngbNavContent>
+        <special-character-row [characters]="MATH1" [charEmitter]="clickChar"></special-character-row>
+        <special-character-row [characters]="MATH2" [charEmitter]="clickChar"></special-character-row>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
 </div>

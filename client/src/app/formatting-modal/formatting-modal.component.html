@@ -25,11 +25,7 @@
       </div>
     </div>
     <div class="w-100">
-      <app-special-character-selector class="mb-1 w-100" [characters]="'αβγδεζηθικλμν'" [target]="nodeTextElemRef">
-      </app-special-character-selector>
-      <app-special-character-selector class="mb-1 w-100" [characters]="'ξοπρςστυφχψω'" [target]="nodeTextElemRef">
-      </app-special-character-selector>
-    </div>
+      <app-special-character-selector (clickChar)="addChar($event)"></app-special-character-selector>
     <div class="form-group row px-3">
       <label class="w-25 col-form-label" >Double Border</label>
       <div class="w-75">

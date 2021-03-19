@@ -201,7 +201,7 @@ export class DiagramComponent implements AfterViewInit {
 
   greekNumbers() {
     let result = [];
-    for (let x = 945; x <= 969; x++) {
+    for (let x = 8714; x < 8724; x++) {
       result.push(this.sanitizer.bypassSecurityTrustHtml('&#x0' + x.toString(16) + ';'));
     }
     return result;
