@@ -48,6 +48,25 @@ import { SaveModalComponent } from './save-modal/save-modal.component';
 import { JsonIconComponent } from './icons/json-icon/json-icon.component';
 import { PngIconComponent } from './icons/png-icon/png-icon.component';
 import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-preview.component';
+import { SelectionSidebarComponent } from './selection-sidebar/selection-sidebar.component';
+import { HourglassNodeRenderComponent } from './node-compontents/hourglass-node/hourglass-node-render.component';
+import { ActorNodeRenderComponent } from './node-compontents/actor-node/actor-node-render.component';
+import { DiagramManagementModalComponent } from './diagram-management-modal/diagram-management-modal.component';
+import { DiagramPreviewComponent } from './diagram-preview/diagram-preview.component';
+import { BelowTextNodeComponent } from './node-compontents/below-text-node/below-text-node.component';
+import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
+import {faEdit, faEye, faEyeSlash, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
+import {
+  faCopy,
+  faFolderOpen,
+  faPaste,
+  faRedo,
+  faSave,
+  faSearchMinus,
+  faSearchPlus,
+  faUndo
+} from "@fortawesome/free-solid-svg-icons";
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +109,14 @@ import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-pr
     SaveModalComponent,
     JsonIconComponent,
     PngIconComponent,
-    DragSelectPreviewComponent
+    DragSelectPreviewComponent,
+    SelectionSidebarComponent,
+    HourglassNodeRenderComponent,
+    ActorNodeRenderComponent,
+    DiagramManagementModalComponent,
+    DiagramPreviewComponent,
+    BelowTextNodeComponent,
+    NavBarComponent
   ],
     imports: [
         BrowserModule,
@@ -98,9 +124,14 @@ import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-pr
         HttpClientModule,
         FormsModule,
         NgbModule,
-
+        FontAwesomeModule
     ],
   providers: [RepositionService, ModeService, DeletionService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen,
+      faSearchMinus, faSearchPlus);
+  }
+}

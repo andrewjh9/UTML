@@ -11,6 +11,7 @@ import {DeletionService} from "../services/deletion.service";
 import {CachingService} from "../services/caching/caching.service";
 import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
+import {EditService} from "../services/edit.service";
 
 @Component({
   templateUrl: './node.component.html',
@@ -20,6 +21,7 @@ export class NodeComponent extends ModeAwareComponent {
   @Input() node!: Node;
   hoveringNearby: boolean = false;
   isSelected: boolean = false;
+  isInEditMode: boolean = false;
 
   constructor(private repositionService: RepositionService,
               modeService: ModeService,
@@ -27,7 +29,8 @@ export class NodeComponent extends ModeAwareComponent {
               private modalService: NgbModal,
               private deletionService: DeletionService,
               private cachingService: CachingService,
-              private mousePositionTransformService: MousePositionTransformService) {
+              private mousePositionTransformService: MousePositionTransformService,
+              private editService: EditService) {
     super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.node);
@@ -40,23 +43,28 @@ export class NodeComponent extends ModeAwareComponent {
     // and this allows you to move multiple at the same time.
     if (!this.isSelected) {
       this.selectionService.setNode(this.node);
+    } else {
+      this.repositionService.activate(this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY)));
     }
-    this.repositionService.activate(this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY)));
-  }
-
-  public handleMouseEnter() {
-    this.hoveringNearby = true;
-  }
-
-  public handleMouseLeave() {
-    this.hoveringNearby = false;
   }
 
   public handleDoubleClick(event: MouseEvent) {
+    if (this.repositionService.isActive()) {
+      this.repositionService.deactivate();
+    }
+
     if (event.ctrlKey) {
+      this.editService.deactivate();
+
       if (this.selectionService.isNode()) {
         this.modalService.open(FormattingModalComponent);
       }
+    } else if (this.node && this.editService.getNode() != this.node) {
+      this.isInEditMode = true;
+      this.editService.deactivate();
+      this.editService.activate(this.node);
+    } else if (this.node == this.editService.getNode()) {
+      this.editService.addField();
     }
   }
 

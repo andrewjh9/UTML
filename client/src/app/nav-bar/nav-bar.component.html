@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light pb-0 pt-0">
+  <div class="collapse navbar-collapse" style="height: 50px;">
+    <ul class="navbar-nav mr-auto pb-0 pt-0">
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="upload()" ngbTooltip="Open" placement="bottom">
+          <fa-icon [icon]="['fas', 'folder-open']"></fa-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="save()" ngbTooltip="Save" placement="bottom">
+          <fa-icon [icon]="['fas', 'save']"></fa-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="copy()" ngbTooltip="Copy (ctrl+c)" placement="bottom">
+          <fa-icon [icon]="['fas', 'copy']"></fa-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="paste()" ngbTooltip="Paste (ctrl+v)" placement="bottom">
+          <fa-icon [icon]="['fas', 'paste']"></fa-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="undo()" ngbTooltip="Undo (ctrl+z)" placement="bottom">
+          <fa-icon [icon]="['fas', 'undo']"></fa-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="redo()" ngbTooltip="Redo (ctrl+y)" placement="bottom">
+          <fa-icon [icon]="['fas', 'redo']"></fa-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="zoomOut()" ngbTooltip="Zoom Out" placement="bottom">
+          <fa-icon [icon]="['fas', 'search-minus']"></fa-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="zoomIn()" ngbTooltip="Zoom In" placement="bottom">
+          <fa-icon [icon]="['fas', 'search-plus']"></fa-icon>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Settings</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" (click)="openDiagramManagementModal()">Teacher</a>
+      </li>
+    </ul>
+  </div>
+</nav>

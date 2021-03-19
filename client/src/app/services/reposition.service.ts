@@ -42,8 +42,10 @@ export class RepositionService implements Deactivatable {
   }
 
   public deactivate(): void {
+    if (this.isActive()) {
+      this.cachingService.save();
+    }
     this.startMousePosition = undefined;
-    this.cachingService.save();
   }
 }
 

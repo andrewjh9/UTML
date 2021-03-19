@@ -10,8 +10,11 @@ import {Diagram} from "../../model/diagram";
   styleUrls: ['./save-modal.component.scss']
 })
 export class SaveModalComponent implements AfterContentInit {
+  filename: string = 'diagram-filename';
+  isAuthenticated: boolean = true;
+
   constructor(public modal: NgbActiveModal,
-              public exportService: ExportService) { }
+              private exportService: ExportService) { }
 
   ngAfterContentInit(): void {
   }
@@ -24,5 +27,8 @@ export class SaveModalComponent implements AfterContentInit {
     this.exportService.exportAsJSON()
   }
 
+  saveToDB() {
+    // Todo: call db here.
+  }
 }
 

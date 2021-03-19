@@ -2,8 +2,12 @@
 // import {Position} from "../position";
 // import {Edge, EdgeFormatter, EndStyle, LineStyle, LineType} from "../edge";
 import {Diagram} from "../diagram";
+import {EllipseNode} from "../node/ellipse-node";
+import {Position} from "../position";
 //
 export let fsm: Diagram;
+fsm = new Diagram();
+fsm.nodes.push(new EllipseNode(100, 100, new Position(10, 10)))
 //
 // const n1: Node = {
 //   texts: ['n1'],
@@ -50,4 +54,3 @@ export let fsm: Diagram;
 //   edges: [e1, e2],
 //   unstructuredEdges: [edgeFormatter]
 // }
-fsm = new Diagram();

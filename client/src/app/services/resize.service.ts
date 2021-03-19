@@ -54,8 +54,10 @@ export class ResizeService implements Deactivatable {
   }
 
   public deactivate(): void {
+    if (this.isActive()) {
+      this.cachingService.save();
+    }
     this.node = undefined;
     this.startPosition = undefined;
-    this.cachingService.save();
   }
 }

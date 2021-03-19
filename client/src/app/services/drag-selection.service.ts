@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {SelectionService} from "./selection.service";
 import {Diagram} from "../../model/diagram";
 import {Position} from "../../model/position";
+import {DiagramContainerService} from "./diagram-container.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,9 +15,15 @@ import {Position} from "../../model/position";
 export class DragSelectionService {
   private _start?: Position;
   private _end?: Position;
-  private _diagram?: Diagram;
+  private _diagram: Diagram;
+  // emitted coordinates are in the form [start.x, start.y, end.x, end.y]
+  // if the dragSelectionService is deactivated [] is sent.
+  public readonly startEndChangeEmitter: EventEmitter<Array<number>> = new EventEmitter<Array<number>>();
 
-  constructor(private selectionService: SelectionService) {
+  constructor(private selectionService: SelectionService,
+              private diagramContainerService: DiagramContainerService) {
+    this._diagram = diagramContainerService.get();
+    diagramContainerService.diagramObservable.subscribe(diagram => this._diagram = diagram);
   }
 
   public isActive(): boolean {
@@ -24,13 +31,10 @@ export class DragSelectionService {
   }
 
   public activate(position: Position): void {
-    if (this._diagram === undefined) {
-      throw new Error('Diagram should be defined before you activate this service.');
-    }
-
     this._start = position;
     this._end = position;
     this.selectionService.deselect();
+    this.startEndChangeEmitter.emit([this._start!.x, this._start!.y, this._end!.x, this._end!.y]);
   }
 
   public update(position: Position): void {
@@ -56,15 +60,14 @@ export class DragSelectionService {
         this.selectionService.add(edge);
       }
     });
+
+    this.startEndChangeEmitter.emit([this._start!.x, this._start!.y, this._end!.x, this._end!.y]);
   }
 
   public deactivate(): void {
     this._start = undefined;
     this._end = undefined;
-  }
-
-  set diagram(value: Diagram) {
-    this._diagram = value;
+    this.startEndChangeEmitter.emit([]);
   }
 
   get start(): Position | undefined {

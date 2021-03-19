@@ -35,4 +35,19 @@ export class EdgeFormattingModalComponent {
   cache() {
     this.cachingService.save();
   }
+
+  removeLabel(middle: 'start' | 'middle' | 'end'): void {
+    if (!this.edge) { return; }
+    switch (middle) {
+      case "start":
+        this.edge.startLabel = undefined;
+        break;
+      case "middle":
+        this.edge.middleLabel = undefined;
+        break;
+      case "end":
+        this.edge.endLabel = undefined;
+        break;
+    }
+  }
 }

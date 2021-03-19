@@ -3,6 +3,9 @@ import {SerialisedDiagram} from "../../../serialisation/serialised-data-structur
 import {Diagram} from "../../../model/diagram";
 import {SizeBoundDoublyLinkedList} from "./SizeBoundDoublyLinkedList";
 import {deserialiseDiagram} from "../../../serialisation/deserialise/deserialise-diagram";
+import {DiagramContainerService} from "../diagram-container.service";
+import {LocalStorageService} from "./local-storage.service";
+import {KeyboardEventCallerService} from "../keyboard-event-caller.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,19 +17,29 @@ export class CachingService {
   /** Key of the serialised version of the diagram that is stored in local storage. */
   public static readonly LOCAL_STORAGE_KEY = 'diagram-cache';
   private readonly MAX_SIZE: number = 25;
-  private list: SizeBoundDoublyLinkedList<SerialisedDiagram>;
-  private diagram?: Diagram;
+  private readonly list: SizeBoundDoublyLinkedList<SerialisedDiagram>;
+  private diagram: Diagram;
 
-  constructor() {
-    this.list = new SizeBoundDoublyLinkedList<SerialisedDiagram>(this.MAX_SIZE, (new Diagram()).serialise());
-  }
+  constructor(diagramContainerService: DiagramContainerService,
+              private localStorageService: LocalStorageService,
+              keyboardEventCallerService: KeyboardEventCallerService) {
+    this.diagram = diagramContainerService.get();
+    diagramContainerService.diagramObservable.subscribe(diagram => this.diagram = diagram);
+    this.list = new SizeBoundDoublyLinkedList<SerialisedDiagram>(this.MAX_SIZE, this.diagram.serialise());
 
-  /**
-   * Sets the diagram for future use and saves the state of the diagram at the moment of setting.
-   * @param diagram Reference to the diagram to be cached when save() is called.
-   */
-  public setDiagram(diagram: Diagram) {
-    this.diagram = diagram;
+    keyboardEventCallerService.addCallback(['z', 'keydown', 'ctrl'], (ignored) => {
+      let result = this.undo();
+      if (result !== null) {
+        diagramContainerService.set(result!);
+      }
+    });
+
+    keyboardEventCallerService.addCallback(['y', 'keydown', 'ctrl'], (ignored) => {
+      let result = this.redo();
+      if (result !== null) {
+        diagramContainerService.set(result!);
+      }
+    });
   }
 
   /**
@@ -34,13 +47,13 @@ export class CachingService {
    * @throws Error if diagram is not set.
    */
   public save(): void {
+    console.log('Caching')
     if (this.diagram === undefined) {
       throw new Error('You can not save whilst the diagram is not set!');
     }
 
     let serialisedDiagram = this.diagram.serialise();
-    localStorage.setItem(CachingService.LOCAL_STORAGE_KEY, JSON.stringify(serialisedDiagram));
-
+    this.localStorageService.save();
     this.list.add(serialisedDiagram);
     // Todo: Make it so similar changes are merged. I.e., typing a word into a node counts as one undo/redo action.
   }

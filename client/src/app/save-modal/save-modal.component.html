@@ -1,19 +1,37 @@
 <div class="modal-header">
-  <h4 class="modal-title" id="modal-title">Save diagram as</h4>
+  <h4 class="modal-title" id="modal-title">Save Diagram</h4>
   <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body">
-  <div class="row">
-    <div class="col-md-6" (click)="modal.close('json export')">
-      <app-json-icon (click)="exportAsJSON()" style="cursor: pointer"></app-json-icon>
-    </div>
-    <div class="col-md-6" (click)="modal.close('png export')">
-      <app-png-icon (click)="exportAsPNG()" style="cursor: pointer"></app-png-icon>
-    </div>
+  <div class="form-group d-flex">
+    <label for="filenameInput">Name: </label>
+    <input type="text" class="form-control flex-grow-1" id="filenameInput" [(ngModel)]="filename">
   </div>
-
+  <div class="d-flex justify-content-around">
+    <button class="btn btn-outline-primary flex-grow-1 m-2"
+            (click)="exportAsPNG()"
+            ngbTooltip="Visual format which can easily be included in documents. Note you can not import a PNG in
+this tool to edit it further."
+            placement="bottom">
+      Save as PNG
+    </button>
+    <button class="btn btn-outline-primary flex-grow-1 m-2"
+            (click)="exportAsJSON()"
+            ngbTooltip="In this format you can upload this file to UTML and continue where you left off at a later time."
+            placement="bottom">
+      Save as .UTML
+    </button>
+    <button *ngIf="isAuthenticated"
+            class="btn btn-outline-primary flex-grow-1 m-2"
+            (click)="saveToDB()"
+            ngbTooltip="You can later resume editing this diagram and you can also make it visible to others using a
+unique URL."
+            placement="bottom">
+      Save to Database
+    </button>
+  </div>
 </div>
 
 

@@ -9,26 +9,26 @@
     <div class="form-group row px-3">
       <label class="w-25 col-form-label">Width</label>
       <div class="w-75">
-        <input class="w-100" type="number" [(ngModel)]="node.width" (ngModelChange)="cache()">
+        <input class="w-100 form-control" type="number" [(ngModel)]="node.width" (ngModelChange)="cache()">
       </div>
     </div>
     <div class="form-group row px-3">
       <label class="w-25 col-form-label">Height</label>
       <div class="w-75">
-        <input class="w-100" type="number" [(ngModel)]="node.height" (ngModelChange)="cache()">
+        <input class="w-100 form-control" type="number" [(ngModel)]="node.height" (ngModelChange)="cache()">
       </div>
     </div>
     <div class="form-group row px-3">
       <label class="w-25 col-form-label" >Node Text</label>
       <div class="w-75">
-        <input matInput matTextareaAutosize class="w-70" [(ngModel)]="node.text" (ngModelChange)="cache()"/> <label class="30">('\n' = new line)</label>
+        <textarea class="form-control from-control-text w-70" rows="4" [(ngModel)]="node.text" (ngModelChange)="cache()"></textarea>
       </div>
     </div>
 
     <div class="form-group row px-3">
       <label class="w-25 col-form-label" >Double Border</label>
       <div class="w-75">
-        <input type="checkbox" [(ngModel)]="node.hasDoubleBorder" (ngModelChange)="cache()"></div>
+        <input class="form-control form-check" type="checkbox" [(ngModel)]="node.hasDoubleBorder" (ngModelChange)="cache()"></div>
     </div>
 
 
