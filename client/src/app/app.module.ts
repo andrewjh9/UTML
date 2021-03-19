@@ -55,7 +55,9 @@ import { DiagramManagementModalComponent } from './diagram-management-modal/diag
 import { DiagramPreviewComponent } from './diagram-preview/diagram-preview.component';
 import { BelowTextNodeComponent } from './node-compontents/below-text-node/below-text-node.component';
 import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
-import {faEdit, faEye, faEyeSlash, faSave, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
+import {faEdit, faEye, faEyeSlash, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
+import {faCopy, faFolderOpen, faPaste, faRedo, faSave, faUndo} from "@fortawesome/free-solid-svg-icons";
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +106,8 @@ import {faEdit, faEye, faEyeSlash, faSave, faTrashAlt} from "@fortawesome/free-r
     ActorNodeRenderComponent,
     DiagramManagementModalComponent,
     DiagramPreviewComponent,
-    BelowTextNodeComponent
+    BelowTextNodeComponent,
+    NavBarComponent
   ],
     imports: [
         BrowserModule,
@@ -119,6 +122,6 @@ import {faEdit, faEye, faEyeSlash, faSave, faTrashAlt} from "@fortawesome/free-r
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
-    library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave);
+    library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen);
   }
 }

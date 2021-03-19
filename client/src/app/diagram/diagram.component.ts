@@ -40,8 +40,7 @@ import {LocalStorageService} from "../services/caching/local-storage.service";
   styleUrls: ['./diagram.component.scss']
 })
 export class DiagramComponent implements AfterViewInit {
-  public static readonly NAV_HEIGHT = 56;
-  get NAV_HEIGHT() { return DiagramComponent.NAV_HEIGHT; }
+  public static readonly NAV_HEIGHT = 50;
   public diagram: Diagram;
   seq = new SequenceDiagram();
 
@@ -162,24 +161,6 @@ export class DiagramComponent implements AfterViewInit {
     }
   }
 
-  undo() {
-    let result = this.cachingService.undo();
-    if (result !== null) {
-      this.diagramContainer.set(result as Diagram);
-    }
-  }
-
-  redo() {
-    let result = this.cachingService.redo();
-    if (result !== null) {
-      this.diagramContainer.set(result as Diagram);
-    }
-  }
-
-  do() {
-    this.cachingService.save();
-  }
-
   restore() {
     let result: null | string = localStorage.getItem(CachingService.LOCAL_STORAGE_KEY);
     if (result === null) {
@@ -192,22 +173,6 @@ export class DiagramComponent implements AfterViewInit {
         alert('Could not restore diagram from local storage');
       }
     }
-  }
-
-  copy() {
-    this.copyPasteService.doCopy();
-  }
-
-  paste() {
-    this.copyPasteService.doPaste();
-  }
-
-  upload() {
-    this.modalService.open(UploadModalComponent, {size: 'xl'});
-  }
-
-  save() {
-    this.modalService.open(SaveModalComponent);
   }
 
   handleMouseDown(event: MouseEvent) {
@@ -233,9 +198,5 @@ export class DiagramComponent implements AfterViewInit {
     } else {
       this.zoomSerivce.updateZoomFactor(false)
     }
-  }
-
-  openDiagramManagementModal() {
-    this.modalService.open(DiagramManagementModalComponent, {size: 'xl'});
   }
 }
