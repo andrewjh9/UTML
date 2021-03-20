@@ -19,7 +19,7 @@ export class AppComponent implements AfterViewInit {
   public userDiagrams: Diagram[] | undefined;
   private loadDiagramId: Number | undefined;
 
-  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router) {
+  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router, private editService: EditService) {
   }
 
   ngOnInit(): void {

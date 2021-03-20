@@ -8,6 +8,7 @@ import { DOCUMENT } from '@angular/common'
 import {DiagramContainerService} from "../services/diagram-container.service";
 import {fsm} from "../../model/examples/fsm";
 import {LocalStorageService} from "../services/caching/local-storage.service";
+import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
 
 @Component({
   selector: 'app-upload-modal',
@@ -21,7 +22,7 @@ export class UploadModalComponent {
 
   constructor(public modal: NgbActiveModal,
               private diagramContainer: DiagramContainerService,
-              private localStorageService: LocalStorageService) { }
+              private localStorageService: LocalStorageService, private diagramManagementModalComponent: DiagramManagementModalComponent){}
 
   onChange(event: any) {
     this.file = event!.target!.files[0];

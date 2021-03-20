@@ -10,7 +10,7 @@ import java.io.Serializable;
 
 
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames={"name", "userEmail"})})
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames={"title", "userEmail"})})
     public class Diagram implements Serializable {
 
     public Diagram(){}
@@ -18,6 +18,8 @@ import java.io.Serializable;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(columnDefinition = "TEXT")
     @JsonProperty("serialisedDiagram")
     private String serialisedDiagram;
 
@@ -26,7 +28,7 @@ import java.io.Serializable;
 
 
     @JsonProperty("title")
-    private String name;
+    private String title;
 
     @JsonProperty("visible")
     private boolean visible;
@@ -65,5 +67,13 @@ import java.io.Serializable;
 
     public void toggleVisible(){
         this.visible = !this.visible;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

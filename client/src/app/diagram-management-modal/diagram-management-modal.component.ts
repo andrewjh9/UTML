@@ -51,9 +51,8 @@ export class DiagramManagementModalComponent implements OnInit{
   }
 
   delete() {
-    // Todo: Hook this up to the back-end
     if(this.dbEntries && this.dbEntries[this.selectedIndex]) {
-      axios.delete('/api/diagram/', {data: {"id": this.dbEntries[this.selectedIndex]}}).then(response => this.dbEntries = response.data)
+      axios.delete('/api/diagram/', {params: {"id": this.dbEntries[this.selectedIndex].id}}).then(response => {this.dbEntries = response.data; this.selectedIndex = -1});
     }
   }
 

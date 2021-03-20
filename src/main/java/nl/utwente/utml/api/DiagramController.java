@@ -2,9 +2,7 @@ package nl.utwente.utml.api;
 
 import nl.utwente.utml.model.Diagram;
 import nl.utwente.utml.service.IDiagramService;
-import org.hibernate.annotations.ParamDef;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,7 +24,6 @@ public class  DiagramController {
     public DiagramController(IDiagramService diagramService, HttpServletRequest request) {
         this.diagramService = diagramService;
         this.request = request;
-
     }
 
     @GetMapping
@@ -38,6 +35,7 @@ public class  DiagramController {
     @PostMapping
     public void postDiagram(@RequestBody Diagram diagram){
         diagram.setOwner(getUserEmail());
+        System.out.println(diagram.getTitle());
         this.diagramService.add(diagram);
 
     }
@@ -56,8 +54,9 @@ public class  DiagramController {
 
 
     @DeleteMapping
-    public void deleteDiagram(@RequestBody long id){
+    public List<Diagram> deleteDiagram(@RequestParam long id){
         diagramService.delete(id);
+        return diagramService.getAllUserDiagrams(getUserEmail());
     }
 
 

@@ -2,6 +2,7 @@ import {Component, AfterContentInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ExportService} from "../services/export.service";
 import {Diagram} from "../../model/diagram";
+import axios from "axios";
 
 
 @Component({
@@ -21,14 +22,16 @@ export class SaveModalComponent implements AfterContentInit {
 
   exportAsPNG() {
     this.exportService.exportAsPNG();
+    this.modal.close();
   }
 
   exportAsJSON() {
     this.exportService.exportAsJSON()
+    this.modal.close();
   }
 
   saveToDB() {
-    // Todo: call db here.
+      axios.post("/api/diagram",this.exportService.getDiagramJSON(this.filename)).then(res => this.modal.close())
   }
 }
 

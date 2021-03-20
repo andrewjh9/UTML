@@ -59,6 +59,10 @@ export class ExportService {
     this.triggerDownload(this.filename, uri, "utml")
   }
 
+  public getDiagramJSON(fileName: String){
+    return {serialisedDiagram: JSON.stringify(this.diagram?.serialise()), title: fileName};
+  }
+
   private triggerDownload(name: string, uri: string, extension: string) {
     let nameAndExtension = name + "." + extension;
     let element = document.createElement('a');
