@@ -6,6 +6,8 @@ import axios from 'axios';
 import {Diagram} from "../model/diagram";
 import {ActivatedRoute, Router, RoutesRecognized} from "@angular/router";
 import {Subscription} from "rxjs";
+import {deserialiseDiagram} from "../serialisation/deserialise/deserialise-diagram";
+import {DiagramContainerService} from "./services/diagram-container.service";
 
 
 
@@ -17,9 +19,9 @@ import {Subscription} from "rxjs";
 export class AppComponent implements AfterViewInit {
   public userFullName: string | undefined;
   public userDiagrams: Diagram[] | undefined;
-  private loadDiagramId: Number | undefined;
+  public loadDiagramId: Number | undefined;
 
-  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router, private editService: EditService) {
+  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router, private editService: EditService, private diagramContainer: DiagramContainerService) {
   }
 
   ngOnInit(): void {
@@ -27,7 +29,18 @@ export class AppComponent implements AfterViewInit {
     this.router.events.subscribe(val => {
       if (val instanceof RoutesRecognized) {
         // @ts-ignore
-        this.loadDiagramId = val.state.root.firstChild.params;
+        this.loadDiagramId = Number.parseInt(val.state.root.firstChild.params.id);
+        // @ts-ignore
+        if(this.loadDiagramId){
+          axios.get("api/diagram/visible",{params: {id:this.loadDiagramId}}).then(res => {
+            if(res.data.serialisedDiagram) {
+              this.diagramContainer.set(deserialiseDiagram(res.data.serialisedDiagram))
+            } else{
+              window.alert("Diagram could not be loaded");
+              this.router.navigateByUrl("");
+            }
+           });
+         }
       }
     });
   }

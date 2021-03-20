@@ -27,12 +27,11 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 // allow antonymous access to the root page
                 .antMatchers("/").permitAll()
-                .antMatchers("/api/visible/**").permitAll()
+                .antMatchers("/api/diagram/visible/**").permitAll()
 
                 // all other requests
                 .antMatchers("/api/user/**").authenticated()
                 .antMatchers("/api/diagram/**").authenticated()
-
                 // set logout URL
                 .and().logout().logoutSuccessUrl("/")
 

@@ -71,7 +71,7 @@ export class DiagramManagementModalComponent implements OnInit{
 
   toggleVisibility() {
     if (this.selectedIndex !== -1 && this.dbEntries) {
-      axios.get('/api/diagram/visible', { params: { id: this.dbEntries[this.selectedIndex].id} })
+      axios.get('/api/diagram/toggle/visible', { params: { id: this.dbEntries[this.selectedIndex].id} })
     }
   }
 }

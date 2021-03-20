@@ -12,5 +12,7 @@ import java.util.List;
 public interface IDiagramRepository extends JpaRepository< Diagram, Long> {
     List<Diagram> findByUserEmail(String email);
     List<Diagram> findByVisibleTrue();
+    Diagram findByIdAndVisibleTrue(long id);
+
 
 }

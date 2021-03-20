@@ -15,7 +15,7 @@ public interface IDiagramService {
 
     void delete(long id);
 
-    Diagram get(long id);
+    Diagram getVisible(long id);
 
     void update(Diagram diagram);
 

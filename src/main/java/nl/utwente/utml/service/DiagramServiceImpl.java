@@ -34,9 +34,14 @@ public class DiagramServiceImpl implements IDiagramService {
         this.diagramRepository.delete(this.get(id));
     }
 
-    public Diagram get(long id) {
+    private Diagram get(long id) {
         return this.diagramRepository.findById(id).orElse(null);
     }
+
+    public Diagram getVisible(long id) {
+        return this.diagramRepository.findByIdAndVisibleTrue(id);
+    }
+
 
     public void update(Diagram diagram){
         this.diagramRepository.save(diagram);

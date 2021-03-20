@@ -26,16 +26,16 @@ public class  DiagramController {
         this.request = request;
     }
 
-    @GetMapping
-    public Diagram getDiagram(@RequestBody long id){
-        return diagramService.get(id);
+
+    @GetMapping("/visible")
+    public Diagram getVisibleDiagram(@RequestParam long id){
+        return diagramService.getVisible(id);
     }
 
 
     @PostMapping
     public void postDiagram(@RequestBody Diagram diagram){
         diagram.setOwner(getUserEmail());
-        System.out.println(diagram.getTitle());
         this.diagramService.add(diagram);
 
     }
@@ -60,7 +60,7 @@ public class  DiagramController {
     }
 
 
-    @GetMapping("/visible")
+    @GetMapping("/toggle/visible")
     public void toggleVisibility(@RequestParam long id){
         if(diagramService.userOwner(id, getUserEmail())){
             diagramService.toggleVisible(id);
