@@ -60,7 +60,9 @@ export class DiagramManagementModalComponent implements OnInit{
     // return axios.post('/api/diagram/',{serializedDiagram:"diagram"}).then(response => this.userFullName = response.data)
   }
   updateChanges() {
-    // Todo: Hook this up to the back-end
+    if(this.dbEntries && this.dbEntries[this.selectedIndex]){
+      axios.put('/api/diagram/', this.dbEntries[this.selectedIndex])
+    }
   }
 
   triggerEditModal() {
