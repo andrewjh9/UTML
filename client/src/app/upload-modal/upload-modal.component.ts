@@ -22,7 +22,7 @@ export class UploadModalComponent {
 
   constructor(public modal: NgbActiveModal,
               private diagramContainer: DiagramContainerService,
-              private localStorageService: LocalStorageService, private diagramManagementModalComponent: DiagramManagementModalComponent){}
+              private localStorageService: LocalStorageService){}
 
   onChange(event: any) {
     this.file = event!.target!.files[0];

@@ -6,8 +6,6 @@ import {DiagramComponent} from "./diagram/diagram.component";
 const routes: Routes = [
   { path: '', component: DiagramComponent },
   {path: 'diagram/:id', component: DiagramComponent},
-  { path: 'user', component: UserComponent }
-
 ];
 
 @NgModule({
