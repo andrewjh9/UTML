@@ -3,6 +3,8 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ExportService} from "../services/export.service";
 import {Diagram} from "../../model/diagram";
 import axios from "axios";
+import {DiagramContainerService} from "../services/diagram-container.service";
+import {HttpClient} from "@angular/common/http";
 
 
 @Component({
@@ -15,7 +17,7 @@ export class SaveModalComponent implements AfterContentInit {
   isAuthenticated: boolean = true;
 
   constructor(public modal: NgbActiveModal,
-              private exportService: ExportService) { }
+              private exportService: ExportService, private http: HttpClient) { }
 
   ngAfterContentInit(): void {
   }
@@ -31,7 +33,18 @@ export class SaveModalComponent implements AfterContentInit {
   }
 
   saveToDB() {
-      axios.post("/api/diagram",this.exportService.getDiagramJSON(this.filename)).then(res => this.modal.close())
+    this.http.post('/api/diagram/',this.exportService.getDiagramJSON(this.filename)).subscribe(
+        (data:any) => {
+          this.modal.close()
+        },error =>  {
+          //TODO Open error modal or something
+          this.handleError(error);
+    });
   }
+  handleError(error: any) {
+    console.log("FIX ME")
+    console.log(error)
+  }
+
 }
 

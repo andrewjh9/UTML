@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, ErrorHandler, OnInit, ViewChild} from '@angular/core';
 import {Node} from "../../model/node/node";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {SelectionService} from "../services/selection.service";
@@ -11,13 +11,17 @@ import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-di
 import {DiagramContainerService} from "../services/diagram-container.service";
 import axios from "axios";
 import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {catchError} from "rxjs/operators";
+
+
 
 @Component({
   selector: 'app-diagram-management-modal',
   templateUrl: './diagram-management-modal.component.html',
   styleUrls: ['./diagram-management-modal.component.scss']
 })
-export class DiagramManagementModalComponent implements OnInit{
+export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
   @ViewChild('deleteModal') deleteModal!: ElementRef;
   @ViewChild('editModal') editModal!: ElementRef;
 
@@ -37,7 +41,7 @@ export class DiagramManagementModalComponent implements OnInit{
 
   constructor(public modal: NgbActiveModal,
               private modalService: NgbModal,
-              private diagramContainer: DiagramContainerService) {
+              private diagramContainer: DiagramContainerService, private http: HttpClient) {
   }
 
   setDiagram() {
@@ -52,7 +56,13 @@ export class DiagramManagementModalComponent implements OnInit{
 
   delete() {
     if(this.dbEntries && this.dbEntries[this.selectedIndex]) {
-      axios.delete('/api/diagram/', {params: {"id": this.dbEntries[this.selectedIndex].id}}).then(response => {this.dbEntries = response.data; this.selectedIndex = -1});
+      this.http.delete('/api/diagram/',{params: new HttpParams().set("id", String(this.dbEntries[this.selectedIndex].id))}).subscribe(
+        (data:any) => {
+            this.dbEntries = data.data; this.selectedIndex = -1;
+        },error =>  {
+          //TODO Open error modal or something
+          this.handleError(error)
+      })
     }
   }
 
@@ -61,7 +71,12 @@ export class DiagramManagementModalComponent implements OnInit{
   }
   updateChanges() {
     if(this.dbEntries && this.dbEntries[this.selectedIndex]){
-      axios.put('/api/diagram/', this.dbEntries[this.selectedIndex])
+      this.http.put('/api/diagram/',this.dbEntries[this.selectedIndex]).subscribe(
+        (data:any) => {
+        },error =>  {
+          //TODO Open error modal or something
+          this.handleError(error)
+        })
     }
   }
 
@@ -71,9 +86,20 @@ export class DiagramManagementModalComponent implements OnInit{
 
   toggleVisibility() {
     if (this.selectedIndex !== -1 && this.dbEntries) {
-      axios.get('/api/diagram/toggle/visible', { params: { id: this.dbEntries[this.selectedIndex].id} })
+      this.http.put('/api/diagram/toggle/visible',{ params: { id: this.dbEntries[this.selectedIndex].id} }).subscribe(
+        (data:any) => {
+        },error =>  {
+          //TODO Open error modal or something
+          this.handleError(error)
+        })
     }
   }
+
+  handleError(error: any) {
+    console.log("FIX ME")
+    console.log(error)
+  }
+
 }
 
 // Todo: Match this up with the actual DB structure once it is known
