@@ -39,8 +39,9 @@ export class LabelComponent {
       console.log('selecting')
       this.selectionService.setLabel(this.label);
     } else {
+      console.log('starting repositioning')
       this.labelRepositionService.activate(this.mousePositionTransformService.transformPosition(
-        new Position(event.x, event.y)));
+        new Position(event.x, event.y)), this.label);
     }
   }
 }

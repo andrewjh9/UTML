@@ -9,29 +9,22 @@ import {CachingService} from "./caching/caching.service";
   providedIn: 'root'
 })
 export class LabelRepositionService {
-  private selectedLabel: Label | undefined = undefined;
   private startPosition: Position | undefined = undefined;
+  private label?: Label;
 
-  constructor(selectionService: SelectionService,
-              private snapService: SnapService,
+  constructor(private snapService: SnapService,
               private cachingService: CachingService) {
-    selectionService.selectedObservable.subscribe(selectedList => {
-      if (selectedList.length === 1 && selectedList[0] instanceof Label) {
-        this.selectedLabel = selectedList[0];
-      } else {
-        this.selectedLabel = undefined;
-      }
-    })
   }
 
-  public activate(position: Position) {
+  public activate(position: Position, label: Label) {
     this.startPosition = position;
+    this.label = label;
   }
 
   public update(position: Position) {
     if (this.isActive()) {
       let diff = this.snapService.snapIfApplicable(Position.subtract(position, this.startPosition!));
-      this.selectedLabel!.position = Position.add(this.startPosition!, diff);
+      this.label!.position = Position.add(this.startPosition!, diff);
     } else {
       throw new Error('Service should be active!');
     }
@@ -41,11 +34,11 @@ export class LabelRepositionService {
     if (this.isActive()) {
       this.cachingService.save();
     }
-    this.selectedLabel = undefined;
+    this.label = undefined;
     this.startPosition = undefined;
   }
 
   public isActive() {
-    return this.startPosition !== undefined && this.selectedLabel !== undefined;
+    return this.startPosition !== undefined && this.label !== undefined;
   }
 }
