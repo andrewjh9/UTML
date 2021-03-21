@@ -67,7 +67,6 @@ import {
   faUndo
 } from "@fortawesome/free-solid-svg-icons";
 import { NavBarComponent } from './nav-bar/nav-bar.component';
-import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -104,7 +103,6 @@ import { UserComponent } from './user/user.component';
     EdgeRenderDispatchComponent,
     NodeRenderDispatchComponent,
     NodeComponent,
-    UserComponent,
     NodeComponent,
     FormattingModalComponent,
     EdgeFormattingModalComponent,

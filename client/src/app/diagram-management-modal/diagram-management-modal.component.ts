@@ -29,7 +29,13 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
   selectedIndex = -1;
 
   ngOnInit() {
-     axios.get('/api/diagram/all/me').then(response => this.dbEntries =response.data);
+    this.http.get('/api/diagram/all/me').subscribe(
+      (data:any) => {
+        this.dbEntries =data
+      },error =>  {
+        //TODO Open error modal or something
+        this.handleError(error)
+      })
   }
 
   get selectedDiagram(): Diagram | undefined {
@@ -58,7 +64,7 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
     if(this.dbEntries && this.dbEntries[this.selectedIndex]) {
       this.http.delete('/api/diagram/',{params: new HttpParams().set("id", String(this.dbEntries[this.selectedIndex].id))}).subscribe(
         (data:any) => {
-            this.dbEntries = data.data; this.selectedIndex = -1;
+            this.dbEntries = data; this.selectedIndex = -1;
         },error =>  {
           //TODO Open error modal or something
           this.handleError(error)
@@ -86,7 +92,7 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
 
   toggleVisibility() {
     if (this.selectedIndex !== -1 && this.dbEntries) {
-      this.http.put('/api/diagram/toggle/visible',{ params: { id: this.dbEntries[this.selectedIndex].id} }).subscribe(
+      this.http.get('/api/diagram/toggle/visible',{params: new HttpParams().set("id",String(this.dbEntries[this.selectedIndex].id))}).subscribe(
         (data:any) => {
         },error =>  {
           //TODO Open error modal or something
@@ -96,7 +102,6 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
   }
 
   handleError(error: any) {
-    console.log("FIX ME")
     console.log(error)
   }
 

@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, Renderer2} from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {DownButton, KeyboardEventCallerService} from "./services/keyboard-event-caller.service";
 import {EditService} from "./services/edit.service";
 import axios from 'axios';
@@ -21,7 +21,7 @@ export class AppComponent implements AfterViewInit {
   public userDiagrams: Diagram[] | undefined;
   public loadDiagramId: Number | undefined;
 
-  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router, private editService: EditService, private diagramContainer: DiagramContainerService) {
+  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router, private editService: EditService, private diagramContainer: DiagramContainerService, private http: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -30,16 +30,21 @@ export class AppComponent implements AfterViewInit {
       if (val instanceof RoutesRecognized) {
         // @ts-ignore
         this.loadDiagramId = Number.parseInt(val.state.root.firstChild.params.id);
+        console.log(this.loadDiagramId)
         // @ts-ignore
         if(this.loadDiagramId){
-          axios.get("api/diagram/visible",{params: {id:this.loadDiagramId}}).then(res => {
-            if(res.data.serialisedDiagram) {
-              this.diagramContainer.set(deserialiseDiagram(res.data.serialisedDiagram))
-            } else{
-              window.alert("Diagram could not be loaded");
-              this.router.navigateByUrl("");
-            }
-           });
+          this.http.get("api/diagram/visible",{params: new HttpParams().set("id", String(this.loadDiagramId))}).subscribe(
+            (data:any) => {
+              if(data.serialisedDiagram) {
+                this.diagramContainer.set(deserialiseDiagram(data.serialisedDiagram))
+              } else{
+                window.alert("Diagram could not be loaded");
+                this.router.navigateByUrl("");
+              }
+            },error =>  {
+              //TODO Open error modal or something
+              this.handleError(error)
+            })
          }
       }
     });
@@ -75,9 +80,25 @@ export class AppComponent implements AfterViewInit {
   }
 
   private isLoggedIn() {
-    return axios.get('/me').then(response => this.userFullName = response.data)
+    this.http.get("/me",{  responseType: 'text'
+      }).subscribe(
+      (data:any) => {
+        if(data == null ){
+          this.userFullName = undefined;
+        } else{
+          this.userFullName = data
+        }
+      },error =>  {
+        //TODO Open error modal or something
+        this.handleError(error)
+      }
+    );
+
   }
 
+  handleError(error: any) {
+    console.log(error)
+  }
 
 
 }
