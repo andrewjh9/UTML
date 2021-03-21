@@ -22,15 +22,15 @@ Once done remove (mousedown) on render dispatch-->
 
 <svg:g *ngIf="edge && edge?.startLabel"
        label-component
-       [label]="edge.startLabel">
+       [label]="edge.startLabel!">
 </svg:g>
 
 <svg:g *ngIf="edge && edge?.middleLabel"
        label-component
-       [label]="edge.middleLabel">
+       [label]="edge.middleLabel!">
 </svg:g>
 
 <svg:g *ngIf="edge && edge?.endLabel"
        label-component
-       [label]="edge.endLabel">
+       [label]="edge.endLabel!">
 </svg:g>

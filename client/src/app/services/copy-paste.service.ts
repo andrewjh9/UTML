@@ -5,6 +5,7 @@ import {Node} from "../../model/node/node";
 import {KnownDeclaration} from "@angular/compiler-cli/src/ngtsc/reflection";
 import {Position} from "../../model/position";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
+import {Label} from "../../model/label";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,12 @@ export class CopyPasteService {
 
   constructor(selectionService: SelectionService, keyboardEventCaller: KeyboardEventCallerService) {
     selectionService.selectedObservable.subscribe(selected => {
-      this.selected = selected;
+      let edges = selected.filter(e => e instanceof Edge).map(e => <Edge> e);
+      let nodes = selected.filter(e => e instanceof Node).map(e => <Node> e);
+      this.selected = [];
+      this.selected.push(...edges);
+      this.selected.push(...nodes);
+
     });
 
     keyboardEventCaller.addCallback(['c', 'keydown', 'ctrl'], (ignored: KeyboardEvent) => {

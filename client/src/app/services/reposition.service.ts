@@ -30,7 +30,6 @@ export class RepositionService implements Deactivatable {
     if (this.selectedNodes.length > 0) {
       this.startPositions = this.selectedNodes.map(node => node.position);
       this.startMousePosition = startPosition;
-
     }
   }
 

@@ -15,24 +15,7 @@ export class SelectedEditorComponent {
   currentEdge?: Edge;
 
   constructor(selectionService: SelectionService, private deletionService: DeletionService) {
-    selectionService.selectedObservable.subscribe((selectedList: Array<Node | Edge>) => {
-      let selected = undefined;
-      if (selectedList.length > 0) {
-        selected = selectedList[0];
-      }
-      if (selected === undefined) {
-        this.currentNode = undefined;
-        this.currentEdge = undefined;
-      } else if (selected instanceof Node) {
-        this.currentNode = <Node> selected;
-        this.currentEdge = undefined;
-      } else if (selected instanceof Edge) {
-        this.currentEdge = <Edge> selected;
-        this.currentNode = undefined;
-      } else {
-        throw new Error('Somehow you broke the type system. Congratulations.');
-      }
-    });
+
   }
 
   private setAllUndefined(): void {

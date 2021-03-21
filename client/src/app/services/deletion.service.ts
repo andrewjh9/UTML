@@ -7,6 +7,7 @@ import {SelectionService} from "./selection.service";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {EditService} from "./edit.service";
 import {DiagramContainerService} from "./diagram-container.service";
+import {Label} from "../../model/label";
 
 @Injectable({
   providedIn: "root"
@@ -18,7 +19,7 @@ import {DiagramContainerService} from "./diagram-container.service";
  */
 export class DeletionService {
   private diagram: Diagram;
-  private selected: Array<Edge | Node> = [];
+  private selected: Array<Edge | Node | Label> = [];
 
   constructor(private cachingService: CachingService,
               private selectionService: SelectionService,
@@ -37,6 +38,8 @@ export class DeletionService {
           }
         } else if (selectedElem instanceof Edge) {
           this.deleteEdge(selectedElem as Edge);
+        } else if (selectedElem instanceof Label) {
+          this.deleteLabel(selectedElem as Label);
         }
       });
     }));
@@ -86,5 +89,17 @@ export class DeletionService {
       this.selectionService.deselect();
     }
     this.cachingService.save();
+  }
+
+  public deleteLabel(label: Label) {
+    for (let edge of this.diagram.edges) {
+      if (edge.startLabel === label) {
+        edge.startLabel = undefined;
+      } else if (edge.middleLabel === label) {
+        edge.middleLabel = undefined;
+      } else if (edge.endLabel === label) {
+        edge.endLabel = undefined;
+      }
+    }
   }
 }

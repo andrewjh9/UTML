@@ -48,7 +48,6 @@ import { SaveModalComponent } from './save-modal/save-modal.component';
 import { JsonIconComponent } from './icons/json-icon/json-icon.component';
 import { PngIconComponent } from './icons/png-icon/png-icon.component';
 import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-preview.component';
-import { SelectionSidebarComponent } from './selection-sidebar/selection-sidebar.component';
 import { HourglassNodeRenderComponent } from './node-compontents/hourglass-node/hourglass-node-render.component';
 import { ActorNodeRenderComponent } from './node-compontents/actor-node/actor-node-render.component';
 import { DiagramManagementModalComponent } from './diagram-management-modal/diagram-management-modal.component';
@@ -113,7 +112,6 @@ import { SpecialCharacterRowComponent } from './special-character-row/special-ch
     JsonIconComponent,
     PngIconComponent,
     DragSelectPreviewComponent,
-    SelectionSidebarComponent,
     HourglassNodeRenderComponent,
     ActorNodeRenderComponent,
     DiagramManagementModalComponent,

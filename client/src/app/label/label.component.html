@@ -3,7 +3,7 @@
           [attr.y]="label.position.y"
           (mousedown)="handleMouseDown($event)"
           (dblclick)="handleDoubleClick($event)"
-          [ngClass]="{'movable': isInMoveMode()}"
+          [ngStyle]="{'fill': isSelected ? 'red' : 'black', 'cursor': isSelected ? 'move' : 'pointer'}"
           dominant-baseline="middle"
           text-anchor="middle"
           font-family="Comic Sans MS, Helvetica, sans-serif">

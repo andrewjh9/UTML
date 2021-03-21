@@ -4,10 +4,14 @@
 import {Diagram} from "../diagram";
 import {EllipseNode} from "../node/ellipse-node";
 import {Position} from "../position";
+import {Edge} from "../edge";
 //
 export let fsm: Diagram;
-fsm = new Diagram();
-fsm.nodes.push(new EllipseNode(100, 100, new Position(10, 10)))
+let n1 = new EllipseNode(100, 100, new Position(50, 10));
+let n2 = new EllipseNode(100, 100, new Position(250, 10));
+let e1 = new Edge(3, 2, n1, n2);
+e1.addMiddleLabel('a, b, c');
+fsm = new Diagram([n1, n2], [e1])
 //
 // const n1: Node = {
 //   texts: ['n1'],

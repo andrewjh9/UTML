@@ -5,12 +5,13 @@ import {BehaviorSubject} from "rxjs";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {DeletionService} from "./deletion.service";
 import {DiagramContainerService} from "./diagram-container.service";
+import {Label} from "../../model/label";
 
 @Injectable({
   providedIn: 'root'
 })
 export class SelectionService {
-  private readonly selected: BehaviorSubject<Array<Node | Edge>> = new BehaviorSubject<Array<Node | Edge>>([]);
+  private readonly selected: BehaviorSubject<Array<Node | Edge | Label>> = new BehaviorSubject<Array<Node | Edge | Label>>([]);
   public readonly selectedObservable = this.selected.asObservable();
 
   constructor(keyboardEventCallerService: KeyboardEventCallerService,
@@ -24,7 +25,7 @@ export class SelectionService {
     diagramContainerService.diagramObservable.subscribe(ignored => this.deselect());
   }
 
-  public add(value: Node | Edge): void {
+  public add(value: Node | Edge | Label): void {
     this.selected.getValue().push(value);
     this.selected.next(this.selected.getValue().map(x => x));
   }
@@ -63,5 +64,9 @@ export class SelectionService {
       throw new Error("Requires a single edge to be selected.");
     }
     return <Edge> this.selected.getValue()[0];
+  }
+
+  public setLabel(label: Label) {
+    this.selected.next([label]);
   }
 }

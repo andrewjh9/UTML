@@ -34,6 +34,7 @@ import {DiagramManagementModalComponent} from "../diagram-management-modal/diagr
 import {DiagramContainerService} from "../services/diagram-container.service";
 import {LocalStorageService} from "../services/caching/local-storage.service";
 import {LensOffsetService} from "../services/lens-offset.service";
+import {LabelRepositionService} from "../services/label-reposition.service";
 
 @Component({
   selector: 'app-diagram',
@@ -67,7 +68,8 @@ export class DiagramComponent implements AfterViewInit {
               public zoomSerivce: ZoomService,
               private localStorageService: LocalStorageService,
               private mousePositionTransformService: MousePositionTransformService,
-              private lensOffsetService: LensOffsetService) {
+              private lensOffsetService: LensOffsetService,
+              private labelRepositionService: LabelRepositionService) {
     this.diagram = diagramContainer.get();
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
 
@@ -123,6 +125,8 @@ export class DiagramComponent implements AfterViewInit {
       this.dragSelectionService.deactivate();
     } else if (this.lensOffsetService.isActive()) {
       this.lensOffsetService.deactivate();
+    } else if (this.labelRepositionService.isActive()) {
+      this.labelRepositionService.deactivate();
     }
   }
 
@@ -143,6 +147,8 @@ export class DiagramComponent implements AfterViewInit {
       this.dragSelectionService.update(position); //idk
     } else if (this.lensOffsetService.isActive()) {
       this.lensOffsetService.update(pos); //works
+    } else if (this.labelRepositionService.isActive()) {
+      this.labelRepositionService.update(pos);
     }
   }
 

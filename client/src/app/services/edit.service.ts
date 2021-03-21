@@ -7,18 +7,17 @@ import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
   providedIn: 'root'
 })
 export class EditService {
-  private isInEditMode?: boolean;
+  private isInEditMode: boolean = false;
   private node?: Node;
-  private renderer: Renderer2;
   private activeIndex?: number;
   constructor(keyboardEventCallerService: KeyboardEventCallerService,
               rendererFactory: RendererFactory2) {
     keyboardEventCallerService.addCallback(['Escape', "keydown", 'any'], (ignored) => this.deactivate());
 
-    this.renderer = rendererFactory.createRenderer(null, null);
-    this.renderer.listen('window', 'keydown', (event: KeyboardEvent) => {
+    let renderer = rendererFactory.createRenderer(null, null);
+    renderer.listen('window', 'keydown', (event: KeyboardEvent) => {
       if (this.isActive()) {
-        this.update(this.activeIndex!, event.key)
+        this.update(this.activeIndex!, event.key);
       }
     });
   }
@@ -30,8 +29,6 @@ export class EditService {
   }
 
   public setActiveTextLine(index: number, previousDeleted: boolean) {
-    console.log(index);
-    console.log(this.activeIndex);
     if (this.activeIndex != index){
       if (!previousDeleted){
         this.removeBar(this.activeIndex);
