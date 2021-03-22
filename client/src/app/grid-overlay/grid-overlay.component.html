@@ -6,4 +6,4 @@
   <path d="M 100 0 L 0 0 0 100" fill="none" stroke="gray" stroke-width="1"/>
 </svg:pattern>
 
-<svg:rect *ngIf="active" x="0" y="0" [attr.width]="width" [attr.height]="height" fill="url(#grid)"></svg:rect>
+<svg:rect *ngIf="active" [attr.x]="x" [attr.y]="y" [attr.width]="width" [attr.height]="height" fill="url(#grid)"></svg:rect>

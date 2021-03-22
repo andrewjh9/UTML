@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ZoomService} from "../services/zoom.service";
 
 @Component({
   selector: '[grid-overlay]',
@@ -6,9 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./grid-overlay.component.scss']
 })
 export class GridOverlayComponent {
-  width = 1200;
-  height = 600;
+  x!: number;
+  y!: number;
+  width!: number;
+  height!: number
   active = true;
 
-  constructor() { }
+  constructor(zoomService: ZoomService) {
+    let callback = () => {
+      this.width = zoomService.getZoomedWidth();
+      this.height = zoomService.getZoomedHeight();
+      let xy = zoomService.getXY();
+      this.x = xy.x;
+      this.y = xy.y;
+    };
+    callback();
+
+    zoomService.updateEmitter.subscribe(callback);
+  }
 }

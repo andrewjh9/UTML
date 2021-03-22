@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {Position} from "../../model/position";
 
 @Injectable({
@@ -12,6 +12,7 @@ export class ZoomService {
   private currentZoomFactor: number = 1;
   private zoomStep: number = 1.1;
   private zoomExponent = 0;
+  public updateEmitter: EventEmitter<any> = new EventEmitter();
   constructor() { }
 
   public getViewBox(): string {
@@ -29,14 +30,24 @@ export class ZoomService {
       this.zoomExponent++;
     }
     this.currentZoomFactor = Math.pow(this.zoomStep, this.zoomExponent);
+    this.updateEmitter.emit();
   }
 
   public setXY(x: number, y: number) {
     this.x += x;
     this.y += y;
+    this.updateEmitter.emit();
   }
 
   public getXY(): Position {
     return new Position(this.x, this.y);
+  }
+
+  public getZoomedWidth(): number {
+    return this.width * this.currentZoomFactor;
+  }
+
+  public getZoomedHeight(): number {
+    return this.height * this.currentZoomFactor;
   }
 }
