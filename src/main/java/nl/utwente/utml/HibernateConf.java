@@ -17,7 +17,7 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class HibernateConf {
 
-    public static final String JDBC_URL = "jdbc:postgresql://localhost:5433/utml";
+    public static final String JDBC_URL = "jdbc:postgresql://localhost:5432/utml";
     public static final String JDBC_USERNAME = "admin";
     public static final String JDBC_PASSWORD = "admin";
 
@@ -44,13 +44,13 @@ public class HibernateConf {
         return dataSource;
     }
 
-    @Bean
-    public PlatformTransactionManager hibernateTransactionManager() {
-        HibernateTransactionManager transactionManager
-                = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
-        return transactionManager;
-    }
+//    @Bean
+//    public PlatformTransactionManager hibernateTransactionManager() {
+//        HibernateTransactionManager transactionManager
+//                = new HibernateTransactionManager();
+//        transactionManager.setSessionFactory(sessionFactory().getObject());
+//        return transactionManager;
+//    }
 
 
     private final Properties hibernateProperties() {

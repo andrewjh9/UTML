@@ -1,7 +1,13 @@
 import {AfterViewInit, Component, Renderer2} from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {DownButton, KeyboardEventCallerService} from "./services/keyboard-event-caller.service";
 import {EditService} from "./services/edit.service";
+import {Diagram} from "../model/diagram";
+import {ActivatedRoute, Router, RoutesRecognized} from "@angular/router";
+import {deserialiseDiagram} from "../serialisation/deserialise/deserialise-diagram";
+import {DiagramContainerService} from "./services/diagram-container.service";
+
+
 
 @Component({
   selector: 'app-root',
@@ -9,9 +15,37 @@ import {EditService} from "./services/edit.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  constructor(private renderer: Renderer2,
-              private keyboardEventCallbackMap: KeyboardEventCallerService,
-              private editService: EditService) {
+  public userFullName: string | undefined;
+  public userDiagrams: Diagram[] | undefined;
+  public loadDiagramId: Number | undefined;
+
+  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router, private editService: EditService, private diagramContainer: DiagramContainerService, private http: HttpClient) {
+  }
+
+  ngOnInit(): void {
+    // @ts-ignore
+    this.router.events.subscribe(val => {
+      if (val instanceof RoutesRecognized) {
+        // @ts-ignore
+        this.loadDiagramId = Number.parseInt(val.state.root.firstChild.params.id);
+        console.log(this.loadDiagramId)
+        // @ts-ignore
+        if(this.loadDiagramId){
+          this.http.get("api/diagram/visible",{params: new HttpParams().set("id", String(this.loadDiagramId))}).subscribe(
+            (data:any) => {
+              if(data.serialisedDiagram) {
+                this.diagramContainer.set(deserialiseDiagram(data.serialisedDiagram))
+              } else{
+                window.alert("Diagram could not be loaded");
+                this.router.navigateByUrl("");
+              }
+            },error =>  {
+              //TODO Open error modal or something
+              this.handleError(error)
+            })
+         }
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -27,6 +61,8 @@ export class AppComponent implements AfterViewInit {
       let downButton = AppComponent.getDownButton(event);
       this.keyboardEventCallbackMap.executeCallbacks([event.key, "keyup", downButton], event);
     });
+
+    this.isLoggedIn();
   }
 
   private static getDownButton(event: KeyboardEvent): DownButton {
@@ -40,4 +76,27 @@ export class AppComponent implements AfterViewInit {
     }
     return downButton;
   }
+
+  private isLoggedIn() {
+    this.http.get("/me",{  responseType: 'text'
+      }).subscribe(
+      (data:any) => {
+        if(data == null ){
+          this.userFullName = undefined;
+        } else{
+          this.userFullName = data
+        }
+      },error =>  {
+        //TODO Open error modal or something
+        this.handleError(error)
+      }
+    );
+
+  }
+
+  handleError(error: any) {
+    console.log(error)
+  }
+
+
 }

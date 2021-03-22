@@ -40,3 +40,5 @@ production.json
 keycloak-realm-export.json
 /metadata/sso.xml
 .jks
+
+src/main/resources/static/*

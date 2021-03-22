@@ -2,8 +2,9 @@
 
 ##Serve angular
 Use the following commands build and to copy the angular into the backend:
-npm run ng -p build
-cp -r client/dist/client/. src/main/resources/static
+`cd client &&
+sudo npm run ng -p build && cd .. &&
+cp -r client/dist/client/. src/main/resources/static`
 
 ##Serving Local Host remotely 
 For dev and testing purposes you may wish to point your local host at a remote URL. 

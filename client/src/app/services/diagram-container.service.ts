@@ -9,7 +9,6 @@ import {fsm} from "../../model/examples/fsm";
 export class DiagramContainerService {
   // private readonly diagramSubject: BehaviorSubject<Diagram> = new BehaviorSubject<Diagram>(new Diagram());
   private readonly diagramSubject: BehaviorSubject<Diagram> = new BehaviorSubject<Diagram>(fsm);
-
   public readonly diagramObservable = this.diagramSubject.asObservable();
 
   public set(diagram: Diagram) {
@@ -19,6 +18,4 @@ export class DiagramContainerService {
   public get() {
     return this.diagramSubject.getValue();
   }
-
-  constructor() { }
 }
