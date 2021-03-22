@@ -1,9 +1,6 @@
 import {Component, AfterContentInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ExportService} from "../services/export.service";
-import {Diagram} from "../../model/diagram";
-import axios from "axios";
-import {DiagramContainerService} from "../services/diagram-container.service";
 import {HttpClient} from "@angular/common/http";
 
 

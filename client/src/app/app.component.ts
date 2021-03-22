@@ -2,10 +2,8 @@ import {AfterViewInit, Component, Renderer2} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {DownButton, KeyboardEventCallerService} from "./services/keyboard-event-caller.service";
 import {EditService} from "./services/edit.service";
-import axios from 'axios';
 import {Diagram} from "../model/diagram";
 import {ActivatedRoute, Router, RoutesRecognized} from "@angular/router";
-import {Subscription} from "rxjs";
 import {deserialiseDiagram} from "../serialisation/deserialise/deserialise-diagram";
 import {DiagramContainerService} from "./services/diagram-container.service";
 

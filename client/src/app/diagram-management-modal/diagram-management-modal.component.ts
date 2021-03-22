@@ -9,7 +9,6 @@ import {fsm} from "../../model/examples/fsm";
 import {Diagram} from "../../model/diagram";
 import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
 import {DiagramContainerService} from "../services/diagram-container.service";
-import axios from "axios";
 import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
