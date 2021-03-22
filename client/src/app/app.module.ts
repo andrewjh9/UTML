@@ -69,6 +69,7 @@ import {
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { SpecialCharacterSelectorComponent } from './special-character-selector/special-character-selector.component';
 import { SpecialCharacterRowComponent } from './special-character-row/special-character-row.component';
+import { GridOverlayComponent } from './grid-overlay/grid-overlay.component';
 
 @NgModule({
   declarations: [
@@ -119,7 +120,8 @@ import { SpecialCharacterRowComponent } from './special-character-row/special-ch
     BelowTextNodeComponent,
     NavBarComponent,
     SpecialCharacterSelectorComponent,
-    SpecialCharacterRowComponent
+    SpecialCharacterRowComponent,
+    GridOverlayComponent
   ],
     imports: [
         BrowserModule,

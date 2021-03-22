@@ -5,13 +5,14 @@
     <div class="flex-grow-1">
       <svg width="1200"
            height="800"
-           [attr.viewBox]="zoomSerivce.getViewBox()"
+           [attr.viewBox]="zoomService.getViewBox()"
            (mousedown)="handleMouseDown($event)"
            (mouseup)="handleMouseUp($event)"
            (mousemove)="handleMouseMove($event)"
            (dblclick)="handleDoubleClick($event)"
            id="diagram"
       >
+        <g grid-overlay></g>
         <g drag-drop-preview></g>
         <g new-edge-preview></g>
         <defs arrow-marker></defs>

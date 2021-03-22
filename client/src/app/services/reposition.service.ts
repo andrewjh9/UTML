@@ -34,9 +34,9 @@ export class RepositionService implements Deactivatable {
   }
 
   public update(mousePosition: Position): void {
-    let difference = this.snapService.snapIfApplicable(Position.subtract(mousePosition, this.startMousePosition!));
+    let difference = Position.subtract(mousePosition, this.startMousePosition!);
     this.selectedNodes.forEach((node, index) => {
-      node.position = Position.add(this.startPositions[index], difference)
+      node.position = this.snapService.snapIfApplicable(Position.add(this.startPositions[index], difference));
     });
   }
 

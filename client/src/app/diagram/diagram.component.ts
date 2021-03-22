@@ -1,36 +1,27 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {RepositionService} from "../services/reposition.service";
-
 import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {DeletionService} from "../services/deletion.service";
 import {CreationTypeSelectionService} from "../services/creation-type-selection.service";
-import {ad} from "../../model/examples/ad";
 import {Node} from "../../model/node/node";
 import {ResizeService} from "../services/resize.service";
 import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
-import {cd} from "../../model/examples/cd";
+import {DomSanitizer} from "@angular/platform-browser";
 import {CachingService} from "../services/caching/caching.service";
 import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
 import {SelectionService} from "../services/selection.service";
-import {Lifeline} from "../../model/sequence-diagram/lifeline";
-import {SequenceDiagram} from "../../model/sequence-diagram/sequence-diagram";
 import {Diagram} from "../../model/diagram";
 import {Edge} from "../../model/edge";
 import {Position} from "../../model/position";
 import {CopyPasteService} from "../services/copy-paste.service";
 import {DragDropCreationService} from "../services/drag-drop-creation.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {UploadModalComponent} from "../upload-modal/upload-modal.component";
 import {UploadService} from "../services/upload.service";
-import {SaveModalComponent} from "../save-modal/save-modal.component";
-import {Expression} from "@angular/compiler";
 import {DragSelectionService} from "../services/drag-selection.service";
 import {ZoomService} from "../services/zoom.service";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
-import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
 import {DiagramContainerService} from "../services/diagram-container.service";
 import {LocalStorageService} from "../services/caching/local-storage.service";
 import {LensOffsetService} from "../services/lens-offset.service";
@@ -44,10 +35,8 @@ import {LabelRepositionService} from "../services/label-reposition.service";
 export class DiagramComponent implements AfterViewInit {
   public static readonly NAV_HEIGHT = 50;
   public diagram: Diagram;
-  seq = new SequenceDiagram();
 
   mode: Mode;
-  Mode = Mode;
 
   constructor(private sanitizer: DomSanitizer,
               private diagramContainer: DiagramContainerService,
@@ -65,7 +54,7 @@ export class DiagramComponent implements AfterViewInit {
               private modalService: NgbModal,
               private uploadService: UploadService,
               private dragSelectionService: DragSelectionService,
-              public zoomSerivce: ZoomService,
+              public zoomService: ZoomService,
               private localStorageService: LocalStorageService,
               private mousePositionTransformService: MousePositionTransformService,
               private lensOffsetService: LensOffsetService,
@@ -103,9 +92,6 @@ export class DiagramComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     if (this.diagram) {
-      // @ts-ignore
-      this.edgeRepositionService.setNodes(this.diagram.nodes);
-
       this.localStorageService.setup();
     }
   }
