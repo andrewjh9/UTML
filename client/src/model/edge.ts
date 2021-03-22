@@ -219,7 +219,7 @@ export class Edge {
     let betweenPerpendicular = new Position(-between.y, between.x)
     let middle = Position.multiply(0.5, Position.add(start, end));
     let position = Position.add(middle, Position.multiply(0.25, betweenPerpendicular))
-    this.middlePositions.push(position);
+    this.middlePositions = [position];
   }
 
   public serialise(): SerialisedEdge {

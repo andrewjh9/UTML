@@ -110,7 +110,7 @@ export class DiagramComponent implements AfterViewInit {
     } else if (this.dragDropCreationService.isActive()) {
       this.dragDropCreationService.create();
     } else if (this.edgeCreationService.isActive()) {
-      this.edgeCreationService.deactivate();
+      this.edgeCreationService.cancel();
     } else if (this.dragSelectionService.isActive()) {
       this.dragSelectionService.deactivate();
     } else if (this.lensOffsetService.isActive()) {
@@ -121,24 +121,24 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleMouseMove(event: MouseEvent) {
-    let position = this.mousePositionTransformService.transformPosition(new Position(event.pageX, event.pageY));
-    let pos = this.mousePositionTransformService.transFormZoomAndMenubar(new Position(event.pageX, event.pageY))
+    let fullyTransformed = this.mousePositionTransformService.transformPosition(new Position(event.pageX, event.pageY));
+    let zoomedPos = this.mousePositionTransformService.transFormZoomAndMenubar(new Position(event.pageX, event.pageY))
     if (this.repositionService.isActive()) {
-      this.repositionService.update(position); //works
+      this.repositionService.update(fullyTransformed); //works
     } else if (this.edgeRepositionService.isActive()) {
-      this.edgeRepositionService.update(position); //works
+      this.edgeRepositionService.update(fullyTransformed); //works
     } else if (this.edgeCreationService.isActive()) {
-      this.edgeCreationService.endPreview = position; //works
+      this.edgeCreationService.endPreview = fullyTransformed; //works
     } else if (this.resizeService.isActive()) {
-      this.resizeService.update(position); //works
+      this.resizeService.update(fullyTransformed); //works
     } else if (this.dragDropCreationService.isActive()) {
-      this.dragDropCreationService.update(position); //works
+      this.dragDropCreationService.update(fullyTransformed); //works
     } else if (this.dragSelectionService.isActive()) {
-      this.dragSelectionService.update(position); //idk
+      this.dragSelectionService.update(fullyTransformed); //idk
     } else if (this.lensOffsetService.isActive()) {
-      this.lensOffsetService.update(pos); //works
+      this.lensOffsetService.update(zoomedPos); //works
     } else if (this.labelRepositionService.isActive()) {
-      this.labelRepositionService.update(pos);
+      this.labelRepositionService.update(fullyTransformed);
     }
   }
 

@@ -3,3 +3,5 @@
        (mousedown)="handleMouseDown($event)"
        (dblclick)="handleDoubleClick($event)"
        [ngStyle]="{'cursor': isSelected ? 'move' : 'pointer'}"/>
+
+<svg:g *ngIf="edgeCreationIsActive" clickable-attachment-points [node]="node"></svg:g>

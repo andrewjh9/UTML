@@ -1,4 +1,4 @@
-<svg:line *ngIf="edgeCreationService.isActive()"
+<svg:line *ngIf="edgeCreationService.startHasBeenSelected()"
           [attr.x1]="edgeCreationService.startPreview!.x"
           [attr.y1]="edgeCreationService.startPreview!.y"
           [attr.x2]="edgeCreationService.endPreview!.x"

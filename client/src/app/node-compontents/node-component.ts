@@ -12,6 +12,7 @@ import {CachingService} from "../services/caching/caching.service";
 import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 import {EditService} from "../services/edit.service";
+import {EdgeCreationService} from "../services/edge-creation.service";
 
 @Component({
   templateUrl: './node.component.html',
@@ -22,6 +23,7 @@ export class NodeComponent extends ModeAwareComponent {
   hoveringNearby: boolean = false;
   isSelected: boolean = false;
   isInEditMode: boolean = false;
+  edgeCreationIsActive: boolean = false;
 
   constructor(private repositionService: RepositionService,
               modeService: ModeService,
@@ -30,18 +32,25 @@ export class NodeComponent extends ModeAwareComponent {
               private deletionService: DeletionService,
               private cachingService: CachingService,
               private mousePositionTransformService: MousePositionTransformService,
-              private editService: EditService) {
+              private editService: EditService,
+              edgeCreationService: EdgeCreationService) {
     super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.node);
     });
+
+    edgeCreationService.activityObservable.subscribe(b => this.edgeCreationIsActive = b);
   }
 
   public handleMouseDown(event: MouseEvent) {
+    if (this.edgeCreationIsActive) {
+      return;
+    }
+
     // If the node is already selected, we do not want to select it again.
     // This is because there are multiple selected nodes sometimes
     // and this allows you to move multiple at the same time.
-    if (!this.isSelected) {
+    if (!this.isSelected ) {
       this.selectionService.setNode(this.node);
     } else {
       this.repositionService.activate(this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY)));

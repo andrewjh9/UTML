@@ -11,6 +11,7 @@ import {DiamondNode} from "../../model/node/diamond-node";
 import {HourglassNode} from "../../model/node/hourglass-node";
 import {ActorNode} from "../../model/node/actor-node";
 import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
+import {EdgeCreationService} from "../services/edge-creation.service";
 
 @Component({
   selector: 'creation-sidebar',
@@ -19,9 +20,15 @@ import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
 })
 export class CreationSidebarComponent {
   public static readonly WIDTH: number = 200;
+  private selectedKeys: [string, string] | undefined;
 
   constructor(private dragDropCreationService: DragDropCreationService,
-              private sanitizer: DomSanitizer) {
+              private edgeCreationService: EdgeCreationService) {
+    edgeCreationService.activityObservable.subscribe(active => {
+      if (!active) {
+        this.selectedKeys = undefined;
+      }
+    })
 
   }
 
@@ -89,6 +96,11 @@ export class CreationSidebarComponent {
   Object = Object;
 
   handleMouseDown(event: MouseEvent, edgeOrNode: Edge | Node) {
+    if (edgeOrNode instanceof Edge && <Edge> edgeOrNode !== this.edgeCreationService.factory) {
+      console.log('wtf')
+      this.edgeCreationService.deactivate();
+    }
+
     if (!this.dragDropCreationService.isActive()) {
       this.dragDropCreationService.activate(edgeOrNode);
     } else {
@@ -96,38 +108,23 @@ export class CreationSidebarComponent {
     }
   }
 
-  handleMouseUp($event: MouseEvent) {
+  handleMouseUp(event: MouseEvent) {
     if (this.dragDropCreationService.isActive()) {
       this.dragDropCreationService.cancel();
     }
   }
 
-  getSafePreview(groupKey: string, nodeKey: string): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml(this.groups[groupKey].nodes[nodeKey].preview);
+  handleEdgeClick(groupKey: string, edgeKey: string) {
+    if (this.isSelected(groupKey, edgeKey)) {
+      this.edgeCreationService.deactivate();
+    } else {
+      this.edgeCreationService.activate(this.groups[groupKey].edges[edgeKey]);
+      this.selectedKeys = [groupKey, edgeKey];
+    }
   }
 
-  isLine(edge: Edge): boolean {
-    return edge.lineType === LineType.Line;
-  }
-
-  isArc(edge: Edge): boolean {
-    return edge.lineType === LineType.Arc;
-  }
-
-  toClassNode(node: Node): ClassNode | undefined {
-    return node instanceof ClassNode ? node as ClassNode : undefined;
-  }
-
-  toEllipseNode(node: Node): EllipseNode | undefined {
-    return node instanceof EllipseNode ? node as EllipseNode : undefined;
-  }
-
-  toRectangleNode(node: Node): RectangleNode | undefined {
-    return (node instanceof RectangleNode && !(node instanceof ClassNode)) ? node as RectangleNode : undefined;
-  }
-
-  toDiamondNode(node: Node): DiamondNode | undefined {
-    return node instanceof DiamondNode ? node as DiamondNode : undefined;
+  isSelected(groupKey: string, edgeKey: string) {
+    return this.selectedKeys !== undefined && this.selectedKeys[0] === groupKey && this.selectedKeys[1] === edgeKey;
   }
 }
 
