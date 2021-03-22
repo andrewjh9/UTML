@@ -106,6 +106,7 @@ import { GridOverlayComponent } from './grid-overlay/grid-overlay.component';
     EdgeRenderDispatchComponent,
     NodeRenderDispatchComponent,
     NodeComponent,
+    NodeComponent,
     FormattingModalComponent,
     EdgeFormattingModalComponent,
     UploadModalComponent,

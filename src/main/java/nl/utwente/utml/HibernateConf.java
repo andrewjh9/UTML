@@ -44,13 +44,13 @@ public class HibernateConf {
         return dataSource;
     }
 
-    @Bean
-    public PlatformTransactionManager hibernateTransactionManager() {
-        HibernateTransactionManager transactionManager
-                = new HibernateTransactionManager();
-        transactionManager.setSessionFactory(sessionFactory().getObject());
-        return transactionManager;
-    }
+//    @Bean
+//    public PlatformTransactionManager hibernateTransactionManager() {
+//        HibernateTransactionManager transactionManager
+//                = new HibernateTransactionManager();
+//        transactionManager.setSessionFactory(sessionFactory().getObject());
+//        return transactionManager;
+//    }
 
 
     private final Properties hibernateProperties() {

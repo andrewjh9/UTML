@@ -1,17 +1,16 @@
 package nl.utwente.utml.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import nl.utwente.utml.Roles;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import org.springframework.security.access.annotation.Secured;
+import org.joda.time.DateTime;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames={"title", "userEmail"})})
     public class Diagram implements Serializable {
 
     public Diagram(){}
@@ -19,23 +18,28 @@ import java.util.UUID;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @JsonProperty("serializedDiagram")
-    private String serializedDiagram;
 
-    @ManyToOne()
-    @JoinColumn(name = "userId")
-    @JsonProperty("userId")
-    private User owner;
+    @Column(columnDefinition = "TEXT")
+    @JsonProperty("serialisedDiagram")
+    private String serialisedDiagram;
 
-
-
-    @JsonProperty("shared")
-    private boolean shared;
+    @JsonProperty("userEmail")
+    private String userEmail;
 
 
-    public Diagram(Long id, String serializedDiagram){
+    @JsonProperty("title")
+    private String title;
+
+    @JsonProperty("visible")
+    private boolean visible;
+
+    @Column(name = "lastModified")
+    @LastModifiedDate
+    public DateTime lastModifiedDate;
+
+    public Diagram(Long id, String serialisedDiagram){
         this.id = id;
-        this.serializedDiagram = serializedDiagram;
+        this.serialisedDiagram = serialisedDiagram;
     }
     public void setId(Long id) {
         this.id = id;
@@ -45,19 +49,31 @@ import java.util.UUID;
         return id;
     }
 
-    public String getSerializedDiagram() {
-        return serializedDiagram;
+    public String getSerialisedDiagram() {
+        return serialisedDiagram;
     }
 
-    public void setSerializedDiagram(String serializedDiagram) {
-        this.serializedDiagram = serializedDiagram;
+    public void setSerialisedDiagram(String serializedDiagram) {
+        this.serialisedDiagram = serializedDiagram;
     }
 
-    public User getOwner() {
-        return owner;
+    public String getOwnerEmail() {
+        return userEmail;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setOwner(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public void toggleVisible(){
+        this.visible = !this.visible;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

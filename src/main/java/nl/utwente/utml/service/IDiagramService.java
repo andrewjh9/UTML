@@ -1,18 +1,25 @@
 package nl.utwente.utml.service;
 
+import jdk.jshell.Diag;
 import nl.utwente.utml.model.Diagram;
 
 import java.util.List;
 
 public interface IDiagramService {
 
+    List<Diagram> getAllUserDiagrams(String email);
 
-    public void add(Diagram diagram);
+    void add(Diagram diagram);
 
-    public List<Diagram> getAll() ;
+    List<Diagram> getAllVisible() ;
 
-    public void delete(long id);
+    void delete(long id);
 
-    public Diagram get(long id);
+    Diagram getVisible(long id);
 
+    void update(Diagram diagram);
+
+    void toggleVisible(long id);
+
+    boolean userOwner(long id, String email);
 }

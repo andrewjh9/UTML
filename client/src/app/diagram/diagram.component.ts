@@ -26,6 +26,7 @@ import {DiagramContainerService} from "../services/diagram-container.service";
 import {LocalStorageService} from "../services/caching/local-storage.service";
 import {LensOffsetService} from "../services/lens-offset.service";
 import {LabelRepositionService} from "../services/label-reposition.service";
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-diagram',
@@ -58,7 +59,10 @@ export class DiagramComponent implements AfterViewInit {
               private localStorageService: LocalStorageService,
               private mousePositionTransformService: MousePositionTransformService,
               private lensOffsetService: LensOffsetService,
-              private labelRepositionService: LabelRepositionService) {
+              private labelRepositionService: LabelRepositionService,
+              private appComponent: AppComponent
+              ) {
+
     this.diagram = diagramContainer.get();
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
 
