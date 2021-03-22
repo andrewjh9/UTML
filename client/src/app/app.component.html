@@ -1,3 +1,3 @@
+<router-outlet></router-outlet>
 <a *ngIf="!userFullName || userFullName == '' " class="nav-link" href="/login">login</a>
 <p *ngIf="userFullName && userFullName != ''">Welcome {{this.userFullName}}</p>
-<router-outlet></router-outlet>
