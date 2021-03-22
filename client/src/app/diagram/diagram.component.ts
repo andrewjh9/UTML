@@ -190,11 +190,29 @@ export class DiagramComponent implements AfterViewInit {
   }
 
   handleMouseDown(event: MouseEvent) {
-    let thisPosition = this.mousePositionTransformService.simpleTransform(new Position(event.x, event.y));
+    let pos = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
     //TODO is this the correct position?, call the correct function.
     if (event.shiftKey) {
-      this.dragSelectionService.activate(thisPosition);
+      this.dragSelectionService.activate(pos);
     } else if (event.ctrlKey) {
+      // Check that no node or edge was double clicked.
+      for (let node of this.diagram.nodes) {
+        let nodeStart = node.position.getDeepCopy();
+        let nodeEnd = Position.add(node.position, new Position(node.width, node.height));
+        if (Position.liesBetween(nodeStart, pos, nodeEnd)) {
+          return;
+        }
+      }
+
+      for (let edge of this.diagram.edges) {
+        let allPoints = edge.getAllPoints();
+        for (let i = 0; i < allPoints.length - 1; i++) {
+          if (EdgeRepositionService.liesOnSegment(pos, allPoints[i], allPoints[i + 1])) {
+            return;
+          }
+        }
+      }
+
       this.lensOffsetService.activate(this.mousePositionTransformService.transFormZoomAndMenubar(new Position(event.x, event.y)));
     }
   }
