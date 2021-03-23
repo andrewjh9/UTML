@@ -8,6 +8,20 @@ import {ActorNode} from "../../model/node/actor-node";
 import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
 import {EllipseNode} from "../../model/node/ellipse-node";
 
+export function flattenActive(courseSets: {[key: string]: CourseSet}) {
+  let result: CourseSet = {};
+
+  for (let [_, courseSet] of Object.entries(courseSets)) {
+    for (let [name, shapeSet] of Object.entries(courseSet)) {
+      if (shapeSet.active) {
+        result[name] = shapeSet
+      }
+    }
+  }
+
+  return result;
+}
+
 let cd: ShapeSet = {nodes: {}, edges: {}, active: true};
 let classNode = new ClassNode(186, 75, new Position(10, 2));
 let association = new Edge(new Position(10, 20), new Position(196, 20));

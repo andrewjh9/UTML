@@ -8,14 +8,9 @@
   <div class="alert alert-info">Select which shape sets you want to use.</div>
 
   <div *ngFor="let courseKeyTuple of allKeyValues">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" [attr.id]="courseKeyTuple[0]">
-      <label class="form-check-label" [attr.for]="courseKeyTuple[0]">
-        {{courseKeyTuple[0]}}
-      </label>
-    </div>
+    <h4>{{courseKeyTuple[0]}}</h4>
     <div>
-      <div *ngFor="let tuple of getCourseTuple(courseKeyTuple[0])" class="form-check ml-5">
+      <div *ngFor="let tuple of getCourseTuple(courseKeyTuple[0])" class="form-check">
         <input class="form-check-input"
                type="checkbox"
                [attr.id]="tuple[0]"

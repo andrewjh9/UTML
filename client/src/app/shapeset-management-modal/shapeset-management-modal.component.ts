@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Node} from "../../model/node/node";
 import {Edge} from "../../model/edge";
-import {courseSets} from "./course-sets";
+import {courseSets, flattenActive} from "./course-sets";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ShapeSetContainerService} from "../services/shape-set-container.service";
 
@@ -11,29 +11,21 @@ import {ShapeSetContainerService} from "../services/shape-set-container.service"
   styleUrls: ['./shapeset-management-modal.component.scss']
 })
 export class ShapesetManagementModalComponent {
-  readonly COURSE_SETS = courseSets;
+  readonly currentCourseSets = courseSets;
 
   constructor(public modal: NgbActiveModal,
               private shapeSetContainerService: ShapeSetContainerService) { }
 
   get allKeyValues(): Array<[string, CourseSet]> {
-    return Object.entries(this.COURSE_SETS);
+    return Object.entries(this.currentCourseSets);
   }
 
   getCourseTuple(key: string) {
-    return Object.entries(this.COURSE_SETS[key]);
+    return Object.entries(this.currentCourseSets[key]);
   }
 
   update(): void {
-    let result: CourseSet = {};
-    for (let [_, courseSet] of Object.entries(this.COURSE_SETS)) {
-      for (let [name, shapeSet] of Object.entries(courseSet)) {
-        if (shapeSet.active) {
-          result[name] = shapeSet
-        }
-      }
-    }
-    this.shapeSetContainerService.shapeSets.next(result);
+    this.shapeSetContainerService.shapeSets.next(flattenActive(this.currentCourseSets));
   }
 }
 
