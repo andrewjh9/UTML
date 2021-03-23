@@ -72,6 +72,7 @@ import { GridOverlayComponent } from './grid-overlay/grid-overlay.component';
 import { ClickableMiddlePointsComponent } from './edge/clickable-middle-points/clickable-middle-points.component';
 import { ClickableNewPointsComponent } from './edge/clickable-new-points/clickable-new-points.component';
 import { ClickableStartEndPointsComponent } from './edge/clickable-start-end-points/clickable-start-end-points.component';
+import { ClearDiagramModalComponent } from './clear-diagram-modal/clear-diagram-modal.component';
 
 @NgModule({
   declarations: [
@@ -126,7 +127,8 @@ import { ClickableStartEndPointsComponent } from './edge/clickable-start-end-poi
     GridOverlayComponent,
     ClickableMiddlePointsComponent,
     ClickableNewPointsComponent,
-    ClickableStartEndPointsComponent
+    ClickableStartEndPointsComponent,
+    ClearDiagramModalComponent
   ],
     imports: [
         BrowserModule,

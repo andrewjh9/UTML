@@ -169,34 +169,6 @@ export class CreationSidebarComponent {
     }
   }
 
-  // handleMouseDown(event: MouseEvent, edgeOrNode: Edge | Node) {
-  //   if (edgeOrNode instanceof Edge && <Edge> edgeOrNode !== this.edgeCreationService.factory) {
-  //     console.log('wtf')
-  //     this.edgeCreationService.deactivate();
-  //   }
-  //
-  //   if (!this.dragDropCreationService.isActive()) {
-  //     this.dragDropCreationService.activate(edgeOrNode);
-  //   } else {
-  //     console.log('Drag and drop service is already active.');
-  //   }
-  // }
-  //
-  // handleMouseUp(event: MouseEvent) {
-  //   if (this.dragDropCreationService.isActive()) {
-  //     this.dragDropCreationService.cancel();
-  //   }
-  // }
-  //
-  // handleEdgeClick(groupKey: string, edgeKey: string) {
-  //   if (this.isSelected(groupKey, edgeKey)) {
-  //     this.edgeCreationService.deactivate();
-  //   } else {
-  //     this.edgeCreationService.activate(this.groups[groupKey].edges[edgeKey]);
-  //     this.selectedKeys = [groupKey, edgeKey];
-  //   }
-  // }
-
   isSelected(groupKey: string, edgeKey: string) {
     return this.selectedKeys !== undefined && this.selectedKeys[0] === groupKey && this.selectedKeys[1] === edgeKey;
   }

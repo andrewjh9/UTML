@@ -9,6 +9,7 @@ import {DiagramContainerService} from "../services/diagram-container.service";
 import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
 import {DiagramComponent} from "../diagram/diagram.component";
 import {ZoomService} from "../services/zoom.service";
+import {ClearDiagramModalComponent} from "../clear-diagram-modal/clear-diagram-modal.component";
 
 @Component({
   selector: 'app-nav-bar',
@@ -78,5 +79,9 @@ export class NavBarComponent {
 
   login() {
     this.isAuthenticated = !this.isAuthenticated;
+  }
+
+  openClearDiagramPopUp() {
+    this.modalService.open(ClearDiagramModalComponent);
   }
 }
