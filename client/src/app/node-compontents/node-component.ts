@@ -1,11 +1,10 @@
 import {RepositionService} from "../services/reposition.service";
-import {Mode, ModeService} from "../services/mode.service";
+import {ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
 import {Node} from "../../model/node/node";
 import {Position} from "../../model/position";
 import {ModeAwareComponent} from "../mode-aware-component";
-import {DiagramComponent} from "../diagram/diagram.component";
-import {Component, ElementRef, Input, ViewChild} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DeletionService} from "../services/deletion.service";
 import {CachingService} from "../services/caching/caching.service";
@@ -13,8 +12,7 @@ import {FormattingModalComponent} from "../formatting-modal/formatting-modal.com
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 import {EditService} from "../services/edit.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
-import {Edge} from "../../model/edge";
-import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
+import {StartEndRepositioner} from "../services/edge-reposition/start-end-repositioner";
 
 @Component({
   templateUrl: './node.component.html',
@@ -36,7 +34,7 @@ export class NodeComponent extends ModeAwareComponent {
               private mousePositionTransformService: MousePositionTransformService,
               private editService: EditService,
               edgeCreationService: EdgeCreationService,
-              public edgeRepositionService: EdgeRepositionService) {
+              public startEndRepositioner: StartEndRepositioner) {
     super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.node);

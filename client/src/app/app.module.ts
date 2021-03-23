@@ -23,7 +23,6 @@ import { ClickableAttachmentPointsComponent } from './node-compontents/clickable
 import {ClickableResizePointsComponent} from "./node-compontents/clickable-resize-points/clickable-resize-points.component";
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
 import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic-node-text.component';
-import { DiagramDownloadComponent } from './diagram-download/diagram-download.component';
 import { JsonUriPipe } from './json-uri.pipe';
 import { DiagramImportComponent } from './diagram-import/diagram-import.component';
 import { LifelineComponent } from './lifeline/lifeline.component';
@@ -92,7 +91,6 @@ import { ClickableStartEndPointsComponent } from './edge/clickable-start-end-poi
     ClickableResizePointsComponent,
     ExportDiagramComponent,
     BasicNodeTextComponent,
-    DiagramDownloadComponent,
     JsonUriPipe,
     DiagramImportComponent,
     LifelineComponent,

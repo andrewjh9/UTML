@@ -6,7 +6,7 @@
 
 <svg:g *ngIf="edgeCreationIsActive" clickable-attachment-points [node]="node"></svg:g>
 
-<svg:g *ngIf="edgeRepositionService.isActive()">
+<svg:g *ngIf="startEndRepositioner.isActive()">
   <svg:ellipse *ngFor="let point of node.getAllAttachmentPoints(); let i = index;"
                [attr.cx]="point.x"
                [attr.cy]="point.y"

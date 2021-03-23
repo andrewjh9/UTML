@@ -1,7 +1,8 @@
 import {Position} from "../../../model/position";
 import {Edge} from "../../../model/edge";
-import {EdgeRepositionService} from "./edge-reposition.service";
 import {Injectable} from "@angular/core";
+import {liesOnSegment} from "./lies-on-segment";
+import {SnapService} from "../snap.service";
 
 @Injectable({
   'providedIn': 'root'
@@ -9,6 +10,9 @@ import {Injectable} from "@angular/core";
 export class FixedPointRepositioner {
   private position?: Position;
   private edge?: Edge;
+
+  constructor(private snapService: SnapService) {
+  }
 
   public isActive(): boolean {
     return this.position !== undefined && this.edge !== undefined;
@@ -24,6 +28,8 @@ export class FixedPointRepositioner {
       throw new Error("Updating an unactivated repositioner.");
     }
 
+    newPosition = this.snapService.snapIfApplicable(newPosition, 5);
+
     this.position!.x = newPosition.x;
     this.position!.y = newPosition.y;
   }
@@ -38,7 +44,7 @@ export class FixedPointRepositioner {
     let allPoints = this.edge!.getAllPoints();
     let foundIndex: number = allPoints.indexOf(this.position!);
     if (0 < foundIndex && foundIndex < allPoints.length - 1) {
-      if (EdgeRepositionService.liesOnSegment(this.position!, allPoints[foundIndex - 1], allPoints[foundIndex + 1])) {
+      if (liesOnSegment(this.position!, allPoints[foundIndex - 1], allPoints[foundIndex + 1])) {
         // Remove the found index from the middle position array of the edge.
         // Since the allPoints contains the start and the middlePositions does not we subtract 1.
         this.edge!.middlePositions.splice(foundIndex - 1, 1);

@@ -2,7 +2,6 @@ import {Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild
 import {Position} from "../../model/position";
 import {Edge, EndStyle, LineStyle, LineType} from "../../model/edge";
 import {Label} from "../../model/label";
-import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
@@ -21,7 +20,7 @@ import {MousePositionTransformService} from "../services/mouse-position-transfor
   templateUrl: './edge.component.html',
   styleUrls: ['./edge.component.scss'],
 })
-export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
+export class EdgeComponent implements OnDestroy {
   @Input() edge!: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
   isSelected: boolean = false;
@@ -31,14 +30,11 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   }
   cursor: 'pointer' | 'move' = 'pointer';
 
-  constructor(private edgeRepositionService: EdgeRepositionService,
-              modeService: ModeService,
-              private selectionService: SelectionService,
+  constructor(private selectionService: SelectionService,
               private deletionService: DeletionService,
               private cachingService: CachingService,
               private modalService: NgbModal,
               private mousePositionTransformService: MousePositionTransformService) {
-    super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.edge);
 
