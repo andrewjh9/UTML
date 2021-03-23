@@ -2,8 +2,8 @@
        [edge]="edge!"
        [styleObject]="styleObject"/>
 
-<!-- Todo: Implement invisible, clickable overlay to make arcs easier to click on.
-Once done remove (mousedown) on render dispatch-->
+
+
 <!-- Invisible, selectable to make the mouse down trigger easily accessible -->
 <svg:polyline *ngIf="edge && isLine()"
               [attr.points]="edge.getPointString()"

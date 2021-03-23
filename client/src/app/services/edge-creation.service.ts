@@ -60,6 +60,10 @@ export class EdgeCreationService implements Deactivatable {
   }
 
   public setEnd(endNode: Node, endAttachment: number) {
+    if (this.startNode === undefined || this.startAttachment === undefined) {
+      throw new Error('Trying to set the end before start is set.')
+    }
+
     if (endNode === this.startNode && endAttachment === this.startAttachment) {
       return this.cancel();
     }
