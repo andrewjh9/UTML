@@ -12,6 +12,8 @@ import {HourglassNode} from "../../model/node/hourglass-node";
 import {ActorNode} from "../../model/node/actor-node";
 import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
 import {EdgeCreationService} from "../services/edge-creation.service";
+import {group} from "@angular/animations";
+import {element} from "protractor";
 
 @Component({
   selector: 'creation-sidebar',
@@ -21,10 +23,12 @@ import {EdgeCreationService} from "../services/edge-creation.service";
 export class CreationSidebarComponent {
   public static readonly WIDTH: number = 200;
   private selectedKeys: [string, string] | undefined;
+  edgeCreationIsActive: boolean = false;
 
   constructor(private dragDropCreationService: DragDropCreationService,
               private edgeCreationService: EdgeCreationService) {
     edgeCreationService.activityObservable.subscribe(active => {
+      this.edgeCreationIsActive = active;
       if (!active) {
         this.selectedKeys = undefined;
       }
@@ -95,33 +99,55 @@ export class CreationSidebarComponent {
 
   Object = Object;
 
-  handleMouseDown(event: MouseEvent, edgeOrNode: Edge | Node) {
-    if (edgeOrNode instanceof Edge && <Edge> edgeOrNode !== this.edgeCreationService.factory) {
-      console.log('wtf')
-      this.edgeCreationService.deactivate();
-    }
-
-    if (!this.dragDropCreationService.isActive()) {
-      this.dragDropCreationService.activate(edgeOrNode);
-    } else {
-      console.log('Drag and drop service is already active.');
-    }
-  }
-
-  handleMouseUp(event: MouseEvent) {
+  handleGenericMouseUp(): void {
     if (this.dragDropCreationService.isActive()) {
       this.dragDropCreationService.cancel();
     }
   }
 
-  handleEdgeClick(groupKey: string, edgeKey: string) {
-    if (this.isSelected(groupKey, edgeKey)) {
-      this.edgeCreationService.deactivate();
-    } else {
-      this.edgeCreationService.activate(this.groups[groupKey].edges[edgeKey]);
-      this.selectedKeys = [groupKey, edgeKey];
+  handleEdgeMouseUp(groupKey: string, elementKey: string) {
+    if (this.selectedKeys !== undefined && this.selectedKeys[0] === groupKey &&
+      this.selectedKeys[1] === elementKey) {
+      this.edgeCreationService.activate(this.groups[groupKey].edges[elementKey])
     }
   }
+
+  handleMouseDown(groupKey: string, elementKey: string, type: 'node' | 'edge'): void {
+    if (type === 'node') {
+      this.dragDropCreationService.activate(this.groups[groupKey].nodes[elementKey]);
+    } else {
+      this.dragDropCreationService.activate(this.groups[groupKey].edges[elementKey]);
+      this.selectedKeys = [groupKey, elementKey];
+    }
+  }
+
+  // handleMouseDown(event: MouseEvent, edgeOrNode: Edge | Node) {
+  //   if (edgeOrNode instanceof Edge && <Edge> edgeOrNode !== this.edgeCreationService.factory) {
+  //     console.log('wtf')
+  //     this.edgeCreationService.deactivate();
+  //   }
+  //
+  //   if (!this.dragDropCreationService.isActive()) {
+  //     this.dragDropCreationService.activate(edgeOrNode);
+  //   } else {
+  //     console.log('Drag and drop service is already active.');
+  //   }
+  // }
+  //
+  // handleMouseUp(event: MouseEvent) {
+  //   if (this.dragDropCreationService.isActive()) {
+  //     this.dragDropCreationService.cancel();
+  //   }
+  // }
+  //
+  // handleEdgeClick(groupKey: string, edgeKey: string) {
+  //   if (this.isSelected(groupKey, edgeKey)) {
+  //     this.edgeCreationService.deactivate();
+  //   } else {
+  //     this.edgeCreationService.activate(this.groups[groupKey].edges[edgeKey]);
+  //     this.selectedKeys = [groupKey, edgeKey];
+  //   }
+  // }
 
   isSelected(groupKey: string, edgeKey: string) {
     return this.selectedKeys !== undefined && this.selectedKeys[0] === groupKey && this.selectedKeys[1] === edgeKey;
