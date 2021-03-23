@@ -11,7 +11,7 @@ export class BasicNodeTextComponent {
   @Input() node!: Node;
   readonly FONT_SIZE = 16;
 
-  constructor(private editService: EditService) {}
+  constructor(public editService: EditService) {}
 
   get lineAmount(): number {
     return this.node!.getTextLines().length;
@@ -34,7 +34,7 @@ export class BasicNodeTextComponent {
 
   setActive(index: number) {
     if (this.editService.isActive()) {
-      this.editService.setActiveTextLine(index, false)
+      this.editService.setNewLineActive(index);
     }
   }
 }

@@ -39,6 +39,10 @@ export class Label {
     result.anchors = this.anchors;
     return result;
   }
+
+  public getTextLines(): string[] {
+    return this.value.split("\\n");
+  }
 }
 
 export type PositionCallback = () => Position;

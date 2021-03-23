@@ -1,4 +1,4 @@
-<div id="creation-side-bar" style="width: 300px" (mouseup)="handleMouseUp($event)">
+<div id="creation-side-bar" [ngStyle]="getStyles()" (mouseup)="handleMouseUp($event)">
   <ngb-accordion>
     <ngb-panel *ngFor="let diagramGroup of groupKeys" title="{{diagramGroup}}">
       <ng-template ngbPanelContent>

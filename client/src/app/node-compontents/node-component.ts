@@ -12,6 +12,7 @@ import {CachingService} from "../services/caching/caching.service";
 import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 import {EditService} from "../services/edit.service";
+import {KeyboardEventCallerService} from "../services/keyboard-event-caller.service";
 
 @Component({
   templateUrl: './node.component.html',
@@ -59,11 +60,11 @@ export class NodeComponent extends ModeAwareComponent {
       if (this.selectionService.isNode()) {
         this.modalService.open(FormattingModalComponent);
       }
-    } else if (this.node && this.editService.getNode() != this.node) {
+    } else if (this.node && this.editService.getEditable() != this.node) {
       this.isInEditMode = true;
       this.editService.deactivate();
-      this.editService.activate(this.node);
-    } else if (this.node == this.editService.getNode()) {
+      this.editService.activate(this.node, 0);
+    } else if (this.node == this.editService.getEditable()) {
       this.editService.addField();
     }
   }

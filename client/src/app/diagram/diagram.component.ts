@@ -35,7 +35,8 @@ import {LabelRepositionService} from "../services/label-reposition.service";
 export class DiagramComponent implements AfterViewInit {
   public static readonly NAV_HEIGHT = 50;
   public diagram: Diagram;
-
+  public width?: number;
+  public height?: number;
   mode: Mode;
 
   constructor(private sanitizer: DomSanitizer,
@@ -59,6 +60,10 @@ export class DiagramComponent implements AfterViewInit {
               private mousePositionTransformService: MousePositionTransformService,
               private lensOffsetService: LensOffsetService,
               private labelRepositionService: LabelRepositionService) {
+    this.width = window.innerWidth;
+    this.height = window.innerHeight - DiagramComponent.NAV_HEIGHT;
+    document.documentElement.style.overflow = 'hidden';  // firefox, chrome
+    // document.body.scroll = "no"; // ie only
     this.diagram = diagramContainer.get();
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
 
@@ -118,7 +123,6 @@ export class DiagramComponent implements AfterViewInit {
 
   handleMouseMove(event: MouseEvent) {
     let position = this.mousePositionTransformService.transformPosition(new Position(event.pageX, event.pageY));
-    let pos = this.mousePositionTransformService.transFormZoomAndMenubar(new Position(event.pageX, event.pageY))
     if (this.repositionService.isActive()) {
       this.repositionService.update(position); //works
     } else if (this.edgeRepositionService.isActive()) {
@@ -132,9 +136,9 @@ export class DiagramComponent implements AfterViewInit {
     } else if (this.dragSelectionService.isActive()) {
       this.dragSelectionService.update(position); //idk
     } else if (this.lensOffsetService.isActive()) {
-      this.lensOffsetService.update(pos); //works
+      this.lensOffsetService.update(position); //works
     } else if (this.labelRepositionService.isActive()) {
-      this.labelRepositionService.update(pos);
+      this.labelRepositionService.update(position);
     }
   }
 
@@ -177,7 +181,6 @@ export class DiagramComponent implements AfterViewInit {
 
   handleMouseDown(event: MouseEvent) {
     let pos = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
-    //TODO is this the correct position?, call the correct function.
     if (event.shiftKey) {
       this.dragSelectionService.activate(pos);
     } else if (event.ctrlKey) {

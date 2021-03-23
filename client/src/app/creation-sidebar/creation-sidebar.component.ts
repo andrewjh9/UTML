@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ClassNode} from "../../model/node/class-node";
 import {Position} from "../../model/position";
 import {Edge, EndStyle, LineType} from "../../model/edge";
@@ -11,23 +11,38 @@ import {DiamondNode} from "../../model/node/diamond-node";
 import {HourglassNode} from "../../model/node/hourglass-node";
 import {ActorNode} from "../../model/node/actor-node";
 import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
+import {DiagramComponent} from "../diagram/diagram.component";
 
 @Component({
   selector: 'creation-sidebar',
   templateUrl: './creation-sidebar.component.html',
   styleUrls: ['./creation-sidebar.component.scss']
 })
-export class CreationSidebarComponent {
-  public static readonly WIDTH: number = 200;
+export class CreationSidebarComponent implements OnInit{
+  public static readonly WIDTH: number = 300;
 
   constructor(private dragDropCreationService: DragDropCreationService,
               private sanitizer: DomSanitizer) {
 
   }
 
+  ngOnInit(): void {
+    let height: number = window.innerHeight - DiagramComponent.NAV_HEIGHT;
+    let left: number = window.innerWidth - CreationSidebarComponent.WIDTH;
+    document.getElementById("creation-side-bar")!.style.overflow = "auto";
+    document.getElementById("creation-side-bar")!.style.height = height + "px";
+    document.getElementById("creation-side-bar")!.style.width = CreationSidebarComponent.WIDTH + "px";
+    document.getElementById("creation-side-bar")!.style.position = "absolute";
+    document.getElementById("creation-side-bar")!.style.left = left + "px";
+    document.getElementById("creation-side-bar")!.style.top = 50 + "px";
+
+  }
+
   get styleObject() {
     return {
-      width: CreationSidebarComponent.WIDTH
+      width: CreationSidebarComponent.WIDTH,
+      height: window.innerHeight - DiagramComponent.NAV_HEIGHT,
+      left: window.innerWidth - CreationSidebarComponent.WIDTH
     }
   }
 
@@ -128,6 +143,16 @@ export class CreationSidebarComponent {
 
   toDiamondNode(node: Node): DiamondNode | undefined {
     return node instanceof DiamondNode ? node as DiamondNode : undefined;
+  }
+
+  getStyles() {
+    return {
+
+
+      left: window.innerWidth - CreationSidebarComponent.WIDTH,
+      position: "absolute",
+      top: 50
+    }
   }
 }
 

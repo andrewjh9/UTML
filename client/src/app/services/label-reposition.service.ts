@@ -23,8 +23,9 @@ export class LabelRepositionService {
 
   public update(position: Position) {
     if (this.isActive()) {
-      let diff = this.snapService.snapIfApplicable(Position.subtract(position, this.startPosition!));
-      this.label!.position = Position.add(this.startPosition!, diff);
+      let diff = (Position.subtract(position, this.startPosition!));
+      this.label!.position = (Position.add(this.startPosition!, diff));
+      this.label!.position.y;
     } else {
       throw new Error('Service should be active!');
     }
