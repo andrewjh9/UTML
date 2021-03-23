@@ -1,5 +1,5 @@
 <div id="creation-side-bar" style="width: 300px" (mouseup)="handleGenericMouseUp()">
-  <ngb-accordion>
+  <ngb-accordion [closeOthers]="true">
     <ngb-panel *ngFor="let diagramGroup of groupKeys" title="{{diagramGroup}}">
       <ng-template ngbPanelContent>
         <ul class="list-group">
