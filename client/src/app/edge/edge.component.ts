@@ -36,8 +36,8 @@ export class EdgeComponent implements OnDestroy {
               private modalService: NgbModal,
               private mousePositionTransformService: MousePositionTransformService) {
     selectionService.selectedObservable.subscribe(selectedList => {
+      console.log(selectedList)
       this.isSelected = selectedList.includes(this.edge);
-
       if (this.isSelected) {
         this.styleObject['stroke'] = 'red';
         this.cursor = 'move';
@@ -89,7 +89,7 @@ export class EdgeComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log("Edge component is being destroyed.")
+    console.log("Edge component is being destroyed.");
   }
 
   delete() {

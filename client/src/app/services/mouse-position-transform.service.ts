@@ -7,7 +7,6 @@ const MENUBAROFFSET: number = 50;
   providedIn: 'root'
 })
 export class MousePositionTransformService {
-
   constructor(private zoomService: ZoomService) { }
 
   public transformPosition(position: Position): Position {
