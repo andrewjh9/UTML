@@ -57,7 +57,7 @@ import {faEdit, faEye, faEyeSlash, faTrashAlt} from "@fortawesome/free-regular-s
 import {
   faCog,
   faCopy,
-  faFolderOpen,
+  faFolderOpen, faList,
   faPaste, faQuestion,
   faRedo,
   faSave,
@@ -73,6 +73,7 @@ import { ClickableMiddlePointsComponent } from './edge/clickable-middle-points/c
 import { ClickableNewPointsComponent } from './edge/clickable-new-points/clickable-new-points.component';
 import { ClickableStartEndPointsComponent } from './edge/clickable-start-end-points/clickable-start-end-points.component';
 import { ClearDiagramModalComponent } from './clear-diagram-modal/clear-diagram-modal.component';
+import { ShapesetManagementModalComponent } from './shapeset-management-modal/shapeset-management-modal.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +129,8 @@ import { ClearDiagramModalComponent } from './clear-diagram-modal/clear-diagram-
     ClickableMiddlePointsComponent,
     ClickableNewPointsComponent,
     ClickableStartEndPointsComponent,
-    ClearDiagramModalComponent
+    ClearDiagramModalComponent,
+    ShapesetManagementModalComponent
   ],
     imports: [
         BrowserModule,
@@ -144,6 +146,6 @@ import { ClearDiagramModalComponent } from './clear-diagram-modal/clear-diagram-
 export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen,
-      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash);
+      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList);
   }
 }

@@ -10,6 +10,7 @@ import {DiagramManagementModalComponent} from "../diagram-management-modal/diagr
 import {DiagramComponent} from "../diagram/diagram.component";
 import {ZoomService} from "../services/zoom.service";
 import {ClearDiagramModalComponent} from "../clear-diagram-modal/clear-diagram-modal.component";
+import {ShapesetManagementModalComponent} from "../shapeset-management-modal/shapeset-management-modal.component";
 
 @Component({
   selector: 'app-nav-bar',
@@ -83,5 +84,9 @@ export class NavBarComponent {
 
   openClearDiagramPopUp() {
     this.modalService.open(ClearDiagramModalComponent);
+  }
+
+  openShapeSetSelector() {
+    this.modalService.open(ShapesetManagementModalComponent);
   }
 }
