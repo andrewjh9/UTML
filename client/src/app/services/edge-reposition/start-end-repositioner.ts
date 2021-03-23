@@ -1,6 +1,7 @@
 import {Edge} from "../../../model/edge";
 import {Node} from "../../../model/node/node";
 import {Position} from "../../../model/position";
+import {Injectable} from "@angular/core";
 
 /**
  * Class responsible for repositioning the start and end points of an edge.
@@ -8,20 +9,14 @@ import {Position} from "../../../model/position";
  * It is also responsible for updating the startNode and endNode properties of the edge if applicable.
  * Lastly it also snaps to attachmentPoints of nodes during updates if their distance is wihtin the SNAP_DISTANCE
  */
+@Injectable({
+  'providedIn': 'root'
+})
 export class StartEndRepositioner {
   private nodes?: Node[];
-  private readonly SNAP_DISTANCE: number;
+  private readonly SNAP_DISTANCE: number = 25;
   private edge?: Edge;
   private isStart?: boolean;
-
-  /**
-   * Constructor for StartEndRepositioner
-   * @param nodes A list of all nodes in the diagram drawer. Used to snapIfApplicable to attachment points.
-   * @param snap_distance The distance within which a start/end position should snapIfApplicable to an attachment point.
-   */
-  constructor(snap_distance: number) {
-    this.SNAP_DISTANCE = snap_distance;
-  }
 
   /**
    * Returns whether the StartEndRepositioner is currently active.

@@ -70,6 +70,9 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { SpecialCharacterSelectorComponent } from './special-character-selector/special-character-selector.component';
 import { SpecialCharacterRowComponent } from './special-character-row/special-character-row.component';
 import { GridOverlayComponent } from './grid-overlay/grid-overlay.component';
+import { ClickableMiddlePointsComponent } from './edge/clickable-middle-points/clickable-middle-points.component';
+import { ClickableNewPointsComponent } from './edge/clickable-new-points/clickable-new-points.component';
+import { ClickableStartEndPointsComponent } from './edge/clickable-start-end-points/clickable-start-end-points.component';
 
 @NgModule({
   declarations: [
@@ -122,7 +125,10 @@ import { GridOverlayComponent } from './grid-overlay/grid-overlay.component';
     NavBarComponent,
     SpecialCharacterSelectorComponent,
     SpecialCharacterRowComponent,
-    GridOverlayComponent
+    GridOverlayComponent,
+    ClickableMiddlePointsComponent,
+    ClickableNewPointsComponent,
+    ClickableStartEndPointsComponent
   ],
     imports: [
         BrowserModule,

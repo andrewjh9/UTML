@@ -53,23 +53,24 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   }
 
   public handleMouseDown(event: MouseEvent): void {
-    let position = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
-    if (this.isSelected) {
-      this.edgeRepositionService.activate(this.edge, position);
-    } else {
+    // On clicking an edge, the edge will be selected.
+    // If the edge is already selected, there is no need to select it again.
+    if (!this.isSelected) {
       this.selectionService.setEdge(this.edge);
     }
   }
 
   public handleDoubleClick(event: MouseEvent) {
+    // If you double click with ctrl pressed a formatting popup should open.
+    // Otherwise it should create a label.
+    // Depending on the mouse position either a start, middle or end label is added.
     this.selectionService.setEdge(this.edge);
     if (event.ctrlKey) {
       if (this.selectionService.isEdge()) {
         this.modalService.open(EdgeFormattingModalComponent);
       }
     } else {
-      // Todo: do mouse transformation.
-      let mousePosition = new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT);
+      let mousePosition = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
       const DISTANCE_THRESHOLD = 25;
       if (Position.getDistance(mousePosition, this.edge.getStartPosition()) <= DISTANCE_THRESHOLD
         && this.edge.startLabel === undefined) {

@@ -13,6 +13,8 @@ import {FormattingModalComponent} from "../formatting-modal/formatting-modal.com
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 import {EditService} from "../services/edit.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
+import {Edge} from "../../model/edge";
+import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 
 @Component({
   templateUrl: './node.component.html',
@@ -33,7 +35,8 @@ export class NodeComponent extends ModeAwareComponent {
               private cachingService: CachingService,
               private mousePositionTransformService: MousePositionTransformService,
               private editService: EditService,
-              edgeCreationService: EdgeCreationService) {
+              edgeCreationService: EdgeCreationService,
+              public edgeRepositionService: EdgeRepositionService) {
     super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.node);

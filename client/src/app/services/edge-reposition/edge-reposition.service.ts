@@ -21,17 +21,14 @@ import {DiagramContainerService} from "../diagram-container.service";
  * 4) Moving the middle point of an Arc.
  */
 export class EdgeRepositionService implements Deactivatable {
-  /** Distance within which start/end snaps to node attachment point */
-  public readonly SNAP_DISTANCE = 10;
   /** Distance within which a start/end/middle point will be selected to be moved */
   public readonly SELECT_DISTANCE = 25;
-
   public readonly arcMiddleRepositioner = new ArcMiddleRepositioner();
-  public readonly fixedPointRepositioner = new FixedPointRepositioner();
-  public readonly startEndRepositioner = new StartEndRepositioner(this.SNAP_DISTANCE);
 
   constructor(private cachingService: CachingService,
               private snapService: SnapService,
+              public fixedPointRepositioner: FixedPointRepositioner,
+              public startEndRepositioner: StartEndRepositioner,
               diagramContainerService: DiagramContainerService) {
     diagramContainerService.diagramObservable.subscribe(diagram => this.setNodes(diagram.nodes));
   }

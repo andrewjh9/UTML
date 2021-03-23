@@ -1,7 +1,11 @@
 import {Position} from "../../../model/position";
 import {Edge} from "../../../model/edge";
 import {EdgeRepositionService} from "./edge-reposition.service";
+import {Injectable} from "@angular/core";
 
+@Injectable({
+  'providedIn': 'root'
+})
 export class FixedPointRepositioner {
   private position?: Position;
   private edge?: Edge;

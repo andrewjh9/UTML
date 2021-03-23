@@ -1,0 +1,15 @@
+<svg:ellipse [attr.cx]="edge.getStartPosition().x"
+             [attr.cy]="edge.getStartPosition().y"
+             [attr.rx]="RADIUS"
+             [attr.ry]="RADIUS"
+             style="fill: green; stroke-width: 2; stroke: green; fill-opacity: 0.5; stroke-opacity: 0.75; cursor: move"
+             (mousedown)="handleMouseDown($event, 'start')"
+/>
+
+<svg:ellipse [attr.cx]="edge.getEndPosition().x"
+             [attr.cy]="edge.getEndPosition().y"
+             [attr.rx]="RADIUS"
+             [attr.ry]="RADIUS"
+             style="fill: green; stroke-width: 2; stroke: green; fill-opacity: 0.5; stroke-opacity: 0.75; cursor: move"
+             (mousedown)="handleMouseDown($event, 'end')"
+/>
