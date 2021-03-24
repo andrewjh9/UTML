@@ -10,7 +10,6 @@
 	</parent>
 	<groupId>nl.utwente</groupId>
 	<artifactId>utml</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
 	<name>utml</name>
 	<description>UTML Design Project</description>
 	<properties>

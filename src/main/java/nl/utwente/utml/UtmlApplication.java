@@ -17,11 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
 public class UtmlApplication extends SpringBootServletInitializer {
 
-//	@RequestMapping("/diagram/{id}")
-//	public String diagrams() {
-//		return "index.html";
-//	}
-
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 		return application.sources(UtmlApplication .class);
