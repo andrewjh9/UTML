@@ -3,6 +3,7 @@ package nl.utwente.utml;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.security.core.Authentication;
@@ -21,7 +22,10 @@ public class UtmlApplication extends SpringBootServletInitializer {
 //		return "index.html";
 //	}
 
-
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+		return application.sources(UtmlApplication .class);
+	}
 	public static void main(String[] args) {
 		SpringApplication.run(UtmlApplication.class, args);
 	}
