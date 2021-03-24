@@ -101,67 +101,6 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-dependency-plugin</artifactId>-->
-<!--				<version>3.0.1</version>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>copy-dependencies</id>-->
-<!--						<phase>package</phase>-->
-<!--						<goals><goal>copy-dependencies</goal></goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
-<!--			<plugin>-->
-<!--				<groupId>org.springframework.boot</groupId>-->
-<!--				<artifactId>spring-boot-maven-plugin</artifactId>-->
-<!--				<configuration>-->
-<!--					<mainClass>nl.utwente.utml.UtmlApplication</mainClass>-->
-<!--				</configuration>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<goals>-->
-<!--							<goal>repackage</goal>-->
-<!--						</goals>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
-<!--			<plugin>-->
-<!--				<groupId>org.apache.maven.plugins</groupId>-->
-<!--				<artifactId>maven-jar-plugin</artifactId>-->
-<!--				<version>3.2.0</version>-->
-<!--				<configuration>-->
-<!--					<archive>-->
-<!--						<manifestFile>out/artifacts/utml_war_exploded/META-INF/MANIFEST.MF</manifestFile>-->
-<!--					</archive>-->
-<!--				</configuration>-->
-<!--			</plugin>-->
-<!--			<plugin>-->
-<!--				<artifactId>maven-resources-plugin</artifactId>-->
-<!--				<version>3.2.0</version>-->
-<!--				<executions>-->
-<!--					<execution>-->
-<!--						<id>copy-resources</id>-->
-<!--						&lt;!&ndash; here the phase you need &ndash;&gt;-->
-<!--						<phase>validate</phase>-->
-<!--						<goals>-->
-<!--							<goal>copy-resources</goal>-->
-<!--						</goals>-->
-<!--						<configuration>-->
-<!--							<outputDirectory>target/static/</outputDirectory>-->
-<!--							<resources>-->
-<!--								<resource>-->
-<!--									<directory>client/dist/client/</directory>-->
-<!--									<filtering>true</filtering>-->
-<!--								</resource>-->
-<!--							</resources>-->
-<!--						</configuration>-->
-<!--					</execution>-->
-<!--				</executions>-->
-<!--			</plugin>-->
-
-
 		</plugins>
 
 	</build>
