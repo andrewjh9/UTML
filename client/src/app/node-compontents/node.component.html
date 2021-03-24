@@ -3,3 +3,15 @@
        (mousedown)="handleMouseDown($event)"
        (dblclick)="handleDoubleClick($event)"
        [ngStyle]="{'cursor': isSelected ? 'move' : 'pointer'}"/>
+
+<svg:g *ngIf="edgeCreationIsActive" clickable-attachment-points [node]="node"></svg:g>
+
+<svg:g *ngIf="startEndRepositioner.isActive()">
+  <svg:ellipse *ngFor="let point of node.getAllAttachmentPoints(); let i = index;"
+               [attr.cx]="point.x"
+               [attr.cy]="point.y"
+               rx="5"
+               ry="5"
+               style="fill:green;stroke:black;stroke-width:2;fill-opacity:1;stroke-opacity:0.9;z-index:100;">
+  </svg:ellipse>
+</svg:g>

@@ -3,7 +3,9 @@ import {Node} from "../../../model/node/node";
 import {RectangleNode} from "../../../model/node/rectangle-node";
 import {Position} from "../../../model/position";
 import {Edge} from "../../../model/edge";
-import {EdgeRepositionService} from "./edge-reposition.service";
+import {TestBed} from "@angular/core/testing";
+import {DiagramContainerService} from "../diagram-container.service";
+import {Diagram} from "../../../model/diagram";
 
 describe('StartEndRepositioner ', function () {
   let repositioner: StartEndRepositioner;
@@ -19,10 +21,10 @@ describe('StartEndRepositioner ', function () {
     origEnd = new RectangleNode(100, 100, new Position(200, 0));
     newNode = new RectangleNode(100, 100, new Position(50, 100));
     edge = new Edge(1, 6, origStart, origEnd);
-
-    nodes = [origStart, origEnd, newNode];
-    repositioner = new StartEndRepositioner(SNAP_DISTANCE);
-    repositioner.setNodes(nodes);
+    TestBed.configureTestingModule({});
+    let diagramContainer = TestBed.inject(DiagramContainerService);
+    diagramContainer.set(new Diagram([origStart, origEnd, newNode], [edge]))
+    repositioner = TestBed.inject(StartEndRepositioner);
   });
 
   it('should start inactive', function () {

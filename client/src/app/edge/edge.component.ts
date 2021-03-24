@@ -2,7 +2,6 @@ import {Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild
 import {Position} from "../../model/position";
 import {Edge, EndStyle, LineStyle, LineType} from "../../model/edge";
 import {Label} from "../../model/label";
-import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
@@ -21,7 +20,7 @@ import {MousePositionTransformService} from "../services/mouse-position-transfor
   templateUrl: './edge.component.html',
   styleUrls: ['./edge.component.scss'],
 })
-export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
+export class EdgeComponent implements OnDestroy {
   @Input() edge!: Edge;
   @Output() edgeChange = new EventEmitter<Edge>();
   isSelected: boolean = false;
@@ -31,17 +30,14 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   }
   cursor: 'pointer' | 'move' = 'pointer';
 
-  constructor(private edgeRepositionService: EdgeRepositionService,
-              modeService: ModeService,
-              private selectionService: SelectionService,
+  constructor(private selectionService: SelectionService,
               private deletionService: DeletionService,
               private cachingService: CachingService,
               private modalService: NgbModal,
               private mousePositionTransformService: MousePositionTransformService) {
-    super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
+      console.log(selectedList)
       this.isSelected = selectedList.includes(this.edge);
-
       if (this.isSelected) {
         this.styleObject['stroke'] = 'red';
         this.cursor = 'move';
@@ -53,23 +49,24 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   }
 
   public handleMouseDown(event: MouseEvent): void {
-    let position = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
-    if (this.isSelected) {
-      this.edgeRepositionService.activate(this.edge, position);
-    } else {
+    // On clicking an edge, the edge will be selected.
+    // If the edge is already selected, there is no need to select it again.
+    if (!this.isSelected) {
       this.selectionService.setEdge(this.edge);
     }
   }
 
   public handleDoubleClick(event: MouseEvent) {
+    // If you double click with ctrl pressed a formatting popup should open.
+    // Otherwise it should create a label.
+    // Depending on the mouse position either a start, middle or end label is added.
     this.selectionService.setEdge(this.edge);
     if (event.ctrlKey) {
       if (this.selectionService.isEdge()) {
         this.modalService.open(EdgeFormattingModalComponent);
       }
     } else {
-      // Todo: do mouse transformation.
-      let mousePosition = new Position(event.x, event.y - DiagramComponent.NAV_HEIGHT);
+      let mousePosition = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
       const DISTANCE_THRESHOLD = 25;
       if (Position.getDistance(mousePosition, this.edge.getStartPosition()) <= DISTANCE_THRESHOLD
         && this.edge.startLabel === undefined) {
@@ -92,7 +89,7 @@ export class EdgeComponent extends ModeAwareComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log("Edge component is being destroyed.")
+    console.log("Edge component is being destroyed.");
   }
 
   delete() {

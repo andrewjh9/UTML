@@ -22,7 +22,9 @@ export class SelectionService {
 
     // When the diagram reference is updated, the references to nodes and edges are too.
     // Therefore our selected objects may be de-synced. To prevent de-sync bugs,  we simply deselect.
-    diagramContainerService.diagramObservable.subscribe(ignored => this.deselect());
+    diagramContainerService.diagramObservable.subscribe(ignored => {
+      this.deselect();
+    });
   }
 
   public add(value: Node | Edge | Label): void {

@@ -1,6 +1,9 @@
 import {Edge} from "../../../model/edge";
 import {Node} from "../../../model/node/node";
 import {Position} from "../../../model/position";
+import {Injectable} from "@angular/core";
+import {SnapService} from "../snap.service";
+import {DiagramContainerService} from "../diagram-container.service";
 
 /**
  * Class responsible for repositioning the start and end points of an edge.
@@ -8,19 +11,19 @@ import {Position} from "../../../model/position";
  * It is also responsible for updating the startNode and endNode properties of the edge if applicable.
  * Lastly it also snaps to attachmentPoints of nodes during updates if their distance is wihtin the SNAP_DISTANCE
  */
+@Injectable({
+  'providedIn': 'root'
+})
 export class StartEndRepositioner {
-  private nodes?: Node[];
-  private readonly SNAP_DISTANCE: number;
+  private nodes: Node[];
+  private readonly SNAP_DISTANCE: number = 25;
   private edge?: Edge;
   private isStart?: boolean;
 
-  /**
-   * Constructor for StartEndRepositioner
-   * @param nodes A list of all nodes in the diagram drawer. Used to snapIfApplicable to attachment points.
-   * @param snap_distance The distance within which a start/end position should snapIfApplicable to an attachment point.
-   */
-  constructor(snap_distance: number) {
-    this.SNAP_DISTANCE = snap_distance;
+  constructor(private snapService: SnapService,
+              diagramContainerService: DiagramContainerService) {
+    this.nodes = diagramContainerService.get().nodes;
+    diagramContainerService.diagramObservable.subscribe(diagram => this.nodes = diagram.nodes);
   }
 
   /**
@@ -38,10 +41,6 @@ export class StartEndRepositioner {
    * @param isStart Set to true if you want to move the start, set to false if you want to move the end.
    */
   public activate(edge: Edge, isStart: boolean): void {
-    if (this.nodes === undefined) {
-      throw new Error('Nodes must be defined!');
-    }
-
     this.edge = edge;
     this.isStart = isStart;
   }
@@ -51,10 +50,6 @@ export class StartEndRepositioner {
    * @param position
    */
   public update(position: Position): void {
-    if (this.nodes === undefined) {
-      throw new Error('Nodes must be defined!');
-    }
-
     let foundNode: undefined | Node = undefined;
     let foundAttachment: undefined | number = undefined;
 
@@ -75,6 +70,10 @@ export class StartEndRepositioner {
   }
 
   private set(position: Position | number, node: Node | undefined) {
+    if (position instanceof Position) {
+      position = this.snapService.snapIfApplicable(position, 5);
+    }
+
     if (this.isStart) {
       this.edge!.startPosition = position;
       this.edge!.startNode = node;
@@ -111,9 +110,5 @@ export class StartEndRepositioner {
     }
 
     return -1;
-  }
-
-  public setNodes(nodes: Node[]): void {
-    this.nodes = nodes;
   }
 }

@@ -51,7 +51,7 @@ export class Position {
    * @returns true if the position lies inbetween, false otherwise.
    */
   public static liesBetween(start: Position, middle: Position, end: Position): boolean {
-    return ((start.x <= middle.x) && (middle.x <= end.x)) || ((end.x <= middle.x) && (middle.x <= start.x)) &&
-      ((start.y <= middle.y) && (middle.y <= end.y)) || ((end.y <= middle.y) && (middle.y <= start.y));
+    return (((start.x <= middle.x) && (middle.x <= end.x)) || ((end.x <= middle.x) && (middle.x <= start.x))) &&
+     (((start.y <= middle.y) && (middle.y <= end.y)) || ((end.y <= middle.y) && (middle.y <= start.y)));
   }
 }

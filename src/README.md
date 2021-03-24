@@ -44,3 +44,7 @@ Copy angular into spring boot
 
 ### Generating a key for saml
 keytool -genkey -alias utmlsaml -keyalg RSA -sigalg SHA256withRSA -keysize 2048 -validity 3650 -keystore saml-keystore.jks
+
+
+##Adding Secret vars to Heroku 
+heroku config:set DB_PASSWORD=secret -a [heroku-app-name]

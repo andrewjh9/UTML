@@ -14,15 +14,13 @@ export class ClickableAttachmentPointsComponent {
   }
 
   handleMouseDown($event: MouseEvent, attachmentPoint: number) {
-    console.log('Mouse Down')
-    if (!this.edgeCreationService.isActive()) {
+    if (!this.edgeCreationService.startHasBeenSelected()) {
       this.edgeCreationService.setStart(this.node, attachmentPoint);
     }
   }
 
   handleMouseUp($event: MouseEvent, attachmentPoint: number) {
-    console.log('Mouse Up')
-    if (this.edgeCreationService.isActive()) {
+    if (this.edgeCreationService.startHasBeenSelected()) {
       this.edgeCreationService.setEnd(this.node, attachmentPoint);
     }
   }

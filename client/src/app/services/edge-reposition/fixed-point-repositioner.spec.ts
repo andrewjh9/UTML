@@ -4,6 +4,7 @@ import {Edge} from "../../../model/edge";
 import {Node} from "../../../model/node/node";
 import {RectangleNode} from "../../../model/node/rectangle-node";
 import {before} from "selenium-webdriver/testing";
+import {TestBed} from "@angular/core/testing";
 
 describe('FixedPointRepositioner ', () => {
   let repositioner: FixedPointRepositioner;
@@ -13,7 +14,8 @@ describe('FixedPointRepositioner ', () => {
   let middle: Position;
 
   beforeEach(() => {
-    repositioner = new FixedPointRepositioner();
+    TestBed.configureTestingModule({});
+    repositioner = TestBed.inject(FixedPointRepositioner);
     n1 = new RectangleNode(100, 100, new Position(0, 0));
     n2 = new RectangleNode(100, 100, new Position(200, 0));
     edge = new Edge(1, 7, n1, n2);

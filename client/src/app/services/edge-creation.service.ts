@@ -5,6 +5,8 @@ import {Position} from "../../model/position";
 import {Edge, LineType} from "../../model/edge";
 import {CreationTypeSelectionService} from "./creation-type-selection.service";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
+import {BehaviorSubject} from "rxjs";
+import {SelectionService} from "./selection.service";
 
 
 @Injectable({
@@ -17,16 +19,29 @@ import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
  * Lastly the newEdgeEmitter emits the newly created Edge upon its creation.
  */
 export class EdgeCreationService implements Deactivatable {
+  private active: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public activityObservable = this.active.asObservable();
+
+  factory: Edge | undefined = undefined;
+
   private startNode?: Node;
-  private startAttachment?: AttachmentDirection;
+  private startAttachment?: number;
 
   public endPreview?: Position;
   public startPreview?: Position;
+
   public newEdgeEmitter: EventEmitter<Edge> = new EventEmitter<Edge>();
 
   constructor(private creationFormatterSelectionService: CreationTypeSelectionService,
+              private selectionService: SelectionService,
               keyboardEventCallerService: KeyboardEventCallerService) {
     keyboardEventCallerService.addCallback(['Escape', 'keydown', 'any'], (ignored) => this.deactivate())
+  }
+
+  public activate(factory: Edge): void {
+    this.selectionService.deselect();
+    this.factory = factory;
+    this.active.next(true);
   }
 
   public setStart(node: Node, attachment: number) {
@@ -36,25 +51,32 @@ export class EdgeCreationService implements Deactivatable {
     this.startPreview = node.getPositionOfAttachment(attachment);
   }
 
-  public isActive() {
-    return this.startNode !== undefined && this.startAttachment !== undefined && this.endPreview !== undefined;
+  public isActive(): boolean {
+    return this.active.getValue();
   }
 
-  public setEnd(endNode: Node, endAttachment: AttachmentDirection) {
+  public startHasBeenSelected() {
+    return this.isActive() && this.startNode !== undefined;
+  }
+
+  public setEnd(endNode: Node, endAttachment: number) {
+    if (this.startNode === undefined || this.startAttachment === undefined) {
+      throw new Error('Trying to set the end before start is set.')
+    }
+
     if (endNode === this.startNode && endAttachment === this.startAttachment) {
-      return this.deactivate();
+      return this.cancel();
     }
 
     if (!this.isActive()) {
       throw new Error("Trying to set end whilst it is inactive!");
     }
 
-    let edge = new Edge(this.startAttachment!, endAttachment, this.startNode, endNode);
-
-    for (let [key, value] of Object.entries(this.creationFormatterSelectionService.getSelectedProperty())) {
-      // @ts-ignore
-      edge[key] = value;
-    }
+    let edge = this.factory!.getDeepCopy();
+    edge.startNode = this.startNode;
+    edge.startPosition = this.startAttachment!;
+    edge.endNode = endNode;
+    edge.endPosition = endAttachment;
 
     // Arcs must have 1 middle point, so we add it if needed.
     if (edge.lineType === LineType.Arc) {
@@ -62,11 +84,14 @@ export class EdgeCreationService implements Deactivatable {
     }
 
     this.newEdgeEmitter.emit(edge);
-
-    this.deactivate();
   }
 
   public deactivate(): void {
+    this.cancel();
+    this.active.next(false);
+  }
+
+  cancel() {
     this.startNode = undefined;
     this.startAttachment = undefined;
     this.endPreview = undefined;

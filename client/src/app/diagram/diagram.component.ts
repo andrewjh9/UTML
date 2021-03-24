@@ -1,6 +1,5 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {RepositionService} from "../services/reposition.service";
-import {EdgeRepositionService} from "../services/edge-reposition/edge-reposition.service";
 import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {DeletionService} from "../services/deletion.service";
@@ -27,6 +26,9 @@ import {LocalStorageService} from "../services/caching/local-storage.service";
 import {LensOffsetService} from "../services/lens-offset.service";
 import {LabelRepositionService} from "../services/label-reposition.service";
 import {AppComponent} from "../app.component";
+import {FixedPointRepositioner} from "../services/edge-reposition/fixed-point-repositioner";
+import {StartEndRepositioner} from "../services/edge-reposition/start-end-repositioner";
+import {liesOnSegment} from "../services/edge-reposition/lies-on-segment";
 
 @Component({
   selector: 'app-diagram',
@@ -42,7 +44,8 @@ export class DiagramComponent implements AfterViewInit {
   constructor(private sanitizer: DomSanitizer,
               private diagramContainer: DiagramContainerService,
               private repositionService: RepositionService,
-              private edgeRepositionService: EdgeRepositionService,
+              private fixedPointRepositioner: FixedPointRepositioner,
+              private startEndRepositioner: StartEndRepositioner,
               private modeService: ModeService,
               private edgeCreationService: EdgeCreationService,
               private deletionService: DeletionService,
@@ -103,42 +106,47 @@ export class DiagramComponent implements AfterViewInit {
   handleMouseUp(event: MouseEvent): void {
     if (this.repositionService.isActive()) {
       this.repositionService.deactivate();
-    } else if (this.edgeRepositionService.isActive()) {
-      this.edgeRepositionService.deactivate()
+    } else if (this.fixedPointRepositioner.isActive()) {
+      this.fixedPointRepositioner.deactivate()
     } else if (this.resizeService.isActive()) {
       this.resizeService.deactivate()
     } else if (this.dragDropCreationService.isActive()) {
       this.dragDropCreationService.create();
     } else if (this.edgeCreationService.isActive()) {
-      this.edgeCreationService.deactivate();
+      this.edgeCreationService.cancel();
     } else if (this.dragSelectionService.isActive()) {
       this.dragSelectionService.deactivate();
     } else if (this.lensOffsetService.isActive()) {
       this.lensOffsetService.deactivate();
     } else if (this.labelRepositionService.isActive()) {
       this.labelRepositionService.deactivate();
+    } else if (this.startEndRepositioner.isActive()) {
+      this.startEndRepositioner.deactivate();
     }
   }
 
   handleMouseMove(event: MouseEvent) {
-    let position = this.mousePositionTransformService.transformPosition(new Position(event.pageX, event.pageY));
-    let pos = this.mousePositionTransformService.transFormZoomAndMenubar(new Position(event.pageX, event.pageY))
+    let fullyTransformed = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
+    let zoomedPos = this.mousePositionTransformService.transFormZoomAndMenubar(new Position(event.x, event.y))
+
     if (this.repositionService.isActive()) {
-      this.repositionService.update(position); //works
-    } else if (this.edgeRepositionService.isActive()) {
-      this.edgeRepositionService.update(position); //works
+      this.repositionService.update(fullyTransformed); //works
+    } else if (this.fixedPointRepositioner.isActive()) {
+      this.fixedPointRepositioner.update(fullyTransformed); //works
     } else if (this.edgeCreationService.isActive()) {
-      this.edgeCreationService.endPreview = position; //works
+      this.edgeCreationService.endPreview = fullyTransformed; //works
     } else if (this.resizeService.isActive()) {
-      this.resizeService.update(position); //works
+      this.resizeService.update(fullyTransformed); //works
     } else if (this.dragDropCreationService.isActive()) {
-      this.dragDropCreationService.update(position); //works
+      this.dragDropCreationService.update(fullyTransformed); //works
     } else if (this.dragSelectionService.isActive()) {
-      this.dragSelectionService.update(position); //idk
+      this.dragSelectionService.update(fullyTransformed); //idk
     } else if (this.lensOffsetService.isActive()) {
-      this.lensOffsetService.update(pos); //works
+      this.lensOffsetService.update(zoomedPos); //works
     } else if (this.labelRepositionService.isActive()) {
-      this.labelRepositionService.update(pos);
+      this.labelRepositionService.update(fullyTransformed);
+    } else if (this.startEndRepositioner.isActive()) {
+      this.startEndRepositioner.update(fullyTransformed);
     }
   }
 
@@ -197,7 +205,7 @@ export class DiagramComponent implements AfterViewInit {
       for (let edge of this.diagram.edges) {
         let allPoints = edge.getAllPoints();
         for (let i = 0; i < allPoints.length - 1; i++) {
-          if (EdgeRepositionService.liesOnSegment(pos, allPoints[i], allPoints[i + 1])) {
+          if (liesOnSegment(pos, allPoints[i], allPoints[i + 1])) {
             return;
           }
         }

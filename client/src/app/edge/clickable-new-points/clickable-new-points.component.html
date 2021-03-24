@@ -1,0 +1,9 @@
+<svg:g *ngFor="let pos of points; let i = index">
+  <svg:ellipse [attr.cx]="pos.x"
+               [attr.cy]="pos.y"
+               [attr.rx]="RADIUS"
+               [attr.ry]="RADIUS"
+               (mousedown)="handleMouseDown($event, i)"
+               style="fill: cyan; stroke-width: 2; stroke: cyan; fill-opacity: 0.5; stroke-opacity: 0.75; cursor: move"
+  />
+</svg:g>

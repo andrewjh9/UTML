@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DiagramComponent } from './diagram.component';
+import { ClearDiagramModalComponent } from './clear-diagram-modal.component';
 
-describe('DiagramComponent', () => {
-  let component: DiagramComponent;
-  let fixture: ComponentFixture<DiagramComponent>;
+describe('ClearDiagramModalComponent', () => {
+  let component: ClearDiagramModalComponent;
+  let fixture: ComponentFixture<ClearDiagramModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DiagramComponent ]
+      declarations: [ ClearDiagramModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DiagramComponent);
+    fixture = TestBed.createComponent(ClearDiagramModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

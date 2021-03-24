@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable, Subject} from "rxjs";
-import {EdgeRepositionService} from "./edge-reposition/edge-reposition.service";
 import {RepositionService} from "./reposition.service";
 import {Deactivatable} from "./deactivatable";
 import {EdgeCreationService} from "./edge-creation.service";
@@ -25,11 +24,10 @@ export class ModeService {
   public readonly modeObservable: Observable<Mode> = new Observable<Mode>();
 
 
-  constructor(edgeRepositionService: EdgeRepositionService,
-              repositionService: RepositionService,
+  constructor(repositionService: RepositionService,
               edgeCreationService: EdgeCreationService,
               keyboardEventCallerService: KeyboardEventCallerService) {
-    this.deactivatables = [edgeRepositionService, repositionService, edgeCreationService];
+    this.deactivatables = [repositionService, edgeCreationService];
     this.mode = new BehaviorSubject<Mode>(Mode.Select);
     this.modeObservable = this.mode.asObservable();
 

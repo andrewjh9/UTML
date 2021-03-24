@@ -11,6 +11,15 @@ import {DiamondNode} from "../../model/node/diamond-node";
 import {HourglassNode} from "../../model/node/hourglass-node";
 import {ActorNode} from "../../model/node/actor-node";
 import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
+import {EdgeCreationService} from "../services/edge-creation.service";
+import {group} from "@angular/animations";
+import {element} from "protractor";
+import {SelectionService} from "../services/selection.service";
+import {Label} from "../../model/label";
+import {DiagramContainerService} from "../services/diagram-container.service";
+import {DeletionService} from "../services/deletion.service";
+import {CourseSet, ShapeSet} from "../shapeset-management-modal/shapeset-management-modal.component";
+import {ShapeSetContainerService} from "../services/shape-set-container.service";
 
 @Component({
   selector: 'creation-sidebar',
@@ -19,10 +28,33 @@ import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
 })
 export class CreationSidebarComponent {
   public static readonly WIDTH: number = 200;
+  private selectedKeys: [string, string] | undefined;
+  private selectedElement: Edge | Node | undefined = undefined;
+  edgeCreationIsActive: boolean = false;
+  shapeSets: CourseSet;
 
   constructor(private dragDropCreationService: DragDropCreationService,
-              private sanitizer: DomSanitizer) {
+              private diagramContainerService: DiagramContainerService,
+              private edgeCreationService: EdgeCreationService,
+              private selectionService: SelectionService,
+              private deletionService: DeletionService,
+              shapeSetContainerService: ShapeSetContainerService) {
+    edgeCreationService.activityObservable.subscribe(active => {
+      this.edgeCreationIsActive = active;
+      if (!active) {
+        this.selectedKeys = undefined;
+      }
+    });
 
+    selectionService.selectedObservable.subscribe(selectedList => {
+      if (selectedList.length === 1 && !(selectedList[0] instanceof Label)) {
+        this.selectedElement = selectedList[0];
+      } else {
+        this.selectedElement = undefined;
+      }
+    });
+    this.shapeSets = shapeSetContainerService.shapeSets.getValue();
+    shapeSetContainerService.observable.subscribe(shapeSets => this.shapeSets = shapeSets);
   }
 
   get styleObject() {
@@ -31,107 +63,68 @@ export class CreationSidebarComponent {
     }
   }
 
-  get groups(): {[key: string]: DiagramTypeTemplate} {
-    let cd: DiagramTypeTemplate = {nodes: {}, edges: {}};
-    let classNode = new ClassNode(186, 75, new Position(10, 2));
-    let association = new Edge(new Position(10, 20), new Position(196, 20));
-    let generalisation = new Edge(new Position(10, 20), new Position(196, 20));
-    generalisation.endStyle = EndStyle.LargeUnfilledArrow;
-
-    classNode.text = 'ClassName  \\n fieldName: type';
-
-    cd.nodes['Class'] = classNode;
-    cd.edges['Association'] = association;
-    cd.edges['Generalisation'] = generalisation;
-
-    let ad: DiagramTypeTemplate = {nodes: {}, edges: {}};
-    let activityNode = new RectangleNode(186, 50, new Position(10, 2));
-    activityNode.text = "Do Something"
-    let arrow = new Edge(new Position(10, 20), new Position(196, 20));
-    arrow.endStyle = EndStyle.SmallFilledArrow;
-
-    classNode.text = 'ClassName  \\n fieldName: type';
-
-    ad.nodes['Activity'] = activityNode;
-    ad.nodes['Hourglass'] = new HourglassNode(40, 80, new Position(84, 10));
-    ad.nodes['Actor'] = new ActorNode(40, 80, new Position(84, 10));
-    ad.nodes['Fork/Rejoin'] = new ForkRejoinNode(200, 20, new Position(8, 0));
-    cd.edges['Arrow'] = arrow;
-
-    let state = new EllipseNode(100, 100, new Position(58, 2));
-    state.text = "s_0";
-    let endState = new EllipseNode(100, 100, new Position(58, 2));
-    endState.text = "s_end";
-
-    endState.hasDoubleBorder = true;
-    let arc = new Edge( new Position(10, 5), new Position( 196, 5));
-    arc.lineType = LineType.Arc;
-    arc.endStyle = EndStyle.SmallFilledArrow;
-    arc.middlePositions.push(new Position(103, 35));
-    let fsm: DiagramTypeTemplate = {nodes: {}, edges: {}};
-    fsm.nodes['State'] = state;
-    fsm.nodes['End State'] = endState;
-    fsm.edges['Arrow'] = arrow;
-    fsm.edges['Arc'] = arc;
-
-
-    return {
-      'Class Diagram': cd,
-      'Activity Diagram': ad,
-      'Finite State Machine': fsm,
-    }
-  }
-
   get groupKeys() {
-    return Object.keys(this.groups);
+    return Object.keys(this.shapeSets);
   }
 
   Object = Object;
 
-  handleMouseDown(event: MouseEvent, edgeOrNode: Edge | Node) {
-    if (!this.dragDropCreationService.isActive()) {
-      this.dragDropCreationService.activate(edgeOrNode);
-    } else {
-      console.log('Drag and drop service is already active.');
-    }
-  }
-
-  handleMouseUp($event: MouseEvent) {
+  handleGenericMouseUp(): void {
     if (this.dragDropCreationService.isActive()) {
       this.dragDropCreationService.cancel();
     }
   }
 
-  getSafePreview(groupKey: string, nodeKey: string): SafeHtml {
-    return this.sanitizer.bypassSecurityTrustHtml(this.groups[groupKey].nodes[nodeKey].preview);
+  handleEdgeMouseUp(groupKey: string, elementKey: string) {
+    if (this.selectedKeys !== undefined && this.selectedKeys[0] === groupKey &&
+      this.selectedKeys[1] === elementKey) {
+      this.edgeCreationService.activate(this.shapeSets[groupKey].edges[elementKey])
+    }
   }
 
-  isLine(edge: Edge): boolean {
-    return edge.lineType === LineType.Line;
+  handleMouseDown(groupKey: string, elementKey: string, type: 'node' | 'edge'): void {
+    if (this.selectedElement === undefined) {
+      if (type === 'node') {
+        this.dragDropCreationService.activate(this.shapeSets[groupKey].nodes[elementKey]);
+      } else {
+        this.dragDropCreationService.activate(this.shapeSets[groupKey].edges[elementKey]);
+        this.selectedKeys = [groupKey, elementKey];
+      }
+    } else if (type === 'node' && this.selectedElement instanceof Node) {
+      let old = <Node> this.selectedElement;
+      let newN = this.shapeSets[groupKey].nodes[elementKey].getDeepCopy();
+      newN.position = old.position;
+      newN.width = old.width;
+      newN.height = old.height;
+      newN.text = old.text;
+      this.deletionService.deleteNode(old);
+      this.diagramContainerService.get().nodes.push(newN)
+      this.selectionService.setNode(newN);
+    } else if (type === 'edge' && this.selectedElement instanceof Edge) {
+      let edge = <Edge> this.selectedElement;
+      let newEdge = this.shapeSets[groupKey].edges[elementKey].getDeepCopy();
+      newEdge.startPosition = edge.startPosition;
+      newEdge.endPosition = edge.endPosition;
+      newEdge.startNode = edge.startNode;
+      newEdge.endNode = edge.endNode;
+      newEdge.startLabel = edge.startLabel;
+      newEdge.middleLabel = edge.middleLabel;
+      newEdge.endLabel = edge.endLabel;
+      newEdge.middlePositions = edge.middlePositions;
+      if (newEdge.lineType === LineType.Arc && newEdge.middlePositions.length !== 1) {
+        newEdge.setDefaultMiddlePointOnArc();
+      }
+      let edges = this.diagramContainerService.get().edges;
+      edges[edges.indexOf(edge)] = newEdge;
+      // The new node should be selected.
+      // For some reason if we select it without delay,
+      // it does not update the edge attribute of the component quick enough.
+      setTimeout(() => this.selectionService.setEdge(newEdge), 50);
+    }
   }
 
-  isArc(edge: Edge): boolean {
-    return edge.lineType === LineType.Arc;
-  }
-
-  toClassNode(node: Node): ClassNode | undefined {
-    return node instanceof ClassNode ? node as ClassNode : undefined;
-  }
-
-  toEllipseNode(node: Node): EllipseNode | undefined {
-    return node instanceof EllipseNode ? node as EllipseNode : undefined;
-  }
-
-  toRectangleNode(node: Node): RectangleNode | undefined {
-    return (node instanceof RectangleNode && !(node instanceof ClassNode)) ? node as RectangleNode : undefined;
-  }
-
-  toDiamondNode(node: Node): DiamondNode | undefined {
-    return node instanceof DiamondNode ? node as DiamondNode : undefined;
+  isSelected(groupKey: string, edgeKey: string) {
+    return this.selectedKeys !== undefined && this.selectedKeys[0] === groupKey && this.selectedKeys[1] === edgeKey;
   }
 }
 
-type DiagramTypeTemplate = {
-  nodes: { [key: string]: Node },
-  edges: { [key: string]: Edge }
-}

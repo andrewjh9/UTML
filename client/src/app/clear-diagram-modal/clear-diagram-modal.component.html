@@ -1,0 +1,23 @@
+<div class="modal-header alert-danger text-center">
+  <h4 class="modal-title" id="modal-title">Diagram Management</h4>
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <p>Are you sure you want to delete this diagram? This action is not reversible.</p>
+</div>
+<div class="modal-footer">
+  <button type="button"
+          ngbAutofocus
+          class="btn btn-outline-secondary"
+          (click)="modal.close('Ok click')">
+    Cancel
+  </button>
+  <button type="button"
+          ngbAutofocus
+          class="btn btn-outline-danger"
+          (click)="modal.close('Ok click'); clearDiagram()">
+    Delete
+  </button>
+</div>

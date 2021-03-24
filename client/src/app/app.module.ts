@@ -23,7 +23,6 @@ import { ClickableAttachmentPointsComponent } from './node-compontents/clickable
 import {ClickableResizePointsComponent} from "./node-compontents/clickable-resize-points/clickable-resize-points.component";
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
 import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic-node-text.component';
-import { DiagramDownloadComponent } from './diagram-download/diagram-download.component';
 import { JsonUriPipe } from './json-uri.pipe';
 import { DiagramImportComponent } from './diagram-import/diagram-import.component';
 import { LifelineComponent } from './lifeline/lifeline.component';
@@ -58,7 +57,7 @@ import {faEdit, faEye, faEyeSlash, faTrashAlt} from "@fortawesome/free-regular-s
 import {
   faCog,
   faCopy,
-  faFolderOpen,
+  faFolderOpen, faList,
   faPaste, faQuestion,
   faRedo,
   faSave,
@@ -70,6 +69,11 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { SpecialCharacterSelectorComponent } from './special-character-selector/special-character-selector.component';
 import { SpecialCharacterRowComponent } from './special-character-row/special-character-row.component';
 import { GridOverlayComponent } from './grid-overlay/grid-overlay.component';
+import { ClickableMiddlePointsComponent } from './edge/clickable-middle-points/clickable-middle-points.component';
+import { ClickableNewPointsComponent } from './edge/clickable-new-points/clickable-new-points.component';
+import { ClickableStartEndPointsComponent } from './edge/clickable-start-end-points/clickable-start-end-points.component';
+import { ClearDiagramModalComponent } from './clear-diagram-modal/clear-diagram-modal.component';
+import { ShapesetManagementModalComponent } from './shapeset-management-modal/shapeset-management-modal.component';
 
 @NgModule({
   declarations: [
@@ -89,7 +93,6 @@ import { GridOverlayComponent } from './grid-overlay/grid-overlay.component';
     ClickableResizePointsComponent,
     ExportDiagramComponent,
     BasicNodeTextComponent,
-    DiagramDownloadComponent,
     JsonUriPipe,
     DiagramImportComponent,
     LifelineComponent,
@@ -122,7 +125,12 @@ import { GridOverlayComponent } from './grid-overlay/grid-overlay.component';
     NavBarComponent,
     SpecialCharacterSelectorComponent,
     SpecialCharacterRowComponent,
-    GridOverlayComponent
+    GridOverlayComponent,
+    ClickableMiddlePointsComponent,
+    ClickableNewPointsComponent,
+    ClickableStartEndPointsComponent,
+    ClearDiagramModalComponent,
+    ShapesetManagementModalComponent
   ],
     imports: [
         BrowserModule,
@@ -138,6 +146,6 @@ import { GridOverlayComponent } from './grid-overlay/grid-overlay.component';
 export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen,
-      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash);
+      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList);
   }
 }

@@ -41,7 +41,6 @@ export class DragDropCreationService {
   }
 
   public update(position: Position): void {
-    position = this.snapService.snapIfApplicable(position, 10);
     if(!this.isActive()) {
       throw new Error('Trying to update the DragDropService while it is not active');
     }
@@ -49,7 +48,7 @@ export class DragDropCreationService {
     if (this.selected.getValue() instanceof Node) {
       let node = this.selected.getValue() as Node;
       // Calculations to make the mouse the center of the object, in stead of the top-right.
-      node.position = Position.subtract(position, new Position(node.width / 2, node.height / 2));
+      node.position = this.snapService.snapIfApplicable(Position.subtract(position, new Position(node.width / 2, node.height / 2)));
     } else {
       let edge = this.selected.getValue() as Edge;
       edge.startPosition = position;
@@ -76,4 +75,9 @@ export class DragDropCreationService {
     this.createdEmitter.emit(value);
     this.selected.next(undefined);
   }
+
+  public getSelected() {
+    return this.selected.getValue();
+  }
+
 }

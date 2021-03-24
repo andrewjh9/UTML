@@ -2,8 +2,8 @@
        [edge]="edge!"
        [styleObject]="styleObject"/>
 
-<!-- Todo: Implement invisible, clickable overlay to make arcs easier to click on.
-Once done remove (mousedown) on render dispatch-->
+
+
 <!-- Invisible, selectable to make the mouse down trigger easily accessible -->
 <svg:polyline *ngIf="edge && isLine()"
               [attr.points]="edge.getPointString()"
@@ -19,6 +19,9 @@ Once done remove (mousedown) on render dispatch-->
           (dblclick)="handleDoubleClick($event)"
           [ngStyle]="{'cursor': cursor}"/>
 
+<svg:g *ngIf="isSelected && isLine()" clickable-new-points [edge]="edge" pointer-events="visible"/>
+<svg:g *ngIf="isSelected" clickable-start-end-points [edge]="edge"/>
+<svg:g *ngIf="isSelected" clickable-middle-points [edge]="edge"/>
 
 <svg:g *ngIf="edge && edge?.startLabel"
        label-component
