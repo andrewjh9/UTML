@@ -11,7 +11,7 @@
 	<groupId>nl.utwente</groupId>
 	<artifactId>utml</artifactId>
 	<version>0.1.0</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>utml</name>
 	<description>UTML Design Project</description>
 	<properties>
@@ -101,7 +101,13 @@
 	</dependencies>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
 
+		</plugins>
 
 	</build>
 	<repositories>
