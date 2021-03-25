@@ -71,6 +71,9 @@ export class DragDropCreationService {
     if (value instanceof Edge && (value as Edge).lineType === LineType.Arc) {
       (value as Edge).middlePositions = [];
       (value as Edge).setDefaultMiddlePointOnArc();
+    } else if (value instanceof Node) {
+      value.width = Math.ceil(value.width / 10) * 10;
+      value.height = Math.ceil(value.height / 10) * 10;
     }
     this.createdEmitter.emit(value);
     this.selected.next(undefined);
@@ -81,3 +84,4 @@ export class DragDropCreationService {
   }
 
 }
+

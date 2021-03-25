@@ -53,7 +53,7 @@ import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome
 import {faEdit, faEye, faEyeSlash, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
 import {
   faCog,
-  faCopy,
+  faCopy, faFile,
   faFolderOpen, faList,
   faPaste, faQuestion,
   faRedo,
@@ -144,6 +144,6 @@ import { HintOverlayComponent } from './hint-overlay/hint-overlay.component';
 export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen,
-      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList);
+      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList, faFile);
   }
 }

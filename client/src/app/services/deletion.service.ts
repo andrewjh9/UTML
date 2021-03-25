@@ -25,24 +25,12 @@ export class DeletionService {
               private selectionService: SelectionService,
               keyboardEventCallerService: KeyboardEventCallerService,
               diagramContainerService: DiagramContainerService,
-              editService: EditService) {
+              private editService: EditService) {
     this.diagram = diagramContainerService.get();
     diagramContainerService.diagramObservable.subscribe(d => this.diagram = d);
     selectionService.selectedObservable.subscribe(value => this.selected = value);
 
-    keyboardEventCallerService.addCallback(['Delete', 'keydown', 'any'], (event => {
-      this.selected.forEach(selectedElem => {
-        if (selectedElem instanceof Node) {
-          if (!editService.isActive()) {
-            this.deleteNode(selectedElem as Node);
-          }
-        } else if (selectedElem instanceof Edge) {
-          this.deleteEdge(selectedElem as Edge);
-        } else if (selectedElem instanceof Label) {
-          this.deleteLabel(selectedElem as Label);
-        }
-      });
-    }));
+    keyboardEventCallerService.addCallback(['Delete', 'keydown', 'any'], ignored => this.deleteSelected());
   }
 
   /**
@@ -101,5 +89,19 @@ export class DeletionService {
         edge.endLabel = undefined;
       }
     }
+  }
+
+  public deleteSelected() {
+    this.selected.forEach(selectedElem => {
+      if (selectedElem instanceof Node) {
+        if (!this.editService.isActive()) {
+          this.deleteNode(selectedElem as Node);
+        }
+      } else if (selectedElem instanceof Edge) {
+        this.deleteEdge(selectedElem as Edge);
+      } else if (selectedElem instanceof Label) {
+        this.deleteLabel(selectedElem as Label);
+      }
+    });
   }
 }
