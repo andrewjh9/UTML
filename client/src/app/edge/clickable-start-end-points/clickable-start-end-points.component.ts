@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Edge} from "../../../model/edge";
 import {StartEndRepositioner} from "../../services/edge-reposition/start-end-repositioner";
 import {MousePositionTransformService} from "../../services/mouse-position-transform.service";
+import {SelectionService} from "../../services/selection.service";
 
 @Component({
   selector: '[clickable-start-end-points]',
@@ -12,9 +13,11 @@ export class ClickableStartEndPointsComponent {
   @Input() edge!: Edge;
   readonly RADIUS: number = 8;
 
-  constructor(private startEndRepositioner: StartEndRepositioner) { }
+  constructor(private startEndRepositioner: StartEndRepositioner,
+              private selectionService: SelectionService) { }
 
   handleMouseDown(event: MouseEvent, type: 'start' | 'end'): void {
+    this.selectionService.setEdge(this.edge);
     this.startEndRepositioner.activate(this.edge, type === 'start');
   }
 }

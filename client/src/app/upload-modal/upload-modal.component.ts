@@ -35,7 +35,9 @@ export class UploadModalComponent {
 
     this.file?.text()
       .then((diagramString: string) => {
+        console.log(diagramString)
         let diagramJSON = JSON.parse(diagramString);
+        console.log(diagramJSON)
         let diagram = deserialiseDiagram(diagramJSON as SerialisedDiagram);
         this.diagramContainer.set(diagram);
       })

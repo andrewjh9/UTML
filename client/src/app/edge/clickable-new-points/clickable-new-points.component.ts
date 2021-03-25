@@ -3,6 +3,7 @@ import {Edge} from "../../../model/edge";
 import {Position} from "../../../model/position";
 import {FixedPointRepositioner} from "../../services/edge-reposition/fixed-point-repositioner";
 import {MousePositionTransformService} from "../../services/mouse-position-transform.service";
+import {SelectionService} from "../../services/selection.service";
 
 @Component({
   selector: '[clickable-new-points]',
@@ -14,7 +15,8 @@ export class ClickableNewPointsComponent {
   readonly RADIUS: number = 8;
 
   constructor(private fixedPointRepositioner: FixedPointRepositioner,
-              private mouseTransformer: MousePositionTransformService) { }
+              private mouseTransformer: MousePositionTransformService,
+              private selectionService: SelectionService) { }
 
   get points(): Position[] {
     let allPoints = this.edge.getAllPoints();
@@ -28,6 +30,7 @@ export class ClickableNewPointsComponent {
   }
 
   handleMouseDown(event: MouseEvent, index: number): void {
+    this.selectionService.setEdge(this.edge);
     let position = this.mouseTransformer.transformPosition(new Position(event.x, event.y));
     this.edge.middlePositions.splice(index, 0, position);
     this.fixedPointRepositioner.activate(this.edge, position);

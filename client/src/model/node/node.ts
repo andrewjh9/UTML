@@ -116,10 +116,14 @@ export abstract class Node {
 
   public getAllResizePoints(): Position[] {
     return [ new Position(this._width / 2, 0),//Up
+      new Position(this.width, 0), //up-right
       new Position(this._width, this._height / 2), //Right
+      new Position(this.width, this.height), // right,down
       new Position(this._width / 2, this._height), //Down
+      new Position(0, this._height), //Down,left
       new Position(0, this._height / 2), // Left
-      ]
+      new Position(0, 0), // up, left
+    ];
   }
 
   // Be careful with settings the fill to none as that will cause the body of the node to not be clickable.

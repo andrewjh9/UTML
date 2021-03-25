@@ -66,7 +66,6 @@ export class NodeComponent extends ModeAwareComponent {
 
     if (event.ctrlKey) {
       this.editService.deactivate();
-
       if (this.selectionService.isNode()) {
         this.modalService.open(FormattingModalComponent);
       }
