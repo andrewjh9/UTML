@@ -11,7 +11,7 @@
 	<groupId>nl.utwente</groupId>
 	<artifactId>utml</artifactId>
 	<version>0.1.0</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>utml</name>
 	<description>UTML Design Project</description>
 	<properties>
@@ -106,7 +106,11 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-
+			<plugin>
+				<groupId>com.heroku.sdk</groupId>
+				<artifactId>heroku-maven-plugin</artifactId>
+				<version>3.0.3</version>
+			</plugin>
 		</plugins>
 
 	</build>
