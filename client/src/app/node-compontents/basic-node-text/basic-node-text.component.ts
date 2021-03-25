@@ -10,8 +10,14 @@ import {EditService} from "../../services/edit.service";
 export class BasicNodeTextComponent {
   @Input() node!: Node;
   readonly FONT_SIZE = 16;
+  private inEditMode: boolean = false;
 
-  constructor(public editService: EditService) {}
+  constructor(public editService: EditService) {
+    editService.editElementObservable.subscribe(x => {
+       this.inEditMode = x !== undefined && x === this.node;
+      }
+    )
+  }
 
   get lineAmount(): number {
     return this.node!.getTextLines().length;
@@ -33,8 +39,12 @@ export class BasicNodeTextComponent {
   }
 
   setActive(index: number) {
-    if (this.editService.isActive()) {
-      this.editService.setNewLineActive(index);
-    }
+    // if (this.editService.isActive()) {
+    //   this.editService.setNewLineActive(index);
+    // }
+  }
+
+  get lines(): string[] {
+    return (this.inEditMode ? this.editService.includeCursor(this.node.text) : this.node.text).split('\\n');
   }
 }

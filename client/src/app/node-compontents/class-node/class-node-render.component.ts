@@ -14,9 +14,9 @@ export class ClassNodeRenderComponent {
   constructor(public editService: EditService) {
   }
 
-  setActive(index: number) {
-    if (this.editService.isActive()) {
-      this.editService.setNewLineActive(index);
-    }
-  }
+  // setActive(index: number) {
+  //   if (this.editService.isActive()) {
+  //     this.editService.setNewLineActive(index);
+  //   }
+  // }
 }

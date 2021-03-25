@@ -9,9 +9,10 @@
           font-family="Comic Sans MS, Helvetica, sans-serif">
 
       <svg:tspan *ngFor="let labelLine of lineBreakLabel(); let i = index" [attr.x]="label.position.x" dy="1.2em" (click)="setLineActive(i)"
-                 [ngStyle]="{'fill': editService.getActiveLineIndex() == i && editService.getEditable() == label? 'red' : 'black'}">
+                 >
 
         {{labelLine}}
       </svg:tspan>
 </svg:text>
 
+<!--[ngStyle]="{'fill': editService.getActiveLineIndex() == i && editService.getEditable() == label? 'red' : 'black'}"-->

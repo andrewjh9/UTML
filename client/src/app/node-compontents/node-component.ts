@@ -69,12 +69,10 @@ export class NodeComponent extends ModeAwareComponent {
       if (this.selectionService.isNode()) {
         this.modalService.open(FormattingModalComponent);
       }
-    } else if (this.node && this.editService.getEditable() != this.node) {
+    } else {
       this.isInEditMode = true;
       this.editService.deactivate();
-      this.editService.activate(this.node, 0);
-    } else if (this.node == this.editService.getEditable()) {
-      this.editService.addField();
+      this.editService.activate(this.node);
     }
   }
 

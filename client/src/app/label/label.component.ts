@@ -29,13 +29,14 @@ export class LabelComponent {
   }
 
   handleDoubleClick(ignored: MouseEvent): void {
-  if (this.label && this.editService.getEditable() != this.label) {
-      this.isInEditMode = true;
-      this.editService.deactivate();
-      this.editService.activate(this.label, 0);
-    } else if (this.label == this.editService.getEditable()) {
-      this.editService.addField();
-    }
+    this.editService.activate(this.label);
+  // if (this.label && this.editService.getEditable() != this.label) {
+  //     this.isInEditMode = true;
+  //     this.editService.deactivate();
+  //     this.editService.activate(this.label, 0);
+  //   } else if (this.label == this.editService.getEditable()) {
+  //     this.editService.addField();
+  //   }
   }
 
   lineBreakLabel() : string[]{
@@ -54,6 +55,6 @@ export class LabelComponent {
   }
 
   public setLineActive(index: number) {
-    this,this.editService.setNewLineActive(index);
+    // this,this.editService.setNewLineActive(index);
   }
 }
