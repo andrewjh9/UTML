@@ -33,6 +33,7 @@ export class CreationSidebarComponent implements OnInit {
   private selectedElement: Edge | Node | undefined = undefined;
   edgeCreationIsActive: boolean = false;
   shapeSets: CourseSet;
+  selectedType: 'node' | 'edge' | 'neither' | 'nothing' = 'nothing';
 
   constructor(private dragDropCreationService: DragDropCreationService,
               private diagramContainerService: DiagramContainerService,
@@ -40,6 +41,23 @@ export class CreationSidebarComponent implements OnInit {
               private selectionService: SelectionService,
               private deletionService: DeletionService,
               shapeSetContainerService: ShapeSetContainerService) {
+    selectionService.selectedObservable.subscribe(list => {
+      if (list.length === 1) {
+        if (list[0] instanceof Node) {
+          this.selectedType = 'node';
+          return;
+        } else if (list[0] instanceof Edge) {
+          this.selectedType = 'edge';
+          return;
+        }
+      } else if (list.length === 0) {
+        this.selectedType = 'nothing';
+        return;
+      }
+
+      this.selectedType = 'neither';
+    })
+
     edgeCreationService.activityObservable.subscribe(active => {
       this.edgeCreationIsActive = active;
       if (!active) {
@@ -147,6 +165,28 @@ export class CreationSidebarComponent implements OnInit {
       left: window.innerWidth - CreationSidebarComponent.WIDTH,
       position: "absolute",
       top: 50
+    }
+  }
+
+  getEdgeCursor() {
+    switch (this.selectedType) {
+      case "edge":
+      case "nothing":
+        return 'pointer';
+      case "node":
+      case "neither":
+        return "disabled";
+    }
+  }
+
+  getNodeCursor() {
+    switch (this.selectedType) {
+      case "node":
+      case "nothing":
+        return 'pointer';
+      case "edge":
+      case "neither":
+        return "disabled";
     }
   }
 }
