@@ -16,10 +16,12 @@
       <g drag-drop-preview></g>
       <g new-edge-preview></g>
       <defs arrow-marker></defs>
+
+      <g *ngFor="let node of diagram.nodes" node-component [node]="node"/>
+
       <g *ngFor="let edge of diagram.edges; let i = index"
          edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
 
-      <g *ngFor="let node of diagram.nodes" node-component [node]="node"/>
       <g selected-node-highlight/>
       <g drag-select-preview/>
     </svg>

@@ -129,7 +129,7 @@ export abstract class Node {
     'fill': 'white',
     'stroke': 'black',
     'stroke-width': 2,
-    'fill-opacity': 0,
+    'fill-opacity': 1,
     'stroke-opacity': 0.75,
   };
 
