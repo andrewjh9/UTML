@@ -23,7 +23,6 @@ import { ClickableAttachmentPointsComponent } from './node-compontents/clickable
 import {ClickableResizePointsComponent} from "./node-compontents/clickable-resize-points/clickable-resize-points.component";
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
 import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic-node-text.component';
-import { JsonUriPipe } from './json-uri.pipe';
 import { DiagramImportComponent } from './diagram-import/diagram-import.component';
 import { LifelineComponent } from './lifeline/lifeline.component';
 import { SequenceDiagramComponent } from './sequence-diagram/sequence-diagram.component';
@@ -44,8 +43,6 @@ import { FormattingModalComponent } from './formatting-modal/formatting-modal.co
 import { EdgeFormattingModalComponent } from './edge-formatting-modal/edge-formatting-modal.component';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';
 import { SaveModalComponent } from './save-modal/save-modal.component';
-import { JsonIconComponent } from './icons/json-icon/json-icon.component';
-import { PngIconComponent } from './icons/png-icon/png-icon.component';
 import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-preview.component';
 import { HourglassNodeRenderComponent } from './node-compontents/hourglass-node/hourglass-node-render.component';
 import { ActorNodeRenderComponent } from './node-compontents/actor-node/actor-node-render.component';
@@ -93,7 +90,6 @@ import { ShapesetManagementModalComponent } from './shapeset-management-modal/sh
     ClickableResizePointsComponent,
     ExportDiagramComponent,
     BasicNodeTextComponent,
-    JsonUriPipe,
     DiagramImportComponent,
     LifelineComponent,
     SequenceDiagramComponent,
@@ -114,8 +110,6 @@ import { ShapesetManagementModalComponent } from './shapeset-management-modal/sh
     EdgeFormattingModalComponent,
     UploadModalComponent,
     SaveModalComponent,
-    JsonIconComponent,
-    PngIconComponent,
     DragSelectPreviewComponent,
     HourglassNodeRenderComponent,
     ActorNodeRenderComponent,

@@ -147,7 +147,7 @@ export class DiagramComponent implements AfterViewInit {
     } else if (this.dragSelectionService.isActive()) {
       this.dragSelectionService.update(fullyTransformed); //idk
     } else if (this.lensOffsetService.isActive()) {
-      this.lensOffsetService.update(fullyTransformed); //works
+      this.lensOffsetService.update(zoomedPos); //works
     } else if (this.labelRepositionService.isActive()) {
       this.labelRepositionService.update(fullyTransformed);
     } else if (this.startEndRepositioner.isActive()) {
