@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClearDiagramModalComponent } from './clear-diagram-modal.component';
+import { HelpModalComponent } from './help-modal.component';
 
-describe('ClearDiagramModalComponent', () => {
-  let component: ClearDiagramModalComponent;
-  let fixture: ComponentFixture<ClearDiagramModalComponent>;
+describe('HelpModalComponent', () => {
+  let component: HelpModalComponent;
+  let fixture: ComponentFixture<HelpModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ClearDiagramModalComponent ]
+      declarations: [ HelpModalComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClearDiagramModalComponent);
+    fixture = TestBed.createComponent(HelpModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

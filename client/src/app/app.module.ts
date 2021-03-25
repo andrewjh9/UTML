@@ -71,6 +71,8 @@ import { ClickableNewPointsComponent } from './edge/clickable-new-points/clickab
 import { ClickableStartEndPointsComponent } from './edge/clickable-start-end-points/clickable-start-end-points.component';
 import { ClearDiagramModalComponent } from './clear-diagram-modal/clear-diagram-modal.component';
 import { ShapesetManagementModalComponent } from './shapeset-management-modal/shapeset-management-modal.component';
+import { HelpModalComponent } from './help-modal/help-modal.component';
+import { HintOverlayComponent } from './hint-overlay/hint-overlay.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +126,9 @@ import { ShapesetManagementModalComponent } from './shapeset-management-modal/sh
     ClickableNewPointsComponent,
     ClickableStartEndPointsComponent,
     ClearDiagramModalComponent,
-    ShapesetManagementModalComponent
+    ShapesetManagementModalComponent,
+    HelpModalComponent,
+    HintOverlayComponent
   ],
     imports: [
         BrowserModule,

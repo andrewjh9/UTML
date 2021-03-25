@@ -1,0 +1,93 @@
+<div class="modal-header">
+  <h4 class="modal-title text-primary" id="modal-title">
+    Help
+  </h4>
+  <button type="bxutton" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>Basics</a>
+      <ng-template ngbNavContent>
+        <p>
+          You can click-and-drag in shapes and edges from the sidebar on the right. You can select shapes and edges by clicking on
+          them to add them to your diagram. Then you can click and drag them to move them around. Lastly you can delete and deselect edges and shapes
+          by pressing <code>Delete</code> and <code>Escape</code> respectively.
+        </p>
+
+        <p>
+          You can zoom in and out by clicking the zoom buttons in the navbar. You can <code>Control</code> click
+          on empty space in your diagram to move around.
+        </p>
+
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>Edges</a>
+      <ng-template ngbNavContent>
+        <div>
+          Edges can be created in two ways:
+          <ul>
+            <li>Drag-and-drop from the creation sidebar.</li>
+            <li>Clicking and edge in the sidebar and click-and-dragging between attachment points.</li>
+          </ul>
+        </div>
+        <p>
+          You can select an edge by clicking on it. You can then move its start and end positions. These are either
+          any arbitrary position on the diagram, or attachment points of shapes as indicated by green circles.
+          You can also add and move around middle positions of edges.
+        </p>
+        <p>
+          If you want to change how an edge looks, you have two options. You can firstly select it and click on
+          the edge which you want it to look like in the creation sidebar. Alternatively, you can <code>Control</code>
+          double click the edge to open up the advanced formatting view.
+        </p>
+        <p>
+          If you want to add labels to an edge, you can use the advanced formatting view. Additionally, you can
+          double click close to the start or end of and edge to create a start or end label. Double clicking anywhere
+          else will create a label in the middle.
+        </p>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="3">
+      <a ngbNavLink>Shapes</a>
+      <ng-template ngbNavContent>
+        <p>
+          Shapes are creating by dragging and dropping from the creation sidebar. They can be selected by clicking on them.
+          When selected, you can move them around by click-and-dragging and resizing is done by click-and-dragging the red
+          circles.
+        </p>
+        <p>
+          You can change the way a shape looks in two ways. You can firstly <code>Control</code> double click it to
+          open the advanced formatting menu. Alternatively, you could select it and click on the shape you want it to
+          look like in the creation sidebar.
+        </p>
+        <p>
+          Changing the text inside a shape is either done through the advanced formatting menu or by double clicking the shape.
+        </p>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+
+</div>
+<div class="modal-footer">
+  <div class="form-check float-left">
+    <input
+      class="form-check-input"
+      type="checkbox"
+      id="openOnStart"
+      [checked]="openOnStart"
+      (change)="openOnStart = !openOnStart; updateLocalStorage()"
+    />
+    <label class="form-check-label" for="openOnStart">
+      Open Help on Start
+    </label>
+  </div>
+  <button type="button" class="btn btn-outline-primary" (click)="modal.close('Ok click')">Close</button>
+</div>
+
+
