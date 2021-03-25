@@ -1,31 +1,32 @@
 <div (keyup)="handleKeyPressed($event)">
+
   <app-nav-bar></app-nav-bar>
 
-  <div class="row d-flex m-0">
-    <div class="flex-grow-1">
-      <svg width="1200"
-           height="800"
-           [attr.viewBox]="zoomService.getViewBox()"
-           (mousedown)="handleMouseDown($event)"
-           (mouseup)="handleMouseUp($event)"
-           (mousemove)="handleMouseMove($event)"
-           (dblclick)="handleDoubleClick($event)"
-           id="diagram"
-      >
-        <g grid-overlay></g>
-        <g drag-drop-preview></g>
-        <g new-edge-preview></g>
-        <defs arrow-marker></defs>
-        <g *ngFor="let edge of diagram.edges; let i = index"
-           edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
+  <div style="overflow: hidden">
+    <svg [attr.width]="width"
+         [attr.height]="height"
+         [attr.viewBox]="zoomService.getViewBox()"
+         (mousedown)="handleMouseDown($event)"
+         (mouseup)="handleMouseUp($event)"
+         (mousemove)="handleMouseMove($event)"
+         (dblclick)="handleDoubleClick($event)"
+         id="diagram"
+         style="overflow: hidden">
+      <g grid-overlay></g>
+      <g drag-drop-preview></g>
+      <g new-edge-preview></g>
+      <defs arrow-marker></defs>
+      <g *ngFor="let edge of diagram.edges; let i = index"
+         edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
 
-        <g *ngFor="let node of diagram.nodes" node-component [node]="node"/>
-        <g selected-node-highlight/>
-        <g drag-select-preview/>
-      </svg>
-    </div>
-    <creation-sidebar></creation-sidebar>
+      <g *ngFor="let node of diagram.nodes" node-component [node]="node"/>
+      <g selected-node-highlight/>
+      <g drag-select-preview/>
+    </svg>
   </div>
+
+  <creation-sidebar id="menu-side"></creation-sidebar>
+
 </div>
 
 <canvas id="canvas" viewbox></canvas>

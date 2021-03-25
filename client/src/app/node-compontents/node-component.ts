@@ -13,6 +13,7 @@ import {MousePositionTransformService} from "../services/mouse-position-transfor
 import {EditService} from "../services/edit.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {StartEndRepositioner} from "../services/edge-reposition/start-end-repositioner";
+import {KeyboardEventCallerService} from "../services/keyboard-event-caller.service";
 
 @Component({
   templateUrl: './node.component.html',
@@ -51,7 +52,7 @@ export class NodeComponent extends ModeAwareComponent {
     // If the node is already selected, we do not want to select it again.
     // This is because there are multiple selected nodes sometimes
     // and this allows you to move multiple at the same time.
-    if (!this.isSelected ) {
+    if (!this.isSelected) {
       this.selectionService.setNode(this.node);
     } else {
       this.repositionService.activate(this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY)));
@@ -69,11 +70,11 @@ export class NodeComponent extends ModeAwareComponent {
       if (this.selectionService.isNode()) {
         this.modalService.open(FormattingModalComponent);
       }
-    } else if (this.node && this.editService.getNode() != this.node) {
+    } else if (this.node && this.editService.getEditable() != this.node) {
       this.isInEditMode = true;
       this.editService.deactivate();
-      this.editService.activate(this.node);
-    } else if (this.node == this.editService.getNode()) {
+      this.editService.activate(this.node, 0);
+    } else if (this.node == this.editService.getEditable()) {
       this.editService.addField();
     }
   }

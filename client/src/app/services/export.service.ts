@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {Diagram} from "../../model/diagram";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {DiagramContainerService} from "./diagram-container.service";
+import {SelectionService} from "./selection.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,14 @@ export class ExportService {
 
   public filename: string = 'yourDiagram';
 
-  constructor(diagramContainer: DiagramContainerService) {
+  constructor(diagramContainer: DiagramContainerService,
+              private selectionService: SelectionService) {
     this.diagram = diagramContainer.get();
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
   }
 
   public exportAsPNG(): void {
+
     let svg :HTMLElement | null = document.getElementById('diagram');
     let canvas = document.querySelector('canvas');
 

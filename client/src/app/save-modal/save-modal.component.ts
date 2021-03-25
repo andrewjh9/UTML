@@ -1,6 +1,8 @@
 import {Component, AfterContentInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ExportService} from "../services/export.service";
+import {Diagram} from "../../model/diagram";
+import {SelectionService} from "../services/selection.service";
 import {HttpClient} from "@angular/common/http";
 
 
@@ -14,9 +16,12 @@ export class SaveModalComponent implements AfterContentInit {
   isAuthenticated: boolean = true;
 
   constructor(public modal: NgbActiveModal,
-              private exportService: ExportService, private http: HttpClient) { }
+              private exportService: ExportService,
+              private selectionService: SelectionService,
+              private http: HttpClient) { }
 
   ngAfterContentInit(): void {
+    this.selectionService.deselect();
   }
 
   exportAsPNG() {

@@ -38,7 +38,8 @@ import {liesOnSegment} from "../services/edge-reposition/lies-on-segment";
 export class DiagramComponent implements AfterViewInit {
   public static readonly NAV_HEIGHT = 50;
   public diagram: Diagram;
-
+  public width?: number;
+  public height?: number;
   mode: Mode;
 
   constructor(private sanitizer: DomSanitizer,
@@ -63,9 +64,13 @@ export class DiagramComponent implements AfterViewInit {
               private mousePositionTransformService: MousePositionTransformService,
               private lensOffsetService: LensOffsetService,
               private labelRepositionService: LabelRepositionService,
-              private appComponent: AppComponent
-              ) {
+              private appComponent: AppComponent) {
 
+
+    this.width = window.innerWidth;
+    this.height = window.innerHeight - DiagramComponent.NAV_HEIGHT;
+    document.documentElement.style.overflow = 'hidden';  // firefox, chrome
+    // document.body.scroll = "no"; // ie only
     this.diagram = diagramContainer.get();
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
 
@@ -142,7 +147,7 @@ export class DiagramComponent implements AfterViewInit {
     } else if (this.dragSelectionService.isActive()) {
       this.dragSelectionService.update(fullyTransformed); //idk
     } else if (this.lensOffsetService.isActive()) {
-      this.lensOffsetService.update(zoomedPos); //works
+      this.lensOffsetService.update(fullyTransformed); //works
     } else if (this.labelRepositionService.isActive()) {
       this.labelRepositionService.update(fullyTransformed);
     } else if (this.startEndRepositioner.isActive()) {
@@ -189,7 +194,6 @@ export class DiagramComponent implements AfterViewInit {
 
   handleMouseDown(event: MouseEvent) {
     let pos = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
-    //TODO is this the correct position?, call the correct function.
     if (event.shiftKey) {
       this.dragSelectionService.activate(pos);
     } else if (event.ctrlKey) {

@@ -9,18 +9,14 @@ import {KeyboardEventCallerService} from "../../services/keyboard-event-caller.s
   styleUrls: ['./class-node-render.component.scss']
 })
 export class ClassNodeRenderComponent {
-  public isInEditMode: boolean = false;
   @Input() node!: ClassNode;
 
-  constructor(public editService: EditService,
-              keyboardEventCallerService: KeyboardEventCallerService) {
-    keyboardEventCallerService.addCallback(['Escape', "keydown", 'any'], (ignored) => {
-      this.isInEditMode = false;
-      editService.deactivate();
-    });
+  constructor(public editService: EditService) {
   }
 
   setActive(index: number) {
-      this.editService.setActiveTextLine(index, false)
+    if (this.editService.isActive()) {
+      this.editService.setNewLineActive(index);
+    }
   }
 }
