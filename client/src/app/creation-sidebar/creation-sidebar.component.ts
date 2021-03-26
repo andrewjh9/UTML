@@ -130,9 +130,21 @@ export class CreationSidebarComponent implements OnInit {
       newN.width = old.width;
       newN.height = old.height;
       newN.text = old.text;
+
+      this.diagramContainerService.get().edges.forEach(edge => {
+        if (edge.startNode === old) {
+          edge.startNode = newN;
+        }
+
+        if (edge.endNode === old) {
+          edge.endNode = newN;
+        }
+      });
+
       this.deletionService.deleteNode(old);
       this.diagramContainerService.get().nodes.push(newN)
-      this.selectionService.setNode(newN);
+      setTimeout(() => this.selectionService.setNode(newN), 50);
+
     } else if (type === 'edge' && this.selectedElement instanceof Edge) {
       let edge = <Edge> this.selectedElement;
       let newEdge = this.shapeSets[groupKey].edges[elementKey].getDeepCopy();

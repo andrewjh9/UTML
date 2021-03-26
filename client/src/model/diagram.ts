@@ -22,10 +22,12 @@ export class Diagram {
       let actualEdge = this.edges[edgeIndex];
 
       if (actualEdge.startNode !== undefined) {
+        console.log('aaa')
         serialisedEdge.startNodeId = this.nodes.indexOf(actualEdge.startNode);
       }
 
       if (actualEdge.endNode !== undefined) {
+        console.log('bbb')
         serialisedEdge.endNodeId = this.nodes.indexOf(actualEdge.endNode);
       }
     }
