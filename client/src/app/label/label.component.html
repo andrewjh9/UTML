@@ -5,14 +5,8 @@
           (dblclick)="handleDoubleClick($event)"
           [ngStyle]="{'fill': isSelected ? 'red' : 'black', 'cursor': isSelected ? 'move' : 'pointer'}"
           dominant-baseline="middle"
-          text-anchor="middle"
-          font-family="Comic Sans MS, Helvetica, sans-serif">
-
-      <svg:tspan *ngFor="let labelLine of lineBreakLabel(); let i = index" [attr.x]="label.position.x" dy="1.2em" (click)="setLineActive(i)"
-                 >
-
+          text-anchor="middle">
+      <svg:tspan *ngFor="let labelLine of textRows(); let i = index" [attr.x]="label.position.x" dy="1.2em">
         {{labelLine}}
       </svg:tspan>
 </svg:text>
-
-<!--[ngStyle]="{'fill': editService.getActiveLineIndex() == i && editService.getEditable() == label? 'red' : 'black'}"-->

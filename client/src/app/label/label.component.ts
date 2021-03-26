@@ -17,44 +17,32 @@ import {EditService} from "../services/edit.service";
 export class LabelComponent {
   @Input() label!: Label;
   isSelected: boolean = false;
-  isInEditMode = false;
+  inEditMode = false;
   constructor(private labelRepositionService: LabelRepositionService,
               private selectionService: SelectionService,
               private mousePositionTransformService: MousePositionTransformService,
-              public editService: EditService) {
+              private editService: EditService) {
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.label);
-      console.log(this.isSelected)
     });
+
+    this.editService.editElementObservable.subscribe(element => this.inEditMode = element === this.label);
   }
 
   handleDoubleClick(ignored: MouseEvent): void {
     this.editService.activate(this.label);
-  // if (this.label && this.editService.getEditable() != this.label) {
-  //     this.isInEditMode = true;
-  //     this.editService.deactivate();
-  //     this.editService.activate(this.label, 0);
-  //   } else if (this.label == this.editService.getEditable()) {
-  //     this.editService.addField();
-  //   }
   }
 
-  lineBreakLabel() : string[]{
-    return this.label.value.split("\\n");
+  textRows() : string[]{
+    return (this.inEditMode ? this.editService.includeCursor(this.label.value) : this.label.value).split('\\n');
   }
 
   public handleMouseDown(event: MouseEvent): void {
     if (!this.isSelected) {
-      console.log('selecting');
       this.selectionService.setLabel(this.label);
     } else {
-      console.log('starting repositioning');
       this.labelRepositionService.activate(this.mousePositionTransformService.transformPosition(
         new Position(event.x, event.y)), this.label);
     }
-  }
-
-  public setLineActive(index: number) {
-    // this,this.editService.setNewLineActive(index);
   }
 }

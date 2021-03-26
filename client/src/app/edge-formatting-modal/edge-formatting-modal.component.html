@@ -6,8 +6,8 @@
 </div>
 <div class="modal-body">
 
-  <div class="w-100" *ngIf="edge">
-    <div class="form-group row px-3">
+  <div class="w-100" *ngIf="edge" >
+    <div class="form-group row px-3" (click)="selectedLabel='start'">
       <label class="w-25 col-form-label">Start Label</label>
       <div class="w-75 d-flex" *ngIf="edge.startLabel">
         <input class="flex-grow-1 form-control form-text" type="text" [(ngModel)]="edge.startLabel.value">
@@ -23,7 +23,7 @@
       </button>
     </div>
 
-    <div class="form-group row px-3">
+    <div class="form-group row px-3" (click)="selectedLabel='middle'">
       <label class="w-25 col-form-label">Middle Label</label>
       <div class="w-75 d-flex" *ngIf="edge.middleLabel">
         <input class="flex-grow-1 form-control form-text" type="text" [(ngModel)]="edge.middleLabel.value">
@@ -39,7 +39,7 @@
       </button>
     </div>
 
-    <div class="form-group row px-3">
+    <div class="form-group row px-3" (click)="selectedLabel='end'">
       <label class="w-25 col-form-label">End Label</label>
       <div class="w-75 d-flex" *ngIf="edge.endLabel">
         <input class="flex-grow-1 form-control form-text" type="text" [(ngModel)]="edge.endLabel.value">
