@@ -12,11 +12,10 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./save-modal.component.scss']
 })
 export class SaveModalComponent implements AfterContentInit {
-  filename: string = 'diagram-filename';
   isAuthenticated: boolean = true;
 
   constructor(public modal: NgbActiveModal,
-              private exportService: ExportService,
+              public exportService: ExportService,
               private selectionService: SelectionService,
               private http: HttpClient) { }
 
@@ -35,7 +34,7 @@ export class SaveModalComponent implements AfterContentInit {
   }
 
   saveToDB() {
-    this.http.post('/api/diagram/',this.exportService.getDiagramJSON(this.filename)).subscribe(
+    this.http.post('/api/diagram/',this.exportService.getDiagramJSON(this.exportService.filename)).subscribe(
         (data:any) => {
           this.modal.close()
         },error =>  {
