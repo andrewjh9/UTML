@@ -66,6 +66,7 @@ export class EditService {
       this.addChar(key);
     } else if (key === 'Escape' || (key === 'Enter' && controlPressed)) {
       this.deactivate();
+      this.selectionService.deselect();
     } else if (key === 'Backspace') {
       this.backspace();
     } else if (key === 'Enter') {
@@ -174,7 +175,6 @@ export class EditService {
     this.charIndex = undefined;
     this.rowIndex = undefined;
     this.editElement.next(undefined);
-    this.selectionService.deselect();
   }
 }
 

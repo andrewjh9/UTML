@@ -7,7 +7,7 @@
                      [attr.font-size]="FONT_SIZE"
                      class="movable">
   <svg:tspan
-    *ngFor="let textLine of lines; let i = index;"
+    *ngFor="let textLine of textLines; let i = index;"
 
     [attr.x]="centerX"
     [attr.y]="getY(i)"
@@ -16,23 +16,3 @@
     {{textLine}}
   </svg:tspan>
 </svg:text>
-
-<!--<svg:text *ngIf="editService.getEditable() == node"-->
-<!--          [attr.x]="node.position.x"-->
-<!--          [attr.y]="node.position.y "-->
-<!--          [attr.width]="node.width"-->
-<!--          [attr.height]="node.height"-->
-<!--          font-family="sans-serif"-->
-<!--          [attr.font-size]="FONT_SIZE"-->
-<!--          class="movable">-->
-<!--  <svg:tspan-->
-<!--    *ngFor="let textLine of node.getTextLines(); let i = index;"-->
-<!--    [attr.x]="centerX"-->
-<!--    [attr.y]="getY(i)"-->
-<!--    dominant-baseline="middle"-->
-<!--    text-anchor="middle"-->
-<!--    (click)="setActive(i)"-->
-<!--    [ngStyle]="{'fill': editService.getActiveLineIndex() == i ? 'red' : 'black'}">-->
-<!--    {{textLine}}-->
-<!--  </svg:tspan>-->
-<!--</svg:text>-->

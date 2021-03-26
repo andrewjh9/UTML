@@ -1,14 +1,23 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Node} from "../../../model/node/node";
+import {AbstractTextNode} from "../abstract-text-node";
+import {EditService} from "../../services/edit.service";
 
 @Component({
   selector: '[below-node-text]',
   templateUrl: './below-text-node.component.html',
   styleUrls: ['./below-text-node.component.scss']
 })
-export class BelowTextNodeComponent {
+export class BelowTextNodeComponent extends AbstractTextNode implements AfterViewInit {
   @Input() node!: Node;
-  constructor() { }
+
+  constructor(editService: EditService) {
+    super(editService);
+  }
+
+  ngAfterViewInit() {
+    this.subscribeToEditService();
+  }
 
   readonly FONT_SIZE = 16;
 

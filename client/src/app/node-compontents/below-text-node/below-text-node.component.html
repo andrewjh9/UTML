@@ -3,7 +3,7 @@
   [attr.font-size]="FONT_SIZE"
   class="movable">
   <svg:tspan
-    *ngFor="let textLine of node.getTextLines(); let i = index;"
+    *ngFor="let textLine of textLines; let i = index;"
     [attr.x]="centerX"
     [attr.y]="getY(i)"
     dominant-baseline="middle"
