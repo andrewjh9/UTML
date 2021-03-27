@@ -3,6 +3,7 @@ import {Edge} from "../../../model/edge";
 import {Injectable} from "@angular/core";
 import {liesOnSegment} from "./lies-on-segment";
 import {SnapService} from "../snap.service";
+import {CachingService} from "../caching/caching.service";
 
 @Injectable({
   'providedIn': 'root'
@@ -11,7 +12,7 @@ export class FixedPointRepositioner {
   private position?: Position;
   private edge?: Edge;
 
-  constructor(private snapService: SnapService) {
+  constructor(private snapService: SnapService, private cachingService: CachingService) {
   }
 
   public isActive(): boolean {
@@ -53,5 +54,6 @@ export class FixedPointRepositioner {
 
     this.edge = undefined;
     this.position = undefined;
+    this.cachingService.save();
   }
 }

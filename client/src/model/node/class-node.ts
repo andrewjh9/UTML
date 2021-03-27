@@ -7,7 +7,7 @@ export class ClassNode extends RectangleNode {
   public secondLine: number | undefined = undefined;
 
   public getNodeTypeName(): string {
-    return 'ClassNode';
+    return 'ClassNode'
   }
 
   public serialise(): SerialisedClassNode {

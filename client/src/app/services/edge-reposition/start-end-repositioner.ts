@@ -4,12 +4,13 @@ import {Position} from "../../../model/position";
 import {Injectable} from "@angular/core";
 import {SnapService} from "../snap.service";
 import {DiagramContainerService} from "../diagram-container.service";
+import {CachingService} from "../caching/caching.service";
 
 /**
  * Class responsible for repositioning the start and end points of an edge.
  * This class is meant to be used as a singleton, only a single instance should ever be created.
  * It is also responsible for updating the startNode and endNode properties of the edge if applicable.
- * Lastly it also snaps to attachmentPoints of nodes during updates if their distance is wihtin the SNAP_DISTANCE
+ * Lastly it also snaps to attachmentPoints of nodes during updates if their distance is within the SNAP_DISTANCE
  */
 @Injectable({
   'providedIn': 'root'
@@ -21,6 +22,7 @@ export class StartEndRepositioner {
   private isStart?: boolean;
 
   constructor(private snapService: SnapService,
+              private cachingService: CachingService,
               diagramContainerService: DiagramContainerService) {
     this.nodes = diagramContainerService.get().nodes;
     diagramContainerService.diagramObservable.subscribe(diagram => this.nodes = diagram.nodes);
@@ -89,6 +91,7 @@ export class StartEndRepositioner {
   public deactivate(): void {
     this.edge = undefined;
     this.isStart = undefined;
+    this.cachingService.save();
   }
 
   /**

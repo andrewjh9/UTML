@@ -21,6 +21,7 @@ import {DeletionService} from "../services/deletion.service";
 import {CourseSet, ShapeSet} from "../shapeset-management-modal/shapeset-management-modal.component";
 import {ShapeSetContainerService} from "../services/shape-set-container.service";
 import {DiagramComponent} from "../diagram/diagram.component";
+import {CachingService} from "../services/caching/caching.service";
 
 @Component({
   selector: 'creation-sidebar',
@@ -40,6 +41,7 @@ export class CreationSidebarComponent implements OnInit {
               private edgeCreationService: EdgeCreationService,
               private selectionService: SelectionService,
               private deletionService: DeletionService,
+              private cachingService: CachingService,
               shapeSetContainerService: ShapeSetContainerService) {
     selectionService.selectedObservable.subscribe(list => {
       if (list.length === 1) {
@@ -141,8 +143,9 @@ export class CreationSidebarComponent implements OnInit {
         }
       });
 
-      this.deletionService.deleteNode(old);
-      this.diagramContainerService.get().nodes.push(newN)
+      this.deletionService.deleteNode(old, false);
+      this.diagramContainerService.get().nodes.push(newN);
+      this.cachingService.save();
       setTimeout(() => this.selectionService.setNode(newN), 50);
 
     } else if (type === 'edge' && this.selectedElement instanceof Edge) {
@@ -161,6 +164,7 @@ export class CreationSidebarComponent implements OnInit {
       }
       let edges = this.diagramContainerService.get().edges;
       edges[edges.indexOf(edge)] = newEdge;
+      this.cachingService.save();
       // The new node should be selected.
       // For some reason if we select it without delay,
       // it does not update the edge attribute of the component quick enough.

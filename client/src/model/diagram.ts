@@ -60,7 +60,6 @@ export class Diagram {
 
     result.height = result.bottomY - result.topY;
     result.width = result.rightX - result.leftX;
-    console.log(result)
     return result;
   }
 
@@ -73,12 +72,10 @@ export class Diagram {
       let actualEdge = this.edges[edgeIndex];
 
       if (actualEdge.startNode !== undefined) {
-        console.log('aaa')
         serialisedEdge.startNodeId = this.nodes.indexOf(actualEdge.startNode);
       }
 
       if (actualEdge.endNode !== undefined) {
-        console.log('bbb')
         serialisedEdge.endNodeId = this.nodes.indexOf(actualEdge.endNode);
       }
     }

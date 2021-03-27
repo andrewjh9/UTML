@@ -25,7 +25,7 @@ export class ForkRejoinNode extends RectangleNode {
   }
 
   public getNodeTypeName(): string {
-    return "ForkRejoin";
+    return 'ForkRejoinNode';
   }
 
   public getDeepCopy(): ForkRejoinNode {

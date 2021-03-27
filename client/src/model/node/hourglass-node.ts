@@ -2,7 +2,7 @@ import {RectangleNode} from "./rectangle-node";
 
 export class HourglassNode extends RectangleNode {
   public getNodeTypeName(): string {
-    return "HourglassNode";
+    return 'HourglassNode';
   }
 
   public getDeepCopy() {

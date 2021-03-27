@@ -17,7 +17,7 @@ export class EditService {
   private rowIndex?: number;
   private charIndex?: number;
 
-  constructor(private selectionService: SelectionService) {
+  constructor(private selectionService: SelectionService, private cachingService: CachingService) {
   }
 
   public isActive(): boolean {
@@ -175,9 +175,6 @@ export class EditService {
     this.charIndex = undefined;
     this.rowIndex = undefined;
     this.editElement.next(undefined);
+    this.cachingService.save();
   }
-}
-
-function min(a: number, b: number): number {
-  return a > b ? a : b;
 }
