@@ -42,3 +42,5 @@ keycloak-realm-export.json
 .jks
 
 src/main/resources/static/*
+*.jar
+*.pem

@@ -2,7 +2,7 @@
 
 ##Serve angular
 Use the following commands build and to copy the angular into the backend:
-`cd client &&
+cd client &&
 sudo npm run ng -p build && cd .. &&
 cp -r client/dist/client/. src/main/resources/static`
 
