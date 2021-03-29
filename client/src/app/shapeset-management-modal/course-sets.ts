@@ -7,6 +7,8 @@ import {HourglassNode} from "../../model/node/hourglass-node";
 import {ActorNode} from "../../model/node/actor-node";
 import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
 import {EllipseNode} from "../../model/node/ellipse-node";
+import {DiamondNode} from "../../model/node/diamond-node";
+import {SwimlaneNode} from "../../model/node/swimlane-node";
 
 export function flattenActive(courseSets: {[key: string]: CourseSet}) {
   let result: CourseSet = {};
@@ -40,7 +42,7 @@ cd.edges['Dotted Assocation'] = associationClassEdge;
 
 let ad: ShapeSet = {nodes: {}, edges: {}, active: true};
 let activityNode = new RectangleNode(186, 50, new Position(10, 2));
-activityNode.text = "Do Something"
+activityNode.text = "Do Something";
 let arrow = new Edge(new Position(10, 20), new Position(196, 20));
 arrow.endStyle = EndStyle.SmallFilledArrow;
 
@@ -50,6 +52,29 @@ ad.nodes['Activity'] = activityNode;
 ad.nodes['Hourglass'] = new HourglassNode(40, 80, new Position(84, 10));
 ad.nodes['Actor'] = new ActorNode(40, 80, new Position(84, 10));
 ad.nodes['Fork/Rejoin'] = new ForkRejoinNode(200, 20, new Position(8, 0));
+ad.nodes['Merge'] = new DiamondNode(40, 40, new Position(84, 30));
+let startState = new EllipseNode(40, 40, new Position(84,30));
+startState.styleObject = {
+  'fill': 'black',
+  'stroke': 'black',
+  'stroke-width': 2,
+  'fill-opacity': 1,
+  'stroke-opacity': 0.75,
+};
+ad.nodes['Start'] = startState;
+let endStateActivity = new EllipseNode(40, 40, new Position(84,30));
+endStateActivity.styleObject = {
+  'fill': 'black',
+  'stroke': 'black',
+  'stroke-width': 2,
+  'fill-opacity': 1,
+  'stroke-opacity': 0.75,
+};
+endStateActivity.hasDoubleBorder = true;
+ad.nodes['End State'] = endStateActivity;
+let swimlane = new SwimlaneNode(60, 120, new Position(64,0));
+swimlane.text = "Actor";
+ad.nodes['Swimlane'] = swimlane;
 
 let state = new EllipseNode(100, 100, new Position(58, 2));
 state.text = "s_0";
@@ -60,6 +85,7 @@ let arc = new Edge( new Position(10, 5), new Position( 196, 5));
 arc.lineType = LineType.Arc;
 arc.endStyle = EndStyle.SmallFilledArrow;
 arc.middlePositions.push(new Position(103, 35));
+
 let fsm: ShapeSet = {nodes: {}, edges: {}, active: true};
 fsm.nodes['State'] = state;
 fsm.nodes['End State'] = endState;
@@ -70,11 +96,27 @@ export let courseSets: {[key: string]: CourseSet};
 let design: CourseSet = {
   'Activity Diagram': ad,
   'Class Diagram': cd
-}
+};
 let lm: CourseSet = {
   'FSM': fsm
-}
+};
+let es: CourseSet = {
+
+};
+let cao: CourseSet = {
+
+};
+let ns: CourseSet = {
+
+};
+let cc: CourseSet = {
+
+};
 courseSets = {
   'Design': design,
-  'Languages & Machines': lm
+  'Languages & Machines': lm,
+  'Embedded Systems': es,
+  'Network Systems': ns,
+  'Computer architecture and Organization': cao,
+  'compiler construction': cc
 };

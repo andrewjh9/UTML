@@ -73,6 +73,8 @@ import { ClearDiagramModalComponent } from './clear-diagram-modal/clear-diagram-
 import { ShapesetManagementModalComponent } from './shapeset-management-modal/shapeset-management-modal.component';
 import { HelpModalComponent } from './help-modal/help-modal.component';
 import { HintOverlayComponent } from './hint-overlay/hint-overlay.component';
+import { SwimlaneNodeComponent } from './node-compontents/swimlane-node/swimlane-node.component';
+import { AboveTextNodeComponent } from './node-compontents/above-text-node/above-text-node.component';
 
 @NgModule({
   declarations: [
@@ -128,7 +130,9 @@ import { HintOverlayComponent } from './hint-overlay/hint-overlay.component';
     ClearDiagramModalComponent,
     ShapesetManagementModalComponent,
     HelpModalComponent,
-    HintOverlayComponent
+    HintOverlayComponent,
+    SwimlaneNodeComponent,
+    AboveTextNodeComponent
   ],
     imports: [
         BrowserModule,
