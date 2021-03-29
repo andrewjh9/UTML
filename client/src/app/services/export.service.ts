@@ -1,59 +1,77 @@
 import { Injectable } from '@angular/core';
 import {Diagram} from "../../model/diagram";
-import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {DiagramContainerService} from "./diagram-container.service";
 import {SelectionService} from "./selection.service";
+import {ZoomService} from "./zoom.service";
+import {SettingsContainerService} from "./settings-container.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExportService {
   private diagram: Diagram;
-  private downloadJsonHref?: SafeUrl;
-
   public filename: string = 'yourDiagram';
 
   constructor(diagramContainer: DiagramContainerService,
-              private selectionService: SelectionService) {
+              private selectionService: SelectionService,
+              private zoomService: ZoomService,
+              private settingsContainerService: SettingsContainerService) {
     this.diagram = diagramContainer.get();
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
   }
 
   public exportAsPNG(): void {
+    let oldGridValue = this.settingsContainerService.grid.getValue();
+    this.settingsContainerService.grid.next(false);
+    this.zoomService.reset();
+    // It takes a bit of time for the zoom to actually change the svg due to change detection.
+    // Therefore we wait 100ms before exporting.
+    setTimeout(() => {
+      let svg :HTMLElement | null = document.getElementById('diagram');
+      let canvas = document.querySelector('canvas');
 
-    let svg :HTMLElement | null = document.getElementById('diagram');
-    let canvas = document.querySelector('canvas');
+      if(canvas != null && svg != null){
+        let ctx = canvas.getContext('2d');
+        let data = (new XMLSerializer()).serializeToString(svg);
+        let DOMURL = window.URL || window.webkitURL || window;
+        let img = new Image();
 
-    if(canvas != null && svg != null){
-      let ctx = canvas.getContext('2d');
-      let data = (new XMLSerializer()).serializeToString(svg);
-      let DOMURL = window.URL || window.webkitURL || window;
-      let img = new Image();
-      img.width = 1200 * 2;
-      img.height = 800 * 2;
-      // @ts-ignore
-      let svgSize = svg.viewBox.baseVal;
-      canvas.width = svgSize.width * 2;
-      canvas.height = svgSize.height * 2;
-      let svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
-      let url = DOMURL.createObjectURL(svgBlob);
-      img.onload = () => {
-        if(ctx != null) {
-          ctx.drawImage(img, 0, 0);
-          DOMURL.revokeObjectURL(url);
-          // @ts-ignore
-          let imgURI = canvas
-            .toDataURL('image/png')
-            .replace('image/png', 'image/octet-stream');
+        const MARGIN = 25;
 
-          this.triggerDownload(this.filename, imgURI, "png");
-          document!.querySelector('canvas')!.remove();
-        } else{
-          new Error("The diagram has disappeared");
-        }
-      };
-      img.src = url;
-    } else{new Error("The diagram has disappeared") }
+        const width = this.diagram.getDimensions().width + (MARGIN * 2);
+        const height = this.diagram.getDimensions().height + (MARGIN * 2);
+
+
+        img.width = width;
+        img.height = height;
+        canvas.width = width;
+        canvas.height = height;
+
+        alert(`${width} - ${height}`);
+
+        let svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
+        let url = DOMURL.createObjectURL(svgBlob);
+        img.onload = () => {
+          if(ctx != null) {
+            ctx.drawImage(img, -(this.diagram.getDimensions().leftX - MARGIN), -(this.diagram.getDimensions().topY - MARGIN));
+            DOMURL.revokeObjectURL(url);
+            // @ts-ignore
+            let imgURI = canvas
+              .toDataURL('image/png')
+              .replace('image/png', 'image/octet-stream');
+
+            this.triggerDownload(this.filename, imgURI, "png");
+            // document!.querySelector('canvas')!.remove();
+          } else {
+            new Error("The diagram has disappeared");
+          }
+        };
+        img.src = url;
+      } else {
+        throw new Error("The diagram has disappeared")
+      }
+      this.settingsContainerService.grid.next(oldGridValue);
+    }, 100);
   }
 
   public exportAsJSON() {

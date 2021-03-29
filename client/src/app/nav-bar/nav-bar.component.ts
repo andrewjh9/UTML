@@ -62,6 +62,7 @@ export class NavBarComponent implements AfterViewInit {
 
   redo() {
     let result = this.cachingService.redo();
+    console.log(result)
     if (result !== null) {
       this.diagramContainer.set(result as Diagram);
     }

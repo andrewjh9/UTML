@@ -39,7 +39,8 @@ export class UploadModalComponent {
         let diagram = deserialiseDiagram(diagramJSON as SerialisedDiagram);
         this.diagramContainer.set(diagram);
       })
-      .catch(() => {
+      .catch((err) => {
+        console.log(err)
         alert('The file you are trying to upload can not be converted to a diagram.');
       });
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {SelectionService} from "../services/selection.service";
 import {Edge} from "../../model/edge";
 import {Node} from "../../model/node/node";
+import {EdgeCreationService} from "../services/edge-creation.service";
 
 @Component({
   selector: 'hint-overlay',
@@ -12,9 +13,9 @@ export class HintOverlayComponent implements OnInit {
   WIDTH = 400;
   HEIGHT = 200;
   private windowHeight: number = 1080;
-  mode: 'node' | 'edge' | 'nothing' = 'node';
+  mode: 'node' | 'edge' | 'nothing' | 'edge-creation' = 'node';
 
-  constructor(selectionService: SelectionService) {
+  constructor(selectionService: SelectionService, edgeCreationService: EdgeCreationService) {
     selectionService.selectedObservable.subscribe(selectedList => {
       if (selectedList.length === 1) {
         if (selectedList[0] instanceof Node) {
@@ -27,7 +28,9 @@ export class HintOverlayComponent implements OnInit {
       }
 
       this.mode = 'nothing'
-    })
+    });
+
+    edgeCreationService.activityObservable.subscribe(isActive => this.mode = isActive ? 'edge-creation' : 'nothing');
   }
 
   ngOnInit(): void {

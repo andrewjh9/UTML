@@ -23,13 +23,6 @@ export class EllipseNode extends Node {
   }
 
   public getNodeTypeName(): string {
-    return "Ellipse";
+    return 'EllipseNode';
   }
-
-  public preview: string = `<ellipse cx="${Node.PREVIEW_WIDTH / 2}"
-cy="${Node.DEFAULT_PREVIEW_HEIGHT / 2 + 1}"
-rx="${Node.DEFAULT_PREVIEW_HEIGHT / 2 - 2}"
-ry="${Node.DEFAULT_PREVIEW_HEIGHT / 2 - 2}"
-style="fill: none; stroke-width: 2; stroke: black">
-</ellipse>`;
 }

@@ -2,7 +2,7 @@ import {RectangleNode} from "./rectangle-node";
 
 export class ActorNode extends RectangleNode {
   getNodeTypeName(): string {
-    return "Actor";
+    return 'ActorNode';
   }
 
   getDeepCopy(): ActorNode {

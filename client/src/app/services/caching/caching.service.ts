@@ -53,7 +53,6 @@ export class CachingService {
     }
 
     let serialisedDiagram = this.diagram.serialise();
-    // this.localStorageService.save();
     this.list.add(serialisedDiagram);
     // Todo: Make it so similar changes are merged. I.e., typing a word into a node counts as one undo/redo action.
   }

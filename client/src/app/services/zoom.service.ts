@@ -35,8 +35,8 @@ export class ZoomService {
   }
 
   public setXY(x: number, y: number) {
-    this.x += x;
-    this.y += y;
+    this.x = max(0, this.x + x);
+    this.y = max(0, this.y + y);
     this.updateEmitter.emit();
   }
 
@@ -51,4 +51,16 @@ export class ZoomService {
   public getZoomedHeight(): number {
     return this.height * this.currentZoomFactor;
   }
+
+  public reset() {
+    this.zoomExponent = 0;
+    this.currentZoomFactor = Math.pow(this.zoomStep, this.zoomExponent);
+    this.updateEmitter.emit();
+    this.x = 0;
+    this.y = 0;
+  }
+}
+
+function max(a: number, b: number): number {
+  return a < b ? b : a;
 }

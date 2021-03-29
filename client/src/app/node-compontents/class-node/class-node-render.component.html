@@ -9,27 +9,13 @@
   </svg:rect>
 
 
-  <svg:g *ngIf="editService.getEditable() != node">
-    <svg:text *ngFor="let line of node.getTextLines(); let i = index;"
-              [attr.x]="node.position.x + node.width / 2"
-              [attr.y]="node.position.y + i * 24 + 20"
-              text-anchor="middle"
-              style="font-size: 16px">
-      {{line}}
-    </svg:text>
-  </svg:g>
-
-  <svg:g *ngIf="editService.getEditable() == node">
-    <svg:text *ngFor="let line of node.getTextLines(); let i = index;"
-              [attr.x]="node.position.x + node.width / 2"
-              [attr.y]="node.position.y + i * 24 + 20"
-              text-anchor="middle"
-              style="font-size: 16px"
-              (click)="setActive(i)"
-              [ngStyle]="{'fill': editService.getActiveLineIndex() == i ? 'red' : 'black'}">
-      {{line}}
-    </svg:text>
-  </svg:g>
+  <svg:text *ngFor="let line of textLines; let i = index;"
+            [attr.x]="node.position.x + node.width / 2"
+            [attr.y]="node.position.y + i * 24 + 20"
+            text-anchor="middle"
+            style="font-size: 16px">
+    {{line}}
+  </svg:text>
 
   <svg:line [attr.x1]="node.position.x"
             [attr.x2]="node.position.x + node.width"

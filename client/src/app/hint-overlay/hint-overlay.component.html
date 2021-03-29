@@ -31,4 +31,13 @@
       <li>Click-and-drag and edge from the sidebar to add it</li>
     </ul>
   </div>
+
+  <div *ngIf="mode === 'edge-creation'" class="p-1">
+    <b>Edge Creation Mode</b>
+    <ul>
+      <li>Click and hold a green circle to select the start</li>
+      <li>Hold and release on a green circle to select the end</li>
+      <li>Press <code>Escape</code> to stop creating edges.</li>
+    </ul>
+  </div>
 </div>

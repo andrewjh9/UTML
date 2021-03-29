@@ -7,6 +7,7 @@ export interface SerialisedNode {
   position: SerialisedPosition;
   text: string;
   hasDoubleBorder: boolean;
+  styleObject: {[key: string]: string | number}
 }
 
 export interface SerialisedClassNode extends SerialisedNode {
