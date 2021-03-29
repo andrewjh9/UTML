@@ -5,4 +5,6 @@
 <svg:g *ngIf="isHourglass(node)" hourglass-node-render  [node]="castToHourglass(node)"></svg:g>
 <svg:g *ngIf="isActor(node)" actor-node-render  [node]="castToActor(node)"></svg:g>
 <svg:g *ngIf="isSwimlane(node)" swimlane-node-render  [node]="castToSwimlane(node)"></svg:g>
+<svg:g *ngIf="isSystemBoundary(node)" system-boundary-node-render  [node]="castToSystemBoundary(node)"></svg:g>
+<svg:g *ngIf="isSystemClock(node)" system-clock-node-render  [node]="castToSystemClockNode(node)"></svg:g>
 

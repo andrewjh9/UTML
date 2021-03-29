@@ -75,6 +75,8 @@ import { HelpModalComponent } from './help-modal/help-modal.component';
 import { HintOverlayComponent } from './hint-overlay/hint-overlay.component';
 import { SwimlaneNodeComponent } from './node-compontents/swimlane-node/swimlane-node.component';
 import { AboveTextNodeComponent } from './node-compontents/above-text-node/above-text-node.component';
+import { SystemClockNodeComponent } from './node-compontents/system-clock-node/system-clock-node.component';
+import { SystemBoundaryNodeComponent } from './node-compontents/system-boundary-node/system-boundary-node.component';
 
 @NgModule({
   declarations: [
@@ -132,7 +134,9 @@ import { AboveTextNodeComponent } from './node-compontents/above-text-node/above
     HelpModalComponent,
     HintOverlayComponent,
     SwimlaneNodeComponent,
-    AboveTextNodeComponent
+    AboveTextNodeComponent,
+    SystemClockNodeComponent,
+    SystemBoundaryNodeComponent
   ],
     imports: [
         BrowserModule,

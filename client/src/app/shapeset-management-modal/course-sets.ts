@@ -9,6 +9,8 @@ import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
 import {EllipseNode} from "../../model/node/ellipse-node";
 import {DiamondNode} from "../../model/node/diamond-node";
 import {SwimlaneNode} from "../../model/node/swimlane-node";
+import {SystemBoundaryNode} from "../../model/node/system-boundary-node";
+import {SystemClockNode} from "../../model/node/system-clock-node";
 
 export function flattenActive(courseSets: {[key: string]: CourseSet}) {
   let result: CourseSet = {};
@@ -50,7 +52,6 @@ arrow.endStyle = EndStyle.SmallFilledArrow;
 ad.edges['Arrow'] = arrow;
 ad.nodes['Activity'] = activityNode;
 ad.nodes['Hourglass'] = new HourglassNode(40, 80, new Position(84, 10));
-ad.nodes['Actor'] = new ActorNode(40, 80, new Position(84, 10));
 ad.nodes['Fork/Rejoin'] = new ForkRejoinNode(200, 20, new Position(8, 0));
 ad.nodes['Merge'] = new DiamondNode(40, 40, new Position(84, 30));
 let startState = new EllipseNode(40, 40, new Position(84,30));
@@ -76,6 +77,22 @@ let swimlane = new SwimlaneNode(60, 120, new Position(64,0));
 swimlane.text = "Actor";
 ad.nodes['Swimlane'] = swimlane;
 
+
+let ucd: ShapeSet = {nodes: {}, edges: {}, active: true};
+let ie = arrow.getDeepCopy();
+ie.lineStyle = LineStyle.Dashed;
+ucd.edges['Include/Extend'] = ie;
+ucd.edges['Link'] = association;
+ucd.nodes['Actor'] = new ActorNode(40, 80, new Position(84, 10));
+ucd.edges['Generalisation'] = generalisation;
+let uc = new EllipseNode(186, 75, new Position(10, 2));
+uc.text = 'Use Case';
+ucd.nodes['Use case'] = uc;
+let systemboundary = new SystemBoundaryNode(186, 110, new Position(4,0));
+systemboundary.text = "Your system";
+ucd.nodes['System Boundary'] = systemboundary;
+ucd.nodes['System Clock'] = new SystemClockNode(100, 100, new Position(52, 2));
+
 let state = new EllipseNode(100, 100, new Position(58, 2));
 state.text = "s_0";
 let endState = new EllipseNode(100, 100, new Position(58, 2));
@@ -92,13 +109,20 @@ fsm.nodes['End State'] = endState;
 fsm.edges['Arrow'] = arrow;
 fsm.edges['Arc'] = arc;
 
+let dt: ShapeSet = {nodes: {}, edges: {}, active: true};
+dt.edges['Edge'] = association;
+dt.nodes['Node'] = new RectangleNode(186, 75, new Position(10, 2));
+
+
 export let courseSets: {[key: string]: CourseSet};
 let design: CourseSet = {
   'Activity Diagram': ad,
-  'Class Diagram': cd
+  'Class Diagram': cd,
+  'Use Case Diagram': ucd
 };
 let lm: CourseSet = {
-  'FSM': fsm
+  'Deterministic finite automaton': fsm,
+  'Derivation tree': dt
 };
 let es: CourseSet = {
 
