@@ -6,7 +6,6 @@
           <a href="#"
              class="list-group-item list-group-item-action"
              [ngClass]="{'selected': isSelected(diagramGroup, edgeKey) && edgeCreationIsActive}"
-             [ngStyle]="{'cursor': (selectedType === 'edge' || selectedType === 'nothing') ? 'pointer' : 'not-allowed'}"
              *ngFor="let edgeKey of Object.keys(shapeSets[diagramGroup].edges)"
              (mousedown)="handleMouseDown(diagramGroup, edgeKey, 'edge')"
              (mouseup)="handleEdgeMouseUp(diagramGroup, edgeKey)"
@@ -26,7 +25,6 @@
              *ngFor="let nodeKey of Object.keys(shapeSets[diagramGroup].nodes)"
              (mousedown)="handleMouseDown(diagramGroup, nodeKey, 'node')"
              (dragstart)="false"
-             [ngStyle]="{'cursor': (selectedType === 'node' || selectedType === 'nothing') ? 'pointer' : 'not-allowed'}"
           >
             <div class="d-flex w-100 justify-content-between text-center">
               <h6 class="mb-1 w-100 text-center">{{nodeKey}}</h6>

@@ -1,5 +1,5 @@
 import {Position} from "../../../model/position";
-import {Edge} from "../../../model/edge";
+import {Edge, LineType} from "../../../model/edge";
 import {Injectable} from "@angular/core";
 import {liesOnSegment} from "./lies-on-segment";
 import {SnapService} from "../snap.service";
@@ -44,7 +44,7 @@ export class FixedPointRepositioner {
     // on the line segment of its predecessor and successor.
     let allPoints = this.edge!.getAllPoints();
     let foundIndex: number = allPoints.indexOf(this.position!);
-    if (0 < foundIndex && foundIndex < allPoints.length - 1) {
+    if (this.edge!.lineType === LineType.Line && 0 < foundIndex && foundIndex < allPoints.length - 1) {
       if (liesOnSegment(this.position!, allPoints[foundIndex - 1], allPoints[foundIndex + 1])) {
         // Remove the found index from the middle position array of the edge.
         // Since the allPoints contains the start and the middlePositions does not we subtract 1.

@@ -1,9 +1,7 @@
 import {RepositionService} from "../services/reposition.service";
-import {ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
 import {Node} from "../../model/node/node";
 import {Position} from "../../model/position";
-import {ModeAwareComponent} from "../mode-aware-component";
 import {Component, Input} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DeletionService} from "../services/deletion.service";
@@ -13,13 +11,12 @@ import {MousePositionTransformService} from "../services/mouse-position-transfor
 import {EditService} from "../services/edit.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {StartEndRepositioner} from "../services/edge-reposition/start-end-repositioner";
-import {KeyboardEventCallerService} from "../services/keyboard-event-caller.service";
 
 @Component({
   templateUrl: './node.component.html',
   selector: '[node-component]'
 })
-export class NodeComponent extends ModeAwareComponent {
+export class NodeComponent {
   @Input() node!: Node;
   hoveringNearby: boolean = false;
   isSelected: boolean = false;
@@ -27,7 +24,6 @@ export class NodeComponent extends ModeAwareComponent {
   edgeCreationIsActive: boolean = false;
 
   constructor(private repositionService: RepositionService,
-              modeService: ModeService,
               private selectionService: SelectionService,
               private modalService: NgbModal,
               private deletionService: DeletionService,
@@ -36,7 +32,6 @@ export class NodeComponent extends ModeAwareComponent {
               private editService: EditService,
               edgeCreationService: EdgeCreationService,
               public startEndRepositioner: StartEndRepositioner) {
-    super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.node);
     });

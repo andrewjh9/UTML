@@ -1,18 +1,11 @@
 import {Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
 import {Position} from "../../model/position";
 import {Edge, EndStyle, LineStyle, LineType} from "../../model/edge";
-import {Label} from "../../model/label";
-import {EdgeCreationService} from "../services/edge-creation.service";
-import {Mode, ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
-import {ModeAwareComponent} from "../mode-aware-component";
 import {DeletionService} from "../services/deletion.service";
 import {CachingService} from "../services/caching/caching.service";
 import {EdgeFormattingModalComponent} from "../edge-formatting-modal/edge-formatting-modal.component";
-import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {ZoomService} from "../services/zoom.service";
-import {DiagramComponent} from "../diagram/diagram.component";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 
 @Component({

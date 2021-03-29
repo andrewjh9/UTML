@@ -18,6 +18,7 @@ export class EditService {
   private charIndex?: number;
 
   constructor(private selectionService: SelectionService, private cachingService: CachingService) {
+    selectionService.selectedObservable.subscribe(ignored => this.deactivate());
   }
 
   public isActive(): boolean {
@@ -27,7 +28,7 @@ export class EditService {
   public activate(editElement: Label | Node) {
     this.editElement.next(editElement);
     this.rowIndex = 0;
-    this.charIndex = 0;
+    this.charIndex = this.rows[0].length;
   }
 
   public includeCursor(s: string) {
@@ -79,6 +80,11 @@ export class EditService {
       this.nextCharIfPossible();
     } else if (key === 'ArrowLeft') {
       this.previousCharIfPossible();
+    } else if (key === 'Delete') {
+      if (this.charIndex! !== this.rows[this.rowIndex!].length) {
+        this.nextCharIfPossible();
+        this.backspace();
+      }
     }
   }
 
