@@ -6,6 +6,8 @@ export class SystemBoundaryNode extends RectangleNode {
   }
 
   public getDeepCopy() {
-    return new SystemBoundaryNode(this.width, this.height, this.position.getDeepCopy());
+    let result = new SystemBoundaryNode(this.width, this.height, this.position.getDeepCopy());
+    result.text = this.text;
+    return result;
   }
 }

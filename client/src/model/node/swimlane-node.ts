@@ -6,6 +6,8 @@ export class SwimlaneNode extends RectangleNode {
   }
 
   getDeepCopy(): SwimlaneNode {
-    return new SwimlaneNode(this.width, this.height, this.position.getDeepCopy());
+    let result = new SwimlaneNode(this.width, this.height, this.position.getDeepCopy());
+    result.text = this.text;
+    return result;
   }
 }

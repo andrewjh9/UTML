@@ -19,6 +19,7 @@ export class EllipseNode extends Node {
     let result =  new EllipseNode(this.width, this.height, this.position.getDeepCopy());
     result.text = this.text;
     result.hasDoubleBorder = this.hasDoubleBorder;
+    result.styleObject = Node.copyStyleObject(this.styleObject);
     return result;
   }
 

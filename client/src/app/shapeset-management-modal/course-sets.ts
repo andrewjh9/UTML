@@ -11,6 +11,7 @@ import {DiamondNode} from "../../model/node/diamond-node";
 import {SwimlaneNode} from "../../model/node/swimlane-node";
 import {SystemBoundaryNode} from "../../model/node/system-boundary-node";
 import {SystemClockNode} from "../../model/node/system-clock-node";
+import {split} from "ts-node";
 
 export function flattenActive(courseSets: {[key: string]: CourseSet}) {
   let result: CourseSet = {};
@@ -35,11 +36,17 @@ let associationClassEdge = new Edge(new Position(10, 20), new Position(196, 20))
 associationClassEdge.lineStyle = LineStyle.Dotted;
 classNode.text = 'ClassName  \\n fieldName: type';
 classNode.text = 'ClassName  \\n fieldName: type';
+let aggregation = new Edge(new Position(10, 20), new Position(196, 20));
+aggregation.endStyle = EndStyle.UnfilledDiamond;
+let composition = new Edge(new Position(10, 20), new Position(196, 20));
+composition.endStyle = EndStyle.FilledDiamond;
 
 cd.nodes['Class'] = classNode;
 cd.edges['Association'] = association;
 cd.edges['Generalisation'] = generalisation;
 cd.edges['Dotted Assocation'] = associationClassEdge;
+cd.edges['Aggregation'] = aggregation;
+cd.edges['Composition'] = composition;
 
 
 let ad: ShapeSet = {nodes: {}, edges: {}, active: true};
@@ -47,22 +54,6 @@ let activityNode = new RectangleNode(186, 50, new Position(10, 2));
 activityNode.text = "Do Something";
 let arrow = new Edge(new Position(10, 20), new Position(196, 20));
 arrow.endStyle = EndStyle.SmallFilledArrow;
-
-
-ad.edges['Arrow'] = arrow;
-ad.nodes['Activity'] = activityNode;
-ad.nodes['Hourglass'] = new HourglassNode(40, 80, new Position(84, 10));
-ad.nodes['Fork/Rejoin'] = new ForkRejoinNode(200, 20, new Position(8, 0));
-ad.nodes['Merge'] = new DiamondNode(40, 40, new Position(84, 30));
-let startState = new EllipseNode(40, 40, new Position(84,30));
-startState.styleObject = {
-  'fill': 'black',
-  'stroke': 'black',
-  'stroke-width': 2,
-  'fill-opacity': 1,
-  'stroke-opacity': 0.75,
-};
-ad.nodes['Start'] = startState;
 let endStateActivity = new EllipseNode(40, 40, new Position(84,30));
 endStateActivity.styleObject = {
   'fill': 'black',
@@ -72,9 +63,24 @@ endStateActivity.styleObject = {
   'stroke-opacity': 0.75,
 };
 endStateActivity.hasDoubleBorder = true;
-ad.nodes['End State'] = endStateActivity;
+let startState = new EllipseNode(40, 40, new Position(84,30));
+startState.styleObject = {
+  'fill': 'black',
+  'stroke': 'black',
+  'stroke-width': 2,
+  'fill-opacity': 1,
+  'stroke-opacity': 0.75,
+};
 let swimlane = new SwimlaneNode(60, 120, new Position(64,0));
 swimlane.text = "Actor";
+
+ad.edges['Arrow'] = arrow;
+ad.nodes['Activity'] = activityNode;
+ad.nodes['Hourglass'] = new HourglassNode(40, 80, new Position(84, 10));
+ad.nodes['Fork/Rejoin'] = new ForkRejoinNode(200, 20, new Position(8, 0));
+ad.nodes['Merge'] = new DiamondNode(40, 40, new Position(84, 30));
+ad.nodes['Start'] = startState;
+ad.nodes['End State'] = endStateActivity;
 ad.nodes['Swimlane'] = swimlane;
 
 
@@ -113,6 +119,35 @@ let dt: ShapeSet = {nodes: {}, edges: {}, active: true};
 dt.edges['Edge'] = association;
 dt.nodes['Node'] = new RectangleNode(186, 75, new Position(10, 2));
 
+let stack: ShapeSet = {nodes: {}, edges: {}, active: true};
+stack.nodes['Stack layer'] = new RectangleNode(186, 50, new Position(10, 2));
+
+let graphs: ShapeSet = {nodes: {}, edges: {}, active: true};
+let undirectedEdge = new Edge(new Position(10, 20), new Position(196, 20));
+let directedEdge = undirectedEdge .getDeepCopy();
+directedEdge.endStyle = EndStyle.SmallFilledArrow;
+
+
+graphs.edges['Undirected edge'] = undirectedEdge;
+graphs.edges['Directed Edge'] = directedEdge;
+graphs.edges['Arc'] = arc;
+graphs.nodes['Square Node'] = new RectangleNode(186, 50, new Position(10, 2));
+graphs.nodes['Ellipse Node'] = new EllipseNode(186, 50, new Position(10, 2));
+
+let splitoff = new EllipseNode(20, 20, new Position(94, 30));
+splitoff.styleObject = {
+  'fill': 'black',
+  'stroke': 'black',
+  'stroke-width': 2,
+  'fill-opacity': 1,
+  'stroke-opacity': 0.75,
+};
+let embedded: ShapeSet = {nodes: {}, edges: {}, active: true};
+embedded.edges['Arrow'] = arrow;
+embedded.edges['Arc'] = arc;
+embedded.nodes['Edge split off node'] = splitoff
+embedded.nodes['Node'] = new RectangleNode(100, 120, new Position(54, 2));
+embedded.nodes['Circular Node'] = new EllipseNode(100, 100, new Position(58, 2));
 
 export let courseSets: {[key: string]: CourseSet};
 let design: CourseSet = {
@@ -125,22 +160,19 @@ let lm: CourseSet = {
   'Derivation tree': dt
 };
 let es: CourseSet = {
-
+  'PDA/MDP/HA/DTMS': embedded
 };
 let cao: CourseSet = {
-
+  'Stack': stack
 };
-let ns: CourseSet = {
-
+let g: CourseSet = {
+  'Graphs': graphs
 };
-let cc: CourseSet = {
 
-};
 courseSets = {
   'Design': design,
   'Languages & Machines': lm,
   'Embedded Systems': es,
-  'Network Systems': ns,
   'Computer architecture and Organization': cao,
-  'compiler construction': cc
+  'General Graphs': g
 };
