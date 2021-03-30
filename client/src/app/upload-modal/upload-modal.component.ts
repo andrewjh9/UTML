@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Inject, OnInit, Output, AfterContentInit} from '@angular/core';
-import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
+import {Component, EventEmitter, Inject, OnInit, Output, AfterContentInit, ViewChild, ElementRef} from '@angular/core';
+import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Diagram} from "../../model/diagram";
 import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
 import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
@@ -16,33 +16,34 @@ import {DiagramManagementModalComponent} from "../diagram-management-modal/diagr
   styleUrls: ['./upload-modal.component.scss']
 })
 export class UploadModalComponent {
+  @ViewChild('clearHistoryModal') private clearHistoryModal!: ElementRef;
   private file?: File;
-  selectedDiagram?: Diagram = fsm;
+  selectedDiagram?: Diagram;
   active: number = 1;
 
   constructor(public modal: NgbActiveModal,
               private diagramContainer: DiagramContainerService,
-              private localStorageService: LocalStorageService){}
+              private localStorageService: LocalStorageService,
+              private modalService: NgbModal){}
 
   onChange(event: any) {
     this.file = event!.target!.files[0];
-  }
 
-  onClick() {
-    if (this.file === undefined) {
-      alert("You have to upload a file first.");
-    }
-
-    this.file?.text()
+    this.file!.text()
       .then((diagramString: string) => {
         let diagramJSON = JSON.parse(diagramString);
-        let diagram = deserialiseDiagram(diagramJSON as SerialisedDiagram);
-        this.diagramContainer.set(diagram);
+        this.selectedDiagram = deserialiseDiagram(diagramJSON as SerialisedDiagram);
       })
       .catch((err) => {
         console.log(err)
         alert('The file you are trying to upload can not be converted to a diagram.');
       });
+  }
+
+  onClick() {
+    if (this.selectedDiagram !== undefined) {
+      this.diagramContainer.set(this.selectedDiagram);
+    }
   }
 
   get keyDiagramPairs() {
@@ -55,5 +56,13 @@ export class UploadModalComponent {
 
   removeLocalStorage(index: number) {
     this.localStorageService.removeKey(this.keyDiagramPairs[index][0])
+  }
+
+  openClearHistory() {
+    this.modalService.open(this.clearHistoryModal);
+  }
+
+  clearHistory() {
+    this.localStorageService.clear();
   }
 }

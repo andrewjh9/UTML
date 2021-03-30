@@ -22,6 +22,7 @@ import {CourseSet, ShapeSet} from "../shapeset-management-modal/shapeset-managem
 import {ShapeSetContainerService} from "../services/shape-set-container.service";
 import {DiagramComponent} from "../diagram/diagram.component";
 import {CachingService} from "../services/caching/caching.service";
+import {EditService} from "../services/edit.service";
 
 @Component({
   selector: 'creation-sidebar',
@@ -42,6 +43,7 @@ export class CreationSidebarComponent implements OnInit {
               private selectionService: SelectionService,
               private deletionService: DeletionService,
               private cachingService: CachingService,
+              private editService: EditService,
               shapeSetContainerService: ShapeSetContainerService) {
     selectionService.selectedObservable.subscribe(list => {
       if (list.length === 1) {
@@ -118,57 +120,13 @@ export class CreationSidebarComponent implements OnInit {
   }
 
   handleMouseDown(groupKey: string, elementKey: string, type: 'node' | 'edge'): void {
-    if (this.selectedElement === undefined) {
-      if (type === 'node') {
-        this.dragDropCreationService.activate(this.shapeSets[groupKey].nodes[elementKey]);
-      } else {
-        this.dragDropCreationService.activate(this.shapeSets[groupKey].edges[elementKey]);
-        this.selectedKeys = [groupKey, elementKey];
-      }
-    } else if (type === 'node' && this.selectedElement instanceof Node) {
-      let old = <Node> this.selectedElement;
-      let newN = this.shapeSets[groupKey].nodes[elementKey].getDeepCopy();
-      newN.position = old.position;
-      newN.width = old.width;
-      newN.height = old.height;
-      newN.text = old.text;
-
-      this.diagramContainerService.get().edges.forEach(edge => {
-        if (edge.startNode === old) {
-          edge.startNode = newN;
-        }
-
-        if (edge.endNode === old) {
-          edge.endNode = newN;
-        }
-      });
-
-      this.deletionService.deleteNode(old, false);
-      this.diagramContainerService.get().nodes.push(newN);
-      this.cachingService.save();
-      setTimeout(() => this.selectionService.setNode(newN), 50);
-
-    } else if (type === 'edge' && this.selectedElement instanceof Edge) {
-      let edge = <Edge> this.selectedElement;
-      let newEdge = this.shapeSets[groupKey].edges[elementKey].getDeepCopy();
-      newEdge.startPosition = edge.startPosition;
-      newEdge.endPosition = edge.endPosition;
-      newEdge.startNode = edge.startNode;
-      newEdge.endNode = edge.endNode;
-      newEdge.startLabel = edge.startLabel;
-      newEdge.middleLabel = edge.middleLabel;
-      newEdge.endLabel = edge.endLabel;
-      newEdge.middlePositions = edge.middlePositions;
-      if (newEdge.lineType === LineType.Arc && newEdge.middlePositions.length !== 1) {
-        newEdge.setDefaultMiddlePointOnArc();
-      }
-      let edges = this.diagramContainerService.get().edges;
-      edges[edges.indexOf(edge)] = newEdge;
-      this.cachingService.save();
-      // The new node should be selected.
-      // For some reason if we select it without delay,
-      // it does not update the edge attribute of the component quick enough.
-      setTimeout(() => this.selectionService.setEdge(newEdge), 50);
+    this.selectionService.deselect();
+    this.editService.deactivate();
+    if (type === 'node') {
+      this.dragDropCreationService.activate(this.shapeSets[groupKey].nodes[elementKey]);
+    } else {
+      this.dragDropCreationService.activate(this.shapeSets[groupKey].edges[elementKey]);
+      this.selectedKeys = [groupKey, elementKey];
     }
   }
 

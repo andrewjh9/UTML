@@ -1,9 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {Label} from "../../model/label";
 import {Position} from "../../model/position";
-import {RepositionService} from "../services/reposition.service";
-import {ModeService} from "../services/mode.service";
-import {ModeAwareComponent} from "../mode-aware-component";
 import {SelectionService} from "../services/selection.service";
 import {LabelRepositionService} from "../services/label-reposition.service";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";

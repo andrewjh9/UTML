@@ -128,7 +128,7 @@ import { HintOverlayComponent } from './hint-overlay/hint-overlay.component';
     ClearDiagramModalComponent,
     ShapesetManagementModalComponent,
     HelpModalComponent,
-    HintOverlayComponent
+    HintOverlayComponent,
   ],
     imports: [
         BrowserModule,
