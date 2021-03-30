@@ -21,6 +21,12 @@
         <li [ngbNavItem]="2">
           <a ngbNavLink>History</a>
           <ng-template ngbNavContent>
+            <div class="alert alert-warning">
+              Your history is an emergency backup, not as a primary means of storing your work!
+              Please save your <code>.utml</code> if you want to store your work. Rely on this feature
+              at your own risk.
+            </div>
+            <button class="btn btn-outline-danger w-100" (click)="openClearHistory()">Clear History</button>
             <table class="table table-hover">
               <thead>
               <tr>
@@ -64,3 +70,17 @@
     <button type="button" class="btn btn-outline-primary" (click)="modal.close('Ok click')">Open</button>
   </div>
 </div>
+
+<ng-template #clearHistoryModal let-modal>
+  <div class="modal-header alert-danger">
+    <h4 class="modal-title">Clear History</h4>
+  </div>
+  <div class="modal-body">
+    <p>Are you sure you want to clear your entire history? This action can not be undone.</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.close()">Cancel</button>
+    <button type="button" class="btn btn-outline-danger" (click)="modal.close(); clearHistory();">Clear</button>
+  </div>
+</ng-template>
+

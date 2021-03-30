@@ -1,6 +1,7 @@
 <div class="modal-header">
   <h4 class="modal-title" id="modal-title">Advanced node formatting</h4>
-  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
+  <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title"
+          (click)="modal.dismiss('Cross click'); cache()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
@@ -78,7 +79,7 @@
     <div class="form-group row px-3">
       <label class="w-25 col-form-label">Line Style</label>
       <div class="w-75">
-        <select class="custom-select" [(ngModel)]="edge!.lineStyle" (ngModelChange)="cache()">
+        <select class="custom-select" [(ngModel)]="edge!.lineStyle">
           <option [ngValue]="0">Filled</option>
           <option [ngValue]="1">Dotted</option>
           <option [ngValue]="2">Dashed</option>
@@ -89,7 +90,7 @@
     <div class="form-group row px-3">
       <label class="w-25 col-form-label">Start Style</label>
       <div class="w-75">
-        <select class="custom-select" [(ngModel)]="edge!.startStyle" (ngModelChange)="cache()">
+        <select class="custom-select" [(ngModel)]="edge!.startStyle">
           <option [ngValue]="0">None</option>
           <option [ngValue]="1">Big Unfilled Arrow</option>
           <option [ngValue]="2">Filled Diamond</option>
@@ -102,7 +103,7 @@
     <div class="form-group row px-3">
       <label class="w-25 col-form-label">End Style</label>
       <div class="w-75">
-        <select class="custom-select" [(ngModel)]="edge!.endStyle" (ngModelChange)="cache()">
+        <select class="custom-select" [(ngModel)]="edge!.endStyle">
           <option [ngValue]="0">None</option>
           <option [ngValue]="1">Small Filled Arrow</option>
           <option [ngValue]="2">Filled Diamond</option>
@@ -119,7 +120,7 @@
       Delete <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
     </button>
   </div>
-  <button type="button" ngbAutofocus class="btn btn-success" (click)="modal.close('Ok click')">
+  <button type="button" ngbAutofocus class="btn btn-success" (click)="modal.close('Ok click'); cache()">
     Save <fa-icon [icon]="['fas', 'save']"></fa-icon>
   </button>
 </div>

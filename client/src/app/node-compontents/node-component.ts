@@ -75,8 +75,4 @@ export class NodeComponent {
     this.modalService.dismissAll();
     this.deletionService.deleteNode(this.node);
   }
-
-  save(): void {
-    this.cachingService.save();
-  }
 }

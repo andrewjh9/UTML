@@ -7,10 +7,9 @@ import {DiagramContainerService} from "./diagram-container.service";
   providedIn: 'root'
 })
 export class UploadService {
-  public diagramEmitter: EventEmitter<Diagram> = new EventEmitter<Diagram>();
   constructor(private diagramContainer: DiagramContainerService) { }
 
-  public emit(diagram: Diagram) {
+  public set(diagram: Diagram) {
     this.diagramContainer.set(diagram);
   }
 }
