@@ -1,11 +1,9 @@
 package nl.utwente.utml;
 
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -20,13 +18,12 @@ import java.util.Properties;
 @EnableTransactionManagement
 public class HibernateConf {
 
-
-    @Value( "${spring.datasource.url}" )
+    @Value("${spring.datasource.url}")
     public String JDBC_URL ;
-    @Value( "${spring.datasource.username}" )
-    public String JDBC_USERNAME;
-    @Value( "${spring.datasource.password}")
-    public String JDBC_PASSWORD;
+    @Value("${spring.datasource.username}")
+    public String JDBC_USERNAME ;
+    @Value("${spring.datasource.password}")
+    public String JDBC_PASSWORD ;
 
     @Bean(name="entityManagerFactory")
     public LocalSessionFactoryBean sessionFactory() {
