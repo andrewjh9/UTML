@@ -41,6 +41,7 @@ export class DiagramComponent implements AfterViewInit {
   public width?: number;
   public height?: number;
   mode: Mode;
+  edgeCreationIsActive: boolean = false;
 
   constructor(private sanitizer: DomSanitizer,
               private diagramContainer: DiagramContainerService,
@@ -63,8 +64,8 @@ export class DiagramComponent implements AfterViewInit {
               private localStorageService: LocalStorageService,
               private mousePositionTransformService: MousePositionTransformService,
               private lensOffsetService: LensOffsetService,
-              private labelRepositionService: LabelRepositionService,
-              private appComponent: AppComponent) {
+              private labelRepositionService: LabelRepositionService) {
+    edgeCreationService.activityObservable.subscribe(b => this.edgeCreationIsActive = b);
 
 
     this.width = window.innerWidth;
@@ -152,43 +153,6 @@ export class DiagramComponent implements AfterViewInit {
       this.labelRepositionService.update(fullyTransformed);
     } else if (this.startEndRepositioner.isActive()) {
       this.startEndRepositioner.update(fullyTransformed);
-    }
-  }
-
-  handleDoubleClick(event: MouseEvent) {
-  }
-
-  handleKeyPressed(event: KeyboardEvent): void {
-    const SELECT_KEY = "1";
-    const CREATE_KEY = "2";
-    const MOVE_KEY = "3";
-
-    if (event.ctrlKey) {
-      switch (event.key) {
-        case SELECT_KEY :
-          this.modeService.setMode(Mode.Select);
-          break;
-        case CREATE_KEY:
-          this.modeService.setMode(Mode.Create);
-          break;
-        case MOVE_KEY:
-          this.modeService.setMode(Mode.Move);
-          break;
-      }
-    }
-  }
-
-  restore() {
-    let result: null | string = localStorage.getItem(CachingService.LOCAL_STORAGE_KEY);
-    if (result === null) {
-      alert('No diagram stored in local storage');
-    } else {
-      try {
-        let diagram: Diagram = deserialiseDiagram(JSON.parse(result as string) as SerialisedDiagram);
-        this.diagramContainer.set(diagram);
-      } catch (e) {
-        alert('Could not restore diagram from local storage');
-      }
     }
   }
 

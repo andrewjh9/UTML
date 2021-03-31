@@ -178,9 +178,11 @@ export class EditService {
   }
 
   public deactivate() {
+    if (this.isActive()) {
+      this.cachingService.save();
+    }
     this.charIndex = undefined;
     this.rowIndex = undefined;
     this.editElement.next(undefined);
-    this.cachingService.save();
   }
 }

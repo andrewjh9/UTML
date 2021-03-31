@@ -43,10 +43,10 @@ export class CachingService {
   }
 
   /**
-   * Save the current version of the diagram to localStorage and the redo/undo structure and to local storage.
+   * Save the current version of the diagram to localStorage and the redo/undo structure.
    */
   public save(): void {
-    console.log('Saving')
+    console.log('Saving (cachingService)')
     let serialisedDiagram = this.diagram.serialise();
     this.list.add(serialisedDiagram);
     this.localStorageService.save();

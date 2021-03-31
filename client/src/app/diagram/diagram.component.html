@@ -1,4 +1,4 @@
-<div (keyup)="handleKeyPressed($event)">
+<div>
 
   <app-nav-bar></app-nav-bar>
 
@@ -9,12 +9,10 @@
          (mousedown)="handleMouseDown($event)"
          (mouseup)="handleMouseUp($event)"
          (mousemove)="handleMouseMove($event)"
-         (dblclick)="handleDoubleClick($event)"
          id="diagram"
          style="overflow: hidden">
       <g grid-overlay></g>
-      <g drag-drop-preview></g>
-      <g new-edge-preview></g>
+
       <defs arrow-marker></defs>
 
       <g *ngFor="let node of diagram.nodes" node-component [node]="node"/>
@@ -24,6 +22,12 @@
 
       <g selected-node-highlight/>
       <g drag-select-preview/>
+      <g drag-drop-preview></g>
+
+      <svg:g *ngFor="let node of diagram.nodes">
+        <svg:g *ngIf="edgeCreationIsActive" clickable-attachment-points [node]="node"/>
+      </svg:g>
+      <g new-edge-preview></g>
     </svg>
   </div>
 

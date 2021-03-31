@@ -75,13 +75,24 @@ export class RepositionService implements Deactivatable {
   }
 
   public deactivate(): void {
-    if (this.isActive()) {
+    if (this.isActive() && differ(this.nodeStartPositions, this.selectedNodes.map(node => node.position))) {
+      console.log('Reposition save')
       this.cachingService.save();
     }
     this.startMousePosition = undefined;
   }
 }
 
-export interface Positionable {
-  position: Position;
+function differ(l1: Array<Position>, l2: Array<Position>): boolean {
+  if (l1.length !== l2.length) {
+    throw new Error('Lists must have the same length.');
+  }
+
+  for (let i = 0; i < l1.length; i++) {
+    if (l1[i].x !== l2[i].x || l2[i].y !== l2[i].y) {
+      return true;
+    }
+  }
+
+  return false;
 }

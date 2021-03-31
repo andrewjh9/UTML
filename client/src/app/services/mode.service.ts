@@ -30,22 +30,7 @@ export class ModeService {
     this.deactivatables = [repositionService, edgeCreationService];
     this.mode = new BehaviorSubject<Mode>(Mode.Select);
     this.modeObservable = this.mode.asObservable();
-
-    keyboardEventCallerService.addCallback(['Control', "keydown", 'any'], (event => {
-      this.setMode(Mode.Create);
-    }));
-    keyboardEventCallerService.addCallback(['Control', "keyup", 'any'], (event => {
-      this.setMode(Mode.Select);
-    }));
-
-    keyboardEventCallerService.addCallback(['Shift', "keydown", 'any'], (event => {
-      this.setMode(Mode.Move);
-    }));
-    keyboardEventCallerService.addCallback(['Shift', "keyup", 'any'], (event => {
-      this.setMode(Mode.Select);
-    }));
-
-  }
+      }
 
   /**
    * Sets the mode and multi-casts this update to all subscribed.
@@ -53,10 +38,7 @@ export class ModeService {
    * @param mode New mode value
    */
   public setMode(mode: Mode): void {
-    if (this.getLatestMode() !== mode) {
-      this.mode.next(mode);
-      this.deactivatables.forEach(d => d.deactivate());
-    }
+
   }
 
   /**

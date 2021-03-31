@@ -89,9 +89,11 @@ export class StartEndRepositioner {
    * Deactivate the repositioner.
    */
   public deactivate(): void {
+    if (this.isActive()) {
+      this.cachingService.save();
+    }
     this.edge = undefined;
     this.isStart = undefined;
-    this.cachingService.save();
   }
 
   /**
