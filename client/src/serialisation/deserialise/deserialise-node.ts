@@ -9,6 +9,7 @@ import {ForkRejoinNode} from "../../model/node/fork-rejoin-node";
 import {ClassNode} from "../../model/node/class-node";
 import {ActorNode} from "../../model/node/actor-node";
 import {HourglassNode} from "../../model/node/hourglass-node";
+import {SwimlaneNode} from "../../model/node/swimlane-node";
 
 function deserialiseGeneric(serialisedNode: SerialisedNode, constructor: GenericNodeConstructor): Node {
   let result = new constructor(serialisedNode.width, serialisedNode.height,
@@ -45,6 +46,8 @@ export function deserialiseNode(serialisedNode: SerialisedNode): Node {
       return deserialiseGeneric(serialisedNode, ForkRejoinNode);
     case 'ClassNode':
       return deserialiseClassNode(serialisedNode as SerialisedClassNode);
+    case 'SwimlaneNode':
+      return deserialiseGeneric(serialisedNode, SwimlaneNode);
   }
 
   throw new Error("Node of unknown type and the node can therefore not be deserialised.");
