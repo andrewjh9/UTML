@@ -33,7 +33,7 @@ export class AppComponent implements AfterViewInit {
           this.http.get("api/diagram/visible",{params: new HttpParams().set("id", String(this.loadDiagramId))}).subscribe(
             (data:any) => {
               if(data.serialisedDiagram) {
-                this.diagramContainer.set(deserialiseDiagram(data.serialisedDiagram))
+                this.diagramContainer.set(deserialiseDiagram(JSON.parse(data.serialisedDiagram)))
               } else{
                 window.alert("Diagram could not be loaded");
                 this.router.navigateByUrl("");

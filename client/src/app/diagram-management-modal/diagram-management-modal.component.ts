@@ -28,7 +28,7 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
   selectedIndex = -1;
 
   ngOnInit() {
-    this.http.get('localhost:8080/api/diagram/all/me').subscribe(
+    this.http.get('/api/diagram/all/me').subscribe(
       (data:any) => {
         this.dbEntries = data;
       },error =>  {
@@ -41,7 +41,7 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
     if(!this.dbEntries){
       return;
     }
-    return this.selectedIndex === -1  ? undefined : deserialiseDiagram(this.dbEntries[this.selectedIndex].serialisedDiagram);
+    return this.selectedIndex === -1  ? undefined : deserialiseDiagram(JSON.parse(this.dbEntries[this.selectedIndex].serialisedDiagram));
   }
 
   constructor(public modal: NgbActiveModal,
@@ -51,7 +51,7 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
 
   setDiagram() {
     if (this.selectedIndex !== -1 && this.dbEntries != undefined) {
-      this.diagramContainer.set(deserialiseDiagram(this.dbEntries[this.selectedIndex].serialisedDiagram));
+      this.diagramContainer.set(deserialiseDiagram(JSON.parse(this.dbEntries[this.selectedIndex].serialisedDiagram)));
     }
   }
 
@@ -112,5 +112,5 @@ export type DatabaseDiagramEntry = {
   title: string,
   lastModified: Date,
   visible: boolean,
-  serialisedDiagram: SerialisedDiagram
+  serialisedDiagram: string
 }

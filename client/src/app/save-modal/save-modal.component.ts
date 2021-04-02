@@ -4,6 +4,7 @@ import {ExportService} from "../services/export.service";
 import {Diagram} from "../../model/diagram";
 import {SelectionService} from "../services/selection.service";
 import {HttpClient} from "@angular/common/http";
+import {AuthenticatedService} from "../services/authenticated.service";
 
 
 @Component({
@@ -17,7 +18,7 @@ export class SaveModalComponent implements AfterContentInit {
   constructor(public modal: NgbActiveModal,
               public exportService: ExportService,
               private selectionService: SelectionService,
-              private http: HttpClient) { }
+              private http: HttpClient, public authenticatedService: AuthenticatedService) { }
 
   ngAfterContentInit(): void {
     this.selectionService.deselect();
