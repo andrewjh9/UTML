@@ -6,6 +6,7 @@ import {Diagram} from "../model/diagram";
 import {ActivatedRoute, Router, RoutesRecognized} from "@angular/router";
 import {deserialiseDiagram} from "../serialisation/deserialise/deserialise-diagram";
 import {DiagramContainerService} from "./services/diagram-container.service";
+import {AuthenticatedService} from "./services/authenticated.service";
 
 
 
@@ -15,11 +16,9 @@ import {DiagramContainerService} from "./services/diagram-container.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  public userFullName: string | undefined;
-  public userDiagrams: Diagram[] | undefined;
   public loadDiagramId: Number | undefined;
 
-  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router, private editService: EditService, private diagramContainer: DiagramContainerService, private http: HttpClient) {
+  constructor(private authenticatedService: AuthenticatedService, private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router, private editService: EditService, private diagramContainer: DiagramContainerService, private http: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -85,13 +84,14 @@ export class AppComponent implements AfterViewInit {
     this.http.get("/me",{  responseType: 'text'
       }).subscribe(
       (data:any) => {
+        this.authenticatedService.setAuthenticated(true);
         if(data == null ){
-          this.userFullName = undefined;
         } else{
-          this.userFullName = data
+          this.authenticatedService.setUserFullName(data)
         }
       },error =>  {
         //TODO Open error modal or something
+        this.authenticatedService.setAuthenticated(false);
         this.handleError(error)
       }
     );

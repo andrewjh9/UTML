@@ -13,6 +13,7 @@ import {ClearDiagramModalComponent} from "../clear-diagram-modal/clear-diagram-m
 import {ShapesetManagementModalComponent} from "../shapeset-management-modal/shapeset-management-modal.component";
 import {HelpModalComponent} from "../help-modal/help-modal.component";
 import {DeletionService} from "../services/deletion.service";
+import {AuthenticatedService} from "../services/authenticated.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -21,14 +22,13 @@ import {DeletionService} from "../services/deletion.service";
 })
 export class NavBarComponent implements AfterViewInit {
   get NAV_HEIGHT() { return DiagramComponent.NAV_HEIGHT; }
-  isAuthenticated = true;
 
   constructor(private modalService: NgbModal,
               private copyPasteService: CopyPasteService,
               private cachingService: CachingService,
               private diagramContainer: DiagramContainerService,
               private zoomService: ZoomService,
-              private deletionService: DeletionService) { }
+              private deletionService: DeletionService, public authenticatedService: AuthenticatedService) { }
 
   ngAfterViewInit() {
     let showHelpOnStart = localStorage.getItem(HelpModalComponent.LOCAL_STORAGE_KEY);
@@ -84,9 +84,6 @@ export class NavBarComponent implements AfterViewInit {
     this.modalService.open(HelpModalComponent, {size: ' xl'});
   }
 
-  login() {
-    this.isAuthenticated = !this.isAuthenticated;
-  }
 
   openClearDiagramPopUp() {
     this.modalService.open(ClearDiagramModalComponent);

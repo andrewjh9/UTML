@@ -60,15 +60,17 @@
   </div>
 
   <ul class="navbar-nav ml-auto pb-0 pt-0">
-    <li class="nav-item" *ngIf="isAuthenticated">
+    <li class="nav-item" *ngIf="authenticatedService.getAuthenticated()">
       <a class="nav-link" href="#" (click)="openDiagramManagementModal()" ngbTooltip="Manage Diagrams" placement="bottom">
         <fa-icon [icon]="['fas', 'tasks']"></fa-icon>
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#" (click)="login()" ngbTooltip="Login" placement="bottom">
-        <fa-icon *ngIf="isAuthenticated" [icon]="['fas', 'user']"></fa-icon>
-        <fa-icon *ngIf="!isAuthenticated" [icon]="['fas', 'user-slash']"></fa-icon>
+      <a *ngIf="!authenticatedService.getAuthenticated()" class="nav-link" href="/login"  ngbTooltip="Login" placement="bottom">
+        <fa-icon [icon]="['fas', 'user']"></fa-icon>
+        </a>
+      <a *ngIf="authenticatedService.getAuthenticated()" class="nav-link" href="/logout"  ngbTooltip="Login" placement="bottom">
+        <fa-icon [icon]="['fas', 'user-slash']"></fa-icon>
       </a>
     </li>
     <li class="nav-item">
