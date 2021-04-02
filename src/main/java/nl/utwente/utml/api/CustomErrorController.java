@@ -14,6 +14,6 @@ public class CustomErrorController implements ErrorController {
 
     @Override
     public String getErrorPath() {
-        return "index.html";
+        return "error.html";
     }
 }

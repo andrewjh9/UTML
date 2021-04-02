@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication(exclude = HibernateJpaAutoConfiguration.class)
 public class UtmlApplication extends SpringBootServletInitializer {
-
 	public static void main(String[] args) {
 		SpringApplication.run(UtmlApplication.class, args);
 	}
-
 }

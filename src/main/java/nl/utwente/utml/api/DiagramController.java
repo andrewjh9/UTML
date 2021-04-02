@@ -19,8 +19,7 @@ public class  DiagramController {
     private final IDiagramService diagramService;
 
     @Autowired
-    public DiagramController(IDiagramService diagramService
-                            ) {
+    public DiagramController(IDiagramService diagramService) {
         this.diagramService = diagramService;
     }
 

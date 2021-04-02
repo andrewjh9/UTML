@@ -84,10 +84,6 @@ export class NavBarComponent implements AfterViewInit {
     this.modalService.open(HelpModalComponent, {size: ' xl'});
   }
 
-  settings() {
-
-  }
-
   login() {
     this.isAuthenticated = !this.isAuthenticated;
   }

@@ -1,7 +1,3 @@
-<svg:g *ngIf="isSelected && isLine()" clickable-new-points [edge]="edge" pointer-events="visible"/>
-<svg:g *ngIf="isSelected" clickable-start-end-points [edge]="edge"/>
-<svg:g *ngIf="isSelected" clickable-middle-points [edge]="edge"/>
-
 <svg:g edge-render-dispatch
        [edge]="edge!"
        [styleObject]="styleObject"/>
@@ -20,6 +16,10 @@
           (mousedown)="handleMouseDown($event)"
           (dblclick)="handleDoubleClick($event)"
           [ngStyle]="{'cursor': cursor}"/>
+
+<svg:g *ngIf="isSelected && isLine()" clickable-new-points [edge]="edge" pointer-events="visible"/>
+<svg:g *ngIf="isSelected" clickable-start-end-points [edge]="edge"/>
+<svg:g *ngIf="isSelected" clickable-middle-points [edge]="edge"/>
 
 <svg:g *ngIf="edge && edge?.startLabel"
        label-component
