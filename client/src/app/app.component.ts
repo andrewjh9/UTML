@@ -19,7 +19,13 @@ export class AppComponent implements AfterViewInit {
   public userDiagrams: Diagram[] | undefined;
   public loadDiagramId: Number | undefined;
 
-  constructor(private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router, private editService: EditService, private diagramContainer: DiagramContainerService, private http: HttpClient) {
+  constructor(private renderer: Renderer2,
+              private keyboardEventCallbackMap: KeyboardEventCallerService,
+              private route: ActivatedRoute,
+              private router: Router,
+              private editService: EditService,
+              private diagramContainer: DiagramContainerService,
+              private http: HttpClient) {
   }
 
   ngOnInit(): void {
@@ -99,8 +105,6 @@ export class AppComponent implements AfterViewInit {
   }
 
   handleError(error: any) {
-    console.log(error)
+    console.error(error)
   }
-
-
 }

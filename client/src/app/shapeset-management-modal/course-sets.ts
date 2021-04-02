@@ -71,7 +71,7 @@ startState.styleObject = {
   'fill-opacity': 1,
   'stroke-opacity': 0.75,
 };
-let swimlane = new SwimlaneNode(60, 120, new Position(64,0));
+let swimlane = new SwimlaneNode(60, 120, new Position(64,4));
 swimlane.text = "Actor";
 
 ad.edges['Arrow'] = arrow;
@@ -87,6 +87,7 @@ ad.nodes['Swimlane'] = swimlane;
 let ucd: ShapeSet = {nodes: {}, edges: {}, active: true};
 let ie = arrow.getDeepCopy();
 ie.lineStyle = LineStyle.Dashed;
+// ie.addMiddleLabel('<<include>>')
 ucd.edges['Include/Extend'] = ie;
 ucd.edges['Link'] = association;
 ucd.nodes['Actor'] = new ActorNode(40, 80, new Position(84, 10));
@@ -94,7 +95,7 @@ ucd.edges['Generalisation'] = generalisation;
 let uc = new EllipseNode(186, 75, new Position(10, 2));
 uc.text = 'Use Case';
 ucd.nodes['Use case'] = uc;
-let systemboundary = new SystemBoundaryNode(186, 110, new Position(4,0));
+let systemboundary = new SystemBoundaryNode(186, 110, new Position(4,4));
 systemboundary.text = "Your system";
 ucd.nodes['System Boundary'] = systemboundary;
 ucd.nodes['System Clock'] = new SystemClockNode(100, 100, new Position(52, 2));

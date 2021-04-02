@@ -8,6 +8,12 @@ export abstract class Node {
   private _position: Position;
   private _text: string;
   private _hasDoubleBorder: boolean;
+  protected _transparent: boolean = false;
+
+
+  get transparent(): boolean {
+    return this._transparent;
+  }
 
   get width(): number {
     return this._width;

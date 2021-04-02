@@ -8,6 +8,7 @@ import {ZoomService} from "./zoom.service";
 export class LensOffsetService {
   private isInOffsetChangeMode: boolean = false;
   private startPosition?: Position;
+
   constructor(private zoomService: ZoomService) { }
 
   public activate(position: Position): void {
@@ -24,7 +25,6 @@ export class LensOffsetService {
       let difference = Position.subtract(this.startPosition!, position);
       let x = difference.x;
       let y = difference.y;
-      console.log(x + "," + y)
       this.zoomService.setXY(x, y);
       this.startPosition = position;
     }
