@@ -36,7 +36,7 @@ export class ExportService {
         let DOMURL = window.URL || window.webkitURL || window;
         let img = new Image();
 
-        const MARGIN = 25;
+        const MARGIN = 5;
 
         const width = this.diagram.getDimensions().width + (MARGIN * 2);
         const height = this.diagram.getDimensions().height + (MARGIN * 2);
@@ -46,8 +46,6 @@ export class ExportService {
         img.height = height;
         canvas.width = width;
         canvas.height = height;
-
-        alert(`${width} - ${height}`);
 
         let svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
         let url = DOMURL.createObjectURL(svgBlob);
