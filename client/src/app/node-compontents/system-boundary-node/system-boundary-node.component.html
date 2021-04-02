@@ -1,0 +1,19 @@
+<svg:rect [attr.height]="node.height"
+          [attr.width]="node.width"
+          [attr.x]=node.position.x
+          [attr.y]= node.position.y
+          stroke-width="2"
+          stroke="black"
+          fill="none"
+          y=30
+          rx="20"
+          ry="20">
+</svg:rect>
+<svg:line [attr.x1]="node.position.x"
+          [attr.y1]="node.position.y + (node.getTextLines().length) * 24 + 12"
+          [attr.x2]="node.position.x + node.width"
+          [attr.y2]="node.position.y + (node.getTextLines().length) * 24 + 12"
+          stroke-width="2"
+          stroke="black"
+></svg:line>
+<svg:g above-node-text [node]="node"></svg:g>

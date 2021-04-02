@@ -2,133 +2,187 @@ import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {Node} from "../../model/node/node";
 import {Edge} from "../../model/edge";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
+import {Label} from "../../model/label";
+import {CachingService} from "./caching/caching.service";
+import {SelectionService} from "./selection.service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
 export class EditService {
-  private isInEditMode: boolean = false;
-  private node?: Node;
-  private activeIndex?: number;
-  constructor(keyboardEventCallerService: KeyboardEventCallerService,
-              rendererFactory: RendererFactory2) {
-    keyboardEventCallerService.addCallback(['Escape', "keydown", 'any'], (ignored) => this.deactivate());
+  private readonly editElement: BehaviorSubject<Node | Label | undefined> = new BehaviorSubject<Node|Label|undefined>(undefined);
+  public readonly editElementObservable = this.editElement.asObservable();
 
-    let renderer = rendererFactory.createRenderer(null, null);
-    renderer.listen('window', 'keydown', (event: KeyboardEvent) => {
-      if (this.isActive()) {
-        this.update(this.activeIndex!, event.key);
-      }
-    });
-  }
+  private rowIndex?: number;
+  private charIndex?: number;
 
-  public activate(node: Node) {
-    this.node = node;
-    this.isInEditMode = true;
-    this.setActiveTextLine(0, false);
-  }
-
-  public setActiveTextLine(index: number, previousDeleted: boolean) {
-    if (this.activeIndex != index){
-      if (!previousDeleted){
-        this.removeBar(this.activeIndex);
-      }
-      this.activeIndex = index;
-      let currentText: string[] = this.node!.getTextLines();
-      currentText[index] += "|";
-      this.setTextToNode(currentText);
-    }
+  constructor(private selectionService: SelectionService, private cachingService: CachingService) {
+    selectionService.selectedObservable.subscribe(ignored => this.deactivate());
   }
 
   public isActive(): boolean {
-    return this.isInEditMode!;
+    return this.editElement.getValue() !== undefined;
   }
 
-  public addField(): void{
-    if (this.isActive()) {
-      let currentText: string[] = this.node!.getTextLines();
-      let newFieldDefaultText = "New field";
-      currentText.push(newFieldDefaultText);
-      this.setTextToNode(currentText);
-      this.setActiveTextLine(currentText.length - 1, false);
-    }
+  public activate(editElement: Label | Node) {
+    this.editElement.next(editElement);
+    this.rowIndex = 0;
+    this.charIndex = this.rows[0].length;
   }
 
-  public update(index: number, text: string): void {
-    if (this.isActive()) {
-      let currentText: string[] = this.node!.getTextLines();
-      if (text.length == 1 && text != "|") {
-        currentText[index] = currentText[index].split("|")[0] + text + "|"
-          +currentText[index].split("|")[1];
-      } else if (text == "Backspace") {
-        currentText[index] = currentText[index].split("|")[0].slice(0,-1) +
-          "|" + currentText[index].split("|")[1];
-      } else if (text == "ArrowLeft") {
-        let arr: string[] = currentText[index].split("|");
-        currentText[index] = this.swapFirstAndLastAndAppend(arr[0], "|" + arr[1]);
-      } else if (text == "ArrowRight") {
-        let arr: string[] = currentText[index].split("|");
-        currentText[index] = this.swapFirstAndLastAndAppend(arr[0] + "|", arr[1]);
+  public includeCursor(s: string) {
+    let rows = s.split('\\n');
+    rows = rows.map((row, index) => {
+      if (index === this.rowIndex) {
+        return row.slice(0, this.charIndex!) + '|' + row.slice(this.charIndex!)
       }
-      this.setTextToNode(currentText);
-      if (text == "ArrowUp") {
-        if (this.activeIndex! > 0) {
-          this.setActiveTextLine(this.activeIndex! - 1, false);
-        }
-      } else if (text == "ArrowDown") {
-        if (this.activeIndex! < this.node!.getTextLines().length - 1) {
-          this.setActiveTextLine(this.activeIndex! + 1, false);
-        }
-      } else if (text == "Delete") {
-        this.deleteLine();
+      return row;
+    });
+    return rows.join('\\n');
+  }
+
+  private setValue(s: string) {
+    if (!this.isActive()) { throw new Error("Can not get when unactivated. ") }
+    let element = this.editElement.getValue()
+    if (element instanceof Node) {
+      element.text = s;
+    } else if (element instanceof Label) {
+      element.value = s;
+    }
+  }
+
+  private get value(): string {
+    if (!this.isActive()) { throw new Error("Can not get when unactivated. ") }
+    let value = this.editElement.getValue();
+    return value instanceof Node ? value.text : value!.value;
+  }
+
+  public handleKeyPressed(key: string, controlPressed: boolean): void {
+    if (!this.isActive()) {
+      throw new Error();
+    }
+    console.log(key)
+    if (key.length === 1) {
+      this.addChar(key);
+    } else if (key === 'Escape' || (key === 'Enter' && controlPressed)) {
+      this.deactivate();
+      this.selectionService.deselect();
+    } else if (key === 'Backspace') {
+      this.backspace();
+    } else if (key === 'Enter') {
+      this.addLine();
+    } else if (key === 'ArrowUp') {
+      this.previousRowIfPossible();
+    } else if (key === 'ArrowDown') {
+      this.nextRowIfPossible();
+    } else if (key === 'ArrowRight') {
+      this.nextCharIfPossible();
+    } else if (key === 'ArrowLeft') {
+      this.previousCharIfPossible();
+    } else if (key === 'Delete') {
+      if (this.charIndex! !== this.rows[this.rowIndex!].length) {
+        this.nextCharIfPossible();
+        this.backspace();
       }
     }
   }
 
-  private deleteLine() {
-    let currentText = this.node!.getTextLines();
-    if (currentText.length > 1 && this.activeIndex != 0) {
-      console.log(currentText);
-      currentText.splice(this.activeIndex!, 1);
-      console.log(currentText);
-      this.setTextToNode(currentText);
-      this.setActiveTextLine(this.activeIndex! - 1, true);
+  private get rows(): string[] {
+    return this.value.split('\\n');
+  }
+
+  private get lineAmount(): number {
+    return this.rows.length;
+  }
+
+  private nextRowIfPossible() {
+    if (this.rowIndex! >= (this.lineAmount - 1)) {
+      return;
+    }
+
+    this.rowIndex!++;
+    this.charIndex = this.rows[this.rowIndex!].length;
+  }
+
+  private previousRowIfPossible() {
+    if (this.rowIndex! <= 0) {
+      return;
+    }
+
+    this.rowIndex!--;
+    this.charIndex = this.rows[this.rowIndex!].length;
+  }
+
+  private previousCharIfPossible() {
+    if (this.charIndex! !== 0) {
+      this.charIndex!--;
     }
   }
 
-  private swapFirstAndLastAndAppend(string1: string, string2: string): string {
-    let lastOfFirst = string1[string1.length - 1];
-    let firstOfLast = string2[0];
-    string1 = string1.slice(0,-1) + firstOfLast;
-    string2 = lastOfFirst + string2.substring(1);
-    return string1 + string2;
-  }
-
-  private setTextToNode(currentText: string[]): void {
-    let textContent = "";
-    for (let i = 0; i < currentText.length - 1; i++) {
-      textContent += currentText[i] + "\\n"
-    }
-    textContent += currentText[currentText.length - 1];
-    this.node!.text = textContent;
-  }
-
-  private removeBar(index: number | undefined): void {
-    if (index !== undefined) {
-      let currentText = this.node!.getTextLines();
-      currentText[index!] = currentText[index].replace("|", "");
-      this.setTextToNode(currentText);
+  private nextCharIfPossible() {
+    if (this.charIndex! !== this.rows[this.rowIndex!].length) {
+      this.charIndex!++;
     }
   }
 
-  public deactivate(): void {
-    this.removeBar(this.activeIndex);
-    this.node = undefined;
-    this.isInEditMode = false;
-    this.activeIndex = undefined;
+  private addLine() {
+    if (this.rowIndex! === this.lineAmount - 1) {
+      this.setValue(this.value + '\\n');
+    } else {
+      this.setValue([
+        this.rows.slice(0, this.rowIndex! + 1),
+        '',
+        this.rows.slice(this.rowIndex! + 1)
+      ].join('\\n'));
+    }
+
+    this.rowIndex!++;
+    this.charIndex = 0;
   }
 
-  public getNode(): Node {
-    return this.node!
+  private backspace() {
+    // Remove row if it is empty, unless it is the last row.
+    if (this.rowIndex! !== 0 && this.rows[this.rowIndex!].length === 0 && this.rows.length !== 1) {
+      let newRows = this.rows.map(x => x);
+      newRows.splice(this.rowIndex!, 1);
+      this.setValue(newRows.join('\\n'));
+      this.rowIndex!--;
+      this.charIndex = this.rows[this.rowIndex!].length;
+      console.log(newRows);
+    } else if (this.charIndex! !== 0) {
+      console.log('lower')
+      let newRows = this.rows.map((row, index) => {
+        if (index === this.rowIndex!) {
+          return row.substr(0, this.charIndex! - 1) + row.substr(this.charIndex!);
+        }
+        return row;
+      });
+      console.log(newRows)
+      this.charIndex!--;
+
+      this.setValue(newRows.join('\\n'));
+    }
+  }
+
+  private addChar(char: string) {
+    let newRows = this.rows.map((row, index) => {
+      if (index === this.rowIndex!) {
+        return row.substr(0, this.charIndex!) + char + row.substr(this.charIndex!);
+      }
+      return row;
+    });
+    console.log(newRows)
+    this.charIndex!++;
+    this.setValue(newRows.join('\\n'));
+  }
+
+  public deactivate() {
+    if (this.isActive()) {
+      this.cachingService.save();
+    }
+    this.charIndex = undefined;
+    this.rowIndex = undefined;
+    this.editElement.next(undefined);
   }
 }

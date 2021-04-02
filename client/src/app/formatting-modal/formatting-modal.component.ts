@@ -19,6 +19,7 @@ export class FormattingModalComponent {
               private deletionService: DeletionService,
               private cachingService: CachingService) {
     this.node = this.selectionService.getNode();
+    selectionService.deselect();
   }
 
   delete(): void {

@@ -38,8 +38,10 @@ import {liesOnSegment} from "../services/edge-reposition/lies-on-segment";
 export class DiagramComponent implements AfterViewInit {
   public static readonly NAV_HEIGHT = 50;
   public diagram: Diagram;
-
+  public width?: number;
+  public height?: number;
   mode: Mode;
+  edgeCreationIsActive: boolean = false;
 
   constructor(private sanitizer: DomSanitizer,
               private diagramContainer: DiagramContainerService,
@@ -62,10 +64,14 @@ export class DiagramComponent implements AfterViewInit {
               private localStorageService: LocalStorageService,
               private mousePositionTransformService: MousePositionTransformService,
               private lensOffsetService: LensOffsetService,
-              private labelRepositionService: LabelRepositionService,
-              private appComponent: AppComponent
-              ) {
+              private labelRepositionService: LabelRepositionService) {
+    edgeCreationService.activityObservable.subscribe(b => this.edgeCreationIsActive = b);
 
+
+    this.width = window.innerWidth;
+    this.height = window.innerHeight - DiagramComponent.NAV_HEIGHT;
+    document.documentElement.style.overflow = 'hidden';  // firefox, chrome
+    // document.body.scroll = "no"; // ie only
     this.diagram = diagramContainer.get();
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
 
@@ -150,46 +156,8 @@ export class DiagramComponent implements AfterViewInit {
     }
   }
 
-  handleDoubleClick(event: MouseEvent) {
-  }
-
-  handleKeyPressed(event: KeyboardEvent): void {
-    const SELECT_KEY = "1";
-    const CREATE_KEY = "2";
-    const MOVE_KEY = "3";
-
-    if (event.ctrlKey) {
-      switch (event.key) {
-        case SELECT_KEY :
-          this.modeService.setMode(Mode.Select);
-          break;
-        case CREATE_KEY:
-          this.modeService.setMode(Mode.Create);
-          break;
-        case MOVE_KEY:
-          this.modeService.setMode(Mode.Move);
-          break;
-      }
-    }
-  }
-
-  restore() {
-    let result: null | string = localStorage.getItem(CachingService.LOCAL_STORAGE_KEY);
-    if (result === null) {
-      alert('No diagram stored in local storage');
-    } else {
-      try {
-        let diagram: Diagram = deserialiseDiagram(JSON.parse(result as string) as SerialisedDiagram);
-        this.diagramContainer.set(diagram);
-      } catch (e) {
-        alert('Could not restore diagram from local storage');
-      }
-    }
-  }
-
   handleMouseDown(event: MouseEvent) {
     let pos = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
-    //TODO is this the correct position?, call the correct function.
     if (event.shiftKey) {
       this.dragSelectionService.activate(pos);
     } else if (event.ctrlKey) {

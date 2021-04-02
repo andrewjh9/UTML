@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ClearDiagramModalComponent } from './clear-diagram-modal.component';
+import { SwimlaneNodeComponent } from './swimlane-node.component';
 
-describe('ClearDiagramModalComponent', () => {
-  let component: ClearDiagramModalComponent;
-  let fixture: ComponentFixture<ClearDiagramModalComponent>;
+describe('SwimlaneNodeComponent', () => {
+  let component: SwimlaneNodeComponent;
+  let fixture: ComponentFixture<SwimlaneNodeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ClearDiagramModalComponent ]
+      declarations: [ SwimlaneNodeComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ClearDiagramModalComponent);
+    fixture = TestBed.createComponent(SwimlaneNodeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

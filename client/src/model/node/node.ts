@@ -1,5 +1,6 @@
 import {Position} from '../position';
 import {SerialisedNode} from "../../serialisation/serialised-data-structures/serialised-node";
+import {Style} from "@angular/cli/lib/config/schema";
 
 export abstract class Node {
   private _width: number;
@@ -8,34 +9,12 @@ export abstract class Node {
   private _text: string;
   private _hasDoubleBorder: boolean;
 
-  private static beforeCallbacks: (() => void)[] = [];
-  private static afterCallbacks: (() => void)[] = [];
-
-
-  public static addBeforeCallback(callback: () => void): void {
-    Node.beforeCallbacks.push(callback);
-  }
-
-  public static addAfterCallback(callback: () => void): void {
-    Node.afterCallbacks.push(callback);
-  }
-
-  private callBeforeCallbacks(): void {
-    Node.beforeCallbacks.forEach(callback => callback());
-  }
-
-  private callAfterCallbacks(): void {
-    Node.afterCallbacks.forEach(callback => callback());
-  }
-
   get width(): number {
     return this._width;
   }
 
   set width(value: number) {
-    this.callBeforeCallbacks();
     this._width = value;
-    this.callAfterCallbacks();
   }
 
   get height(): number {
@@ -43,9 +22,7 @@ export abstract class Node {
   }
 
   set height(value: number) {
-    this.callBeforeCallbacks();
     this._height = value;
-    this.callAfterCallbacks();
   }
 
   get position(): Position {
@@ -53,9 +30,7 @@ export abstract class Node {
   }
 
   set position(value: Position) {
-    this.callBeforeCallbacks();
     this._position = value;
-    this.callAfterCallbacks();
   }
 
   get text(): string {
@@ -63,9 +38,7 @@ export abstract class Node {
   }
 
   set text(value: string) {
-    this.callBeforeCallbacks();
     this._text = value;
-    this.callAfterCallbacks();
   }
 
   get hasDoubleBorder(): boolean {
@@ -73,9 +46,7 @@ export abstract class Node {
   }
 
   set hasDoubleBorder(value: boolean) {
-    this.callBeforeCallbacks();
     this._hasDoubleBorder = value;
-    this.callAfterCallbacks();
   }
 
 
@@ -116,10 +87,14 @@ export abstract class Node {
 
   public getAllResizePoints(): Position[] {
     return [ new Position(this._width / 2, 0),//Up
+      new Position(this.width, 0), //up-right
       new Position(this._width, this._height / 2), //Right
+      new Position(this.width, this.height), // right,down
       new Position(this._width / 2, this._height), //Down
+      new Position(0, this._height), //Down,left
       new Position(0, this._height / 2), // Left
-      ]
+      new Position(0, 0), // up, left
+    ];
   }
 
   // Be careful with settings the fill to none as that will cause the body of the node to not be clickable.
@@ -129,7 +104,7 @@ export abstract class Node {
     'fill': 'white',
     'stroke': 'black',
     'stroke-width': 2,
-    'fill-opacity': 0,
+    'fill-opacity': 1,
     'stroke-opacity': 0.75,
   };
 
@@ -144,17 +119,25 @@ export abstract class Node {
       height: this._height,
       position: this._position.serialise(),
       text: this._text,
-      hasDoubleBorder: this._hasDoubleBorder
+      hasDoubleBorder: this._hasDoubleBorder,
+      styleObject: Node.copyStyleObject(this.styleObject)
     }
   }
 
-  public abstract preview: string;
-  public static readonly PREVIEW_WIDTH = 216;
-  public static readonly DEFAULT_PREVIEW_HEIGHT = 50;
-
+  public static copyStyleObject(obj: StyleObject): StyleObject {
+    return Object.entries(obj).reduce(
+      (obj, [key, value]) => {
+        obj[key] = value
+        return obj;
+      },
+      {} as StyleObject
+    );
+  }
 }
 
-type nodeChangeCallback = (oldNode: Node, newNode: Node) => void;
+export type StyleObject = {
+  [key: string]: string | number;
+}
 
 export enum AttachmentDirection {
   North,

@@ -1,5 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Position} from "../../model/position";
+import {DiagramComponent} from "../diagram/diagram.component";
 
 @Injectable({
   providedIn: 'root'
@@ -7,8 +8,8 @@ import {Position} from "../../model/position";
 export class ZoomService {
   private x: number = 0;
   private y: number = 0;
-  private width: number = 1200;
-  private height: number = 800;
+  private width: number = window.innerWidth || document.body.clientWidth;
+  private height: number = window.innerHeight - DiagramComponent.NAV_HEIGHT || document.body.clientHeight - DiagramComponent.NAV_HEIGHT;
   private currentZoomFactor: number = 1;
   private zoomStep: number = 1.1;
   private zoomExponent = 0;
@@ -34,8 +35,8 @@ export class ZoomService {
   }
 
   public setXY(x: number, y: number) {
-    this.x += x;
-    this.y += y;
+    this.x = max(0, this.x + x);
+    this.y = max(0, this.y + y);
     this.updateEmitter.emit();
   }
 
@@ -50,4 +51,16 @@ export class ZoomService {
   public getZoomedHeight(): number {
     return this.height * this.currentZoomFactor;
   }
+
+  public reset() {
+    this.zoomExponent = 0;
+    this.currentZoomFactor = Math.pow(this.zoomStep, this.zoomExponent);
+    this.updateEmitter.emit();
+    this.x = 0;
+    this.y = 0;
+  }
+}
+
+function max(a: number, b: number): number {
+  return a < b ? b : a;
 }

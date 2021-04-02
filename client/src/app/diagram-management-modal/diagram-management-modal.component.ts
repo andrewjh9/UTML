@@ -28,9 +28,9 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
   selectedIndex = -1;
 
   ngOnInit() {
-    this.http.get('/api/diagram/all/me').subscribe(
+    this.http.get('localhost:8080/api/diagram/all/me').subscribe(
       (data:any) => {
-        this.dbEntries =data
+        this.dbEntries = data;
       },error =>  {
         //TODO Open error modal or something
         this.handleError(error)

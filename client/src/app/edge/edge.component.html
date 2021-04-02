@@ -2,8 +2,6 @@
        [edge]="edge!"
        [styleObject]="styleObject"/>
 
-
-
 <!-- Invisible, selectable to make the mouse down trigger easily accessible -->
 <svg:polyline *ngIf="edge && isLine()"
               [attr.points]="edge.getPointString()"

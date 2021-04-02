@@ -1,9 +1,9 @@
 <svg:ellipse *ngFor="let point of node.getAllAttachmentPoints(); let i = index;"
   [attr.cx]="point.x"
   [attr.cy]="point.y"
-  rx="5"
-  ry="5"
-  style="fill:green;stroke:black;stroke-width:2;fill-opacity:1;stroke-opacity:0.9;z-index:100;"
+  rx="10"
+  ry="10"
+  style="fill:orange;stroke:orange;stroke-width:2;fill-opacity:0.75;stroke-opacity:0.9"
   (mouseup)="handleMouseUp($event, i)"
   (mousedown)="handleMouseDown($event, i)"
   (click)="handleMouseDown($event, i)">

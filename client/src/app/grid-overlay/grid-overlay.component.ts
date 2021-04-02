@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ZoomService} from "../services/zoom.service";
+import {SettingsContainerService} from "../services/settings-container.service";
 
 @Component({
   selector: '[grid-overlay]',
@@ -13,7 +14,10 @@ export class GridOverlayComponent {
   height!: number
   active = true;
 
-  constructor(zoomService: ZoomService) {
+  constructor(zoomService: ZoomService, settingsContainerService: SettingsContainerService) {
+    this.active = settingsContainerService.grid.getValue();
+    settingsContainerService.grid.asObservable().subscribe(grid => this.active = grid);
+
     let callback = () => {
       this.width = zoomService.getZoomedWidth();
       this.height = zoomService.getZoomedHeight();

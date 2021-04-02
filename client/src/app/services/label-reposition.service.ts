@@ -9,7 +9,8 @@ import {CachingService} from "./caching/caching.service";
   providedIn: 'root'
 })
 export class LabelRepositionService {
-  private startPosition: Position | undefined = undefined;
+  private startMousePosition: Position | undefined = undefined;
+  private startLabelPosition: Position | undefined = undefined;
   private label?: Label;
 
   constructor(private snapService: SnapService,
@@ -17,14 +18,15 @@ export class LabelRepositionService {
   }
 
   public activate(position: Position, label: Label) {
-    this.startPosition = position;
+    this.startMousePosition = position;
+    this.startLabelPosition = label.position;
     this.label = label;
   }
 
   public update(position: Position) {
     if (this.isActive()) {
-      let diff = this.snapService.snapIfApplicable(Position.subtract(position, this.startPosition!));
-      this.label!.position = Position.add(this.startPosition!, diff);
+      let diff = (Position.subtract(position, this.startMousePosition!));
+      this.label!.position = this.snapService.snapIfApplicable(Position.add(this.startLabelPosition!, diff));
     } else {
       throw new Error('Service should be active!');
     }
@@ -32,13 +34,15 @@ export class LabelRepositionService {
 
   public deactivate() {
     if (this.isActive()) {
+      console.log('Label Repositioner')
       this.cachingService.save();
     }
     this.label = undefined;
-    this.startPosition = undefined;
+    this.startMousePosition = undefined;
+    this.startLabelPosition = undefined;
   }
 
   public isActive() {
-    return this.startPosition !== undefined && this.label !== undefined;
+    return this.startMousePosition !== undefined && this.label !== undefined && this.startLabelPosition !== undefined;
   }
 }

@@ -23,7 +23,6 @@ import { ClickableAttachmentPointsComponent } from './node-compontents/clickable
 import {ClickableResizePointsComponent} from "./node-compontents/clickable-resize-points/clickable-resize-points.component";
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
 import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic-node-text.component';
-import { JsonUriPipe } from './json-uri.pipe';
 import { DiagramImportComponent } from './diagram-import/diagram-import.component';
 import { LifelineComponent } from './lifeline/lifeline.component';
 import { SequenceDiagramComponent } from './sequence-diagram/sequence-diagram.component';
@@ -44,8 +43,6 @@ import { FormattingModalComponent } from './formatting-modal/formatting-modal.co
 import { EdgeFormattingModalComponent } from './edge-formatting-modal/edge-formatting-modal.component';
 import { UploadModalComponent } from './upload-modal/upload-modal.component';
 import { SaveModalComponent } from './save-modal/save-modal.component';
-import { JsonIconComponent } from './icons/json-icon/json-icon.component';
-import { PngIconComponent } from './icons/png-icon/png-icon.component';
 import { DragSelectPreviewComponent } from './drag-select-preview/drag-select-preview.component';
 import { HourglassNodeRenderComponent } from './node-compontents/hourglass-node/hourglass-node-render.component';
 import { ActorNodeRenderComponent } from './node-compontents/actor-node/actor-node-render.component';
@@ -56,7 +53,7 @@ import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome
 import {faEdit, faEye, faEyeSlash, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
 import {
   faCog,
-  faCopy,
+  faCopy, faFile,
   faFolderOpen, faList,
   faPaste, faQuestion,
   faRedo,
@@ -74,6 +71,12 @@ import { ClickableNewPointsComponent } from './edge/clickable-new-points/clickab
 import { ClickableStartEndPointsComponent } from './edge/clickable-start-end-points/clickable-start-end-points.component';
 import { ClearDiagramModalComponent } from './clear-diagram-modal/clear-diagram-modal.component';
 import { ShapesetManagementModalComponent } from './shapeset-management-modal/shapeset-management-modal.component';
+import { HelpModalComponent } from './help-modal/help-modal.component';
+import { HintOverlayComponent } from './hint-overlay/hint-overlay.component';
+import { SwimlaneNodeComponent } from './node-compontents/swimlane-node/swimlane-node.component';
+import { AboveTextNodeComponent } from './node-compontents/above-text-node/above-text-node.component';
+import { SystemClockNodeComponent } from './node-compontents/system-clock-node/system-clock-node.component';
+import { SystemBoundaryNodeComponent } from './node-compontents/system-boundary-node/system-boundary-node.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +96,6 @@ import { ShapesetManagementModalComponent } from './shapeset-management-modal/sh
     ClickableResizePointsComponent,
     ExportDiagramComponent,
     BasicNodeTextComponent,
-    JsonUriPipe,
     DiagramImportComponent,
     LifelineComponent,
     SequenceDiagramComponent,
@@ -114,8 +116,6 @@ import { ShapesetManagementModalComponent } from './shapeset-management-modal/sh
     EdgeFormattingModalComponent,
     UploadModalComponent,
     SaveModalComponent,
-    JsonIconComponent,
-    PngIconComponent,
     DragSelectPreviewComponent,
     HourglassNodeRenderComponent,
     ActorNodeRenderComponent,
@@ -130,7 +130,14 @@ import { ShapesetManagementModalComponent } from './shapeset-management-modal/sh
     ClickableNewPointsComponent,
     ClickableStartEndPointsComponent,
     ClearDiagramModalComponent,
-    ShapesetManagementModalComponent
+    ShapesetManagementModalComponent,
+    HelpModalComponent,
+    HintOverlayComponent,
+    SwimlaneNodeComponent,
+    AboveTextNodeComponent,
+    SystemClockNodeComponent,
+    SystemBoundaryNodeComponent,
+    HintOverlayComponent,
   ],
     imports: [
         BrowserModule,
@@ -146,6 +153,6 @@ import { ShapesetManagementModalComponent } from './shapeset-management-modal/sh
 export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen,
-      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList);
+      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList, faFile);
   }
 }

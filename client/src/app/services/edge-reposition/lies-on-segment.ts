@@ -15,7 +15,7 @@ export function liesOnSegment(point: Position, start: Position, end: Position): 
   let rotationMatrix: number[][] = [[Math.cos(angle), Math.sin(angle)],[-Math.sin(angle), Math.cos(angle)]];
   let baseVector: number[] = matrixVectorMult(rotationMatrix, [actualSegment.x, actualSegment.y]);
   let transformedPoint: number[] = matrixVectorMult(rotationMatrix, [ourSegment.x, ourSegment.y]);
-  return (Math.abs(transformedPoint[1]) < 10 && (transformedPoint[0] >= 0) && (transformedPoint[0] <= baseVector[0]));
+  return (Math.abs(transformedPoint[1]) < 9.9 && (transformedPoint[0] >= 0) && (transformedPoint[0] <= baseVector[0]));
 }
 
 export function matrixVectorMult(matrix: number[][], vector: number[]): number[] {

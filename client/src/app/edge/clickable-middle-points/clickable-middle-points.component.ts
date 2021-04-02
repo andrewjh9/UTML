@@ -3,6 +3,7 @@ import {Edge} from "../../../model/edge";
 import {Position} from "../../../model/position";
 import {FixedPointRepositioner} from "../../services/edge-reposition/fixed-point-repositioner";
 import {MousePositionTransformService} from "../../services/mouse-position-transform.service";
+import {SelectionService} from "../../services/selection.service";
 
 @Component({
   selector: '[clickable-middle-points]',
@@ -15,9 +16,10 @@ export class ClickableMiddlePointsComponent {
   @Input() edge!: Edge;
 
   constructor(private fixedPointRepositioner: FixedPointRepositioner,
-              private mouseTransformer: MousePositionTransformService) { }
+              private selectionService: SelectionService) { }
 
   handleMouseDown(event: MouseEvent, index: number): void {
+    this.selectionService.setEdge(this.edge);
     let position = this.edge.middlePositions[index];
     this.fixedPointRepositioner.activate(this.edge, position);
   }

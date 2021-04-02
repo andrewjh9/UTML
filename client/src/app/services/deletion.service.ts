@@ -25,37 +25,27 @@ export class DeletionService {
               private selectionService: SelectionService,
               keyboardEventCallerService: KeyboardEventCallerService,
               diagramContainerService: DiagramContainerService,
-              editService: EditService) {
+              private editService: EditService) {
     this.diagram = diagramContainerService.get();
     diagramContainerService.diagramObservable.subscribe(d => this.diagram = d);
     selectionService.selectedObservable.subscribe(value => this.selected = value);
 
-    keyboardEventCallerService.addCallback(['Delete', 'keydown', 'any'], (event => {
-      this.selected.forEach(selectedElem => {
-        if (selectedElem instanceof Node) {
-          if (!editService.isActive()) {
-            this.deleteNode(selectedElem as Node);
-          }
-        } else if (selectedElem instanceof Edge) {
-          this.deleteEdge(selectedElem as Edge);
-        } else if (selectedElem instanceof Label) {
-          this.deleteLabel(selectedElem as Label);
-        }
-      });
-    }));
+    keyboardEventCallerService.addCallback(['Delete', 'keydown', 'any'], ignored => this.deleteSelected());
   }
 
   /**
    * Delete a node and any connected edges from the diagram data structure and its component from the DOM.
    * @param node Node to be deleted.
    */
-  public deleteNode(node: Node) {
+  public deleteNode(node: Node, cache: boolean = true) {
     this.diagram.edges.forEach(edge => {
       if (edge.startNode === node) {
         edge.startPosition = edge.getStartPosition();
+        edge.startNode = undefined;
       }
-      if (edge.startNode === node) {
+      if (edge.endNode === node) {
         edge.endPosition = edge.getEndPosition();
+        edge.endNode = undefined;
       }
     });
 
@@ -69,14 +59,16 @@ export class DeletionService {
     if (this.selected.includes(node)) {
       this.selectionService.deselect();
     }
-    this.cachingService.save();
+    if (cache) {
+      this.cachingService.save();
+    }
   }
 
   /**
    * Delete an edge from the diagram data structure and its component from the DOM.
    * @param edge Edge to be deleted.
    */
-  public deleteEdge(edge: Edge) {
+  public deleteEdge(edge: Edge, cache: boolean = true) {
     const index = this.diagram!.edges.indexOf(edge);
 
     if (index === -1) {
@@ -88,10 +80,12 @@ export class DeletionService {
     if (this.selected.includes(edge)) {
       this.selectionService.deselect();
     }
-    this.cachingService.save();
+    if (cache) {
+      this.cachingService.save();
+    }
   }
 
-  public deleteLabel(label: Label) {
+  public deleteLabel(label: Label, cache: boolean = true) {
     for (let edge of this.diagram.edges) {
       if (edge.startLabel === label) {
         edge.startLabel = undefined;
@@ -101,5 +95,24 @@ export class DeletionService {
         edge.endLabel = undefined;
       }
     }
+
+    if (cache) {
+      this.cachingService.save();
+    }
+  }
+
+  public deleteSelected() {
+    this.selected.forEach(selectedElem => {
+      if (selectedElem instanceof Node) {
+        if (!this.editService.isActive()) {
+          this.deleteNode(selectedElem as Node, false);
+        }
+      } else if (selectedElem instanceof Edge) {
+        this.deleteEdge(selectedElem as Edge, false);
+      } else if (selectedElem instanceof Label) {
+        this.deleteLabel(selectedElem as Label, false);
+      }
+    });
+    this.cachingService.save();
   }
 }

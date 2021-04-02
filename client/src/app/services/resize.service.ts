@@ -37,24 +37,56 @@ export class ResizeService implements Deactivatable {
 
     switch (this.resizePointIndex) {
       case 0: // up
-        this.node!.height = Math.round((this.node!.height - this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).y)/10) * 10;
-        this.node!.position.y = this.snapService.snapIfApplicable(endPosition,10).y;
+        this.handleUp(endPosition);
         break;
-      case 1: //right
-        this.node!.width = this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).x;
+      case 1: //up, right
+        this.handleRight(endPosition)
+        this.handleUp(endPosition);
         break;
-      case 2:  //down
-        this.node!.height = this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).y;
+      case 2:  //right
+        this.handleRight(endPosition);
         break;
-      case 3: // left
-        this.node!.width = Math.round((this.node!.width - this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).x)/10) * 10;
-        this.node!.position.x = this.snapService.snapIfApplicable(endPosition,10).x;
+      case 3: // down,right
+        this.handleRight(endPosition);
+        this.handleDown(endPosition)
         break;
+      case 4:
+        this.handleDown(endPosition);
+        break;
+      case 5:
+        this.handleDown(endPosition);
+        this.handleLeft(endPosition);
+        break;
+      case 6:
+        this.handleLeft(endPosition);
+        break;
+      case 7:
+        this.handleLeft(endPosition);
+        this.handleUp(endPosition);
     }
+  }
+
+  private handleUp(endPosition: Position): void {
+    this.node!.height = Math.round((this.node!.height - this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).y)/10) * 10;
+    this.node!.position.y = this.snapService.snapIfApplicable(endPosition,10).y;
+  }
+
+  private handleRight(endPosition: Position): void {
+    this.node!.width = this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).x;
+  }
+
+  private handleDown(endPosition: Position): void {
+    this.node!.height = this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).y;
+  }
+
+  private handleLeft(endPosition: Position): void {
+    this.node!.width = Math.round((this.node!.width - this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).x)/10) * 10;
+    this.node!.position.x = this.snapService.snapIfApplicable(endPosition,10).x;
   }
 
   public deactivate(): void {
     if (this.isActive()) {
+      console.log('Resize Service')
       this.cachingService.save();
     }
     this.node = undefined;

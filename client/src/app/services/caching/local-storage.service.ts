@@ -9,10 +9,14 @@ import {deserialiseDiagram} from "../../../serialisation/deserialise/deserialise
 export class LocalStorageService {
   private currentID?: number;
   public static readonly CACHE_PREFIX = 'diagram-cache-'
+
   private get currentKey() {
     return LocalStorageService.CACHE_PREFIX + this.currentID!;
   }
 
+  constructor(private diagramContainer: DiagramContainerService) {
+
+  }
   // This setup must happen after the DOM is created. Therefore this logic can not be in the constructor.
   // Setup is now called in ngAfterInit of the diagram component.
   public setup() {
@@ -20,7 +24,6 @@ export class LocalStorageService {
     let allIDs = allKeys.map(key => parseInt(key.substr(LocalStorageService.CACHE_PREFIX.length)));
 
     let currentHighest = 0;
-    console.log(allIDs);
     for (let id of allIDs) {
       if (id > currentHighest) {
         currentHighest = id;
@@ -30,9 +33,7 @@ export class LocalStorageService {
     this.currentID = currentHighest + 1;
   }
 
-  constructor(private diagramContainer: DiagramContainerService) {
 
-  }
 
   public getAllDiagramKeys(): string[] {
     let result = [];
@@ -62,9 +63,14 @@ export class LocalStorageService {
   }
 
   public save(): void {
-    console.log('Saving')
-    console.log(this.currentKey)
-    console.log(JSON.stringify(this.diagramContainer.get().serialise()))
-    localStorage.setItem(this.currentKey, JSON.stringify(this.diagramContainer.get().serialise()));
+    if (this.currentID !== undefined) {
+      localStorage.setItem(this.currentKey, JSON.stringify(this.diagramContainer.get().serialise()));
+    }
+  }
+
+  public clear(): void {
+    this.getKeyDiagramPairs().forEach(([key, _]) => {
+      localStorage.removeItem(key);
+    });
   }
 }

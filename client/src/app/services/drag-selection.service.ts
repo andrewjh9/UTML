@@ -48,7 +48,6 @@ export class DragSelectionService {
     this._diagram?.nodes.forEach(node => {
       let nodeStart = node.position.getDeepCopy();
       let nodeEnd = Position.add(node.position, new Position(node.width, node.height));
-      console.log()
       if (Position.liesBetween(this._start!, nodeStart, this._end!) &&
         Position.liesBetween(this._start!, nodeEnd, this._end!)) {
         this.selectionService.add(node);

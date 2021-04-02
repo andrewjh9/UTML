@@ -1,0 +1,21 @@
+
+<!--<svg:rect height="30" width="100"  stroke-width="3" stroke="black"></svg:rect>-->
+<svg:rect [attr.height]="node.height"
+          [attr.width]="node.width"
+          [attr.x]=node.position.x
+          [attr.y]= node.position.y
+          stroke-width="2"
+          stroke-dasharray="15 7.5"
+          stroke="black"
+          fill="none"
+          y=30>
+</svg:rect>
+<svg:line [attr.x1]="node.position.x"
+          [attr.y1]="node.position.y + (node.getTextLines().length) * 24 + 12"
+          [attr.x2]="node.position.x + node.width"
+          [attr.y2]="node.position.y + (node.getTextLines().length) * 24 + 12"
+          stroke-width="2"
+          stroke-dasharray="15 7.5"
+          stroke="black"
+></svg:line>
+<svg:g above-node-text [node]="node"></svg:g>

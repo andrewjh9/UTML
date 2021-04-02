@@ -2,6 +2,11 @@
   <div class="collapse navbar-collapse" style="height: 50px;">
     <ul class="navbar-nav mr-auto pb-0 pt-0">
       <li class="nav-item">
+        <a class="nav-link" href="#" (click)="openClearDiagramPopUp()" ngbTooltip="Clear Diagram" placement="bottom">
+          <fa-icon [icon]="['fas', 'file']"></fa-icon>
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="#" (click)="upload()" ngbTooltip="Open" placement="bottom">
           <fa-icon [icon]="['fas', 'folder-open']"></fa-icon>
         </a>
@@ -42,7 +47,7 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#" (click)="openClearDiagramPopUp()" ngbTooltip="Clear Diagram" placement="bottom">
+        <a class="nav-link" href="#" (click)="delete()" ngbTooltip="Delete Selected" placement="bottom">
           <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
         </a>
       </li>
@@ -64,11 +69,6 @@
       <a class="nav-link" href="#" (click)="login()" ngbTooltip="Login" placement="bottom">
         <fa-icon *ngIf="isAuthenticated" [icon]="['fas', 'user']"></fa-icon>
         <fa-icon *ngIf="!isAuthenticated" [icon]="['fas', 'user-slash']"></fa-icon>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" (click)="settings()" ngbTooltip="Settings" placement="bottom">
-        <fa-icon [icon]="['fas', 'cog']"></fa-icon>
       </a>
     </li>
     <li class="nav-item">

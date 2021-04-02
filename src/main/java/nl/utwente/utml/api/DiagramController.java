@@ -10,7 +10,6 @@ import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequestMapping("api/diagram")
@@ -18,12 +17,10 @@ import java.util.List;
 @RestController
 public class  DiagramController {
     private final IDiagramService diagramService;
-    private final HttpServletRequest request;
 
     @Autowired
-    public DiagramController(IDiagramService diagramService, HttpServletRequest request) {
+    public DiagramController(IDiagramService diagramService) {
         this.diagramService = diagramService;
-        this.request = request;
     }
 
 

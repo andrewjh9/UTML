@@ -54,7 +54,11 @@ export class AppComponent implements AfterViewInit {
         event.preventDefault();
       }
       let downButton = AppComponent.getDownButton(event);
-      this.keyboardEventCallbackMap.executeCallbacks([event.key, "keydown", downButton], event);
+      if (this.editService.isActive()) {
+        this.editService.handleKeyPressed(event.key, event.ctrlKey);
+      } else {
+        this.keyboardEventCallbackMap.executeCallbacks([event.key, "keydown", downButton], event);
+      }
     });
 
     this.renderer.listen('window', 'keyup', (event: KeyboardEvent) => {

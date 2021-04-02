@@ -35,6 +35,7 @@ export class EdgeCreationService implements Deactivatable {
   constructor(private creationFormatterSelectionService: CreationTypeSelectionService,
               private selectionService: SelectionService,
               keyboardEventCallerService: KeyboardEventCallerService) {
+    this.selectionService.selectedObservable.subscribe(ignored => this.deactivate());
     keyboardEventCallerService.addCallback(['Escape', 'keydown', 'any'], (ignored) => this.deactivate())
   }
 

@@ -1,17 +1,24 @@
-import {Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input} from '@angular/core';
 import {Node} from "../../../model/node/node";
 import {EditService} from "../../services/edit.service";
+import {AbstractTextNode} from "../abstract-text-node";
 
 @Component({
   selector: '[basic-node-text]',
   templateUrl: './basic-node-text.component.html',
   styleUrls: ['./basic-node-text.component.scss']
 })
-export class BasicNodeTextComponent {
+export class BasicNodeTextComponent extends AbstractTextNode implements AfterViewInit {
   @Input() node!: Node;
   readonly FONT_SIZE = 16;
 
-  constructor(private editService: EditService) {}
+  constructor(editService: EditService) {
+    super(editService);
+  }
+
+  ngAfterViewInit() {
+    this.subscribeToEditService();
+  }
 
   get lineAmount(): number {
     return this.node!.getTextLines().length;
@@ -33,8 +40,8 @@ export class BasicNodeTextComponent {
   }
 
   setActive(index: number) {
-    if (this.editService.isActive()) {
-      this.editService.setActiveTextLine(index, false)
-    }
+    // if (this.editService.isActive()) {
+    //   this.editService.setNewLineActive(index);
+    // }
   }
 }

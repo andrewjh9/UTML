@@ -6,6 +6,10 @@ import {EllipseNode} from "../../../model/node/ellipse-node";
 import {DiamondNode} from "../../../model/node/diamond-node";
 import {HourglassNode} from "../../../model/node/hourglass-node";
 import {ActorNode} from "../../../model/node/actor-node";
+import {SwimlaneNode} from "../../../model/node/swimlane-node";
+import {SystemBoundaryNode} from "../../../model/node/system-boundary-node";
+import {INSPECT_CUSTOM} from "ts-node";
+import {SystemClockNode} from "../../../model/node/system-clock-node";
 
 @Component({
   selector: '[node-render-dispatch]',
@@ -17,7 +21,8 @@ export class NodeRenderDispatchComponent {
 
   isRectangle(node: Node): boolean {
     return node instanceof RectangleNode && !(node instanceof ClassNode) && !(node instanceof HourglassNode)
-      && !(node instanceof ActorNode);
+      && !(node instanceof ActorNode) && !(node instanceof SwimlaneNode) && !(node instanceof SystemBoundaryNode)
+      && !(node instanceof SystemClockNode);
   }
 
   castToRectangle(node: Node): RectangleNode {
@@ -60,7 +65,32 @@ export class NodeRenderDispatchComponent {
     return node instanceof ActorNode;
   }
 
+
   castToActor(node: Node): ActorNode {
     return <ActorNode>node;
+  }
+
+  isSwimlane(node: Node) {
+    return node instanceof SwimlaneNode;
+  }
+
+  castToSwimlane(node: Node) {
+    return <SwimlaneNode>node;
+  }
+
+  isSystemBoundary(node: Node) {
+    return node instanceof SystemBoundaryNode
+  }
+
+  castToSystemBoundary(node: Node) {
+    return <SystemBoundaryNode>node;
+  }
+
+  isSystemClock(node: Node) {
+    return node instanceof SystemClockNode;
+  }
+
+  castToSystemClockNode(node: Node) {
+    return <SystemClockNode>node;
   }
 }

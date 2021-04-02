@@ -1,4 +1,4 @@
-<div id="creation-side-bar" style="width: 300px" (mouseup)="handleGenericMouseUp()">
+<div id="creation-side-bar" [ngStyle]="getStyles()" (mouseup)="handleGenericMouseUp()">
   <ngb-accordion [closeOthers]="true">
     <ngb-panel *ngFor="let diagramGroup of groupKeys" title="{{diagramGroup}}">
       <ng-template ngbPanelContent>
@@ -24,7 +24,8 @@
              class="list-group-item list-group-item-action flex-column align-items-start"
              *ngFor="let nodeKey of Object.keys(shapeSets[diagramGroup].nodes)"
              (mousedown)="handleMouseDown(diagramGroup, nodeKey, 'node')"
-             (dragstart)="false">
+             (dragstart)="false"
+          >
             <div class="d-flex w-100 justify-content-between text-center">
               <h6 class="mb-1 w-100 text-center">{{nodeKey}}</h6>
             </div>

@@ -2,6 +2,7 @@ import {Position} from "./position";
 import {Node} from "./node/node";
 import {EdgeLocation, Label, PositionCallback} from "./label";
 import {SerialisedEdge} from "../serialisation/serialised-data-structures/serialised-edge";
+import {liesOnSegment} from "../app/services/edge-reposition/lies-on-segment";
 
 export class Edge {
   public startNode?: Node;
@@ -107,7 +108,7 @@ export class Edge {
    * Returns a point string that can be used to draw a polyline or path depending on the line type
    */
   public getPointString(): string {
-    if (this.lineType == LineType.Line) {
+    if (this.lineType === LineType.Line) {
       let result: string = "";
       result += this.getStartPosition().toString();
       for (let position of this.middlePositions) {
@@ -115,7 +116,9 @@ export class Edge {
       }
       result += this.getEndPosition().toString();
       return result;
-    } else if (this.lineType == LineType.Arc) {
+    } else if (this.lineType === LineType.Arc &&
+      !liesOnSegment(this.middlePositions[0], this.getStartPosition(), this.getEndPosition())) {
+      console.log(liesOnSegment(this.middlePositions[0], this.getStartPosition(), this.getEndPosition()))
       if (this.middlePositions.length != 1) {
         throw new Error(`An Arc typed edge should have exactly 1 middle position. Edge ${this} has
         ${this.middlePositions.length}.`);
@@ -144,7 +147,9 @@ export class Edge {
       return ['M', start.x, start.y, 'A', r, r, 0, laf, saf, end.x, end.y].join(' ');
 
     } else {
-      throw new Error(`EdgeFormatter ${this} has type ${this.lineType} for which points can not be computed.`);
+      let start = this.getStartPosition();
+      let end = this.getEndPosition();
+      return ['M', start.x, start.y, 'L', end.x, end.y].join(' ');
     }
   }
 

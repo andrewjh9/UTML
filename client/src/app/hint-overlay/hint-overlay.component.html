@@ -1,0 +1,43 @@
+<div id="hint-container"
+     [ngStyle]="styleObject">
+  <div *ngIf="mode === 'node'" class="p-1">
+    <b>A shape is selected</b>
+    <ul>
+      <li><code>Escape</code> to deselect</li>
+      <li><code>Delete</code> to delete</li>
+      <li>Click-and-drag to move</li>
+      <li>Control-click to open formatting</li>
+      <li>Click other node in creation sidebar to replace</li>
+    </ul>
+  </div>
+
+  <div *ngIf="mode === 'edge'" class="p-1">
+    <b>An edge is selected</b>
+    <ul>
+      <li><code>Escape</code> to deselect</li>
+      <li><code>Delete</code> to delete</li>
+      <li>Click-and-drag on any circles to move them</li>
+      <li>Control-click to open formatting</li>
+      <li>Click other node in creation sidebar to replace</li>
+      <li>Double click to add labels</li>
+    </ul>
+  </div>
+
+  <div *ngIf="mode === 'nothing'" class="p-1">
+    <b>Nothing is selected</b>
+    <ul>
+      <li>Click something to select it</li>
+      <li><code>Shift</code> click-and-drag to select multiple things</li>
+      <li>Click-and-drag and edge from the sidebar to add it</li>
+    </ul>
+  </div>
+
+  <div *ngIf="mode === 'edge-creation'" class="p-1">
+    <b>Edge Creation Mode</b>
+    <ul>
+      <li>Click and hold a green circle to select the start</li>
+      <li>Hold and release on a green circle to select the end</li>
+      <li>Press <code>Escape</code> to stop creating edges.</li>
+    </ul>
+  </div>
+</div>

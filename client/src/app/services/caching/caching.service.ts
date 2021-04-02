@@ -44,18 +44,12 @@ export class CachingService {
 
   /**
    * Save the current version of the diagram to localStorage and the redo/undo structure.
-   * @throws Error if diagram is not set.
    */
   public save(): void {
-    console.log('Caching')
-    if (this.diagram === undefined) {
-      throw new Error('You can not save whilst the diagram is not set!');
-    }
-
+    console.log('Saving (cachingService)')
     let serialisedDiagram = this.diagram.serialise();
-    // this.localStorageService.save();
     this.list.add(serialisedDiagram);
-    // Todo: Make it so similar changes are merged. I.e., typing a word into a node counts as one undo/redo action.
+    this.localStorageService.save();
   }
 
   /**

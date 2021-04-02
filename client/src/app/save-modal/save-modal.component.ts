@@ -1,6 +1,8 @@
 import {Component, AfterContentInit} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ExportService} from "../services/export.service";
+import {Diagram} from "../../model/diagram";
+import {SelectionService} from "../services/selection.service";
 import {HttpClient} from "@angular/common/http";
 
 
@@ -10,13 +12,15 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./save-modal.component.scss']
 })
 export class SaveModalComponent implements AfterContentInit {
-  filename: string = 'diagram-filename';
   isAuthenticated: boolean = true;
 
   constructor(public modal: NgbActiveModal,
-              private exportService: ExportService, private http: HttpClient) { }
+              public exportService: ExportService,
+              private selectionService: SelectionService,
+              private http: HttpClient) { }
 
   ngAfterContentInit(): void {
+    this.selectionService.deselect();
   }
 
   exportAsPNG() {
@@ -30,7 +34,7 @@ export class SaveModalComponent implements AfterContentInit {
   }
 
   saveToDB() {
-    this.http.post('/api/diagram/',this.exportService.getDiagramJSON(this.filename)).subscribe(
+    this.http.post('/api/diagram/',this.exportService.getDiagramJSON(this.exportService.filename)).subscribe(
         (data:any) => {
           this.modal.close()
         },error =>  {

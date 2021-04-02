@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ClassNode} from "../../model/node/class-node";
 import {Position} from "../../model/position";
 import {Edge, EndStyle, LineType} from "../../model/edge";
@@ -20,25 +20,48 @@ import {DiagramContainerService} from "../services/diagram-container.service";
 import {DeletionService} from "../services/deletion.service";
 import {CourseSet, ShapeSet} from "../shapeset-management-modal/shapeset-management-modal.component";
 import {ShapeSetContainerService} from "../services/shape-set-container.service";
+import {DiagramComponent} from "../diagram/diagram.component";
+import {CachingService} from "../services/caching/caching.service";
+import {EditService} from "../services/edit.service";
 
 @Component({
   selector: 'creation-sidebar',
   templateUrl: './creation-sidebar.component.html',
   styleUrls: ['./creation-sidebar.component.scss']
 })
-export class CreationSidebarComponent {
-  public static readonly WIDTH: number = 200;
+export class CreationSidebarComponent implements OnInit {
+  public static readonly WIDTH: number = 300;
   private selectedKeys: [string, string] | undefined;
   private selectedElement: Edge | Node | undefined = undefined;
   edgeCreationIsActive: boolean = false;
   shapeSets: CourseSet;
+  selectedType: 'node' | 'edge' | 'neither' | 'nothing' = 'nothing';
 
   constructor(private dragDropCreationService: DragDropCreationService,
               private diagramContainerService: DiagramContainerService,
               private edgeCreationService: EdgeCreationService,
               private selectionService: SelectionService,
               private deletionService: DeletionService,
+              private cachingService: CachingService,
+              private editService: EditService,
               shapeSetContainerService: ShapeSetContainerService) {
+    selectionService.selectedObservable.subscribe(list => {
+      if (list.length === 1) {
+        if (list[0] instanceof Node) {
+          this.selectedType = 'node';
+          return;
+        } else if (list[0] instanceof Edge) {
+          this.selectedType = 'edge';
+          return;
+        }
+      } else if (list.length === 0) {
+        this.selectedType = 'nothing';
+        return;
+      }
+
+      this.selectedType = 'neither';
+    })
+
     edgeCreationService.activityObservable.subscribe(active => {
       this.edgeCreationIsActive = active;
       if (!active) {
@@ -57,9 +80,23 @@ export class CreationSidebarComponent {
     shapeSetContainerService.observable.subscribe(shapeSets => this.shapeSets = shapeSets);
   }
 
+  ngOnInit(): void {
+    let height: number = window.innerHeight - DiagramComponent.NAV_HEIGHT;
+    let left: number = window.innerWidth - CreationSidebarComponent.WIDTH;
+    document.getElementById("creation-side-bar")!.style.overflow = "auto";
+    document.getElementById("creation-side-bar")!.style.height = height + "px";
+    document.getElementById("creation-side-bar")!.style.width = CreationSidebarComponent.WIDTH + "px";
+    document.getElementById("creation-side-bar")!.style.position = "absolute";
+    document.getElementById("creation-side-bar")!.style.left = left + "px";
+    document.getElementById("creation-side-bar")!.style.top = 50 + "px";
+
+  }
+
   get styleObject() {
     return {
-      width: CreationSidebarComponent.WIDTH
+      width: CreationSidebarComponent.WIDTH,
+      height: window.innerHeight - DiagramComponent.NAV_HEIGHT,
+      left: window.innerWidth - CreationSidebarComponent.WIDTH
     }
   }
 
@@ -83,48 +120,48 @@ export class CreationSidebarComponent {
   }
 
   handleMouseDown(groupKey: string, elementKey: string, type: 'node' | 'edge'): void {
-    if (this.selectedElement === undefined) {
-      if (type === 'node') {
-        this.dragDropCreationService.activate(this.shapeSets[groupKey].nodes[elementKey]);
-      } else {
-        this.dragDropCreationService.activate(this.shapeSets[groupKey].edges[elementKey]);
-        this.selectedKeys = [groupKey, elementKey];
-      }
-    } else if (type === 'node' && this.selectedElement instanceof Node) {
-      let old = <Node> this.selectedElement;
-      let newN = this.shapeSets[groupKey].nodes[elementKey].getDeepCopy();
-      newN.position = old.position;
-      newN.width = old.width;
-      newN.height = old.height;
-      newN.text = old.text;
-      this.deletionService.deleteNode(old);
-      this.diagramContainerService.get().nodes.push(newN)
-      this.selectionService.setNode(newN);
-    } else if (type === 'edge' && this.selectedElement instanceof Edge) {
-      let edge = <Edge> this.selectedElement;
-      let newEdge = this.shapeSets[groupKey].edges[elementKey].getDeepCopy();
-      newEdge.startPosition = edge.startPosition;
-      newEdge.endPosition = edge.endPosition;
-      newEdge.startNode = edge.startNode;
-      newEdge.endNode = edge.endNode;
-      newEdge.startLabel = edge.startLabel;
-      newEdge.middleLabel = edge.middleLabel;
-      newEdge.endLabel = edge.endLabel;
-      newEdge.middlePositions = edge.middlePositions;
-      if (newEdge.lineType === LineType.Arc && newEdge.middlePositions.length !== 1) {
-        newEdge.setDefaultMiddlePointOnArc();
-      }
-      let edges = this.diagramContainerService.get().edges;
-      edges[edges.indexOf(edge)] = newEdge;
-      // The new node should be selected.
-      // For some reason if we select it without delay,
-      // it does not update the edge attribute of the component quick enough.
-      setTimeout(() => this.selectionService.setEdge(newEdge), 50);
+    this.selectionService.deselect();
+    this.editService.deactivate();
+    if (type === 'node') {
+      this.dragDropCreationService.activate(this.shapeSets[groupKey].nodes[elementKey]);
+    } else {
+      this.dragDropCreationService.activate(this.shapeSets[groupKey].edges[elementKey]);
+      this.selectedKeys = [groupKey, elementKey];
     }
   }
 
   isSelected(groupKey: string, edgeKey: string) {
     return this.selectedKeys !== undefined && this.selectedKeys[0] === groupKey && this.selectedKeys[1] === edgeKey;
+  }
+
+  getStyles() {
+    return {
+      left: window.innerWidth - CreationSidebarComponent.WIDTH,
+      position: "absolute",
+      top: 50
+    }
+  }
+
+  getEdgeCursor() {
+    switch (this.selectedType) {
+      case "edge":
+      case "nothing":
+        return 'pointer';
+      case "node":
+      case "neither":
+        return "disabled";
+    }
+  }
+
+  getNodeCursor() {
+    switch (this.selectedType) {
+      case "node":
+      case "nothing":
+        return 'pointer';
+      case "edge":
+      case "neither":
+        return "disabled";
+    }
   }
 }
 

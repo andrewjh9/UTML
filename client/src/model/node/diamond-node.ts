@@ -54,13 +54,8 @@ export class DiamondNode extends PolylineNode {
       return pos;
     }).map(pos => pos.toString()).join();
   }
+
   public getNodeTypeName(): string {
-    return "Diamond";
+    return 'DiamondNode';
   }
-  public preview = `<ellipse cx="${Node.PREVIEW_WIDTH} / 2"
-y="${Node.DEFAULT_PREVIEW_HEIGHT} / 2"
-width="${Node.PREVIEW_WIDTH} / 2"
-height="${Node.DEFAULT_PREVIEW_HEIGHT} /2"
-style="fill: none; stroke-width: 1; stroke: black">
-</ellipse>`;
 }

@@ -1,9 +1,7 @@
 import {RepositionService} from "../services/reposition.service";
-import {ModeService} from "../services/mode.service";
 import {SelectionService} from "../services/selection.service";
 import {Node} from "../../model/node/node";
 import {Position} from "../../model/position";
-import {ModeAwareComponent} from "../mode-aware-component";
 import {Component, Input} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DeletionService} from "../services/deletion.service";
@@ -18,7 +16,7 @@ import {StartEndRepositioner} from "../services/edge-reposition/start-end-reposi
   templateUrl: './node.component.html',
   selector: '[node-component]'
 })
-export class NodeComponent extends ModeAwareComponent {
+export class NodeComponent {
   @Input() node!: Node;
   hoveringNearby: boolean = false;
   isSelected: boolean = false;
@@ -26,7 +24,6 @@ export class NodeComponent extends ModeAwareComponent {
   edgeCreationIsActive: boolean = false;
 
   constructor(private repositionService: RepositionService,
-              modeService: ModeService,
               private selectionService: SelectionService,
               private modalService: NgbModal,
               private deletionService: DeletionService,
@@ -35,7 +32,6 @@ export class NodeComponent extends ModeAwareComponent {
               private editService: EditService,
               edgeCreationService: EdgeCreationService,
               public startEndRepositioner: StartEndRepositioner) {
-    super(modeService);
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.node);
     });
@@ -51,7 +47,7 @@ export class NodeComponent extends ModeAwareComponent {
     // If the node is already selected, we do not want to select it again.
     // This is because there are multiple selected nodes sometimes
     // and this allows you to move multiple at the same time.
-    if (!this.isSelected ) {
+    if (!this.isSelected) {
       this.selectionService.setNode(this.node);
     } else {
       this.repositionService.activate(this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY)));
@@ -65,25 +61,18 @@ export class NodeComponent extends ModeAwareComponent {
 
     if (event.ctrlKey) {
       this.editService.deactivate();
-
       if (this.selectionService.isNode()) {
         this.modalService.open(FormattingModalComponent);
       }
-    } else if (this.node && this.editService.getNode() != this.node) {
+    } else {
       this.isInEditMode = true;
       this.editService.deactivate();
       this.editService.activate(this.node);
-    } else if (this.node == this.editService.getNode()) {
-      this.editService.addField();
     }
   }
 
   delete(): void {
     this.modalService.dismissAll();
     this.deletionService.deleteNode(this.node);
-  }
-
-  save(): void {
-    this.cachingService.save();
   }
 }

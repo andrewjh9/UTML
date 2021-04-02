@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {UploadModalComponent} from "../upload-modal/upload-modal.component";
 import {SaveModalComponent} from "../save-modal/save-modal.component";
 import {Diagram} from "../../model/diagram";
@@ -11,13 +11,15 @@ import {DiagramComponent} from "../diagram/diagram.component";
 import {ZoomService} from "../services/zoom.service";
 import {ClearDiagramModalComponent} from "../clear-diagram-modal/clear-diagram-modal.component";
 import {ShapesetManagementModalComponent} from "../shapeset-management-modal/shapeset-management-modal.component";
+import {HelpModalComponent} from "../help-modal/help-modal.component";
+import {DeletionService} from "../services/deletion.service";
 
 @Component({
   selector: 'app-nav-bar',
   templateUrl: './nav-bar.component.html',
   styleUrls: ['./nav-bar.component.scss']
 })
-export class NavBarComponent {
+export class NavBarComponent implements AfterViewInit {
   get NAV_HEIGHT() { return DiagramComponent.NAV_HEIGHT; }
   isAuthenticated = true;
 
@@ -25,7 +27,15 @@ export class NavBarComponent {
               private copyPasteService: CopyPasteService,
               private cachingService: CachingService,
               private diagramContainer: DiagramContainerService,
-              private zoomService: ZoomService) { }
+              private zoomService: ZoomService,
+              private deletionService: DeletionService) { }
+
+  ngAfterViewInit() {
+    let showHelpOnStart = localStorage.getItem(HelpModalComponent.LOCAL_STORAGE_KEY);
+    if (showHelpOnStart !== 'false') {
+      this.help();
+    }
+  }
 
   copy() {
     this.copyPasteService.doCopy();
@@ -71,11 +81,7 @@ export class NavBarComponent {
   }
 
   help() {
-
-  }
-
-  settings() {
-
+    this.modalService.open(HelpModalComponent, {size: ' xl'});
   }
 
   login() {
@@ -88,5 +94,9 @@ export class NavBarComponent {
 
   openShapeSetSelector() {
     this.modalService.open(ShapesetManagementModalComponent);
+  }
+
+  delete() {
+    this.deletionService.deleteSelected();
   }
 }
