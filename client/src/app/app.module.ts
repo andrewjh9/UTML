@@ -136,7 +136,7 @@ import { SystemBoundaryNodeComponent } from './node-compontents/system-boundary-
     SwimlaneNodeComponent,
     AboveTextNodeComponent,
     SystemClockNodeComponent,
-    SystemBoundaryNodeComponent
+    SystemBoundaryNodeComponent,
     HintOverlayComponent,
   ],
     imports: [
