@@ -11,7 +11,7 @@ import {DiamondNode} from "../../model/node/diamond-node";
 import {SwimlaneNode} from "../../model/node/swimlane-node";
 import {SystemBoundaryNode} from "../../model/node/system-boundary-node";
 import {SystemClockNode} from "../../model/node/system-clock-node";
-import {split} from "ts-node";
+import {CrossNode} from "../../model/node/cross-node";
 
 export function flattenActive(courseSets: {[key: string]: CourseSet}) {
   let result: CourseSet = {};
@@ -114,6 +114,24 @@ arc.lineType = LineType.Arc;
 arc.endStyle = EndStyle.SmallFilledArrow;
 arc.middlePositions.push(new Position(103, 35));
 
+let sequence: ShapeSet = {nodes: {}, edges: {}, active: true};
+let msg = new Edge(new Position(10, 5), new Position( 196, 5));
+msg.endStyle = EndStyle.SmallFilledArrow;
+let resp = msg.getDeepCopy();
+resp.lineStyle = LineStyle.Dashed;
+let dashed = new Edge(new Position(10, 5), new Position( 196, 5));
+dashed.lineStyle = LineStyle.Dashed;
+sequence.edges['Message'] = msg;
+sequence.edges['Response'] = resp;
+sequence.edges['Dashed'] = dashed;
+let lifeline = new RectangleNode(140, 40, new Position(38, 2));
+let cross = new CrossNode(60, 60, new Position(78, 2));
+lifeline.text = 'Classifier'
+let execution = new RectangleNode(40, 100, new Position(78, 2));
+sequence.nodes['Lifeline'] = lifeline;
+sequence.nodes['Execution'] = execution;
+sequence.nodes['Destruction'] = cross;
+
 let fsm: ShapeSet = {nodes: {}, edges: {}, active: true};
 fsm.nodes['State'] = state;
 fsm.nodes['End State'] = endState;
@@ -158,7 +176,8 @@ export let courseSets: {[key: string]: CourseSet};
 let design: CourseSet = {
   'Activity Diagram': ad,
   'Class Diagram': cd,
-  'Use Case Diagram': ucd
+  'Use Case Diagram': ucd,
+  'Sequence Diagram': sequence,
 };
 let lm: CourseSet = {
   'Deterministic finite automaton': fsm,

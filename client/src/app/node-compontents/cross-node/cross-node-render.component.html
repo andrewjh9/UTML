@@ -1,0 +1,14 @@
+<svg:line
+  [attr.x1]="node.position.x"
+  [attr.y1]="node.position.y"
+  [attr.x2]="node.position.x + node.width"
+  [attr.y2]="node.position.y + node.height"
+  style="stroke: black; stroke-width: 6"
+/>
+<svg:line
+  [attr.x1]="node.position.x + node.width"
+  [attr.y1]="node.position.y"
+  [attr.x2]="node.position.x"
+  [attr.y2]="node.position.y + node.height"
+  style="stroke: black; stroke-width: 6"
+/>

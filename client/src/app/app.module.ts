@@ -78,6 +78,7 @@ import { AboveTextNodeComponent } from './node-compontents/above-text-node/above
 import { SystemClockNodeComponent } from './node-compontents/swimlane-node/system-clock-node/system-clock-node.component';
 import { SystemBoundaryNodeComponent } from './node-compontents/system-boundary-node/system-boundary-node.component';
 import { WhiteBackgroundComponent } from './white-background/white-background.component';
+import { CrossNodeRenderComponent } from './node-compontents/cross-node/cross-node-render.component';
 
 @NgModule({
   declarations: [
@@ -140,6 +141,7 @@ import { WhiteBackgroundComponent } from './white-background/white-background.co
     SystemBoundaryNodeComponent,
     HintOverlayComponent,
     WhiteBackgroundComponent,
+    CrossNodeRenderComponent,
   ],
     imports: [
         BrowserModule,

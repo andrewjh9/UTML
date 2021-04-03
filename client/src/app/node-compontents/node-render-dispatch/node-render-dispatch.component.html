@@ -7,4 +7,6 @@
 <svg:g *ngIf="isSwimlane(node)" swimlane-node-render  [node]="castToSwimlane(node)"></svg:g>
 <svg:g *ngIf="isSystemBoundary(node)" system-boundary-node-render  [node]="castToSystemBoundary(node)"></svg:g>
 <svg:g *ngIf="isSystemClock(node)" system-clock-node-render  [node]="castToSystemClockNode(node)"></svg:g>
+<svg:g *ngIf="isCross(node)" cross-node-render  [node]="castToCrossNode(node)"></svg:g>
+
 
