@@ -4,7 +4,7 @@ import {Position} from "../position";
 export class SystemBoundaryNode extends RectangleNode {
   constructor(width: number, height: number, position: Position) {
     super(width, height, position);
-    this._transparent = false;
+    this._transparent = true;
   }
 
   public getNodeTypeName(): string {

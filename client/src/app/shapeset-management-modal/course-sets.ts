@@ -85,10 +85,14 @@ ad.nodes['Swimlane'] = swimlane;
 
 
 let ucd: ShapeSet = {nodes: {}, edges: {}, active: true};
-let ie = arrow.getDeepCopy();
-ie.lineStyle = LineStyle.Dashed;
-// ie.addMiddleLabel('<<include>>')
-ucd.edges['Include/Extend'] = ie;
+let include = arrow.getDeepCopy();
+include.lineStyle = LineStyle.Dashed;
+include.addMiddleLabel('<<include>>')
+let extend = include.getDeepCopy();
+extend.middleLabel!.value = ' <<extend>>'
+
+ucd.edges['Include'] = include;
+ucd.edges['Extend'] = extend;
 ucd.edges['Link'] = association;
 ucd.nodes['Actor'] = new ActorNode(40, 80, new Position(84, 10));
 ucd.edges['Generalisation'] = generalisation;

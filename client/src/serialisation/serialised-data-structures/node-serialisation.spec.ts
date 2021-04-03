@@ -8,6 +8,9 @@ import {HourglassNode} from "../../model/node/hourglass-node";
 import {RectangleNode} from "../../model/node/rectangle-node";
 import {Node} from "../../model/node/node";
 import {deserialiseNode} from "../deserialise/deserialise-node";
+import {SystemClockNode} from "../../model/node/system-clock-node";
+import {SystemBoundaryNode} from "../../model/node/system-boundary-node";
+import {SwimlaneNode} from "../../model/node/swimlane-node";
 
 describe('Node Serialisation ' , () => {
   let actor: ActorNode;
@@ -17,6 +20,9 @@ describe('Node Serialisation ' , () => {
   let fork: ForkRejoinNode;
   let hourglass: HourglassNode;
   let rect: RectangleNode;
+  let clock: SystemClockNode;
+  let boundary: SystemBoundaryNode;
+  let swimlane: SwimlaneNode;
   let all: Array<Node>;
 
   beforeEach(() => {
@@ -27,7 +33,10 @@ describe('Node Serialisation ' , () => {
     fork = new ForkRejoinNode(200, 10, Position.zero());
     hourglass = new HourglassNode(100, 100, Position.zero());
     rect = new RectangleNode(100, 100, new Position(123, 456));
-    all = [actor, clazz, diamond, ellipse, fork, hourglass, rect];
+    clock = new SystemClockNode(100, 100, Position.zero());
+    boundary = new SystemBoundaryNode(100, 100, Position.zero());
+    swimlane = new SwimlaneNode(100, 100, Position.zero());
+    all = [actor, clazz, diamond, ellipse, fork, hourglass, rect, clock, boundary, swimlane];
   });
 
   describe('serialisation ', () => {
@@ -39,6 +48,9 @@ describe('Node Serialisation ' , () => {
       expect(fork.serialise().type).toEqual('ForkRejoinNode');
       expect(hourglass.serialise().type).toEqual('HourglassNode');
       expect(rect.serialise().type).toEqual('RectangleNode');
+      expect(swimlane.serialise().type).toEqual('SwimlaneNode');
+      expect(boundary.serialise().type).toEqual('SystemBoundaryNode');
+      expect(clock.serialise().type).toEqual('SystemClockNode');
     });
 
     it('should correctly save the width', function () {
@@ -88,6 +100,9 @@ describe('Node Serialisation ' , () => {
       expect(deserialiseNode(fork.serialise()) instanceof ForkRejoinNode).toBeTrue();
       expect(deserialiseNode(hourglass.serialise()) instanceof HourglassNode).toBeTrue();
       expect(deserialiseNode(rect.serialise()) instanceof RectangleNode).toBeTrue();
+      expect(deserialiseNode(swimlane.serialise()) instanceof SwimlaneNode).toBeTrue();
+      expect(deserialiseNode(boundary.serialise()) instanceof SystemBoundaryNode).toBeTrue();
+      expect(deserialiseNode(clock.serialise()) instanceof SystemClockNode).toBeTrue();
     });
   });
 });

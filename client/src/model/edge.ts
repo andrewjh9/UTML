@@ -248,8 +248,17 @@ export class Edge {
 
 
     result.startLabel = this.startLabel?.getDeepCopy();
+    if (result.startLabel) {
+      result.startLabel.anchors = result.labelAnchors;
+    }
     result.middleLabel = this.middleLabel?.getDeepCopy();
+    if (result.middleLabel) {
+      result.middleLabel.anchors = result.labelAnchors;
+    }
     result.endLabel = this.endLabel?.getDeepCopy();
+    if (result.endLabel) {
+      result.endLabel.anchors = result.labelAnchors;
+    }
     result.startStyle = this.startStyle;
     result.endStyle = this.endStyle;
     result.lineStyle = this.lineStyle;

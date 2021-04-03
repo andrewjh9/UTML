@@ -75,7 +75,7 @@ import { HelpModalComponent } from './help-modal/help-modal.component';
 import { HintOverlayComponent } from './hint-overlay/hint-overlay.component';
 import { SwimlaneNodeComponent } from './node-compontents/swimlane-node/swimlane-node.component';
 import { AboveTextNodeComponent } from './node-compontents/above-text-node/above-text-node.component';
-import { SystemClockNodeComponent } from './node-compontents/system-clock-node/system-clock-node.component';
+import { SystemClockNodeComponent } from './node-compontents/swimlane-node/system-clock-node/system-clock-node.component';
 import { SystemBoundaryNodeComponent } from './node-compontents/system-boundary-node/system-boundary-node.component';
 import { WhiteBackgroundComponent } from './white-background/white-background.component';
 
