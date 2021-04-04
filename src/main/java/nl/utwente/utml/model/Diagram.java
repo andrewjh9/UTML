@@ -8,6 +8,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 @Entity
@@ -37,7 +38,7 @@ import java.io.Serializable;
 
     @Column(name = "lastModified")
     @LastModifiedDate
-    public DateTime lastModifiedDate;
+    public Date lastModifiedDate = new Date();
 
     public Diagram(String id, String serialisedDiagram){
         this.id = id;

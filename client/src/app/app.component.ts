@@ -16,7 +16,7 @@ import {AuthenticatedService} from "./services/authenticated.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  public loadDiagramId: Number | undefined;
+  public loadDiagramId: String | undefined;
 
   constructor(private authenticatedService: AuthenticatedService, private renderer: Renderer2, private keyboardEventCallbackMap: KeyboardEventCallerService, private route: ActivatedRoute, private router: Router, private editService: EditService, private diagramContainer: DiagramContainerService, private http: HttpClient) {
   }
@@ -26,7 +26,7 @@ export class AppComponent implements AfterViewInit {
     this.router.events.subscribe(val => {
       if (val instanceof RoutesRecognized) {
         // @ts-ignore
-        this.loadDiagramId = Number.parseInt(val.state.root.firstChild.params.id);
+        this.loadDiagramId = (val.state.root.firstChild.params.id);
         console.log(this.loadDiagramId)
         // @ts-ignore
         if(this.loadDiagramId){

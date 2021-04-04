@@ -93,6 +93,9 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
     if (this.selectedIndex !== -1 && this.dbEntries) {
       this.http.get('/api/diagram/toggle/visible',{params: new HttpParams().set("id",String(this.dbEntries[this.selectedIndex].id))}).subscribe(
         (data:any) => {
+          if (this.dbEntries) {
+            this.dbEntries[this.selectedIndex].visible = !this.dbEntries[this.selectedIndex].visible;
+          }
         },error =>  {
           //TODO Open error modal or something
           this.handleError(error)
