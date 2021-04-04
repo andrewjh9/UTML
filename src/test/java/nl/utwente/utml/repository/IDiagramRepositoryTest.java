@@ -48,10 +48,7 @@ public class IDiagramRepositoryTest {
         assertEquals(content, diagram.get().getSerialisedDiagram());
     }
 
-    @Test
-    public void testGetSingleReturnsEmptyIfNonExists() {
-        assertTrue(IDiagramRepository.findById(new Random().nextLong()).isEmpty());
-    }
+
 
 //    @Test
 //    public void testUpdateNonExistent() {
