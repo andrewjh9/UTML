@@ -79,6 +79,7 @@ import { SystemClockNodeComponent } from './node-compontents/swimlane-node/syste
 import { SystemBoundaryNodeComponent } from './node-compontents/system-boundary-node/system-boundary-node.component';
 import { WhiteBackgroundComponent } from './white-background/white-background.component';
 import { CrossNodeRenderComponent } from './node-compontents/cross-node/cross-node-render.component';
+import { ErrorModalComponent } from './error-modal/error-modal.component';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import { CrossNodeRenderComponent } from './node-compontents/cross-node/cross-no
     HintOverlayComponent,
     WhiteBackgroundComponent,
     CrossNodeRenderComponent,
+    ErrorModalComponent,
   ],
     imports: [
         BrowserModule,
