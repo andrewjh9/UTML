@@ -61,9 +61,9 @@
         </div>
       </div>
       <hr>
-      <svg width="500" height="500">
-        <g *ngIf="selectedDiagram" [diagram]="selectedDiagram!" diagram-preview ></g>
-      </svg>
+      <diagram-preview *ngIf="selectedDiagram" [width]="500" [height]="500" [diagram]="selectedDiagram">
+
+      </diagram-preview>
     </div>
   </div>
 
