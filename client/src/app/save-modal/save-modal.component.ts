@@ -22,7 +22,8 @@ export class SaveModalComponent implements AfterContentInit {
               public exportService: ExportService,
               private selectionService: SelectionService,
               private http: HttpClient,
-              private errorLauncherService: ErrorLauncherService) { }
+              private errorLauncherService: ErrorLauncherService,
+              public authenticatedService: AuthenticatedService) { }
 
   ngAfterContentInit(): void {
     this.selectionService.deselect();
