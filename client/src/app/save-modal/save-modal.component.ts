@@ -59,11 +59,7 @@ export class SaveModalComponent implements AfterContentInit {
   }
 
   private existsDiagramWithName() {
-    // Todo: @Andrew implement this.
-
-
-
-    return true;
+    return this.userService.diagramNameExists(this.userService.openDiagramName);
   }
 }
 

@@ -21,4 +21,6 @@ public interface IDiagramService {
     void toggleVisible(String id);
 
     boolean userOwner(String id, String email);
+
+    List<String> getDiagramNames(String email);
 }

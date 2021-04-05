@@ -90,14 +90,15 @@ export class AppComponent implements AfterViewInit {
   private isLoggedIn() {
     this.http.get("/me",{  responseType: 'text'
       }).subscribe(
-      (data:any) => {
-        this.userService.setAuthenticated(true);
-        if( data !== null) {
+      (usersDiagramNames: any) => {
+        let userDiagramNamesParsed: any = JSON.parse(usersDiagramNames);
+        if(Array.isArray(userDiagramNamesParsed) && typeof userDiagramNamesParsed[0] == "string"){
+          this.userService.addDiagramNames(userDiagramNamesParsed);
         }
+        this.userService.setAuthenticated(true);
       }, (error) =>  {
-        //TODO Open error modal or something
+        this.userService.clearDiagramNames();
         this.userService.setAuthenticated(false);
-        this.handleError(error)
       }
     );
   }

@@ -13,6 +13,7 @@ import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
 import {ErrorLauncherService} from "../error-launcher.service";
+import {UserService} from "../services/user.service";
 
 
 
@@ -33,7 +34,9 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
               private modalService: NgbModal,
               private diagramContainer: DiagramContainerService,
               private http: HttpClient,
-              private errorLauncherService: ErrorLauncherService) {
+              private errorLauncherService: ErrorLauncherService,
+              private userService: UserService
+              ) {
   }
 
   ngOnInit() {
@@ -57,8 +60,8 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
   setDiagram() {
     if (this.selectedIndex !== -1 && this.dbEntries != undefined) {
       this.diagramContainer.set(deserialiseDiagram(JSON.parse(this.dbEntries[this.selectedIndex].serialisedDiagram)));
+      this.userService.setOpenDiagramName(this.dbEntries[this.selectedIndex].title)
     }
-    //TODO set the currently open diagram in the service
   }
 
   triggerDeleteModal() {

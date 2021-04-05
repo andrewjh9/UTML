@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 
 @Service
@@ -63,5 +63,12 @@ public class DiagramServiceImpl implements IDiagramService {
     @Override
     public boolean userOwner(String id, String email) {
         return this.diagramRepository.getOne(id).getOwnerEmail().equals(email);
+    }
+
+    @Override
+    public List<String> getDiagramNames(String email) {
+        return this.diagramRepository.findByUserEmail(email).stream()
+                .map(Diagram::getTitle)
+                .collect(Collectors.toList());
     }
 }
