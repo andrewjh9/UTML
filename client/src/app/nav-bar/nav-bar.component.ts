@@ -13,7 +13,7 @@ import {ClearDiagramModalComponent} from "../clear-diagram-modal/clear-diagram-m
 import {ShapesetManagementModalComponent} from "../shapeset-management-modal/shapeset-management-modal.component";
 import {HelpModalComponent} from "../help-modal/help-modal.component";
 import {DeletionService} from "../services/deletion.service";
-import {AuthenticatedService} from "../services/authenticated.service";
+import {UserService} from "../services/user.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -28,7 +28,8 @@ export class NavBarComponent implements AfterViewInit {
               private cachingService: CachingService,
               private diagramContainer: DiagramContainerService,
               private zoomService: ZoomService,
-              private deletionService: DeletionService, public authenticatedService: AuthenticatedService) { }
+              private deletionService: DeletionService,
+              public userService: UserService) { }
 
   ngAfterViewInit() {
     let showHelpOnStart = localStorage.getItem(HelpModalComponent.LOCAL_STORAGE_KEY);

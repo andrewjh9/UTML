@@ -6,7 +6,7 @@ import {Diagram} from "../model/diagram";
 import {ActivatedRoute, Router, RoutesRecognized} from "@angular/router";
 import {deserialiseDiagram} from "../serialisation/deserialise/deserialise-diagram";
 import {DiagramContainerService} from "./services/diagram-container.service";
-import {AuthenticatedService} from "./services/authenticated.service";
+import {UserService} from "./services/user.service";
 
 
 
@@ -18,7 +18,7 @@ import {AuthenticatedService} from "./services/authenticated.service";
 export class AppComponent implements AfterViewInit {
   public loadDiagramId: String | undefined;
 
-  constructor(private authenticatedService: AuthenticatedService,
+  constructor(private userService: UserService,
               private keyboardEventCallbackMap: KeyboardEventCallerService,
               private route: ActivatedRoute,
               private router: Router,
@@ -91,13 +91,12 @@ export class AppComponent implements AfterViewInit {
     this.http.get("/me",{  responseType: 'text'
       }).subscribe(
       (data:any) => {
-        this.authenticatedService.setAuthenticated(true);
+        this.userService.setAuthenticated(true);
         if( data !== null) {
-          this.authenticatedService.setUserFullName(data)
         }
       }, (error) =>  {
         //TODO Open error modal or something
-        this.authenticatedService.setAuthenticated(false);
+        this.userService.setAuthenticated(false);
         this.handleError(error)
       }
     );

@@ -23,7 +23,7 @@ this tool to edit it further."
             placement="bottom">
       Save as .UTML
     </button>
-    <button *ngIf="this.authenticatedService.getAuthenticated()"
+    <button *ngIf="this.userService.getAuthenticated()"
             class="btn btn-outline-primary flex-grow-1 m-2"
             (click)="saveToDBOrLaunchOverwriteModal()"
             ngbTooltip="You can later resume editing this diagram and you can also make it visible to others using a

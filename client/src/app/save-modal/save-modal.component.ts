@@ -5,7 +5,7 @@ import {Diagram} from "../../model/diagram";
 import {SelectionService} from "../services/selection.service";
 import {HttpClient} from "@angular/common/http";
 import {ErrorLauncherService} from "../error-launcher.service";
-import {AuthenticatedService} from "../services/authenticated.service";
+import {UserService} from "../services/user.service";
 
 
 @Component({
@@ -23,7 +23,7 @@ export class SaveModalComponent implements AfterContentInit {
               private selectionService: SelectionService,
               private http: HttpClient,
               private errorLauncherService: ErrorLauncherService,
-              public authenticatedService: AuthenticatedService) { }
+              public userService: UserService) { }
 
   ngAfterContentInit(): void {
     this.selectionService.deselect();
