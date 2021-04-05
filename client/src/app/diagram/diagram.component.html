@@ -25,10 +25,11 @@
       <g drag-select-preview/>
       <g drag-drop-preview></g>
 
+      <g new-edge-preview></g>
+
       <svg:g *ngFor="let node of diagram.nodes">
         <svg:g *ngIf="edgeCreationIsActive" clickable-attachment-points [node]="node"/>
       </svg:g>
-      <g new-edge-preview></g>
     </svg>
   </div>
 
