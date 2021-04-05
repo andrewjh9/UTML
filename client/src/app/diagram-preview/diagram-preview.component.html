@@ -1,2 +1,6 @@
-<svg:g *ngFor="let edge of diagram.edges" edge-render-dispatch [edge]="edge"></svg:g>
-<svg:g *ngFor="let node of diagram.nodes" node-render-dispatch [node]="node"></svg:g>
+<svg [attr.width]="width"
+     [attr.height]="height"
+     [attr.viewBox]="viewBox">
+  <g *ngFor="let edge of diagram.edges" edge-render-dispatch [edge]="edge"/>
+  <g *ngFor="let node of diagram.nodes" node-render-dispatch [node]="node"/>
+</svg>

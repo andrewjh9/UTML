@@ -11,6 +11,7 @@
          (mousemove)="handleMouseMove($event)"
          id="diagram"
          style="overflow: hidden">
+      <g white-background></g>
       <g grid-overlay></g>
 
       <defs arrow-marker></defs>
@@ -24,10 +25,11 @@
       <g drag-select-preview/>
       <g drag-drop-preview></g>
 
+      <g new-edge-preview></g>
+
       <svg:g *ngFor="let node of diagram.nodes">
         <svg:g *ngIf="edgeCreationIsActive" clickable-attachment-points [node]="node"/>
       </svg:g>
-      <g new-edge-preview></g>
     </svg>
   </div>
 

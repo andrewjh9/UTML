@@ -11,7 +11,7 @@ import {DiamondNode} from "../../model/node/diamond-node";
 import {SwimlaneNode} from "../../model/node/swimlane-node";
 import {SystemBoundaryNode} from "../../model/node/system-boundary-node";
 import {SystemClockNode} from "../../model/node/system-clock-node";
-import {split} from "ts-node";
+import {CrossNode} from "../../model/node/cross-node";
 
 export function flattenActive(courseSets: {[key: string]: CourseSet}) {
   let result: CourseSet = {};
@@ -71,7 +71,7 @@ startState.styleObject = {
   'fill-opacity': 1,
   'stroke-opacity': 0.75,
 };
-let swimlane = new SwimlaneNode(60, 120, new Position(64,0));
+let swimlane = new SwimlaneNode(60, 120, new Position(64,4));
 swimlane.text = "Actor";
 
 ad.edges['Arrow'] = arrow;
@@ -85,16 +85,21 @@ ad.nodes['Swimlane'] = swimlane;
 
 
 let ucd: ShapeSet = {nodes: {}, edges: {}, active: true};
-let ie = arrow.getDeepCopy();
-ie.lineStyle = LineStyle.Dashed;
-ucd.edges['Include/Extend'] = ie;
+let include = arrow.getDeepCopy();
+include.lineStyle = LineStyle.Dashed;
+include.addMiddleLabel('<<include>>')
+let extend = include.getDeepCopy();
+extend.middleLabel!.value = ' <<extend>>'
+
+ucd.edges['Include'] = include;
+ucd.edges['Extend'] = extend;
 ucd.edges['Link'] = association;
 ucd.nodes['Actor'] = new ActorNode(40, 80, new Position(84, 10));
 ucd.edges['Generalisation'] = generalisation;
 let uc = new EllipseNode(186, 75, new Position(10, 2));
 uc.text = 'Use Case';
 ucd.nodes['Use case'] = uc;
-let systemboundary = new SystemBoundaryNode(186, 110, new Position(4,0));
+let systemboundary = new SystemBoundaryNode(186, 110, new Position(4,4));
 systemboundary.text = "Your system";
 ucd.nodes['System Boundary'] = systemboundary;
 ucd.nodes['System Clock'] = new SystemClockNode(100, 100, new Position(52, 2));
@@ -108,6 +113,24 @@ let arc = new Edge( new Position(10, 5), new Position( 196, 5));
 arc.lineType = LineType.Arc;
 arc.endStyle = EndStyle.SmallFilledArrow;
 arc.middlePositions.push(new Position(103, 35));
+
+let sequence: ShapeSet = {nodes: {}, edges: {}, active: true};
+let msg = new Edge(new Position(10, 5), new Position( 196, 5));
+msg.endStyle = EndStyle.SmallFilledArrow;
+let resp = msg.getDeepCopy();
+resp.lineStyle = LineStyle.Dashed;
+let dashed = new Edge(new Position(10, 5), new Position( 196, 5));
+dashed.lineStyle = LineStyle.Dashed;
+sequence.edges['Message'] = msg;
+sequence.edges['Response'] = resp;
+sequence.edges['Dashed'] = dashed;
+let lifeline = new RectangleNode(140, 40, new Position(38, 2));
+let cross = new CrossNode(60, 60, new Position(78, 2));
+lifeline.text = 'Classifier'
+let execution = new RectangleNode(40, 100, new Position(78, 2));
+sequence.nodes['Lifeline'] = lifeline;
+sequence.nodes['Execution'] = execution;
+sequence.nodes['Destruction'] = cross;
 
 let fsm: ShapeSet = {nodes: {}, edges: {}, active: true};
 fsm.nodes['State'] = state;
@@ -153,7 +176,8 @@ export let courseSets: {[key: string]: CourseSet};
 let design: CourseSet = {
   'Activity Diagram': ad,
   'Class Diagram': cd,
-  'Use Case Diagram': ucd
+  'Use Case Diagram': ucd,
+  'Sequence Diagram': sequence,
 };
 let lm: CourseSet = {
   'Deterministic finite automaton': fsm,

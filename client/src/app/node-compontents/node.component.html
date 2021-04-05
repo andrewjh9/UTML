@@ -4,6 +4,16 @@
        (dblclick)="handleDoubleClick($event)"
        [ngStyle]="{'cursor': isSelected ? 'move' : 'pointer'}"/>
 
+<!--Rectangle to make transparent nodes easily clickable.-->
+<svg:rect *ngIf="node.transparent"
+          [attr.x]="node.position.x"
+          [attr.y]="node.position.y"
+          [attr.width]="node.width"
+          [attr.height]="node.height"
+          (mousedown)="handleMouseDown($event)"
+          (dblclick)="handleDoubleClick($event)"
+          style="stroke: black; stroke-opacity: 0; stroke-width: 12; fill: none;"
+          [ngStyle]="{'cursor': isSelected ? 'move' : 'pointer'}"/>
 
 <svg:g *ngIf="startEndRepositioner.isActive()">
   <svg:ellipse *ngFor="let point of node.getAllAttachmentPoints(); let i = index;"

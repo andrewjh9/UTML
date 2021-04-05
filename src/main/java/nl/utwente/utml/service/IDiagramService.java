@@ -12,13 +12,13 @@ public interface IDiagramService {
 
     List<Diagram> getAllVisible() ;
 
-    void delete(long id);
+    void delete(String id);
 
-    Diagram getVisible(long id);
+    Diagram getVisible(String id);
 
     void update(Diagram diagram);
 
-    void toggleVisible(long id);
+    void toggleVisible(String id);
 
-    boolean userOwner(long id, String email);
+    boolean userOwner(String id, String email);
 }

@@ -22,7 +22,7 @@
             (click)="selectedIndex = i" class="clickable"
             [ngClass]="{selected: i === selectedIndex}">
           <td>{{dbEntry.title}}</td>
-          <td>{{dbEntry.lastModified | date:'dd/MM/yyyy'}}</td>
+<!--          <td>{{dbEntry.lastModified | date:'dd/MM/yyyy'}}</td>-->
           <td class="icon">
             <button class="btn btn-outline-secondary text-center" style="width: 50px" (click)="triggerEditModal()"
                     ngbTooltip="Edit Title" placement="top">
@@ -50,9 +50,20 @@
     </div>
 
     <div class="border-left">
-      <svg width="500" height="500">
-        <g *ngIf="selectedDiagram" [diagram]="selectedDiagram!" diagram-preview ></g>
-      </svg>
+      <div *ngIf="selectedIndex !== -1" class="w-100 d-flex p-1 m-1">
+        <div class="flex-grow-1">
+          <input #urlElement class="form-control" type="text" [value]="url" readonly/>
+        </div>
+        <div class="flex-grow-0">
+          <button class="btn btn-outline-primary ml-1" ngbTooltip="Copy to Clipboard" (click)="copyUrl()">
+            <fa-icon [icon]="['fas', 'copy']"></fa-icon>
+          </button>
+        </div>
+      </div>
+      <hr>
+      <diagram-preview *ngIf="selectedDiagram" [width]="500" [height]="500" [diagram]="selectedDiagram">
+
+      </diagram-preview>
     </div>
   </div>
 
@@ -88,7 +99,7 @@
     <h4 class="modal-title">Edit Title</h4>
   </div>
   <div class="modal-body">
-    <input class="form-control"*ngIf="dbEntries"  [(ngModel)]="dbEntries[selectedIndex].title" type="text">
+    <input class="form-control" *ngIf="dbEntries" [(ngModel)]="dbEntries[selectedIndex].title" type="text">
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-success" (click)="modal.close(); updateChanges();">Save</button>

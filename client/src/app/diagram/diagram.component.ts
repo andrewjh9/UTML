@@ -160,26 +160,6 @@ export class DiagramComponent implements AfterViewInit {
     let pos = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
     if (event.shiftKey) {
       this.dragSelectionService.activate(pos);
-    } else if (event.ctrlKey) {
-      // Check that no node or edge was double clicked.
-      for (let node of this.diagram.nodes) {
-        let nodeStart = node.position.getDeepCopy();
-        let nodeEnd = Position.add(node.position, new Position(node.width, node.height));
-        if (Position.liesBetween(nodeStart, pos, nodeEnd)) {
-          return;
-        }
-      }
-
-      for (let edge of this.diagram.edges) {
-        let allPoints = edge.getAllPoints();
-        for (let i = 0; i < allPoints.length - 1; i++) {
-          if (liesOnSegment(pos, allPoints[i], allPoints[i + 1])) {
-            return;
-          }
-        }
-      }
-
-      this.lensOffsetService.activate(this.mousePositionTransformService.transFormZoomAndMenubar(new Position(event.x, event.y)));
     }
   }
 }

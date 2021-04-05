@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SwimlaneNodeComponent } from './swimlane-node.component';
+import { WhiteBackgroundComponent } from './white-background.component';
 
-describe('SwimlaneNodeComponent', () => {
-  let component: SwimlaneNodeComponent;
-  let fixture: ComponentFixture<SwimlaneNodeComponent>;
+describe('WhiteBackgroundComponent', () => {
+  let component: WhiteBackgroundComponent;
+  let fixture: ComponentFixture<WhiteBackgroundComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SwimlaneNodeComponent ]
+      declarations: [ WhiteBackgroundComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SwimlaneNodeComponent);
+    fixture = TestBed.createComponent(WhiteBackgroundComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -56,10 +56,10 @@
       <div [ngbNavOutlet]="nav" class="mt-2"></div>
     </div>
 
-    <div class="preview-container border-left">
-      <svg width="500" height="700">
-        <g *ngIf="selectedDiagram" diagram-preview [diagram]="selectedDiagram!"></g>
-      </svg>
+    <div class="preview-container border-left" style="width:700px">
+      <diagram-preview *ngIf="selectedDiagram" [height]="500" [width]="700" [diagram]="selectedDiagram!">
+
+      </diagram-preview>
     </div>
 
   </div>

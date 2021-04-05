@@ -10,6 +10,9 @@ import {ClassNode} from "../../model/node/class-node";
 import {ActorNode} from "../../model/node/actor-node";
 import {HourglassNode} from "../../model/node/hourglass-node";
 import {SwimlaneNode} from "../../model/node/swimlane-node";
+import {SystemClockNode} from "../../model/node/system-clock-node";
+import {SystemBoundaryNode} from "../../model/node/system-boundary-node";
+import {CrossNode} from "../../model/node/cross-node";
 
 function deserialiseGeneric(serialisedNode: SerialisedNode, constructor: GenericNodeConstructor): Node {
   let result = new constructor(serialisedNode.width, serialisedNode.height,
@@ -48,9 +51,15 @@ export function deserialiseNode(serialisedNode: SerialisedNode): Node {
       return deserialiseClassNode(serialisedNode as SerialisedClassNode);
     case 'SwimlaneNode':
       return deserialiseGeneric(serialisedNode, SwimlaneNode);
+    case 'SystemClockNode':
+      return deserialiseGeneric(serialisedNode, SystemClockNode);
+    case 'SystemBoundaryNode':
+      return deserialiseGeneric(serialisedNode, SystemBoundaryNode);
+    case 'CrossNode':
+      return deserialiseGeneric(serialisedNode, CrossNode);
   }
 
-  throw new Error("Node of unknown type and the node can therefore not be deserialised.");
+  throw new Error(`Node of unknown type '${serialisedNode.type}' and the node can therefore not be deserialised.`);
 }
 
 type GenericNodeConstructor = {

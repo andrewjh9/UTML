@@ -33,14 +33,7 @@
         <input class="form-control form-check" type="checkbox" [(ngModel)]="node.hasDoubleBorder"></div>
     </div>
 
-
-<!--    <div  class="form-group row px-3" *ngFor="let key of node.styleKeys">-->
-<!--      <label class="w-25 col-form-label">{{key}}</label>-->
-<!--      <div class="w-75">-->
-<!--        <input class="w-100" type="text" [(ngModel)]="node.styleObject[key]">-->
-<!--      </div>-->
-<!--    </div>-->
-    <div class="form-group row px-3">
+    <div class="form-group row px-3" *ngIf="!node.transparent">
       <label class="w-25 col-form-label">Color</label>
       <div class="w-75">
         <input type="color" class="w-100" [(ngModel)]="node.styleObject['fill']">
@@ -57,9 +50,9 @@
 </div>
 <div class="modal-footer">
   <div (click)="modal.close('Ok click')">
-    <button type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+    <button type="button" class="btn btn-outline-danger" (click)="delete()">Delete</button>
   </div>
-  <button type="button" ngbAutofocus class="btn btn-primary" (click)="modal.close('Ok click'); cache();">Save</button>
+  <button type="button" ngbAutofocus class="btn btn-outline-primary" (click)="modal.close('Ok click'); cache();">Save</button>
 </div>
 
 

@@ -9,8 +9,9 @@ import java.util.List;
 
 @Repository
 @Transactional
-public interface IDiagramRepository extends JpaRepository< Diagram, Long> {
+public interface IDiagramRepository extends JpaRepository< Diagram, String> {
     List<Diagram> findByUserEmail(String email);
     List<Diagram> findByVisibleTrue();
-    Diagram findByIdAndVisibleTrue(long id);
+    Diagram findByIdAndVisibleTrue(String id);
+    Diagram findByUserEmailAndTitle(String email, String title);
 }

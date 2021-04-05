@@ -9,6 +9,7 @@ import {DiagramContainerService} from "../services/diagram-container.service";
 import {fsm} from "../../model/examples/fsm";
 import {LocalStorageService} from "../services/caching/local-storage.service";
 import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
+import {ErrorLauncherService} from "../error-launcher.service";
 
 @Component({
   selector: 'app-upload-modal',
@@ -24,7 +25,8 @@ export class UploadModalComponent {
   constructor(public modal: NgbActiveModal,
               private diagramContainer: DiagramContainerService,
               private localStorageService: LocalStorageService,
-              private modalService: NgbModal){}
+              private modalService: NgbModal,
+              private errorLauncherService: ErrorLauncherService){}
 
   onChange(event: any) {
     this.file = event!.target!.files[0];
@@ -35,8 +37,8 @@ export class UploadModalComponent {
         this.selectedDiagram = deserialiseDiagram(diagramJSON as SerialisedDiagram);
       })
       .catch((err) => {
-        console.log(err)
-        alert('The file you are trying to upload can not be converted to a diagram.');
+        console.log(err);
+        this.errorLauncherService.launch('The file you are trying to upload can not be converted to a diagram.');
       });
   }
 

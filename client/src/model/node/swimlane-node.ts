@@ -1,6 +1,12 @@
 import {RectangleNode} from "./rectangle-node";
+import {Position} from "../position";
 
 export class SwimlaneNode extends RectangleNode {
+  constructor(width: number, height: number, position: Position) {
+    super(width, height, position);
+    this._transparent = true;
+  }
+
   getNodeTypeName(): string {
     return 'SwimlaneNode';
   }

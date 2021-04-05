@@ -16,6 +16,13 @@
             <div class="w-100">
               <svg height="40" width="196">
                 <svg:g edge-render-dispatch [edge]="shapeSets[diagramGroup].edges[edgeKey]"/>
+                <svg:text *ngIf="shapeSets[diagramGroup].edges[edgeKey].middleLabel"
+                          dominant-baseline="middle"
+                          text-anchor="middle"
+                          x="108"
+                          y="33">
+                  {{shapeSets[diagramGroup].edges[edgeKey].middleLabel!.value}}
+                </svg:text>
               </svg>
             </div>
           </a>

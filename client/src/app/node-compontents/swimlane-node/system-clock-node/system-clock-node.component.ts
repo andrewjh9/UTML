@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {SystemClockNode} from "../../../model/node/system-clock-node";
+import {SystemClockNode} from "../../../../model/node/system-clock-node";
 
 @Component({
   selector: '[system-clock-node-render]',
