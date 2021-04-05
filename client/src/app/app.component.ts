@@ -6,6 +6,7 @@ import {Diagram} from "../model/diagram";
 import {ActivatedRoute, Router, RoutesRecognized} from "@angular/router";
 import {deserialiseDiagram} from "../serialisation/deserialise/deserialise-diagram";
 import {DiagramContainerService} from "./services/diagram-container.service";
+import {AuthenticatedService} from "./services/authenticated.service";
 
 
 
@@ -15,17 +16,16 @@ import {DiagramContainerService} from "./services/diagram-container.service";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements AfterViewInit {
-  public userFullName: string | undefined;
-  public userDiagrams: Diagram[] | undefined;
-  public loadDiagramId: Number | undefined;
+  public loadDiagramId: String | undefined;
 
-  constructor(private renderer: Renderer2,
+  constructor(private authenticatedService: AuthenticatedService,
               private keyboardEventCallbackMap: KeyboardEventCallerService,
               private route: ActivatedRoute,
               private router: Router,
               private editService: EditService,
               private diagramContainer: DiagramContainerService,
-              private http: HttpClient) {
+              private http: HttpClient,
+              private renderer: Renderer2) {
   }
 
   ngOnInit(): void {
@@ -33,14 +33,14 @@ export class AppComponent implements AfterViewInit {
     this.router.events.subscribe(val => {
       if (val instanceof RoutesRecognized) {
         // @ts-ignore
-        this.loadDiagramId = Number.parseInt(val.state.root.firstChild.params.id);
+        this.loadDiagramId = (val.state.root.firstChild.params.id);
         console.log(this.loadDiagramId)
         // @ts-ignore
         if(this.loadDiagramId){
           this.http.get("api/diagram/visible",{params: new HttpParams().set("id", String(this.loadDiagramId))}).subscribe(
             (data:any) => {
               if(data.serialisedDiagram) {
-                this.diagramContainer.set(deserialiseDiagram(data.serialisedDiagram))
+                this.diagramContainer.set(deserialiseDiagram(JSON.parse(data.serialisedDiagram)))
               } else{
                 window.alert("Diagram could not be loaded");
                 this.router.navigateByUrl("");
@@ -91,17 +91,16 @@ export class AppComponent implements AfterViewInit {
     this.http.get("/me",{  responseType: 'text'
       }).subscribe(
       (data:any) => {
-        if(data == null ){
-          this.userFullName = undefined;
-        } else{
-          this.userFullName = data
+        this.authenticatedService.setAuthenticated(true);
+        if( data !== null) {
+          this.authenticatedService.setUserFullName(data)
         }
-      },error =>  {
+      }, (error) =>  {
         //TODO Open error modal or something
+        this.authenticatedService.setAuthenticated(false);
         this.handleError(error)
       }
     );
-
   }
 
   handleError(error: any) {

@@ -5,6 +5,7 @@ import {Diagram} from "../../model/diagram";
 import {SelectionService} from "../services/selection.service";
 import {HttpClient} from "@angular/common/http";
 import {ErrorLauncherService} from "../error-launcher.service";
+import {AuthenticatedService} from "../services/authenticated.service";
 
 
 @Component({

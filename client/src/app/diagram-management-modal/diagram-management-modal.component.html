@@ -22,7 +22,7 @@
             (click)="selectedIndex = i" class="clickable"
             [ngClass]="{selected: i === selectedIndex}">
           <td>{{dbEntry.title}}</td>
-          <td>{{dbEntry.lastModified | date:'dd/MM/yyyy'}}</td>
+<!--          <td>{{dbEntry.lastModified | date:'dd/MM/yyyy'}}</td>-->
           <td class="icon">
             <button class="btn btn-outline-secondary text-center" style="width: 50px" (click)="triggerEditModal()"
                     ngbTooltip="Edit Title" placement="top">

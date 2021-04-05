@@ -37,7 +37,7 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
   }
 
   ngOnInit() {
-    this.http.get('localhost:8080/api/diagram/all/me').subscribe(
+    this.http.get('/api/diagram/all/me').subscribe(
       (data:any) => {
         this.dbEntries = data;
       },error =>  {
@@ -51,12 +51,12 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
     if(!this.dbEntries){
       return;
     }
-    return this.selectedIndex === -1  ? undefined : deserialiseDiagram(this.dbEntries[this.selectedIndex].serialisedDiagram);
+    return this.selectedIndex === -1  ? undefined : deserialiseDiagram(JSON.parse(this.dbEntries[this.selectedIndex].serialisedDiagram));
   }
 
   setDiagram() {
     if (this.selectedIndex !== -1 && this.dbEntries != undefined) {
-      this.diagramContainer.set(deserialiseDiagram(this.dbEntries[this.selectedIndex].serialisedDiagram));
+      this.diagramContainer.set(deserialiseDiagram(JSON.parse(this.dbEntries[this.selectedIndex].serialisedDiagram)));
     }
   }
 
@@ -98,6 +98,9 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
     if (this.selectedIndex !== -1 && this.dbEntries) {
       this.http.get('/api/diagram/toggle/visible',{params: new HttpParams().set("id",String(this.dbEntries[this.selectedIndex].id))}).subscribe(
         (data:any) => {
+          if (this.dbEntries) {
+            this.dbEntries[this.selectedIndex].visible = !this.dbEntries[this.selectedIndex].visible;
+          }
         },error =>  {
           this.errorLauncherService.launch('Something went wrong whilst toggling visibility.');
           console.error(error);
@@ -135,5 +138,5 @@ export type DatabaseDiagramEntry = {
   title: string,
   lastModified: Date,
   visible: boolean,
-  serialisedDiagram: SerialisedDiagram
+  serialisedDiagram: string
 }

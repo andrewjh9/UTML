@@ -25,7 +25,7 @@ public class  DiagramController {
 
 
     @GetMapping("/visible")
-    public Diagram getVisibleDiagram(@RequestParam long id){
+    public Diagram getVisibleDiagram(@RequestParam String id){
         return diagramService.getVisible(id);
     }
 
@@ -51,14 +51,14 @@ public class  DiagramController {
 
 
     @DeleteMapping
-    public List<Diagram> deleteDiagram(@RequestParam long id){
+    public List<Diagram> deleteDiagram(@RequestParam String id){
         diagramService.delete(id);
         return diagramService.getAllUserDiagrams(getUserEmail());
     }
 
 
     @GetMapping("/toggle/visible")
-    public void toggleVisibility(@RequestParam long id){
+    public void toggleVisibility(@RequestParam String id){
         if(diagramService.userOwner(id, getUserEmail())){
             diagramService.toggleVisible(id);
         } else {
