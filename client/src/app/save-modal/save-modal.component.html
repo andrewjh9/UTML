@@ -25,7 +25,7 @@ this tool to edit it further."
     </button>
     <button *ngIf="isAuthenticated"
             class="btn btn-outline-primary flex-grow-1 m-2"
-            (click)="saveToDB()"
+            (click)="saveToDBOrLaunchOverwriteModal()"
             ngbTooltip="You can later resume editing this diagram and you can also make it visible to others using a
 unique URL."
             placement="bottom">
@@ -35,5 +35,20 @@ unique URL."
 </div>
 
 
+<ng-template #overwriteModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Overwrite Existing Diagram</h4>
+  </div>
+  <div class="modal-body">
+    <div class="alert alert-warning">
+      You already have a diagram with that name stored on the server. Would you like to overwrite it.
+      The existing diagram will then be lost forever.
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-secondary" (click)="modal.close();">Cancel</button>
+    <button type="button" class="btn btn-outline-primary" (click)="modal.close(); saveToDB();">Overwrite</button>
+  </div>
+</ng-template>
 
 

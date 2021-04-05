@@ -6,7 +6,7 @@ import {ErrorModalComponent} from "./error-modal/error-modal.component";
   providedIn: 'root'
 })
 export class ErrorLauncherService {
-  private static readonly DEFAULT_ERROR_MESSAGE = 'An error has occured.'
+  private static readonly DEFAULT_ERROR_MESSAGE = 'An error has occurred.'
   private _errorMessage: string = ErrorLauncherService.DEFAULT_ERROR_MESSAGE;
 
   constructor(private modalService: NgbModal) { }
