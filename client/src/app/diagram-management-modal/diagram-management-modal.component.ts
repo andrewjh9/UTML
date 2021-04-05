@@ -12,6 +12,7 @@ import {DiagramContainerService} from "../services/diagram-container.service";
 import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
+import {ErrorLauncherService} from "../error-launcher.service";
 
 
 
@@ -23,17 +24,26 @@ import {catchError} from "rxjs/operators";
 export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
   @ViewChild('deleteModal') deleteModal!: ElementRef;
   @ViewChild('editModal') editModal!: ElementRef;
+  @ViewChild('urlElement') urlElement!: ElementRef;
 
   dbEntries: Array<DatabaseDiagramEntry> | undefined;
   selectedIndex = -1;
+
+  constructor(public modal: NgbActiveModal,
+              private modalService: NgbModal,
+              private diagramContainer: DiagramContainerService,
+              private http: HttpClient,
+              private errorLauncherService: ErrorLauncherService) {
+  }
 
   ngOnInit() {
     this.http.get('localhost:8080/api/diagram/all/me').subscribe(
       (data:any) => {
         this.dbEntries = data;
       },error =>  {
-        //TODO Open error modal or something
-        this.handleError(error)
+        this.errorLauncherService.launch('Something went wrong when loading your diagrams.' +
+          ' Are you logged in?');
+        console.error(error);
       })
   }
 
@@ -42,11 +52,6 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
       return;
     }
     return this.selectedIndex === -1  ? undefined : deserialiseDiagram(this.dbEntries[this.selectedIndex].serialisedDiagram);
-  }
-
-  constructor(public modal: NgbActiveModal,
-              private modalService: NgbModal,
-              private diagramContainer: DiagramContainerService, private http: HttpClient) {
   }
 
   setDiagram() {
@@ -65,8 +70,8 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
         (data:any) => {
             this.dbEntries = data; this.selectedIndex = -1;
         },error =>  {
-          //TODO Open error modal or something
-          this.handleError(error)
+          this.errorLauncherService.launch();
+          console.error(error);
       })
     }
   }
@@ -79,8 +84,8 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
       this.http.put('/api/diagram/',this.dbEntries[this.selectedIndex]).subscribe(
         (data:any) => {
         },error =>  {
-          //TODO Open error modal or something
-          this.handleError(error)
+          this.errorLauncherService.launch();
+          console.error(error);
         })
     }
   }
@@ -94,16 +99,34 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
       this.http.get('/api/diagram/toggle/visible',{params: new HttpParams().set("id",String(this.dbEntries[this.selectedIndex].id))}).subscribe(
         (data:any) => {
         },error =>  {
-          //TODO Open error modal or something
-          this.handleError(error)
+          this.errorLauncherService.launch('Something went wrong whilst toggling visibility.');
+          console.error(error);
         })
     }
   }
 
-  handleError(error: any) {
-    console.log(error)
+  get url(): string {
+    const URL_PREFIX: string = 'www.utml.nl/diagram'
+    return `${URL_PREFIX}/${this.dbEntries![this.selectedIndex].id.toString()}`
   }
 
+  copyUrl() {
+    this.urlElement.nativeElement.focus();
+    this.urlElement.nativeElement.select();
+    try {
+      let success = document.execCommand('copy');
+      if (success) {
+        console.log('Successfully copied');
+      } else {
+        console.log('Unsuccessfully copied');
+      }
+    } catch (err) {}
+  }
+
+  handleError(error: any): void {
+    console.error(error);
+    this.errorLauncherService.launch();
+  }
 }
 
 // Todo: Match this up with the actual DB structure once it is known
