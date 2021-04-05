@@ -76,9 +76,6 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
     }
   }
 
-  save (){
-    // return axios.post('/api/diagram/',{serializedDiagram:"diagram"}).then(response => this.userFullName = response.data)
-  }
   updateChanges() {
     if(this.dbEntries && this.dbEntries[this.selectedIndex]){
       this.http.put('/api/diagram/',this.dbEntries[this.selectedIndex]).subscribe(
@@ -109,7 +106,7 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
   }
 
   get url(): string {
-    const URL_PREFIX: string = 'www.utml.nl/diagram'
+    const URL_PREFIX: string = 'utml.nl/diagram'
     return `${URL_PREFIX}/${this.dbEntries![this.selectedIndex].id.toString()}`
   }
 
