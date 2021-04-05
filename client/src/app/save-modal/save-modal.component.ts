@@ -50,6 +50,7 @@ export class SaveModalComponent implements AfterContentInit {
   saveToDB() {
     this.http.post('/api/diagram/', this.exportService.getDiagramJSON(this.exportService.filename)).subscribe(
         (data: any) => {
+          this.userService.addDiagramNames([this.exportService.filename])
           this.modal.close()
         },error => {
           console.error(error);
