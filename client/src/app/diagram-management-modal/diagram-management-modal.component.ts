@@ -58,6 +58,7 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
     if (this.selectedIndex !== -1 && this.dbEntries != undefined) {
       this.diagramContainer.set(deserialiseDiagram(JSON.parse(this.dbEntries[this.selectedIndex].serialisedDiagram)));
     }
+    //TODO set the currently open diagram in the service
   }
 
   triggerDeleteModal() {

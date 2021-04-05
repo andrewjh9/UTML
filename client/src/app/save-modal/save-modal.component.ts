@@ -60,6 +60,9 @@ export class SaveModalComponent implements AfterContentInit {
 
   private existsDiagramWithName() {
     // Todo: @Andrew implement this.
+
+
+
     return true;
   }
 }
