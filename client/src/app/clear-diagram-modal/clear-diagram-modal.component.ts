@@ -15,5 +15,10 @@ export class ClearDiagramModalComponent {
 
   clearDiagram(): void {
     this.diagramContainer.set(new Diagram());
+    // @ts-ignore
+    //TS ignore is required as we don't wish to have title, but it won't compile with null.
+    window.history.pushState({}, null, '/');
+
+
   }
 }
