@@ -1,11 +1,9 @@
 import {Position} from "../../model/position";
-// import {FormattedElement} from "./reposition.service";
 import {Injectable} from "@angular/core";
 import {Deactivatable} from "./deactivatable";
 import {SnapService} from "./snap.service";
 import {Node} from "../../model/node/node";
 import {CachingService} from "./caching/caching.service";
-import {MousePositionTransformService} from "./mouse-position-transform.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +13,7 @@ export class ResizeService implements Deactivatable {
   private startPosition?: Position;
   private resizePointIndex?: number;
   constructor(private snapService: SnapService,
-              private cachingService: CachingService,
-              private mousePositionTransformService: MousePositionTransformService) { }
+              private cachingService: CachingService) { }
 
   public isActive(): boolean {
     return this.node !== undefined;

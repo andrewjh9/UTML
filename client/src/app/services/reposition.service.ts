@@ -42,7 +42,6 @@ export class RepositionService implements Deactivatable {
     }
 
     if (this.selectedEdges.length > 0) {
-      console.log(this.selectedEdges)
       this.edgeStartPositionsPoints = this.selectedEdges.map(e => {
         return e.startPosition instanceof Position ? e.startPosition : undefined;
       });

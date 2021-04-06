@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,10 +9,7 @@ import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
 import {FormsModule} from "@angular/forms";
 import { LabelComponent } from './label/label.component';
 import {RepositionService} from "./services/reposition.service";
-import {ModeSelectorComponent} from "./mode-selector/mode-selector.component";
-import {ModeService} from "./services/mode.service";
 import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.component';
-import { SelectedEditorComponent } from './selected-editor/selected-editor.component';
 import {DeletionService} from "./services/deletion.service";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
@@ -90,9 +86,7 @@ import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-co
     EdgeComponent,
     ArrowMarkerComponent,
     LabelComponent,
-    ModeSelectorComponent,
     NewEdgePreviewComponent,
-    SelectedEditorComponent,
     EdgeEditorComponent,
     NodeEditorComponent,
     MoveMenuComponent,
@@ -155,7 +149,7 @@ import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-co
         NgbModule,
         FontAwesomeModule
     ],
-  providers: [RepositionService, ModeService, DeletionService],
+  providers: [RepositionService, DeletionService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
