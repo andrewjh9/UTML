@@ -11,7 +11,6 @@
       <thead>
         <tr>
           <th scope="col">Title</th>
-          <th scope="col">Last Modified</th>
           <th scope="col"></th>
           <th scope="col"></th>
           <th scope="col"></th>
@@ -22,7 +21,6 @@
             (click)="selectedIndex = i" class="clickable"
             [ngClass]="{selected: i === selectedIndex}">
           <td>{{dbEntry.title}}</td>
-<!--          <td>{{dbEntry.lastModified | date:'dd/MM/yyyy'}}</td>-->
           <td class="icon">
             <button class="btn btn-outline-secondary text-center" style="width: 50px" (click)="triggerEditModal()"
                     ngbTooltip="Edit Title" placement="top">
@@ -50,7 +48,7 @@
     </div>
 
     <div class="border-left">
-      <div *ngIf="selectedIndex !== -1" class="w-100 d-flex p-1 m-1">
+      <div *ngIf="selectedIndex !== -1 && dbEntries !== undefined && !dbEntries[selectedIndex].visible" class="w-100 d-flex p-1 m-1">
         <div class="flex-grow-1">
           <input #urlElement class="form-control" type="text" [value]="url" readonly/>
         </div>
