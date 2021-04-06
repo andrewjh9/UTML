@@ -90,7 +90,7 @@ export class AppComponent implements AfterViewInit {
   private isLoggedIn() {
     this.http.get("/me",{  responseType: 'text'
       }).subscribe(
-      (data:any) => {
+      (data: any) => {
         this.authenticatedService.setAuthenticated(true);
         if( data !== null) {
           this.authenticatedService.setUserFullName(data)

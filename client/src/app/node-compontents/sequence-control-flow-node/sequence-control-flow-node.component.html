@@ -1,0 +1,26 @@
+<svg:rect [attr.height]="node.height"
+          [attr.width]="node.width"
+          [attr.x]=node.position.x
+          [attr.y]= node.position.y
+          stroke-width="2"
+          stroke="black"
+          fill="none">
+</svg:rect>
+<svg:path [attr.d]="path" style="stroke: black; stroke-width: 2; fill: white; fill-opacity: 0"/>
+<svg:text font-weight="bold"
+          [attr.x]="textPos.x"
+          [attr.y]="textPos.y"
+          dominant-baseline="middle"
+          text-anchor="middle">
+  {{name}}
+</svg:text>
+<svg:text
+  font-family="sans-serif"
+  class="movable">
+  <svg:tspan
+    *ngFor="let textLine of textLines; let i = index;"
+    [attr.x]="node.position.x + 5"
+    [attr.y]="node.position.y + 50 + (i * 14)">
+    {{textLine}}
+  </svg:tspan>
+</svg:text>

@@ -80,6 +80,7 @@ import { SystemBoundaryNodeComponent } from './node-compontents/system-boundary-
 import { WhiteBackgroundComponent } from './white-background/white-background.component';
 import { CrossNodeRenderComponent } from './node-compontents/cross-node/cross-node-render.component';
 import { ErrorModalComponent } from './error-modal/error-modal.component';
+import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-control-flow-node/sequence-control-flow-node.component';
 
 @NgModule({
   declarations: [
@@ -144,6 +145,7 @@ import { ErrorModalComponent } from './error-modal/error-modal.component';
     WhiteBackgroundComponent,
     CrossNodeRenderComponent,
     ErrorModalComponent,
+    SequenceControlFlowNodeComponent,
   ],
     imports: [
         BrowserModule,

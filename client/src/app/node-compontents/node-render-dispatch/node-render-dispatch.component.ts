@@ -11,6 +11,7 @@ import {SystemBoundaryNode} from "../../../model/node/system-boundary-node";
 import {INSPECT_CUSTOM} from "ts-node";
 import {SystemClockNode} from "../../../model/node/system-clock-node";
 import {CrossNode} from "../../../model/node/cross-node";
+import {SequenceControlFlowNode} from "../../../model/node/sequence-control-flow-node";
 
 @Component({
   selector: '[node-render-dispatch]',
@@ -23,7 +24,7 @@ export class NodeRenderDispatchComponent {
   isRectangle(node: Node): boolean {
     return node instanceof RectangleNode && !(node instanceof ClassNode) && !(node instanceof HourglassNode)
       && !(node instanceof ActorNode) && !(node instanceof SwimlaneNode) && !(node instanceof SystemBoundaryNode)
-      && !(node instanceof SystemClockNode) && !(node instanceof CrossNode);
+      && !(node instanceof SystemClockNode) && !(node instanceof CrossNode) && !(node instanceof SequenceControlFlowNode);
   }
 
   castToRectangle(node: Node): RectangleNode {
@@ -101,5 +102,13 @@ export class NodeRenderDispatchComponent {
 
   castToCrossNode(node: Node) {
     return <CrossNode> node;
+  }
+
+  isSequenceControlFlowNode(node: Node) {
+    return node instanceof SequenceControlFlowNode;
+  }
+
+  castToSequenceControlFlowNode(node: Node) {
+    return <SequenceControlFlowNode> node;
   }
 }

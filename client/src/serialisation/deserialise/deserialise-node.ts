@@ -1,4 +1,8 @@
-import {SerialisedClassNode, SerialisedNode} from "../serialised-data-structures/serialised-node";
+import {
+  SerialisedClassNode,
+  SerialisedNode,
+  SerialisedSequenceControlFlowNode
+} from "../serialised-data-structures/serialised-node";
 import {Node} from "../../model/node/node";
 import {RectangleNode} from "../../model/node/rectangle-node";
 import {deserialisePosition} from "./deserialise-position";
@@ -13,6 +17,8 @@ import {SwimlaneNode} from "../../model/node/swimlane-node";
 import {SystemClockNode} from "../../model/node/system-clock-node";
 import {SystemBoundaryNode} from "../../model/node/system-boundary-node";
 import {CrossNode} from "../../model/node/cross-node";
+import {ExecutionNode} from "../../model/node/execution-node";
+import {SequenceControlFlowNode} from "../../model/node/sequence-control-flow-node";
 
 function deserialiseGeneric(serialisedNode: SerialisedNode, constructor: GenericNodeConstructor): Node {
   let result = new constructor(serialisedNode.width, serialisedNode.height,
@@ -31,6 +37,11 @@ function deserialiseClassNode(serialisedClassNode: SerialisedClassNode): ClassNo
   result.secondLine = serialisedClassNode.secondLine;
   result.styleObject = serialisedClassNode.styleObject;
   return result;
+}
+
+function deserialiseSequenceControlFlowNode(serialised: SerialisedSequenceControlFlowNode): SequenceControlFlowNode {
+  return new SequenceControlFlowNode(serialised.width, serialised.height, deserialisePosition(serialised.position),
+    serialised.name);
 }
 
 export function deserialiseNode(serialisedNode: SerialisedNode): Node {
@@ -57,6 +68,10 @@ export function deserialiseNode(serialisedNode: SerialisedNode): Node {
       return deserialiseGeneric(serialisedNode, SystemBoundaryNode);
     case 'CrossNode':
       return deserialiseGeneric(serialisedNode, CrossNode);
+    case 'ExecutionNode':
+      return deserialiseGeneric(serialisedNode, ExecutionNode);
+    case 'SequenceControlFlowNode':
+      return deserialiseSequenceControlFlowNode(serialisedNode as SerialisedSequenceControlFlowNode);
   }
 
   throw new Error(`Node of unknown type '${serialisedNode.type}' and the node can therefore not be deserialised.`);

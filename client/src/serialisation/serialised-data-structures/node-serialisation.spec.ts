@@ -12,6 +12,8 @@ import {SystemClockNode} from "../../model/node/system-clock-node";
 import {SystemBoundaryNode} from "../../model/node/system-boundary-node";
 import {SwimlaneNode} from "../../model/node/swimlane-node";
 import {CrossNode} from "../../model/node/cross-node";
+import {ExecutionNode} from "../../model/node/execution-node";
+import {SequenceControlFlowNode} from "../../model/node/sequence-control-flow-node";
 
 describe('Node Serialisation ' , () => {
   let actor: ActorNode;
@@ -25,6 +27,8 @@ describe('Node Serialisation ' , () => {
   let boundary: SystemBoundaryNode;
   let swimlane: SwimlaneNode;
   let cross: CrossNode;
+  let exec: ExecutionNode;
+  let seqFlow: SequenceControlFlowNode;
   let all: Array<Node>;
 
   beforeEach(() => {
@@ -39,7 +43,9 @@ describe('Node Serialisation ' , () => {
     boundary = new SystemBoundaryNode(100, 100, Position.zero());
     swimlane = new SwimlaneNode(100, 100, Position.zero());
     cross = new CrossNode(100, 100, Position.zero())
-    all = [actor, clazz, diamond, ellipse, fork, hourglass, rect, clock, boundary, cross, swimlane];
+    exec = new ExecutionNode(40, 200, Position.zero());
+    seqFlow = new SequenceControlFlowNode(100, 100, Position.zero(), 'Opt');
+    all = [actor, clazz, diamond, ellipse, fork, hourglass, rect, clock, boundary, cross, swimlane, exec, seqFlow];
   });
 
   describe('serialisation ', () => {
@@ -56,6 +62,8 @@ describe('Node Serialisation ' , () => {
       expect(clock.serialise().type).toEqual('SystemClockNode');
       expect(clock.serialise().type).toEqual('SystemClockNode');
       expect(cross.serialise().type).toEqual('CrossNode');
+      expect(exec.serialise().type).toEqual('ExecutionNode');
+      expect(seqFlow.serialise().type).toEqual('SequenceControlFlowNode');
     });
 
     it('should correctly save the width', function () {
@@ -109,6 +117,8 @@ describe('Node Serialisation ' , () => {
       expect(deserialiseNode(boundary.serialise()) instanceof SystemBoundaryNode).toBeTrue();
       expect(deserialiseNode(clock.serialise()) instanceof SystemClockNode).toBeTrue();
       expect(deserialiseNode(cross.serialise()) instanceof CrossNode).toBeTrue();
+      expect(deserialiseNode(exec.serialise()) instanceof ExecutionNode).toBeTrue();
+      expect(deserialiseNode(seqFlow.serialise()) instanceof SequenceControlFlowNode).toBeTrue();
 
     });
   });
