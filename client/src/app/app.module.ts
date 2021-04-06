@@ -12,7 +12,6 @@ import {RepositionService} from "./services/reposition.service";
 import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.component';
 import {DeletionService} from "./services/deletion.service";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
 import { NodeEditorComponent } from './node-compontents/node-editor/node-editor.component';
 import { MoveMenuComponent } from './move-menu/move-menu.component';
 import { ClickableAttachmentPointsComponent } from './node-compontents/clickable-attachment-points/clickable-attachment-points.component';
@@ -20,9 +19,6 @@ import {ClickableResizePointsComponent} from "./node-compontents/clickable-resiz
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
 import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic-node-text.component';
 import { DiagramImportComponent } from './diagram-import/diagram-import.component';
-import { LifelineComponent } from './lifeline/lifeline.component';
-import { SequenceDiagramComponent } from './sequence-diagram/sequence-diagram.component';
-import { SequenceEdgeComponent } from './sequence-edge/sequence-edge.component';
 import { SelectedNodeHighlightComponent } from './node-compontents/selected-node-highlight/selected-node-highlight.component';
 import { CreationSidebarComponent } from './creation-sidebar/creation-sidebar.component';
 import { DragDropPreviewComponent } from './drag-drop-preview/drag-drop-preview.component';
@@ -87,7 +83,6 @@ import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-co
     ArrowMarkerComponent,
     LabelComponent,
     NewEdgePreviewComponent,
-    EdgeEditorComponent,
     NodeEditorComponent,
     MoveMenuComponent,
     ClickableAttachmentPointsComponent,
@@ -95,9 +90,6 @@ import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-co
     ExportDiagramComponent,
     BasicNodeTextComponent,
     DiagramImportComponent,
-    LifelineComponent,
-    SequenceDiagramComponent,
-    SequenceEdgeComponent,
     SelectedNodeHighlightComponent,
     CreationSidebarComponent,
     DragDropPreviewComponent,

@@ -4,7 +4,7 @@ import {ExportService} from "../services/export.service";
 import {Diagram} from "../../model/diagram";
 import {SelectionService} from "../services/selection.service";
 import {HttpClient} from "@angular/common/http";
-import {ErrorLauncherService} from "../error-launcher.service";
+import {ErrorLauncherService} from "../services/error-launcher.service";
 import {AuthenticatedService} from "../services/authenticated.service";
 
 

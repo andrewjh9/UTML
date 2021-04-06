@@ -9,7 +9,7 @@ import {DiagramContainerService} from "../services/diagram-container.service";
 import {fsm} from "../../model/examples/fsm";
 import {LocalStorageService} from "../services/caching/local-storage.service";
 import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
-import {ErrorLauncherService} from "../error-launcher.service";
+import {ErrorLauncherService} from "../services/error-launcher.service";
 
 @Component({
   selector: 'app-upload-modal',
