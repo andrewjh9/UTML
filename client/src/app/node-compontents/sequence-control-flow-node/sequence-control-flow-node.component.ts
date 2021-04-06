@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {SequenceControlFlowNode} from "../../../model/node/sequence-control-flow-node";
 import {Position} from "../../../model/position";
 import {AbstractTextNode} from "../abstract-text-node";
@@ -9,11 +9,15 @@ import {Node} from "../../../model/node/node";
   selector: '[sequence-control-flow-node-render]',
   templateUrl: './sequence-control-flow-node.component.html',
 })
-export class SequenceControlFlowNodeComponent extends AbstractTextNode {
+export class SequenceControlFlowNodeComponent extends AbstractTextNode implements AfterViewInit {
   @Input() node!: Node;
 
   constructor(editService: EditService) {
     super(editService);
+  }
+
+  ngAfterViewInit() {
+    this.subscribeToEditService();
   }
 
   get path(): string {
