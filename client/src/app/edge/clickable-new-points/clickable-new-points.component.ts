@@ -30,7 +30,7 @@ export class ClickableNewPointsComponent {
   }
 
   handleMouseDown(event: MouseEvent, index: number): void {
-    this.selectionService.setEdge(this.edge);
+    this.selectionService.set(this.edge);
     let position = this.mouseTransformer.transformPosition(new Position(event.x, event.y));
     this.edge.middlePositions.splice(index, 0, position);
     this.fixedPointRepositioner.activate(this.edge, position);

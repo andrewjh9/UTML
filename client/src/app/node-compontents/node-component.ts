@@ -48,7 +48,7 @@ export class NodeComponent {
     // This is because there are multiple selected nodes sometimes
     // and this allows you to move multiple at the same time.
     if (!this.isSelected) {
-      this.selectionService.setNode(this.node);
+      this.selectionService.set(this.node);
     } else {
       this.repositionService.activate(this.mousePositionTransformService.transformPosition(new Position(event.clientX, event.clientY)));
     }

@@ -8,10 +8,14 @@ import {CachingService} from "./caching/caching.service";
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service for resizing nodes.
+ */
 export class ResizeService implements Deactivatable {
   private node?: Node;
   private startPosition?: Position;
   private resizePointIndex?: number;
+
   constructor(private snapService: SnapService,
               private cachingService: CachingService) { }
 
@@ -19,14 +23,29 @@ export class ResizeService implements Deactivatable {
     return this.node !== undefined;
   }
 
-  public activate(current: Node, resizePointIndex: number): void {
-    this.node = current;
-    this.startPosition = current.position;
+  /**
+   * Activate the resize service. s
+   * @param node The node to be resized.
+   * @param resizePointIndex The direction in which the node should be resized.
+   *                         Should be between 0 and 7 (inclusive). 0 is top, 1 is top-right, 2 is right etc.
+   * @throws Error if the resizePointIndex is not valid.
+   */
+  public activate(node: Node, resizePointIndex: number): void {
+    if (resizePointIndex < 0 || resizePointIndex > 7) {
+      throw new Error(`resizePointIndex should be 0..7 but is '${resizePointIndex}'`);
+    }
+    this.node = node;
+    this.startPosition = node.position;
     this.resizePointIndex = resizePointIndex;
   }
 
 
-  public update(endPosition: Position): void {
+  /**
+   * Update the size and possibly the position of the node
+   * @param mousePosition The position of the mouse at the time update was called.
+   * @throws Error if the service is not active.
+   */
+  public update(mousePosition: Position): void {
     if (!this.isActive()) {
       throw new Error('Calling update while the node and startPosition are undefined. ' +
         'Service was probably not activated.');
@@ -34,32 +53,32 @@ export class ResizeService implements Deactivatable {
 
     switch (this.resizePointIndex) {
       case 0: // up
-        this.handleUp(endPosition);
+        this.handleUp(mousePosition);
         break;
       case 1: //up, right
-        this.handleRight(endPosition)
-        this.handleUp(endPosition);
+        this.handleRight(mousePosition)
+        this.handleUp(mousePosition);
         break;
       case 2:  //right
-        this.handleRight(endPosition);
+        this.handleRight(mousePosition);
         break;
       case 3: // down,right
-        this.handleRight(endPosition);
-        this.handleDown(endPosition)
+        this.handleRight(mousePosition);
+        this.handleDown(mousePosition)
         break;
       case 4:
-        this.handleDown(endPosition);
+        this.handleDown(mousePosition);
         break;
       case 5:
-        this.handleDown(endPosition);
-        this.handleLeft(endPosition);
+        this.handleDown(mousePosition);
+        this.handleLeft(mousePosition);
         break;
       case 6:
-        this.handleLeft(endPosition);
+        this.handleLeft(mousePosition);
         break;
       case 7:
-        this.handleLeft(endPosition);
-        this.handleUp(endPosition);
+        this.handleLeft(mousePosition);
+        this.handleUp(mousePosition);
     }
   }
 
@@ -81,9 +100,11 @@ export class ResizeService implements Deactivatable {
     this.node!.position.x = this.snapService.snapIfApplicable(endPosition,10).x;
   }
 
+  /**
+   * Deactivate the service. If the service was active when this was called, the diagram is cached.
+   */
   public deactivate(): void {
     if (this.isActive()) {
-      console.log('Resize Service')
       this.cachingService.save();
     }
     this.node = undefined;

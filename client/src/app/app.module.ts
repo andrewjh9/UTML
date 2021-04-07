@@ -49,7 +49,7 @@ import {
   faFolderOpen, faList,
   faPaste, faQuestion,
   faRedo,
-  faSave,
+  faSave, faSearch,
   faSearchMinus,
   faSearchPlus, faTasks,
   faUndo, faUser, faUserSlash
@@ -147,6 +147,6 @@ import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-co
 export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen,
-      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList, faFile);
+      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList, faFile, faSearch);
   }
 }

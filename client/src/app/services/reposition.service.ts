@@ -19,8 +19,6 @@ export class RepositionService implements Deactivatable {
   private edgeEndPositionsPoints: Array<undefined | Position> = [];
   private edgeMiddlePositions: Array<Array<Position>> = [];
 
-
-
   constructor(private snapService: SnapService,
               private cachingService: CachingService,
               selectionService: SelectionService) {

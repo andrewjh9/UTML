@@ -5,6 +5,9 @@ import {DiagramComponent} from "../diagram/diagram.component";
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * Service for zooming and panning around the diagram
+ */
 export class ZoomService {
   private x: number = 0;
   private y: number = 0;
@@ -13,18 +16,21 @@ export class ZoomService {
   private currentZoomFactor: number = 1;
   private zoomStep: number = 1.1;
   private zoomExponent = 0;
+  /** Anytime the zoomService's internal state is changes updateEmitter.emit() is called. */
   public updateEmitter: EventEmitter<any> = new EventEmitter();
-  constructor() { }
 
+  /**
+   * Get the correctly moved and zoomed value that can be assigned to the 'viewbox' attribute of the svg tag.
+   */
   public getViewBox(): string {
-    return "" + this.x + " " + this.y + " " + this.width * this.currentZoomFactor + " " + this.height * this.currentZoomFactor;
+    return "" + this.x + " " + this.y + " " + this.getZoomedWidth() + " " + this.getZoomedHeight();
   }
 
   public getCurrentZoomFactor(): number {
     return this.currentZoomFactor;
   }
 
-  public updateZoomFactor(zoomIn: boolean): void{
+  public updateZoomFactor(zoomIn: boolean): void {
     if (zoomIn) {
       this.zoomExponent--;
     } else {
@@ -34,9 +40,15 @@ export class ZoomService {
     this.updateEmitter.emit();
   }
 
-  public setXY(x: number, y: number) {
-    this.x = max(0, this.x + x);
-    this.y = max(0, this.y + y);
+  /**
+   * Set which coordinates will be the top-left of the view shown to the user.
+   * This method ensures that this.x and this.y will both always be larger than 0.
+   * @param dx The difference in the x-coordinate
+   * @param dy The difference to the y-coordinate
+   */
+  public setXY(dx: number, dy: number) {
+    this.x = max(0, this.x + dx);
+    this.y = max(0, this.y + dy);
     this.updateEmitter.emit();
   }
 
@@ -55,9 +67,9 @@ export class ZoomService {
   public reset() {
     this.zoomExponent = 0;
     this.currentZoomFactor = Math.pow(this.zoomStep, this.zoomExponent);
-    this.updateEmitter.emit();
     this.x = 0;
     this.y = 0;
+    this.updateEmitter.emit();
   }
 }
 

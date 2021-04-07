@@ -13,7 +13,6 @@ import {Position} from "../../model/position";
 import {CopyPasteService} from "../services/copy-paste.service";
 import {DragDropCreationService} from "../services/drag-drop-creation.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {UploadService} from "../services/upload.service";
 import {DragSelectionService} from "../services/drag-selection.service";
 import {ZoomService} from "../services/zoom.service";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
@@ -49,7 +48,6 @@ export class DiagramComponent implements AfterViewInit {
               private copyPasteService: CopyPasteService,
               private dragDropCreationService: DragDropCreationService,
               private modalService: NgbModal,
-              private uploadService: UploadService,
               private dragSelectionService: DragSelectionService,
               public zoomService: ZoomService,
               private localStorageService: LocalStorageService,

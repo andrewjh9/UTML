@@ -38,13 +38,13 @@ describe('CopyPasteService', () => {
   });
 
   it('should have copy become available after selection', function () {
-    selectionService.setNode(NODE);
+    selectionService.set(NODE);
     expect(service.copyIsAvailable()).toBeTrue();
     expect(service.pasteIsAvailable()).toBeFalse();
   });
 
   it('should have paste come available after selection and doCopy', function () {
-    selectionService.setNode(NODE);
+    selectionService.set(NODE);
     expect(service.copyIsAvailable()).toBeTrue();
     service.doCopy();
     expect(service.pasteIsAvailable()).toBeTrue();
@@ -52,7 +52,7 @@ describe('CopyPasteService', () => {
 
   it('should emit a node after selection, doCopy, doPaste', function () {
     spyOn(service.pasteEmitter, 'emit');
-    selectionService.setNode(NODE);
+    selectionService.set(NODE);
     service.doCopy();
     service.doPaste();
     expect(service.pasteEmitter.emit).toHaveBeenCalled();
@@ -60,7 +60,7 @@ describe('CopyPasteService', () => {
 
   it('should emit a edge after selection, doCopy, doPaste', function () {
     spyOn(service.pasteEmitter, 'emit');
-    selectionService.setEdge(EDGE);
+    selectionService.set(EDGE);
     service.doCopy();
     service.doPaste();
     expect(service.pasteEmitter.emit).toHaveBeenCalled();
