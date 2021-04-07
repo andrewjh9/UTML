@@ -32,10 +32,6 @@ public class DiagramServiceImpl implements IDiagramService {
         }
     }
 
-    public List<Diagram> getAllVisible() {
-        return diagramRepository.findByVisibleTrue();
-    }
-
     public void delete(String id) {
         this.diagramRepository.delete(this.get(id));
     }

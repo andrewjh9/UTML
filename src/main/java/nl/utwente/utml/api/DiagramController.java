@@ -38,11 +38,6 @@ public class  DiagramController {
     }
 
 
-    @GetMapping("/all")
-    public List<Diagram> getAllDiagramsVisible(){
-        return diagramService.getAllVisible();
-    }
-
 
      @GetMapping("/all/me")
      public List<Diagram> getAllUsersDiagrams(){
