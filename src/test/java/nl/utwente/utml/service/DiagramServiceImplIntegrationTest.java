@@ -20,7 +20,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
+/**
+ * note: Mocking is done inline
+ */
 @RunWith(SpringRunner.class)
 public class DiagramServiceImplIntegrationTest {
 
@@ -75,33 +79,83 @@ public class DiagramServiceImplIntegrationTest {
     @Test
     public void addDiagram(){
 
+        //Adding diagram
 
 
+        this.diagramService.add(testDiagram1);
+
+
+        fail("not implemented");
     }
     @Test
     public void addOverWriteDiagram(){
-
-
-
+        fail("not implemented");
     }
-    //getAllVisible diagram
+    /*
+    Get all Visible diagrams, toggle one to visible and see it returns,
+     untoggle and see it doesn't.
+     */
     @Test
     public void getAllVisibleDiagrams(){
+        fail("not implemented");
+    }
+    /*
+    See that service deletes a diagram
+    delete diagram and see it no longer returns
+     */
+    @Test
+    public void delete(){
+        fail("not implemented");
+    }
+    /*
+     get a diagram by id
+     fetch a diagram via it's id via the service
+     */
+    @Test
+    public void get(){
+        fail("not implemented");
 
     }
-    //delete a diagram
+    /*
+    Get a visible diagram by id check non-visible diagram are not returned.
+     */
+    @Test
+    public void getVisibleDiagram(){
+        fail("not implemented");
+    }
+    /*
+    Update a diagram passing diagram
+     */
+    @Test void update(){
+        fail("not implemented");
+    }
 
-    //get a diagram by id
 
-    //get a visible diagram by id
+    /*
+        Toggle on and off visibility of diagram
+     */
+    @Test
+    public void toggleVisible(){
+        fail("not implemented");
+    }
 
-    //update a diagram passing diagram
 
-    // toogle visible diagram
 
-    // check if user if owner of a diagram
+    /*
+        Check if user is owner of diagram
+        pass and fail case should be tested
+     */
+    @Test
+    public void userOwner(){
+        fail("not implemented");
+    }
 
-    //get names of diagram of a user.
-
+    /*
+        Get names of diagram belonging to users
+    */
+    @Test
+    public void getDiagramNames(){
+        fail("not implemented");
+    }
 
 }

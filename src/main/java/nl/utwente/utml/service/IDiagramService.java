@@ -10,8 +10,6 @@ public interface IDiagramService {
 
     void add(Diagram diagram);
 
-    List<Diagram> getAllVisible() ;
-
     void delete(String id);
 
     Diagram getVisible(String id);
