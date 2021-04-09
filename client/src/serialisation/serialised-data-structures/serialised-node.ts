@@ -14,3 +14,7 @@ export interface SerialisedClassNode extends SerialisedNode {
   firstLine: number;
   secondLine: number | undefined;
 }
+
+export interface SerialisedSequenceControlFlowNode extends SerialisedNode {
+  name: string;
+}

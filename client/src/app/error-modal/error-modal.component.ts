@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
-import {ErrorLauncherService} from "../error-launcher.service";
+import {ErrorLauncherService} from "../services/error-launcher.service";
 
 @Component({
   selector: 'app-error-modal',

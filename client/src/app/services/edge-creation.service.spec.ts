@@ -1,5 +1,4 @@
 import {EdgeCreationService} from "./edge-creation.service";
-import {CreationTypeSelectionService} from "./creation-type-selection.service";
 import {RectangleNode} from "../../model/node/rectangle-node";
 import {Position} from "../../model/position";
 import {Node} from "../../model/node/node";
@@ -9,7 +8,6 @@ import {DragSelectionService} from "./drag-selection.service";
 
 describe("EdgeCreationService", () => {
   let edgeCreationService: EdgeCreationService;
-  let creationFormatterSelectionService: CreationTypeSelectionService;
   let n1: Node;
   let n2: Node;
   let edge: Edge;

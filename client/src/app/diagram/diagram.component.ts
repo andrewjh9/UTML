@@ -1,15 +1,11 @@
 import {AfterViewInit, Component} from '@angular/core';
 import {RepositionService} from "../services/reposition.service";
-import {Mode, ModeService} from "../services/mode.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {DeletionService} from "../services/deletion.service";
-import {CreationTypeSelectionService} from "../services/creation-type-selection.service";
 import {Node} from "../../model/node/node";
 import {ResizeService} from "../services/resize.service";
-import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
 import {DomSanitizer} from "@angular/platform-browser";
 import {CachingService} from "../services/caching/caching.service";
-import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
 import {SelectionService} from "../services/selection.service";
 import {Diagram} from "../../model/diagram";
 import {Edge} from "../../model/edge";
@@ -17,7 +13,6 @@ import {Position} from "../../model/position";
 import {CopyPasteService} from "../services/copy-paste.service";
 import {DragDropCreationService} from "../services/drag-drop-creation.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {UploadService} from "../services/upload.service";
 import {DragSelectionService} from "../services/drag-selection.service";
 import {ZoomService} from "../services/zoom.service";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
@@ -25,10 +20,8 @@ import {DiagramContainerService} from "../services/diagram-container.service";
 import {LocalStorageService} from "../services/caching/local-storage.service";
 import {LensOffsetService} from "../services/lens-offset.service";
 import {LabelRepositionService} from "../services/label-reposition.service";
-import {AppComponent} from "../app.component";
 import {FixedPointRepositioner} from "../services/edge-reposition/fixed-point-repositioner";
 import {StartEndRepositioner} from "../services/edge-reposition/start-end-repositioner";
-import {liesOnSegment} from "../services/edge-reposition/lies-on-segment";
 
 @Component({
   selector: 'app-diagram',
@@ -40,7 +33,6 @@ export class DiagramComponent implements AfterViewInit {
   public diagram: Diagram;
   public width?: number;
   public height?: number;
-  mode: Mode;
   edgeCreationIsActive: boolean = false;
 
   constructor(private sanitizer: DomSanitizer,
@@ -48,17 +40,14 @@ export class DiagramComponent implements AfterViewInit {
               private repositionService: RepositionService,
               private fixedPointRepositioner: FixedPointRepositioner,
               private startEndRepositioner: StartEndRepositioner,
-              private modeService: ModeService,
               private edgeCreationService: EdgeCreationService,
               private deletionService: DeletionService,
-              private creationTypeSelectionService: CreationTypeSelectionService,
               private resizeService: ResizeService,
               private cachingService: CachingService,
               private selectionService: SelectionService,
               private copyPasteService: CopyPasteService,
               private dragDropCreationService: DragDropCreationService,
               private modalService: NgbModal,
-              private uploadService: UploadService,
               private dragSelectionService: DragSelectionService,
               public zoomService: ZoomService,
               private localStorageService: LocalStorageService,
@@ -74,9 +63,6 @@ export class DiagramComponent implements AfterViewInit {
     // document.body.scroll = "no"; // ie only
     this.diagram = diagramContainer.get();
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
-
-    this.modeService.modeObservable.subscribe((mode: Mode) => this.mode = mode);
-    this.mode = modeService.getLatestMode();
 
     edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => {
       this.diagram.edges.push(newEdge);

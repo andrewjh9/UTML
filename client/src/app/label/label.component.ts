@@ -36,7 +36,7 @@ export class LabelComponent {
 
   public handleMouseDown(event: MouseEvent): void {
     if (!this.isSelected) {
-      this.selectionService.setLabel(this.label);
+      this.selectionService.set(this.label);
     } else {
       this.labelRepositionService.activate(this.mousePositionTransformService.transformPosition(
         new Position(event.x, event.y)), this.label);

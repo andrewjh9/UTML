@@ -19,7 +19,7 @@ export class ClickableMiddlePointsComponent {
               private selectionService: SelectionService) { }
 
   handleMouseDown(event: MouseEvent, index: number): void {
-    this.selectionService.setEdge(this.edge);
+    this.selectionService.set(this.edge);
     let position = this.edge.middlePositions[index];
     this.fixedPointRepositioner.activate(this.edge, position);
   }

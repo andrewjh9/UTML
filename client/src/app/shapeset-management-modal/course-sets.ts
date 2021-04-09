@@ -12,6 +12,8 @@ import {SwimlaneNode} from "../../model/node/swimlane-node";
 import {SystemBoundaryNode} from "../../model/node/system-boundary-node";
 import {SystemClockNode} from "../../model/node/system-clock-node";
 import {CrossNode} from "../../model/node/cross-node";
+import {ExecutionNode} from "../../model/node/execution-node";
+import {SequenceControlFlowNode} from "../../model/node/sequence-control-flow-node";
 
 export function flattenActive(courseSets: {[key: string]: CourseSet}) {
   let result: CourseSet = {};
@@ -127,10 +129,14 @@ sequence.edges['Dashed'] = dashed;
 let lifeline = new RectangleNode(140, 40, new Position(38, 2));
 let cross = new CrossNode(60, 60, new Position(78, 2));
 lifeline.text = 'Classifier'
-let execution = new RectangleNode(40, 100, new Position(78, 2));
+let execution = new ExecutionNode(40, 100, new Position(78, 2));
+sequence.nodes['Actor'] = new ActorNode(40, 80, new Position(98, 5));
 sequence.nodes['Lifeline'] = lifeline;
 sequence.nodes['Execution'] = execution;
 sequence.nodes['Destruction'] = cross;
+sequence.nodes['Opt'] = new SequenceControlFlowNode(100, 100, new Position(56, 2), 'Opt');
+sequence.nodes['Loop'] = new SequenceControlFlowNode(100, 100, new Position(56, 2), 'Loop');
+sequence.nodes['Alt'] = new SequenceControlFlowNode(100, 100, new Position(56, 2), 'Alt');
 
 let fsm: ShapeSet = {nodes: {}, edges: {}, active: true};
 fsm.nodes['State'] = state;

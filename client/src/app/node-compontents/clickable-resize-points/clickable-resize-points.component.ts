@@ -21,7 +21,7 @@ export class ClickableResizePointsComponent {
       throw new Error("You are clicking on clickable resize points that have no associated node. " +
         "This should be impossible");
     }
-    this.selectionService.setNode(this.node!);
+    this.selectionService.set(this.node!);
     this.resizeService.activate(this.node, resizePointIndex);
   }
 

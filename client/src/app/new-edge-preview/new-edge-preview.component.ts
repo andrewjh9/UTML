@@ -1,8 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {EdgeCreationService} from "../services/edge-creation.service";
-import {ModeService} from "../services/mode.service";
-import {SelectionService} from "../services/selection.service";
-import {Position} from "../../model/position";
 
 @Component({
   selector: '[new-edge-preview]',

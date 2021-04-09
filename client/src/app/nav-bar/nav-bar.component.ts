@@ -30,6 +30,8 @@ export class NavBarComponent implements AfterViewInit {
               private zoomService: ZoomService,
               private deletionService: DeletionService,
               public userService: UserService) { }
+              private deletionService: DeletionService,
+              public authenticatedService: AuthenticatedService) { }
 
   ngAfterViewInit() {
     let showHelpOnStart = localStorage.getItem(HelpModalComponent.LOCAL_STORAGE_KEY);
@@ -74,6 +76,10 @@ export class NavBarComponent implements AfterViewInit {
 
   zoomIn() {
     this.zoomService.updateZoomFactor(true);
+  }
+
+  resetZoom() {
+    this.zoomService.reset();
   }
 
   zoomOut() {

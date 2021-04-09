@@ -92,6 +92,4 @@ export class ExportService {
     element.click();
     document.body.removeChild(element);
   }
-
-
 }

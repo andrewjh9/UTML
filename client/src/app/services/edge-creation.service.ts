@@ -3,7 +3,6 @@ import {Deactivatable} from "./deactivatable";
 import {AttachmentDirection, Node} from "../../model/node/node";
 import {Position} from "../../model/position";
 import {Edge, LineType} from "../../model/edge";
-import {CreationTypeSelectionService} from "./creation-type-selection.service";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {BehaviorSubject} from "rxjs";
 import {SelectionService} from "./selection.service";
@@ -32,8 +31,7 @@ export class EdgeCreationService implements Deactivatable {
 
   public newEdgeEmitter: EventEmitter<Edge> = new EventEmitter<Edge>();
 
-  constructor(private creationFormatterSelectionService: CreationTypeSelectionService,
-              private selectionService: SelectionService,
+  constructor(private selectionService: SelectionService,
               keyboardEventCallerService: KeyboardEventCallerService) {
     this.selectionService.selectedObservable.subscribe(ignored => this.deactivate());
     keyboardEventCallerService.addCallback(['Escape', 'keydown', 'any'], (ignored) => this.deactivate())

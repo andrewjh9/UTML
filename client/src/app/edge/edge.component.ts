@@ -44,7 +44,7 @@ export class EdgeComponent implements OnDestroy {
     // On clicking an edge, the edge will be selected.
     // If the edge is already selected, there is no need to select it again.
     if (!this.isSelected) {
-      this.selectionService.setEdge(this.edge);
+      this.selectionService.set(this.edge);
     }
   }
 
@@ -52,7 +52,7 @@ export class EdgeComponent implements OnDestroy {
     // If you double click with ctrl pressed a formatting popup should open.
     // Otherwise it should create a label.
     // Depending on the mouse position either a start, middle or end label is added.
-    this.selectionService.setEdge(this.edge);
+    this.selectionService.set(this.edge);
     if (event.ctrlKey) {
       if (this.selectionService.isEdge()) {
         this.modalService.open(EdgeFormattingModalComponent);

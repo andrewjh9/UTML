@@ -3,13 +3,9 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {Diagram} from "../../model/diagram";
 import {deserialiseDiagram} from "../../serialisation/deserialise/deserialise-diagram";
 import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
-import {UploadService} from "../services/upload.service";
-import { DOCUMENT } from '@angular/common'
 import {DiagramContainerService} from "../services/diagram-container.service";
-import {fsm} from "../../model/examples/fsm";
 import {LocalStorageService} from "../services/caching/local-storage.service";
-import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
-import {ErrorLauncherService} from "../error-launcher.service";
+import {ErrorLauncherService} from "../services/error-launcher.service";
 
 @Component({
   selector: 'app-upload-modal',

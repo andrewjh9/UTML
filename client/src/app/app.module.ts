@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,13 +9,9 @@ import { ArrowMarkerComponent } from './arrow-marker/arrow-marker.component';
 import {FormsModule} from "@angular/forms";
 import { LabelComponent } from './label/label.component';
 import {RepositionService} from "./services/reposition.service";
-import {ModeSelectorComponent} from "./mode-selector/mode-selector.component";
-import {ModeService} from "./services/mode.service";
 import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.component';
-import { SelectedEditorComponent } from './selected-editor/selected-editor.component';
 import {DeletionService} from "./services/deletion.service";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { EdgeEditorComponent } from './edge-editor/edge-editor.component';
 import { NodeEditorComponent } from './node-compontents/node-editor/node-editor.component';
 import { MoveMenuComponent } from './move-menu/move-menu.component';
 import { ClickableAttachmentPointsComponent } from './node-compontents/clickable-attachment-points/clickable-attachment-points.component';
@@ -24,9 +19,6 @@ import {ClickableResizePointsComponent} from "./node-compontents/clickable-resiz
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
 import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic-node-text.component';
 import { DiagramImportComponent } from './diagram-import/diagram-import.component';
-import { LifelineComponent } from './lifeline/lifeline.component';
-import { SequenceDiagramComponent } from './sequence-diagram/sequence-diagram.component';
-import { SequenceEdgeComponent } from './sequence-edge/sequence-edge.component';
 import { SelectedNodeHighlightComponent } from './node-compontents/selected-node-highlight/selected-node-highlight.component';
 import { CreationSidebarComponent } from './creation-sidebar/creation-sidebar.component';
 import { DragDropPreviewComponent } from './drag-drop-preview/drag-drop-preview.component';
@@ -57,7 +49,7 @@ import {
   faFolderOpen, faList,
   faPaste, faQuestion,
   faRedo,
-  faSave,
+  faSave, faSearch,
   faSearchMinus,
   faSearchPlus, faTasks,
   faUndo, faUser, faUserSlash
@@ -80,6 +72,7 @@ import { SystemBoundaryNodeComponent } from './node-compontents/system-boundary-
 import { WhiteBackgroundComponent } from './white-background/white-background.component';
 import { CrossNodeRenderComponent } from './node-compontents/cross-node/cross-node-render.component';
 import { ErrorModalComponent } from './error-modal/error-modal.component';
+import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-control-flow-node/sequence-control-flow-node.component';
 
 @NgModule({
   declarations: [
@@ -89,10 +82,7 @@ import { ErrorModalComponent } from './error-modal/error-modal.component';
     EdgeComponent,
     ArrowMarkerComponent,
     LabelComponent,
-    ModeSelectorComponent,
     NewEdgePreviewComponent,
-    SelectedEditorComponent,
-    EdgeEditorComponent,
     NodeEditorComponent,
     MoveMenuComponent,
     ClickableAttachmentPointsComponent,
@@ -100,9 +90,6 @@ import { ErrorModalComponent } from './error-modal/error-modal.component';
     ExportDiagramComponent,
     BasicNodeTextComponent,
     DiagramImportComponent,
-    LifelineComponent,
-    SequenceDiagramComponent,
-    SequenceEdgeComponent,
     SelectedNodeHighlightComponent,
     CreationSidebarComponent,
     DragDropPreviewComponent,
@@ -144,6 +131,7 @@ import { ErrorModalComponent } from './error-modal/error-modal.component';
     WhiteBackgroundComponent,
     CrossNodeRenderComponent,
     ErrorModalComponent,
+    SequenceControlFlowNodeComponent,
   ],
     imports: [
         BrowserModule,
@@ -153,12 +141,12 @@ import { ErrorModalComponent } from './error-modal/error-modal.component';
         NgbModule,
         FontAwesomeModule
     ],
-  providers: [RepositionService, ModeService, DeletionService],
+  providers: [RepositionService, DeletionService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen,
-      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList, faFile);
+      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList, faFile, faSearch);
   }
 }

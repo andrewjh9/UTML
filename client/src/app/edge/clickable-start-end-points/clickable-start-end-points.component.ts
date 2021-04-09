@@ -17,7 +17,7 @@ export class ClickableStartEndPointsComponent {
               private selectionService: SelectionService) { }
 
   handleMouseDown(event: MouseEvent, type: 'start' | 'end'): void {
-    this.selectionService.setEdge(this.edge);
+    this.selectionService.set(this.edge);
     this.startEndRepositioner.activate(this.edge, type === 'start');
   }
 }

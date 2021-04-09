@@ -78,7 +78,6 @@ export class CopyPasteService {
         setTimeout(() => this.selectionService.add(copy), 50);
       }
     });
-
   }
 
   public pasteIsAvailable(): boolean {
