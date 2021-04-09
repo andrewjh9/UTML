@@ -28,10 +28,8 @@ export class NavBarComponent implements AfterViewInit {
               private cachingService: CachingService,
               private diagramContainer: DiagramContainerService,
               private zoomService: ZoomService,
-              private deletionService: DeletionService,
-              public userService: UserService) { }
-              private deletionService: DeletionService,
-              public authenticatedService: AuthenticatedService) { }
+              public userService: UserService,
+              private deletionService: DeletionService) { }
 
   ngAfterViewInit() {
     let showHelpOnStart = localStorage.getItem(HelpModalComponent.LOCAL_STORAGE_KEY);
