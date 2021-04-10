@@ -7,6 +7,8 @@ import {CachingService} from "../services/caching/caching.service";
 import {EdgeFormattingModalComponent} from "../edge-formatting-modal/edge-formatting-modal.component";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
+import {EditService} from "../services/edit.service";
+import {Label} from "../../model/label";
 
 @Component({
   selector: '[edge-component]',
@@ -27,7 +29,8 @@ export class EdgeComponent implements OnDestroy {
               private deletionService: DeletionService,
               private cachingService: CachingService,
               private modalService: NgbModal,
-              private mousePositionTransformService: MousePositionTransformService) {
+              private mousePositionTransformService: MousePositionTransformService,
+              private editService: EditService) {
     selectionService.selectedObservable.subscribe(selectedList => {
       this.isSelected = selectedList.includes(this.edge);
       if (this.isSelected) {
@@ -44,7 +47,11 @@ export class EdgeComponent implements OnDestroy {
     // On clicking an edge, the edge will be selected.
     // If the edge is already selected, there is no need to select it again.
     if (!this.isSelected) {
-      this.selectionService.set(this.edge);
+      if (event.ctrlKey) {
+        this.selectionService.add(this.edge);
+      } else {
+        this.selectionService.set(this.edge);
+      }
     }
   }
 
@@ -60,16 +67,27 @@ export class EdgeComponent implements OnDestroy {
     } else {
       let mousePosition = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
       const DISTANCE_THRESHOLD = 25;
+
       if (Position.getDistance(mousePosition, this.edge.getStartPosition()) <= DISTANCE_THRESHOLD
         && this.edge.startLabel === undefined) {
-        this.edge.addStartLabel();
+        this.edge.addStartLabel('s');
+        this.activateEditService(this.edge.startLabel!);
       } else if (Position.getDistance(mousePosition, this.edge.getEndPosition()) <= DISTANCE_THRESHOLD
         && this.edge.endLabel === undefined) {
-        this.edge.addEndLabel();
+        this.edge.addEndLabel('e');
+        this.activateEditService(this.edge.endLabel!);
       } else if (this.edge.middleLabel === undefined) {
-        this.edge.addMiddleLabel();
+        this.edge.addMiddleLabel('m');
+        this.activateEditService(this.edge.middleLabel!);
       }
     }
+  }
+
+  private activateEditService(label: Label, delay: number = 75) {
+    setTimeout(() => {
+      this.selectionService.deselect();
+      this.editService.activate(label);
+    }, delay);
   }
 
   public isLine(): boolean {

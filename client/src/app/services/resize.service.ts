@@ -15,6 +15,7 @@ export class ResizeService implements Deactivatable {
   private node?: Node;
   private startPosition?: Position;
   private resizePointIndex?: number;
+  private static readonly MIN_SIZE = 10;
 
   constructor(private snapService: SnapService,
               private cachingService: CachingService) { }
@@ -83,21 +84,31 @@ export class ResizeService implements Deactivatable {
   }
 
   private handleUp(endPosition: Position): void {
-    this.node!.height = Math.round((this.node!.height - this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).y)/10) * 10;
-    this.node!.position.y = this.snapService.snapIfApplicable(endPosition,10).y;
+    let newHeight = Math.round((this.node!.height - this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).y)/10) * 10;
+    if (newHeight < ResizeService.MIN_SIZE) {
+      this.node!.height = ResizeService.MIN_SIZE;
+    } else {
+      this.node!.height = newHeight;
+      this.node!.position.y = this.snapService.snapIfApplicable(endPosition, 10).y;
+    }
   }
 
   private handleRight(endPosition: Position): void {
-    this.node!.width = this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).x;
+    this.node!.width = Math.max(ResizeService.MIN_SIZE, this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).x);
   }
 
   private handleDown(endPosition: Position): void {
-    this.node!.height = this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).y;
+    this.node!.height = Math.max(ResizeService.MIN_SIZE, this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).y);
   }
 
   private handleLeft(endPosition: Position): void {
-    this.node!.width = Math.round((this.node!.width - this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).x)/10) * 10;
-    this.node!.position.x = this.snapService.snapIfApplicable(endPosition,10).x;
+    let newWidth = Math.round((this.node!.width - this.snapService.snapIfApplicable(Position.subtract(endPosition, this.node!.position), 10).x)/10) * 10;
+    if (newWidth < ResizeService.MIN_SIZE) {
+      this.node!.width = ResizeService.MIN_SIZE;
+    } else {
+      this.node!.width = newWidth;
+      this.node!.position.x = this.snapService.snapIfApplicable(endPosition, 10).x;
+    }
   }
 
   /**

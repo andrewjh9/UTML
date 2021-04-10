@@ -21,10 +21,12 @@ import {ErrorLauncherService} from "../services/error-launcher.service";
   templateUrl: './diagram-management-modal.component.html',
   styleUrls: ['./diagram-management-modal.component.scss']
 })
-export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
+export class DiagramManagementModalComponent implements OnInit, ErrorHandler {
   @ViewChild('deleteModal') deleteModal!: ElementRef;
   @ViewChild('editModal') editModal!: ElementRef;
   @ViewChild('urlElement') urlElement!: ElementRef;
+
+  editTitle?: string;
 
   dbEntries: Array<DatabaseDiagramEntry> | undefined;
   selectedIndex = -1;
@@ -40,13 +42,13 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
 
   ngOnInit() {
     this.http.get('/api/diagram/all/me').subscribe(
-      (data:any) => {
+      (data: any) => {
         this.dbEntries = data;
       },error =>  {
         this.errorLauncherService.launch('Something went wrong when loading your diagrams.' +
           ' Are you logged in?');
         console.error(error);
-      })
+      });
   }
 
   get selectedDiagram(): Diagram | undefined {
@@ -80,9 +82,17 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
   }
 
   updateChanges() {
+    if (!this.editTitle === undefined) {
+      this.errorLauncherService.launch('Something went wrong when changing the title.');
+      console.error('Somehow the edit title is undefined when updating Changes.');
+    }
+
+    this.dbEntries![this.selectedIndex].title = this.editTitle!;
+
+
     if(this.dbEntries && this.dbEntries[this.selectedIndex]){
       this.http.put('/api/diagram/',this.dbEntries[this.selectedIndex]).subscribe(
-        (data:any) => {
+        (data: any) => {
         },error =>  {
           this.errorLauncherService.launch();
           console.error(error);
@@ -90,7 +100,8 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler{
     }
   }
 
-  triggerEditModal() {
+  triggerEditModal(diagramIndex: number) {
+    this.editTitle = this.dbEntries![diagramIndex].title;
     this.modalService.open(this.editModal);
   }
 

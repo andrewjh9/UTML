@@ -52,7 +52,13 @@ export class Edge {
   }
 
   public getEndPosition(): Position {
-    return Edge.getPosition(this.endNode, this.endPosition);
+    let result = Edge.getPosition(this.endNode, this.endPosition);
+    // Arcs that self-loop can not be rendered.
+    // This is a trick to make the positions be un-noticeably different and allow them to be rendered
+    if (this.startNode === this.endNode && this.startPosition === this.endPosition && this.lineType == LineType.Arc) {
+      result = Position.add(new Position(0.01, 0.01), result);
+    }
+    return result;
   }
 
   public getAllPoints(): Position[] {

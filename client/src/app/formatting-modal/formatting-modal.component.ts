@@ -38,6 +38,7 @@ export class FormattingModalComponent {
   addChar(char: string) {
     if (this.node) {
       this.node.text += char;
+      this.nodeTextElemRef.nativeElement.focus();
     }
   }
 }

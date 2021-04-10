@@ -2,7 +2,7 @@
   <div class="collapse navbar-collapse" style="height: 50px;">
     <ul class="navbar-nav mr-auto pb-0 pt-0">
       <li class="nav-item">
-        <a class="nav-link" (click)="openClearDiagramPopUp()" ngbTooltip="Clear Diagram" placement="bottom">
+        <a class="nav-link" (click)="openClearDiagramPopUp()" ngbTooltip="Clear Diagram" placement="bottom-left">
           <fa-icon [icon]="['fas', 'file']"></fa-icon>
         </a>
       </li>
@@ -73,9 +73,10 @@
     <li class="nav-item">
       <a *ngIf="!userService.getAuthenticated()" class="nav-link" href="/login" ngbTooltip="Login" placement="bottom">
         <fa-icon [icon]="['fas', 'user']"></fa-icon>
-        </a>
-      <a *ngIf="userService.getAuthenticated()" class="nav-link" href="/logout" ngbTooltip="Login" placement="bottom">
-        <fa-icon [icon]="['fas', 'user-slash']"></fa-icon>
+      </a>
+
+      <a *ngIf="userService.getAuthenticated()" class="nav-link" href="/logout" ngbTooltip="Logout" placement="bottom">
+        {{userService.name}} <fa-icon [icon]="['fas', 'user-slash']"></fa-icon>
       </a>
     </li>
     <li class="nav-item">
