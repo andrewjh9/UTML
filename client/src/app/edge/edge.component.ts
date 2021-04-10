@@ -47,7 +47,11 @@ export class EdgeComponent implements OnDestroy {
     // On clicking an edge, the edge will be selected.
     // If the edge is already selected, there is no need to select it again.
     if (!this.isSelected) {
-      this.selectionService.set(this.edge);
+      if (event.ctrlKey) {
+        this.selectionService.add(this.edge);
+      } else {
+        this.selectionService.set(this.edge);
+      }
     }
   }
 
