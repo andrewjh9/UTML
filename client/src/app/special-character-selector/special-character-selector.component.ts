@@ -14,7 +14,7 @@ export class SpecialCharacterSelectorComponent {
   readonly UC_GREEK1 = 'ΑΒΓΔΕΖΗΘΙΚΛΜΝ';
   readonly UC_GREEK2 = 'ΞΟΠΡΣΤΥΦΧΨΩ';
   readonly MATH1 = '∀∁∂∃∄∅∆∇∈∉'
-  readonly MATH2 = '∊∋∌∍∎∏∐∑−∓';
+  readonly MATH2 = '∊∋∌∍∎∏∑−←→';
 
   constructor() { }
 
