@@ -5,6 +5,7 @@ import {Node} from "../../model/node/node";
 import {Position} from "../../model/position";
 import {BehaviorSubject, Observable} from "rxjs";
 import {SnapService} from "./snap.service";
+import {SelectionService} from "./selection.service";
 
 
 @Injectable({
@@ -15,8 +16,9 @@ export class DragDropCreationService {
   public readonly selectedObservable: Observable<Node | Edge | undefined> = this.selected.asObservable();
   public readonly createdEmitter: EventEmitter<Node | Edge> = new EventEmitter<Node|Edge>();
 
-  constructor(keyboardEventCaller: KeyboardEventCallerService, private snapService: SnapService) {
-    // Todo: Allow keyboard event caller to have multiple callbacks.
+  constructor(keyboardEventCaller: KeyboardEventCallerService,
+              private snapService: SnapService,
+              private selectionService: SelectionService) {
     keyboardEventCaller.addCallback(['Escape', 'keydown', 'any'], (ignored) => this.cancel());
   }
 
@@ -53,7 +55,7 @@ export class DragDropCreationService {
       let edge = this.selected.getValue() as Edge;
       edge.startPosition = position;
       const OFFSET = 100;
-      edge.endPosition = Position.add(new Position(OFFSET, OFFSET), position);
+      edge.endPosition = Position.add(new Position(OFFSET, 0), position);
 
       if (edge.lineType === LineType.Arc) {
         edge.middlePositions = [];
@@ -77,11 +79,11 @@ export class DragDropCreationService {
     }
     this.createdEmitter.emit(value);
     this.selected.next(undefined);
+    setTimeout(() => this.selectionService.set(value!), 50);
   }
 
   public getSelected() {
     return this.selected.getValue();
   }
-
 }
 
