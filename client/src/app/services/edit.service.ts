@@ -6,6 +6,7 @@ import {Label} from "../../model/label";
 import {CachingService} from "./caching/caching.service";
 import {SelectionService} from "./selection.service";
 import {BehaviorSubject} from "rxjs";
+import {logger} from "codelyzer/util/logger";
 
 @Injectable({
   providedIn: 'root'
@@ -127,15 +128,21 @@ export class EditService {
   }
 
   private addLine() {
-    if (this.rowIndex! === this.lineAmount - 1) {
-      this.setValue(this.value + '\\n');
-    } else {
-      this.setValue([
-        this.rows.slice(0, this.rowIndex! + 1),
-        '',
-        this.rows.slice(this.rowIndex! + 1)
-      ].join('\\n'));
+    let beforeRows = this.rows.slice(0, this.rowIndex!);
+    if (beforeRows.length !== 0) {
+      beforeRows.push('');
     }
+
+    let current = this.rows[this.rowIndex!];
+    let beforeChars = current.slice(0, this.charIndex!);
+    let afterChars = current.slice(this.charIndex!);
+
+    let afterRows = this.rows.slice(this.rowIndex! + 1);
+    if (afterRows.length !== 0) {
+      afterRows = ['', ...afterRows]
+    }
+
+    this.setValue(beforeRows.join('\\n') + beforeChars + '\\n' + afterChars + afterRows.join('\\n'));
 
     this.rowIndex!++;
     this.charIndex = 0;
