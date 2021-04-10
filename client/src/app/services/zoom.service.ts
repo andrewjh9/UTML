@@ -17,7 +17,8 @@ export class ZoomService {
   private zoomStep: number = 1.1;
   private zoomExponent = 0;
   /** Anytime the zoomService's internal state is changes updateEmitter.emit() is called. */
-  public updateEmitter: EventEmitter<any> = new EventEmitter();
+  public readonly updateEmitter: EventEmitter<any> = new EventEmitter();
+  public readonly resizeEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   /**
    * Get the correctly moved and zoomed value that can be assigned to the 'viewbox' attribute of the svg tag.
@@ -70,6 +71,20 @@ export class ZoomService {
     this.x = 0;
     this.y = 0;
     this.updateEmitter.emit();
+  }
+
+  public handleResize(innerWidth: number, innerHeight: number) {
+    this.width = innerWidth;
+    this.height = innerHeight - DiagramComponent.NAV_HEIGHT;
+    this.resizeEmitter.emit();
+  }
+
+  get baseWidth(): number {
+    return this.width;
+  }
+
+  get baseHeight(): number {
+    return this.height;
   }
 }
 

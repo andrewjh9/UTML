@@ -7,6 +7,7 @@ import {ActivatedRoute, Router, RoutesRecognized} from "@angular/router";
 import {deserialiseDiagram} from "../serialisation/deserialise/deserialise-diagram";
 import {DiagramContainerService} from "./services/diagram-container.service";
 import {UserService} from "./services/user.service";
+import {ZoomService} from "./services/zoom.service";
 
 
 
@@ -25,33 +26,8 @@ export class AppComponent implements AfterViewInit {
               private editService: EditService,
               private diagramContainer: DiagramContainerService,
               private http: HttpClient,
-              private renderer: Renderer2) {
-  }
-
-  ngOnInit(): void {
-    // @ts-ignore
-    this.router.events.subscribe(val => {
-      if (val instanceof RoutesRecognized) {
-        // @ts-ignore
-        this.loadDiagramId = (val.state.root.firstChild.params.id);
-        console.log(this.loadDiagramId)
-        // @ts-ignore
-        if(this.loadDiagramId){
-          this.http.get("api/diagram/visible",{params: new HttpParams().set("id", String(this.loadDiagramId))}).subscribe(
-            (data:any) => {
-              if(data.serialisedDiagram) {
-                this.diagramContainer.set(deserialiseDiagram(JSON.parse(data.serialisedDiagram)))
-              } else{
-                window.alert("Diagram could not be loaded");
-                this.router.navigateByUrl("");
-              }
-            },error =>  {
-              //TODO Open error modal or something
-              this.handleError(error)
-            })
-         }
-      }
-    });
+              private renderer: Renderer2,
+              private zoomService: ZoomService) {
   }
 
   ngAfterViewInit(): void {
@@ -72,6 +48,11 @@ export class AppComponent implements AfterViewInit {
       this.keyboardEventCallbackMap.executeCallbacks([event.key, "keyup", downButton], event);
     });
 
+    this.renderer.listen('window', 'resize', () => {
+      console.log(`${window.innerWidth} - ${window.innerHeight}`);
+      this.zoomService.handleResize(window.innerWidth, window.innerHeight);
+    });
+
     this.isLoggedIn();
   }
 
@@ -90,9 +71,10 @@ export class AppComponent implements AfterViewInit {
   private isLoggedIn() {
     this.http.get("/me",{  responseType: 'text'
       }).subscribe(
-      (data:any) => {
+      (data: any) => {
         this.userService.setAuthenticated(true);
         if (data !== null) {
+          // Todo: Extract the name from data, somehow, I'm not sure what's sent back.
           this.userService.name = data;
         }
       }, (error) =>  {
