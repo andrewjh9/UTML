@@ -1,6 +1,5 @@
 package nl.utwente.utml.service;
 
-import jdk.jshell.Diag;
 import nl.utwente.utml.model.Diagram;
 
 import java.util.List;
@@ -8,15 +7,15 @@ import java.util.List;
 public interface IDiagramService {
     List<Diagram> getAllUserDiagrams(String email);
 
-    void add(Diagram diagram);
+    Diagram add(Diagram diagram);
 
     void delete(String id);
 
-    Diagram getVisible(String id);
+    Diagram getByIdVisible(String id);
 
-    void update(Diagram diagram);
+    Diagram update(Diagram diagram);
 
-    void toggleVisible(String id);
+    Diagram toggleVisible(String id);
 
     boolean userOwner(String id, String email);
 

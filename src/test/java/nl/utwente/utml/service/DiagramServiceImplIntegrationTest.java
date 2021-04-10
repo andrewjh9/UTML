@@ -1,26 +1,21 @@
 package nl.utwente.utml.service;
 
-import nl.utwente.utml.UtmlApplication;
 import nl.utwente.utml.model.Diagram;
 import nl.utwente.utml.repository.IDiagramRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.*;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.fail;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 /**
  * note: Mocking is done inline
@@ -78,84 +73,64 @@ public class DiagramServiceImplIntegrationTest {
     //Add diagram check overwrite
     @Test
     public void addDiagram(){
-
-        //Adding diagram
-
-
-        this.diagramService.add(testDiagram1);
-
-
-        fail("not implemented");
+        Mockito.when(diagramRepository.save(testDiagram1)).thenReturn(testDiagram1);
+        assertThat(this.diagramService.add(testDiagram1)).isEqualTo(testDiagram1);
     }
+
     @Test
-    public void addOverWriteDiagram(){
-        fail("not implemented");
+    public void addOverwriteDiagram(){
+        Mockito.when(diagramRepository.save(testDiagram1)).thenReturn(testDiagram1);
+        assertThat(this.diagramService.add(testDiagram1)).isEqualTo(testDiagram1);
+        assertThat(this.diagramService.add(testDiagram1)).isEqualTo(testDiagram1);
     }
-    /*
-    Get all Visible diagrams, toggle one to visible and see it returns,
-     untoggle and see it doesn't.
-     */
-    @Test
-    public void getAllVisibleDiagrams(){
-        fail("not implemented");
-    }
-    /*
-    See that service deletes a diagram
-    delete diagram and see it no longer returns
-     */
-    @Test
-    public void delete(){
-        fail("not implemented");
-    }
-    /*
-     get a diagram by id
-     fetch a diagram via it's id via the service
-     */
-    @Test
-    public void get(){
-        fail("not implemented");
 
-    }
     /*
     Get a visible diagram by id check non-visible diagram are not returned.
      */
     @Test
-    public void getVisibleDiagram(){
-        fail("not implemented");
+    public void getByIdVisibleDiagram(){
+        testDiagram1.setVisible(true);
+        Mockito.when(diagramRepository.findByIdAndVisibleTrue(testDiagram1.getId())).thenReturn(testDiagram1);
+        assertThat(this.diagramService.getByIdVisible(testDiagram1.getId())).isEqualTo(testDiagram1);
     }
     /*
     Update a diagram passing diagram
      */
-    @Test void update(){
-        fail("not implemented");
+    @Test
+    public void update(){
+        Mockito.when(diagramRepository.save(testDiagram1)).thenReturn(testDiagram1);
+        assertThat(this.diagramService.update(testDiagram1)).isEqualTo(testDiagram1);
     }
-
 
     /*
         Toggle on and off visibility of diagram
      */
     @Test
     public void toggleVisible(){
-        fail("not implemented");
+        testDiagram1.setVisible(false);
+        Mockito.when(diagramRepository.save(testDiagram1)).thenReturn(testDiagram1);
+        Mockito.when(diagramRepository.getOne(testDiagram1.getId())).thenReturn(testDiagram1);
+        assertThat(this.diagramService.toggleVisible(testDiagram1.getId()).getVisible()).isEqualTo(true);
+
     }
 
-
-
-    /*
-        Check if user is owner of diagram
-        pass and fail case should be tested
-     */
     @Test
     public void userOwner(){
-        fail("not implemented");
+        Mockito.when(this.diagramRepository.getOne(testDiagram1.getId())).thenReturn(testDiagram1);
+        assertThat(this.diagramService.userOwner(testDiagram1.getId(), EXAMPLE_USER_EMAIL_1)).isEqualTo(true);
+        Mockito.when(this.diagramRepository.getOne(testDiagram2.getId())).thenReturn(testDiagram2);
+        assertThat(this.diagramService.userOwner(testDiagram2.getId(), EXAMPLE_USER_EMAIL_1)).isEqualTo(false);
     }
 
-    /*
-        Get names of diagram belonging to users
-    */
+
     @Test
     public void getDiagramNames(){
-        fail("not implemented");
+        List<Diagram> response = new ArrayList<>();
+        response.add(testDiagram1);
+        Mockito.when(this.diagramRepository.findByUserEmail(EXAMPLE_USER_EMAIL_1)).thenReturn(response);
+        List<String> responseNames = new ArrayList<>();
+        responseNames.add(testDiagram1.getTitle());
+        assertThat(this.diagramService.getDiagramNames(EXAMPLE_USER_EMAIL_1)).isEqualTo(responseNames);
     }
 
 }

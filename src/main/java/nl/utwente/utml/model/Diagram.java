@@ -29,7 +29,7 @@ import java.util.Date;
     @JsonProperty("userEmail")
     private String userEmail;
 
-
+    //Sometimes referred to by Name
     @JsonProperty("title")
     private String title;
 
@@ -71,6 +71,12 @@ import java.util.Date;
     public void toggleVisible(){
         this.visible = !this.visible;
     }
+
+    public void setVisible(boolean visible){this.visible = visible;}
+
+    public boolean getVisible(){return visible;}
+
+
 
     public String getTitle() {
         return title;
