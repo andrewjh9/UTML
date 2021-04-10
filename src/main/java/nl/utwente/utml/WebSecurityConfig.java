@@ -18,11 +18,17 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
-        Set<String> oktaScopes = new HashSet<>();
-        oktaScopes.add("okta.users.read.self");
+        Set<String> oauth2ScopesOkta = new HashSet<>();
+        oauth2ScopesOkta.add("okta.users.read.self");
 
         OidcUserService oktaUserService = new OidcUserService();
-        oktaUserService.setAccessibleScopes(oktaScopes);
+        oktaUserService.setAccessibleScopes(oauth2ScopesOkta);
+
+        Set<String> oauth2ScopesCanvas = new HashSet<>();
+        oauth2ScopesCanvas.add("canvas.users.read.self");
+
+        OidcUserService canvasUserServiceCanvas = new OidcUserService();
+        canvasUserServiceCanvas.setAccessibleScopes(oauth2ScopesCanvas);
 
         http.authorizeRequests()
                 // allow antonymous access to the root page
