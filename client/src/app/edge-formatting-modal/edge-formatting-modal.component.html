@@ -11,7 +11,7 @@
     <div class="form-group row px-3" (click)="selectedLabel='start'">
       <label class="w-25 col-form-label">Start Label</label>
       <div class="w-75 d-flex" *ngIf="edge.startLabel">
-        <input class="flex-grow-1 form-control form-text" type="text" [(ngModel)]="edge.startLabel.value">
+        <input #startLabelInput class="flex-grow-1 form-control form-text" type="text" [(ngModel)]="edge.startLabel.value">
         <button class="btn btn-outline-danger icon-50 ml-2"
                 style="height: 38px; margin-top: 4px;"
                 type="text"
@@ -27,7 +27,7 @@
     <div class="form-group row px-3" (click)="selectedLabel='middle'">
       <label class="w-25 col-form-label">Middle Label</label>
       <div class="w-75 d-flex" *ngIf="edge.middleLabel">
-        <input class="flex-grow-1 form-control form-text" type="text" [(ngModel)]="edge.middleLabel.value">
+        <input #middleLabelInput class="flex-grow-1 form-control form-text" type="text" [(ngModel)]="edge.middleLabel.value">
         <button class="btn btn-outline-danger icon-50 ml-2"
                 style="height: 38px; margin-top: 4px;"
                 type="text"
@@ -43,7 +43,7 @@
     <div class="form-group row px-3" (click)="selectedLabel='end'">
       <label class="w-25 col-form-label">End Label</label>
       <div class="w-75 d-flex" *ngIf="edge.endLabel">
-        <input class="flex-grow-1 form-control form-text" type="text" [(ngModel)]="edge.endLabel.value">
+        <input #endLabelInput class="flex-grow-1 form-control form-text" type="text" [(ngModel)]="edge.endLabel.value">
         <button class="btn btn-outline-danger icon-50 ml-2"
                 style="height: 38px; margin-top: 4px;"
                 type="text"

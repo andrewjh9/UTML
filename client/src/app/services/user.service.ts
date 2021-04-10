@@ -4,8 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserService {
-
-
+  private _name?: string;
   private _diagramNames: Set<String>;
   private authenticated: boolean = false;
   public openDiagramName: String =  'yourDiagram';
@@ -18,6 +17,7 @@ export class UserService {
   public setOpenDiagramName(diagramName: String){
     this.openDiagramName = diagramName;
   }
+
   public setOpenDiagramNameDefault(){
     this.openDiagramName =  'yourDiagram';
   }
@@ -50,4 +50,11 @@ export class UserService {
   }
 
 
+  get name(): string | undefined {
+    return this._name;
+  }
+
+  set name(value: string | undefined) {
+    this._name = value;
+  }
 }

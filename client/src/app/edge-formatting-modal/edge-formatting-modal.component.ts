@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SelectionService} from "../services/selection.service";
 import {Edge} from "../../model/edge";
@@ -11,6 +11,11 @@ import {CachingService} from "../services/caching/caching.service";
   styleUrls: ['./edge-formatting-modal.component.scss']
 })
 export class EdgeFormattingModalComponent {
+  @ViewChild('startLabelInput') startLabelInput?: ElementRef;
+  @ViewChild('middleLabelInput') middleLabelInput?: ElementRef;
+  @ViewChild('endLabelInput') endLabelInput?: ElementRef;
+
+
   public edge?: Edge;
   selectedLabel: 'start' | 'middle' | 'end' = 'start';
 
@@ -61,6 +66,8 @@ export class EdgeFormattingModalComponent {
         } else {
           this.edge?.addStartLabel(char);
         }
+        // this.startLabelInput?.nativeElement.focus();
+        setTimeout(() => this.startLabelInput?.nativeElement.focus(), 50);
         break;
       case "middle":
         if (this.edge?.middleLabel) {
@@ -68,6 +75,8 @@ export class EdgeFormattingModalComponent {
         } else {
           this.edge?.addMiddleLabel(char);
         }
+        // this.middleLabelInput?.nativeElement.focus();
+        setTimeout(() => this.middleLabelInput?.nativeElement.focus(), 50);
         break;
       case "end":
         if (this.edge?.endLabel) {
@@ -75,6 +84,7 @@ export class EdgeFormattingModalComponent {
         } else {
           this.edge?.addEndLabel(char);
         }
+        setTimeout(() => this.endLabelInput?.nativeElement.focus(), 50);
         break;
     }
   }

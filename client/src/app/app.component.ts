@@ -92,7 +92,8 @@ export class AppComponent implements AfterViewInit {
       }).subscribe(
       (data:any) => {
         this.userService.setAuthenticated(true);
-        if( data !== null) {
+        if (data !== null) {
+          this.userService.name = data;
         }
       }, (error) =>  {
         //TODO Open error modal or something

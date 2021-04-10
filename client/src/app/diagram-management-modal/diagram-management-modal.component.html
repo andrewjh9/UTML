@@ -24,7 +24,7 @@
           <td>{{dbEntry.title}}</td>
 <!--          <td>{{dbEntry.lastModified | date:'dd/MM/yyyy'}}</td>-->
           <td class="icon">
-            <button class="btn btn-outline-secondary text-center" style="width: 50px" (click)="triggerEditModal()"
+            <button class="btn btn-outline-secondary text-center" style="width: 50px" (click)="triggerEditModal(i)"
                     ngbTooltip="Edit Title" placement="top">
               <fa-icon [icon]="['far', 'edit']"></fa-icon>
             </button>
@@ -99,7 +99,7 @@
     <h4 class="modal-title">Edit Title</h4>
   </div>
   <div class="modal-body">
-    <input class="form-control" *ngIf="dbEntries" [(ngModel)]="dbEntries[selectedIndex].title" type="text">
+    <input class="form-control" *ngIf="dbEntries" [(ngModel)]="editTitle" type="text">
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-outline-success" (click)="modal.close(); updateChanges();">Save</button>
