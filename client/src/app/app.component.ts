@@ -8,7 +8,7 @@ import {deserialiseDiagram} from "../serialisation/deserialise/deserialise-diagr
 import {DiagramContainerService} from "./services/diagram-container.service";
 import {UserService} from "./services/user.service";
 import {ErrorModalComponent} from "./error-modal/error-modal.component";
-import {ErrorLauncherService} from "./error-launcher.service";
+import {ErrorLauncherService} from "./services/error-launcher.service";
 
 
 

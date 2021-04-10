@@ -48,7 +48,7 @@
     </div>
 
     <div class="border-left">
-      <div *ngIf="selectedIndex !== -1 && dbEntries !== undefined && !dbEntries[selectedIndex].visible" class="w-100 d-flex p-1 m-1">
+      <div *ngIf="selectedIndex !== -1 && dbEntries !== undefined && dbEntries[selectedIndex].visible" class="w-100 d-flex p-1 m-1">
         <div class="flex-grow-1">
           <input #urlElement class="form-control" type="text" [value]="url" readonly/>
         </div>

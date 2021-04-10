@@ -12,8 +12,8 @@ import {DiagramContainerService} from "../services/diagram-container.service";
 import {SerialisedDiagram} from "../../serialisation/serialised-data-structures/serialised-diagram";
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {catchError} from "rxjs/operators";
-import {ErrorLauncherService} from "../error-launcher.service";
 import {UserService} from "../services/user.service";
+import {ErrorLauncherService} from "../services/error-launcher.service";
 
 
 @Component({
