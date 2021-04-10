@@ -48,8 +48,9 @@ export class SaveModalComponent implements AfterContentInit {
   }
 
   saveToDB() {
-    this.http.post('/api/diagram/', this.exportService.getDiagramJSON(this.exportService.filename)).subscribe(
+    this.http.post('/api/diagram/', this.exportService.getDiagramJSON(this.userService.openDiagramName)).subscribe(
         (data: any) => {
+          this.userService.addDiagramNames([this.userService.openDiagramName])
           this.modal.close()
         },error => {
           console.error(error);
@@ -59,11 +60,7 @@ export class SaveModalComponent implements AfterContentInit {
   }
 
   private existsDiagramWithName() {
-    // Todo: @Andrew implement this.
-
-
-
-    return true;
+    return this.userService.diagramNameExists(this.userService.openDiagramName);
   }
 }
 

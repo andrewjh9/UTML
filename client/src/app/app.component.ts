@@ -7,6 +7,8 @@ import {ActivatedRoute, Router, RoutesRecognized} from "@angular/router";
 import {deserialiseDiagram} from "../serialisation/deserialise/deserialise-diagram";
 import {DiagramContainerService} from "./services/diagram-container.service";
 import {UserService} from "./services/user.service";
+import {ErrorModalComponent} from "./error-modal/error-modal.component";
+import {ErrorLauncherService} from "./error-launcher.service";
 
 
 
@@ -25,7 +27,8 @@ export class AppComponent implements AfterViewInit {
               private editService: EditService,
               private diagramContainer: DiagramContainerService,
               private http: HttpClient,
-              private renderer: Renderer2) {
+              private renderer: Renderer2,
+              private errorLauncherService: ErrorLauncherService) {
   }
 
   ngOnInit(): void {
@@ -34,20 +37,18 @@ export class AppComponent implements AfterViewInit {
       if (val instanceof RoutesRecognized) {
         // @ts-ignore
         this.loadDiagramId = (val.state.root.firstChild.params.id);
-        console.log(this.loadDiagramId)
         // @ts-ignore
         if(this.loadDiagramId){
           this.http.get("api/diagram/visible",{params: new HttpParams().set("id", String(this.loadDiagramId))}).subscribe(
             (data:any) => {
-              if(data.serialisedDiagram) {
+              if(data && data.serialisedDiagram) {
                 this.diagramContainer.set(deserialiseDiagram(JSON.parse(data.serialisedDiagram)))
               } else{
-                window.alert("Diagram could not be loaded");
+                this.errorLauncherService.launch("Diagram could not be loaded, either doesn't exist or has not be made public")
                 this.router.navigateByUrl("");
               }
             },error =>  {
-              //TODO Open error modal or something
-              this.handleError(error)
+              this.errorLauncherService.launch("Diagram could not be loaded.")
             })
          }
       }
@@ -90,19 +91,16 @@ export class AppComponent implements AfterViewInit {
   private isLoggedIn() {
     this.http.get("/me",{  responseType: 'text'
       }).subscribe(
-      (data:any) => {
-        this.userService.setAuthenticated(true);
-        if( data !== null) {
+      (usersDiagramNames: any) => {
+        let userDiagramNamesParsed: any = JSON.parse(usersDiagramNames);
+        if(Array.isArray(userDiagramNamesParsed) && typeof userDiagramNamesParsed[0] == "string"){
+          this.userService.addDiagramNames(userDiagramNamesParsed);
         }
+        this.userService.setAuthenticated(true);
       }, (error) =>  {
-        //TODO Open error modal or something
+        this.userService.clearDiagramNames();
         this.userService.setAuthenticated(false);
-        this.handleError(error)
       }
     );
-  }
-
-  handleError(error: any) {
-    console.error(error)
   }
 }

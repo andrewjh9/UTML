@@ -26,7 +26,7 @@ public class  DiagramController {
 
     @GetMapping("/visible")
     public Diagram getVisibleDiagram(@RequestParam String id){
-        return diagramService.getVisible(id);
+        return diagramService.getByIdVisible(id);
     }
 
 
@@ -37,11 +37,6 @@ public class  DiagramController {
 
     }
 
-
-    @GetMapping("/all")
-    public List<Diagram> getAllDiagramsVisible(){
-        return diagramService.getAllVisible();
-    }
 
 
      @GetMapping("/all/me")
