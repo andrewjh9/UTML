@@ -17,8 +17,4 @@ export class SpecialCharacterSelectorComponent {
   readonly MATH2 = '∊∋∌∍∎∏∑−←→';
 
   constructor() { }
-
-  handleClick(char: string) {
-    this.clickChar.emit(char);
-  }
 }

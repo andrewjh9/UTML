@@ -149,7 +149,7 @@ dt.edges['Edge'] = association;
 dt.nodes['Node'] = new RectangleNode(186, 75, new Position(10, 2));
 
 let stack: ShapeSet = {nodes: {}, edges: {}, active: true};
-stack.nodes['Stack layer'] = new RectangleNode(186, 50, new Position(10, 2));
+stack.nodes['Stack layer'] = new RectangleNode(200, 50, new Position(8, 2));
 
 let graphs: ShapeSet = {nodes: {}, edges: {}, active: true};
 let undirectedEdge = new Edge(new Position(10, 20), new Position(196, 20));
