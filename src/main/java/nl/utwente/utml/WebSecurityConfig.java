@@ -38,7 +38,7 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
         canvasUserServiceCanvas.setAccessibleScopes(oauth2ScopesCanvas);
 
         /**
-         * Setting which routes require authetnication
+         * Setting which routes require authentication
          */
         http.authorizeRequests()
                 // allow antonymous access to the root page

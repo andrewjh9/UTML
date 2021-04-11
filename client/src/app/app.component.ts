@@ -32,25 +32,25 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    // @ts-ignore
     this.router.events.subscribe(val => {
       if (val instanceof RoutesRecognized) {
         // @ts-ignore
-        this.loadDiagramId = (val.state.root.firstChild.params.id);
-        // @ts-ignore
-        if(this.loadDiagramId){
-          this.http.get("api/diagram/visible",{params: new HttpParams().set("id", String(this.loadDiagramId))}).subscribe(
-            (data:any) => {
-              if(data && data.serialisedDiagram) {
-                this.diagramContainer.set(deserialiseDiagram(JSON.parse(data.serialisedDiagram)))
-              } else{
-                this.errorLauncherService.launch("Diagram could not be loaded, either doesn't exist or has not be made public")
-                this.router.navigateByUrl("");
-              }
-            },error =>  {
-              this.errorLauncherService.launch("Diagram could not be loaded.")
-            })
-         }
+        if(val.state.root.firstChild) {
+          this.loadDiagramId = (val.state.root.firstChild.params.id);
+          if(this.loadDiagramId){
+            this.http.get("api/diagram/visible",{params: new HttpParams().set("id", String(this.loadDiagramId))}).subscribe(
+              (data:any) => {
+                if(data && data.serialisedDiagram) {
+                  this.diagramContainer.set(deserialiseDiagram(JSON.parse(data.serialisedDiagram)))
+                } else{
+                  this.errorLauncherService.launch("Diagram could not be loaded, either doesn't exist or has not be made public")
+                  this.router.navigateByUrl("");
+                }
+              },error =>  {
+                this.errorLauncherService.launch("Diagram could not be loaded.")
+              })
+          }
+        }
       }
     });
   }
