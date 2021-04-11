@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 @CrossOrigin()
@@ -25,11 +27,14 @@ public class BaseController {
     }
 
     @GetMapping("/me")
-    public List<String> getUser(){
+    public HashMap<String, List<String>> getUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication.getPrincipal() instanceof OidcUser) {
             OidcUser principal = ((OidcUser) authentication.getPrincipal());
-            return diagramService.getDiagramNames( principal.getUserInfo().getEmail());
+            HashMap<String, List<String>> response = new HashMap<>();
+            response.put("email", Collections.singletonList(principal.getUserInfo().getEmail()));
+            response.put("diagramNames", diagramService.getDiagramNames( principal.getUserInfo().getEmail()));
+            return response;
         }
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not logged in.");
     }

@@ -75,7 +75,7 @@
         <fa-icon [icon]="['fas', 'user']"></fa-icon>
       </a>
       <a *ngIf="userService.getAuthenticated()" class="nav-link" href="/logout" ngbTooltip="Logout" placement="bottom">
-        {{userService.name}} <fa-icon [icon]="['fas', 'user-slash']"></fa-icon>
+        {{userService.getUserEmail()}} <fa-icon [icon]="['fas', 'user-slash']"></fa-icon>
       </a>
     </li>
     <li class="nav-item">

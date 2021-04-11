@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserService {
-  private _name?: string;
+  private userEmail?: string;
   private _diagramNames: Set<String>;
   private authenticated: boolean = false;
   public openDiagramName: String =  'yourDiagram';
@@ -49,12 +49,13 @@ export class UserService {
     return this.authenticated;
   }
 
-
-  get name(): string | undefined {
-    return this._name;
+  getUserEmail(): string | undefined{
+    return this.userEmail
   }
 
-  set name(value: string | undefined) {
-    this._name = value;
+  setUserEmail(email: string){
+    this.userEmail = email;
   }
+
+
 }

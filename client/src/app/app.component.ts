@@ -91,11 +91,12 @@ export class AppComponent implements AfterViewInit {
   private isLoggedIn() {
     this.http.get("/me",{  responseType: 'text'
       }).subscribe(
-      (usersDiagramNames: any) => {
-        let userDiagramNamesParsed: any = JSON.parse(usersDiagramNames);
-        if(Array.isArray(userDiagramNamesParsed) && typeof userDiagramNamesParsed[0] == "string"){
-          this.userService.addDiagramNames(userDiagramNamesParsed);
+      (response: any) => {
+        let responseObj: {email: string[], diagramNames: string[]} = JSON.parse(response);
+        if(Array.isArray(response.diagramNames) && typeof response.diagramName[0] == "string"){
+          this.userService.addDiagramNames(response.diagramNames);
         }
+        this.userService.setUserEmail(responseObj.email[0]);
         this.userService.setAuthenticated(true);
       }, (error) =>  {
         this.userService.clearDiagramNames();
