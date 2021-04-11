@@ -7,7 +7,6 @@ import {ActivatedRoute, Router, RoutesRecognized} from "@angular/router";
 import {deserialiseDiagram} from "../serialisation/deserialise/deserialise-diagram";
 import {DiagramContainerService} from "./services/diagram-container.service";
 import {UserService} from "./services/user.service";
-import {ErrorModalComponent} from "./error-modal/error-modal.component";
 import {ErrorLauncherService} from "./services/error-launcher.service";
 
 
@@ -33,24 +32,19 @@ export class AppComponent implements AfterViewInit {
 
   ngOnInit(): void {
     this.router.events.subscribe(val => {
-      if (val instanceof RoutesRecognized) {
-        // @ts-ignore
-        if(val.state.root.firstChild) {
-          this.loadDiagramId = (val.state.root.firstChild.params.id);
-          if(this.loadDiagramId){
-            this.http.get("api/diagram/visible",{params: new HttpParams().set("id", String(this.loadDiagramId))}).subscribe(
-              (data:any) => {
-                if(data && data.serialisedDiagram) {
-                  this.diagramContainer.set(deserialiseDiagram(JSON.parse(data.serialisedDiagram)))
-                } else{
-                  this.errorLauncherService.launch("Diagram could not be loaded, either doesn't exist or has not be made public")
-                  this.router.navigateByUrl("");
-                }
-              },error =>  {
-                this.errorLauncherService.launch("Diagram could not be loaded.")
-              })
-          }
-        }
+      if(val instanceof RoutesRecognized && val.state.root.firstChild && val.state.root.firstChild.params.id) {
+        this.loadDiagramId = val.state.root.firstChild.params.id;
+        this.http.get("api/diagram/visible",{params: new HttpParams().set("id", String(this.loadDiagramId))}).subscribe(
+          (data:any) => {
+            if(data && data.serialisedDiagram) {
+              this.diagramContainer.set(deserialiseDiagram(JSON.parse(data.serialisedDiagram)))
+            } else{
+              this.errorLauncherService.launch("Diagram could not be loaded, either doesn't exist or has not be made public")
+              this.router.navigateByUrl("");
+            }
+          },error =>  {
+            this.errorLauncherService.launch("Diagram could not be loaded.")
+        })
       }
     });
   }
