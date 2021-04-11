@@ -66,7 +66,7 @@ export class CreationSidebarComponent implements OnInit {
       }
 
       this.selectedType = 'neither';
-    })
+    });
 
     edgeCreationService.activityObservable.subscribe(active => {
       this.edgeCreationIsActive = active;

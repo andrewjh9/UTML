@@ -66,6 +66,7 @@ export class EditService {
     if (!this.isActive()) {
       throw new Error();
     }
+
     if (key.length === 1) {
       this.addChar(key);
     } else if (key === 'Escape' || (key === 'Enter' && controlPressed)) {

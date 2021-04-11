@@ -92,10 +92,11 @@ export class DiagramComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.setSVGDimensions();
   }
 
   ngAfterViewInit() {
+    this.setSVGDimensions();
+
     if (this.diagram) {
       this.localStorageService.setup();
     }
