@@ -50,7 +50,6 @@ public class HibernateConf {
 
     private final Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
-        //Possible values: https://stackoverflow.com/questions/438146/what-are-the-possible-values-of-the-hibernate-hbm2ddl-auto-configuration-and-wha
         hibernateProperties.setProperty(
                 "hibernate.hbm2ddl.auto", "update");
         hibernateProperties.setProperty(

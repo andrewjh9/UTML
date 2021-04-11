@@ -9,6 +9,10 @@ import java.util.List;
 
 @Repository
 @Transactional
+/**
+ * Diagram Repository handles interaction between the DB and the service layer
+ * Only an interface is needed spring boot does the rest
+ */
 public interface IDiagramRepository extends JpaRepository< Diagram, String> {
     List<Diagram> findByUserEmail(String email);
     Diagram findByIdAndVisibleTrue(String id);

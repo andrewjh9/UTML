@@ -4,6 +4,9 @@ import nl.utwente.utml.model.Diagram;
 
 import java.util.List;
 
+/**
+ * Interface of diagram service
+ */
 public interface IDiagramService {
     List<Diagram> getAllUserDiagrams(String email);
 

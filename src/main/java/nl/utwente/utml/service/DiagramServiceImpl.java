@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+/**
+ * Implementation of diagram service
+ */
 public class DiagramServiceImpl implements IDiagramService {
 
     @Autowired
@@ -22,6 +25,11 @@ public class DiagramServiceImpl implements IDiagramService {
     }
 
 
+    /**
+     * Adds diagram to db checks if already exists, if it does it overwrites the previous entry one.
+     * @param diagram - to be added
+     * @return diagram that has added to db
+     */
     public Diagram add(Diagram diagram) {
         Diagram existingDiagram = this.diagramRepository.findByUserEmailAndTitle(diagram.getOwnerEmail(), diagram.getTitle());
         if(existingDiagram != null){
@@ -56,11 +64,22 @@ public class DiagramServiceImpl implements IDiagramService {
         return this.diagramRepository.save(diagram);
     }
 
+    /**
+     * Check if user is owner of diagram
+     * @param id - of diagram
+     * @param email - email of owner
+     * @return true - if owner, false if not
+     */
     @Override
     public boolean userOwner(String id, String email) {
         return this.diagramRepository.getOne(id).getOwnerEmail().equals(email);
     }
 
+    /**
+     * Returns the Names(titles) of a users diagrams
+     * @param email
+     * @return string[] of the names of user's diagram
+     */
     @Override
     public List<String> getDiagramNames(String email) {
         return this.diagramRepository.findByUserEmail(email).stream()

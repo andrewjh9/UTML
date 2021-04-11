@@ -13,11 +13,18 @@ import java.util.Set;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(securedEnabled = true)
+/**
+ * Handles the authentication and protection of certain routes.
+ *
+ */
 public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        /**
+         * Scopes of Oauth2 Methods
+         */
         Set<String> oauth2ScopesOkta = new HashSet<>();
         oauth2ScopesOkta.add("okta.users.read.self");
 
@@ -30,6 +37,9 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
         OidcUserService canvasUserServiceCanvas = new OidcUserService();
         canvasUserServiceCanvas.setAccessibleScopes(oauth2ScopesCanvas);
 
+        /**
+         * Setting which routes require authetnication
+         */
         http.authorizeRequests()
                 // allow antonymous access to the root page
                 .antMatchers("/").permitAll()

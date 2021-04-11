@@ -10,7 +10,9 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-
+/**
+ * Model representing the diagrams
+ */
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames={"title", "userEmail"})})
     public class Diagram implements Serializable {
@@ -75,8 +77,6 @@ import java.util.Date;
     public void setVisible(boolean visible){this.visible = visible;}
 
     public boolean getVisible(){return visible;}
-
-
 
     public String getTitle() {
         return title;
