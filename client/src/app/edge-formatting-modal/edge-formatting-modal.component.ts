@@ -66,7 +66,6 @@ export class EdgeFormattingModalComponent {
         } else {
           this.edge?.addStartLabel(char);
         }
-        // this.startLabelInput?.nativeElement.focus();
         setTimeout(() => this.startLabelInput?.nativeElement.focus(), 50);
         break;
       case "middle":
@@ -75,7 +74,6 @@ export class EdgeFormattingModalComponent {
         } else {
           this.edge?.addMiddleLabel(char);
         }
-        // this.middleLabelInput?.nativeElement.focus();
         setTimeout(() => this.middleLabelInput?.nativeElement.focus(), 50);
         break;
       case "end":

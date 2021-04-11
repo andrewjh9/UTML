@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnChanges, OnInit} from '@angular/core';
 import {ClassNode} from "../../model/node/class-node";
 import {Position} from "../../model/position";
 import {Edge, EndStyle, LineType} from "../../model/edge";
@@ -23,6 +23,9 @@ import {ShapeSetContainerService} from "../services/shape-set-container.service"
 import {DiagramComponent} from "../diagram/diagram.component";
 import {CachingService} from "../services/caching/caching.service";
 import {EditService} from "../services/edit.service";
+import {ZoomService} from "../services/zoom.service";
+import {logger} from "codelyzer/util/logger";
+import {NavBarComponent} from "../nav-bar/nav-bar.component";
 
 @Component({
   selector: 'creation-sidebar',
@@ -44,7 +47,10 @@ export class CreationSidebarComponent implements OnInit {
               private deletionService: DeletionService,
               private cachingService: CachingService,
               private editService: EditService,
+              private zoomService: ZoomService,
               shapeSetContainerService: ShapeSetContainerService) {
+    zoomService.resizeEmitter.subscribe((ignored: any) => this.setStyling());
+
     selectionService.selectedObservable.subscribe(list => {
       if (list.length === 1) {
         if (list[0] instanceof Node) {
@@ -60,7 +66,7 @@ export class CreationSidebarComponent implements OnInit {
       }
 
       this.selectedType = 'neither';
-    })
+    });
 
     edgeCreationService.activityObservable.subscribe(active => {
       this.edgeCreationIsActive = active;
@@ -80,7 +86,7 @@ export class CreationSidebarComponent implements OnInit {
     shapeSetContainerService.observable.subscribe(shapeSets => this.shapeSets = shapeSets);
   }
 
-  ngOnInit(): void {
+  private setStyling(): void {
     let height: number = window.innerHeight - DiagramComponent.NAV_HEIGHT;
     let left: number = window.innerWidth - CreationSidebarComponent.WIDTH;
     document.getElementById("creation-side-bar")!.style.overflow = "auto";
@@ -88,23 +94,18 @@ export class CreationSidebarComponent implements OnInit {
     document.getElementById("creation-side-bar")!.style.width = CreationSidebarComponent.WIDTH + "px";
     document.getElementById("creation-side-bar")!.style.position = "absolute";
     document.getElementById("creation-side-bar")!.style.left = left + "px";
-    document.getElementById("creation-side-bar")!.style.top = 50 + "px";
-
+    document.getElementById("creation-side-bar")!.style.top = DiagramComponent.NAV_HEIGHT + "px";
   }
 
-  get styleObject() {
-    return {
-      width: CreationSidebarComponent.WIDTH,
-      height: window.innerHeight - DiagramComponent.NAV_HEIGHT,
-      left: window.innerWidth - CreationSidebarComponent.WIDTH
-    }
+  ngOnInit() {
+    this.setStyling();
   }
+
+  Object = Object;
 
   get groupKeys() {
     return Object.keys(this.shapeSets);
   }
-
-  Object = Object;
 
   handleGenericMouseUp(): void {
     if (this.dragDropCreationService.isActive()) {
@@ -134,12 +135,24 @@ export class CreationSidebarComponent implements OnInit {
     return this.selectedKeys !== undefined && this.selectedKeys[0] === groupKey && this.selectedKeys[1] === edgeKey;
   }
 
-  getStyles() {
-    return {
-      left: window.innerWidth - CreationSidebarComponent.WIDTH,
-      position: "absolute",
-      top: 50
-    }
+  left(): string {
+    return `${this.zoomService.baseWidth - CreationSidebarComponent.WIDTH}px`;
+  }
+
+  topp(): string {
+    return `${DiagramComponent.NAV_HEIGHT}px`;
+  }
+
+  get style() {
+    console.log('Get styles is being called');
+    console.log(this.zoomService.baseWidth - CreationSidebarComponent.WIDTH);
+    let result =  {
+      'left': this.zoomService.baseWidth - CreationSidebarComponent.WIDTH,
+      'position': "absolute",
+      'top': DiagramComponent.NAV_HEIGHT
+    };
+    console.log(result);
+    return result;
   }
 
   getEdgeCursor() {

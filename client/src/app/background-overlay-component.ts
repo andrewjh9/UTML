@@ -17,5 +17,6 @@ export abstract class BackgroundOverlayComponent {
     callback();
 
     zoomService.updateEmitter.subscribe(callback);
+    zoomService.resizeEmitter.subscribe(callback);
   }
 }

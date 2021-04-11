@@ -77,7 +77,7 @@ export class EdgeComponent implements OnDestroy {
         this.edge.addEndLabel('e');
         this.activateEditService(this.edge.endLabel!);
       } else if (this.edge.middleLabel === undefined) {
-        this.edge.addMiddleLabel('m');
+        this.edge.addMiddleLabel('specialCharMap');
         this.activateEditService(this.edge.middleLabel!);
       }
     }

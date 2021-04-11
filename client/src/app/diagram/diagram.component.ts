@@ -1,4 +1,4 @@
-import {AfterViewInit, Component} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {RepositionService} from "../services/reposition.service";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {DeletionService} from "../services/deletion.service";
@@ -28,11 +28,10 @@ import {StartEndRepositioner} from "../services/edge-reposition/start-end-reposi
   templateUrl: './diagram.component.html',
   styleUrls: ['./diagram.component.scss']
 })
-export class DiagramComponent implements AfterViewInit {
+export class DiagramComponent implements AfterViewInit, OnInit {
+  @ViewChild('svg') svgElement!: ElementRef;
   public static readonly NAV_HEIGHT = 50;
   public diagram: Diagram;
-  public width?: number;
-  public height?: number;
   edgeCreationIsActive: boolean = false;
 
   constructor(private sanitizer: DomSanitizer,
@@ -55,10 +54,8 @@ export class DiagramComponent implements AfterViewInit {
               private lensOffsetService: LensOffsetService,
               private labelRepositionService: LabelRepositionService) {
     edgeCreationService.activityObservable.subscribe(b => this.edgeCreationIsActive = b);
+    zoomService.resizeEmitter.subscribe((ignored: any) => this.setSVGDimensions());
 
-
-    this.width = window.innerWidth;
-    this.height = window.innerHeight - DiagramComponent.NAV_HEIGHT;
     document.documentElement.style.overflow = 'hidden';  // firefox, chrome
     // document.body.scroll = "no"; // ie only
     this.diagram = diagramContainer.get();
@@ -89,7 +86,17 @@ export class DiagramComponent implements AfterViewInit {
     });
   }
 
+  private setSVGDimensions(): void {
+    this.svgElement.nativeElement.setAttribute('width', this.zoomService.baseWidth);
+    this.svgElement.nativeElement.setAttribute('height', this.zoomService.baseHeight);
+  }
+
+  ngOnInit(): void {
+  }
+
   ngAfterViewInit() {
+    this.setSVGDimensions();
+
     if (this.diagram) {
       this.localStorageService.setup();
     }

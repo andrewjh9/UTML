@@ -7,6 +7,7 @@ import {ActivatedRoute, Router, RoutesRecognized} from "@angular/router";
 import {deserialiseDiagram} from "../serialisation/deserialise/deserialise-diagram";
 import {DiagramContainerService} from "./services/diagram-container.service";
 import {UserService} from "./services/user.service";
+import {ZoomService} from "./services/zoom.service";
 import {ErrorLauncherService} from "./services/error-launcher.service";
 
 
@@ -27,6 +28,7 @@ export class AppComponent implements AfterViewInit {
               private diagramContainer: DiagramContainerService,
               private http: HttpClient,
               private renderer: Renderer2,
+              private zoomService: ZoomService,
               private errorLauncherService: ErrorLauncherService) {
   }
 
@@ -65,6 +67,11 @@ export class AppComponent implements AfterViewInit {
     this.renderer.listen('window', 'keyup', (event: KeyboardEvent) => {
       let downButton = AppComponent.getDownButton(event);
       this.keyboardEventCallbackMap.executeCallbacks([event.key, "keyup", downButton], event);
+    });
+
+    this.renderer.listen('window', 'resize', () => {
+      console.log(`${window.innerWidth} - ${window.innerHeight}`);
+      this.zoomService.handleResize(window.innerWidth, window.innerHeight);
     });
 
     this.isLoggedIn();

@@ -33,11 +33,11 @@ export class UserService {
     }
   }
 
-  public diagramNameExists(diagramName: String): boolean{
+  public diagramNameExists(diagramName: String): boolean {
     return this._diagramNames.has(diagramName);
   }
 
-  public clearDiagramNames(){
+  public clearDiagramNames() {
     this._diagramNames = new Set<String>();
   }
 
