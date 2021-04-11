@@ -7,6 +7,7 @@ import {CachingService} from "./caching/caching.service";
 import {SelectionService} from "./selection.service";
 import {BehaviorSubject} from "rxjs";
 import {logger} from "codelyzer/util/logger";
+import {specialCharMap} from "../special-char-map";
 
 @Injectable({
   providedIn: 'root'
@@ -43,13 +44,15 @@ export class EditService {
     return rows.join('\\n');
   }
 
-  private setValue(s: string) {
+  private setValue(str: string) {
+    str = this.replaceSpecialChars(str);
+
     if (!this.isActive()) { throw new Error("Can not get when unactivated. ") }
     let element = this.editElement.getValue()
     if (element instanceof Node) {
-      element.text = s;
+      element.text = str;
     } else if (element instanceof Label) {
-      element.value = s;
+      element.value = str;
     }
   }
 
@@ -63,7 +66,6 @@ export class EditService {
     if (!this.isActive()) {
       throw new Error();
     }
-    console.log(key)
     if (key.length === 1) {
       this.addChar(key);
     } else if (key === 'Escape' || (key === 'Enter' && controlPressed)) {
@@ -156,16 +158,13 @@ export class EditService {
       this.setValue(newRows.join('\\n'));
       this.rowIndex!--;
       this.charIndex = this.rows[this.rowIndex!].length;
-      console.log(newRows);
     } else if (this.charIndex! !== 0) {
-      console.log('lower')
       let newRows = this.rows.map((row, index) => {
         if (index === this.rowIndex!) {
           return row.substr(0, this.charIndex! - 1) + row.substr(this.charIndex!);
         }
         return row;
       });
-      console.log(newRows)
       this.charIndex!--;
 
       this.setValue(newRows.join('\\n'));
@@ -179,7 +178,6 @@ export class EditService {
       }
       return row;
     });
-    console.log(newRows)
     this.charIndex!++;
     this.setValue(newRows.join('\\n'));
   }
@@ -191,5 +189,19 @@ export class EditService {
     this.charIndex = undefined;
     this.rowIndex = undefined;
     this.editElement.next(undefined);
+  }
+
+  private replaceSpecialChars(str: string): string {
+    for (let [name, char] of Object.entries(specialCharMap)) {
+      const MARKER_CHAR = 'ǚ';
+      str = str.replace(`\\${name}`, `${MARKER_CHAR}${char}`);
+      let index = str.split('\\n')[this.rowIndex!].indexOf(MARKER_CHAR);
+      if (index !== -1) {
+        this.charIndex = index + 1;
+        str = str.replace(MARKER_CHAR, '');
+      }
+    }
+
+    return str;
   }
 }

@@ -74,7 +74,7 @@ export class AppComponent implements AfterViewInit {
       (data: any) => {
         this.userService.setAuthenticated(true);
         if (data !== null) {
-          // Todo: Extract the name from data, somehow, I'm not sure what's sent back.
+          // Todo: Extract the name from data, somehow, I'specialCharMap not sure what's sent back.
           this.userService.name = data;
         }
       }, (error) =>  {
