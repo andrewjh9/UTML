@@ -17,6 +17,10 @@ import java.util.List;
 
 @CrossOrigin()
 @RestController
+/**
+ * Base Controller
+ * handles the only non-authenticated request which checks if the client is authenticated
+ */
 public class BaseController {
 
     private final IDiagramService diagramService;
@@ -26,6 +30,11 @@ public class BaseController {
         this.diagramService = diagramService;
     }
 
+    /**
+     * Checks if the client currently has a authenticated session with the server.
+     * @return HashMap of the authenticated user's email, also returns the names of diagram belonging to the user.
+     * @throw Not-Authorized status if user is not logged in.
+     */
     @GetMapping("/me")
     public HashMap<String, List<String>> getUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -33,7 +42,7 @@ public class BaseController {
             OidcUser principal = ((OidcUser) authentication.getPrincipal());
             HashMap<String, List<String>> response = new HashMap<>();
             response.put("email", Collections.singletonList(principal.getUserInfo().getEmail()));
-            response.put("diagramNames", diagramService.getDiagramNames( principal.getUserInfo().getEmail()));
+            response.put("diagramNames", diagramService.getDiagramNames(principal.getUserInfo().getEmail()));
             return response;
         }
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "You are not logged in.");
