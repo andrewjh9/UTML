@@ -156,8 +156,8 @@ export class EditService {
     if (this.rowIndex! !== 0 && this.rows[this.rowIndex!].length === 0 && this.rows.length !== 1) {
       let newRows = this.rows.map(x => x);
       newRows.splice(this.rowIndex!, 1);
-      this.setValue(newRows.join('\\n'));
       this.rowIndex!--;
+      this.setValue(newRows.join('\\n'));
       this.charIndex = this.rows[this.rowIndex!].length;
     } else if (this.charIndex! !== 0) {
       let newRows = this.rows.map((row, index) => {
