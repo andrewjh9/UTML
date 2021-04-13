@@ -4,6 +4,8 @@ import {DiagramContainerService} from "./diagram-container.service";
 import {SelectionService} from "./selection.service";
 import {ZoomService} from "./zoom.service";
 import {SettingsContainerService} from "./settings-container.service";
+import {Node} from "../../model/node/node";
+import {EndStyle} from "../../model/edge";
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +82,46 @@ export class ExportService {
 
   public getDiagramJSON(fileName: String){
     return {serialisedDiagram: JSON.stringify(this.diagram?.serialise()), title: fileName};
+  }
+
+  public exportDFA(): void {
+    try {
+      let result: any = {
+        'alphabet': ['a', 'b', 'c'],
+        'states': [],
+        'transitions': [],
+        'accepting_states': [],
+        'initial_state': 's_0',
+      };
+
+      for (let node of this.diagram.nodes) {
+        result['states'].push(node.text);
+
+        if (node.hasDoubleBorder) {
+          result['accepting_states'].push(node.text);
+        }
+      }
+
+      for (let edge of this.diagram.edges) {
+        function add(start: Node, end: Node, s: string): void {
+          result.transitions.push([start.text, s, end.text])
+        }
+        for (let symbol of edge.middleLabel!.value.split(',')) {
+          if (edge.startStyle === EndStyle.None) {
+            add(edge.startNode!, edge.endNode!, symbol.trim())
+          } else {
+            add(edge.endNode!, edge.startNode!, symbol.trim());
+          }
+        }
+      }
+
+      let theJSON = JSON.stringify(result);
+      let uri: string = "data:text/json;charset=UTF-8," + encodeURIComponent(theJSON)
+      this.triggerDownload('dfa', uri, "json")
+    } catch (e) {
+      console.error(e);
+      alert('could not create dfa.json')
+    }
   }
 
   private triggerDownload(name: string, uri: string, extension: string) {
