@@ -18,7 +18,7 @@
         </p>
 
         <p>
-          You can zoom in and out by clicking the zoom buttons in the navbar. You can <code>Control</code> click
+          You can zoom in and out by clicking the zoom buttons in the navbar. You can click-and-drag
           on empty space in your diagram to move around.
         </p>
 
@@ -40,8 +40,7 @@
           You can also add and move around middle positions of edges.
         </p>
         <p>
-          If you want to change how an edge looks, you have two options. You can firstly select it and click on
-          the edge which you want it to look like in the creation sidebar. Alternatively, you can <code>Control</code>
+          If you want to change how an edge looks, you can <code>Control</code>
           double click the edge to open up the advanced formatting view.
         </p>
         <p>
@@ -60,12 +59,20 @@
           circles.
         </p>
         <p>
-          You can change the way a shape looks in two ways. You can firstly <code>Control</code> double click it to
-          open the advanced formatting menu. Alternatively, you could select it and click on the shape you want it to
-          look like in the creation sidebar.
+          To change the formatting of a shape, <code>Control</code> double-click the shape to open up the advanced formatting.
         </p>
         <p>
           Changing the text inside a shape is either done through the advanced formatting menu or by double clicking the shape.
+        </p>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="4">
+      <a ngbNavLink>Exporting and Importing</a>
+      <ng-template ngbNavContent>
+        <p>
+          Pressing the save icon will open the exporting modal. Here you can choose to export to a <code>png</code> image.
+          Alternatively you can export to a <code>.utml</code> file. If you save this file, you can later import it
+          and continue the diagram creation process.
         </p>
       </ng-template>
     </li>

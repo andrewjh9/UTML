@@ -1,23 +1,23 @@
 
 
-##Serve angular
+## Serve angular
 Use the following commands build and to copy the angular into the backend:
 cd client &&
 sudo npm run ng -p build && cd .. &&
 cp -r client/dist/client/. src/main/resources/static
 
-##Serving Local Host remotely 
+## Serving Local Host remotely 
 For dev and testing lspurposes you may wish to point your local host at a remote URL. 
 In order to this with the project run the App (including back-end) via intelij and run the follow command: 
 `lt --port 8080` with 8080 corresponding to the port you are running your instance of the  app on. 
 
-###Development
+### Development
 Run a postgres instance locally. Match the credentials with the ones in the development.json file. 
 
-###Production 
+### Production 
 A postgres docker will be started when docker is created see below. 
 
-##Docker 
+## Docker 
 Install maven. \
 Install docker\
 Start docker. \

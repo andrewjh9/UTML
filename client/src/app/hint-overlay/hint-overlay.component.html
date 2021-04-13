@@ -6,8 +6,9 @@
       <li><code>Escape</code> to deselect</li>
       <li><code>Delete</code> to delete</li>
       <li>Click-and-drag to move</li>
-      <li>Control-click to open formatting</li>
-      <li>Click other node in creation sidebar to replace</li>
+      <li>Click-and-drag the red circles to resize</li>
+      <li>Double-click to edit the text</li>
+      <li>Control-double-click to open formatting</li>
     </ul>
   </div>
 
@@ -17,9 +18,8 @@
       <li><code>Escape</code> to deselect</li>
       <li><code>Delete</code> to delete</li>
       <li>Click-and-drag on any circles to move them</li>
-      <li>Control-click to open formatting</li>
-      <li>Click other node in creation sidebar to replace</li>
-      <li>Double click to add labels</li>
+      <li>Control-double-click to open formatting</li>
+      <li>Double click to add labels close to the middle start or end.</li>
     </ul>
   </div>
 
@@ -32,12 +32,31 @@
     </ul>
   </div>
 
+  <div *ngIf="mode === 'label'" class="p-1">
+    <b>A label is selected</b>
+    <ul>
+      <li><code>Escape</code> to deselect</li>
+      <li><code>Delete</code> to delete</li>
+      <li>Click-and-drag to move it</li>
+      <li>Double click to edit the text</li>
+    </ul>
+  </div>
+
   <div *ngIf="mode === 'edge-creation'" class="p-1">
     <b>Edge Creation Mode</b>
     <ul>
-      <li>Click and hold a green circle to select the start</li>
+      <li>Click and hold a orange circle to select the start</li>
       <li>Hold and release on a green circle to select the end</li>
       <li>Press <code>Escape</code> to stop creating edges.</li>
+    </ul>
+  </div>
+
+  <div *ngIf="mode === 'text-edit'" class="p-1">
+    <b>Editing Text</b>
+    <ul>
+      <li><code>Escape</code> or <code>Control+Enter</code> to stop.</li>
+      <li><code>Enter</code> for a new line</li>
+      <li>Type <code>\alpha</code> for greek letters and math symbols.</li>
     </ul>
   </div>
 </div>
