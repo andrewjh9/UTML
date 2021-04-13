@@ -29,6 +29,9 @@ export function flattenActive(courseSets: {[key: string]: CourseSet}) {
   return result;
 }
 
+let dashed = new Edge(new Position(10, 5), new Position( 196, 5));
+dashed.lineStyle = LineStyle.Dashed;
+
 let cd: ShapeSet = {nodes: {}, edges: {}, active: true};
 let classNode = new ClassNode(186, 75, new Position(10, 2));
 let association = new Edge(new Position(10, 20), new Position(196, 20));
@@ -82,9 +85,17 @@ ad.nodes['Hourglass'] = new HourglassNode(40, 80, new Position(84, 10));
 ad.nodes['Fork/Rejoin'] = new ForkRejoinNode(200, 20, new Position(8, 0));
 ad.nodes['Merge'] = new DiamondNode(40, 40, new Position(84, 30));
 ad.nodes['Start'] = startState;
-ad.nodes['End State'] = endStateActivity;
+ad.nodes['End'] = endStateActivity;
 ad.nodes['Swimlane'] = swimlane;
 
+let smd: ShapeSet = {nodes: {}, edges: {}, active: true};
+smd.nodes['State'] = activityNode;
+smd.edges['Arrow'] = arrow;
+smd.nodes['Fork/Rejoin'] = new ForkRejoinNode(200, 20, new Position(8, 0));
+smd.nodes['Start'] = startState;
+smd.nodes['End'] = endStateActivity;
+smd.nodes['Compound State'] = new SystemBoundaryNode(186, 110, new Position(4,4));;
+smd.edges['Dashed'] = dashed;
 
 let ucd: ShapeSet = {nodes: {}, edges: {}, active: true};
 let include = arrow.getDeepCopy();
@@ -121,8 +132,7 @@ let msg = new Edge(new Position(10, 5), new Position( 196, 5));
 msg.endStyle = EndStyle.SmallFilledArrow;
 let resp = msg.getDeepCopy();
 resp.lineStyle = LineStyle.Dashed;
-let dashed = new Edge(new Position(10, 5), new Position( 196, 5));
-dashed.lineStyle = LineStyle.Dashed;
+
 sequence.edges['Message'] = msg;
 sequence.edges['Response'] = resp;
 sequence.edges['Dashed'] = dashed;
@@ -184,6 +194,7 @@ let design: CourseSet = {
   'Class Diagram': cd,
   'Use Case Diagram': ucd,
   'Sequence Diagram': sequence,
+  'State Machine Diagram': smd
 };
 let lm: CourseSet = {
   'Deterministic finite automaton': fsm,
