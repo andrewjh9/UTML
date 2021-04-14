@@ -6,6 +6,7 @@ import {ZoomService} from "./zoom.service";
 import {SettingsContainerService} from "./settings-container.service";
 import {Node} from "../../model/node/node";
 import {EndStyle} from "../../model/edge";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,8 @@ export class ExportService {
   constructor(diagramContainer: DiagramContainerService,
               private selectionService: SelectionService,
               private zoomService: ZoomService,
-              private settingsContainerService: SettingsContainerService) {
+              private settingsContainerService: SettingsContainerService,
+              private httpClient: HttpClient) {
     this.diagram = diagramContainer.get();
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
   }
@@ -86,12 +88,22 @@ export class ExportService {
 
   public exportDFA(): void {
     try {
+      let alphabet: Array<string> = [];
+
+      this.diagram.edges.forEach(edge => {
+        if (edge.middleLabel) {
+          let symbol = edge.middleLabel!.value;
+          if (!alphabet.includes(symbol)) {
+            alphabet.push(symbol);
+          }
+        }
+      });
+
       let result: any = {
-        'alphabet': ['a', 'b', 'c'],
+        'alphabet': alphabet,
         'states': [],
         'transitions': [],
         'accepting_states': [],
-        'initial_state': 's_0',
       };
 
       for (let node of this.diagram.nodes) {
@@ -103,21 +115,36 @@ export class ExportService {
       }
 
       for (let edge of this.diagram.edges) {
-        function add(start: Node, end: Node, s: string): void {
+        function addTransition(start: Node, end: Node, s: string): void {
           result.transitions.push([start.text, s, end.text])
         }
-        for (let symbol of edge.middleLabel!.value.split(',')) {
-          if (edge.startStyle === EndStyle.None) {
-            add(edge.startNode!, edge.endNode!, symbol.trim())
-          } else {
-            add(edge.endNode!, edge.startNode!, symbol.trim());
+
+        if (edge.startNode !== undefined && edge.endNode !== undefined) {
+          for (let symbol of edge.middleLabel!.value.split(',')) {
+            if (edge.startStyle === EndStyle.None) {
+              addTransition(edge.startNode!, edge.endNode!, symbol.trim())
+            } else {
+              addTransition(edge.endNode!, edge.startNode!, symbol.trim());
+            }
           }
+        } else if (edge.startNode === undefined && edge.endNode !== undefined) {
+          result['initial_state'] = edge.endNode!.text;
         }
       }
 
       let theJSON = JSON.stringify(result);
       let uri: string = "data:text/json;charset=UTF-8," + encodeURIComponent(theJSON)
       this.triggerDownload('dfa', uri, "json")
+      //
+      // this.httpClient.post('http://localhost:5000', {
+      //   'word': 'a',
+      //   'diagram': JSON.stringify(result)
+      // }).subscribe(
+      //   data => console.log(data),
+      //   error => console.log(error)
+      // );
+
+
     } catch (e) {
       console.error(e);
       alert('could not create dfa.json')
