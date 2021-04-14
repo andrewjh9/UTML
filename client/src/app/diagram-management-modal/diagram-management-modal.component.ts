@@ -91,7 +91,7 @@ export class DiagramManagementModalComponent implements OnInit, ErrorHandler {
 
 
     if(this.dbEntries && this.dbEntries[this.selectedIndex]){
-      this.http.put('/api/diagram/',this.dbEntries[this.selectedIndex]).subscribe(
+      this.http.post('/api/diagram/',this.dbEntries[this.selectedIndex]).subscribe(
         (data: any) => {
         },error =>  {
           this.errorLauncherService.launch();

@@ -38,7 +38,7 @@ import java.util.Set;
  */
 public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static final String[] STUDENT_EMAIL_WHITELIST = new String[]{"a.j.heath@student.utwente.nl","a.j.heath@student.utwente.net", "m.t.voorberg@student.utwente.nl", "p.m.frolov@student.utwente.nl"};
+    private static final String[] STUDENT_EMAIL_WHITELIST = new String[]{"a.j.heath@student.utwente.nl","a.j.heath@student.utwente.net", "m.t.voorberg@student.utwente.nl", "p.m.frolov@student.utwente.nl", "j.tripathi@student.utwente.nl"};
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

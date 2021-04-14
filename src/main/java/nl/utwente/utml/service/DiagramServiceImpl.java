@@ -53,9 +53,6 @@ public class DiagramServiceImpl implements IDiagramService {
     }
 
 
-    public Diagram update(Diagram diagram){
-        return this.diagramRepository.save(diagram);
-    }
 
     @Override
     public Diagram toggleVisible(String id) {

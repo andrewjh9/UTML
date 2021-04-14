@@ -16,8 +16,6 @@ public interface IDiagramService {
 
     Diagram getByIdVisible(String id);
 
-    Diagram update(Diagram diagram);
-
     Diagram toggleVisible(String id);
 
     boolean userOwner(String id, String email);

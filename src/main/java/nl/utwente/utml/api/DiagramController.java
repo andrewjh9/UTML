@@ -66,8 +66,13 @@ public class  DiagramController {
      */
     @DeleteMapping
     public List<Diagram> deleteDiagram(@RequestParam String id){
-        diagramService.delete(id);
+        if(diagramService.userOwner(id, getUserEmail())){
+            diagramService.delete(id);
         return diagramService.getAllUserDiagrams(getUserEmail());
+        } else {
+            throw new ResponseStatusException(
+                    HttpStatus.UNAUTHORIZED, "User doesn't own diagram");
+        }
     }
 
 
