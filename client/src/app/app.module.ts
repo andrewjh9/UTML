@@ -44,6 +44,7 @@ import { BelowTextNodeComponent } from './node-compontents/below-text-node/below
 import {FaIconLibrary, FontAwesomeModule} from "@fortawesome/angular-fontawesome";
 import {faEdit, faEye, faEyeSlash, faTrashAlt} from "@fortawesome/free-regular-svg-icons";
 import {
+  faAngleDown, faAngleUp,
   faCog,
   faCopy, faFile,
   faFolderOpen, faList,
@@ -147,6 +148,7 @@ import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-co
 export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen,
-      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList, faFile, faSearch);
+      faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList, faFile, faSearch,
+      faAngleDown, faAngleUp);
   }
 }
