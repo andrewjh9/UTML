@@ -14,6 +14,7 @@ import {ShapesetManagementModalComponent} from "../shapeset-management-modal/sha
 import {HelpModalComponent} from "../help-modal/help-modal.component";
 import {DeletionService} from "../services/deletion.service";
 import {UserService} from "../services/user.service";
+import {ExportService} from "../services/export.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -29,7 +30,8 @@ export class NavBarComponent implements AfterViewInit {
               private diagramContainer: DiagramContainerService,
               private zoomService: ZoomService,
               public userService: UserService,
-              private deletionService: DeletionService) { }
+              private deletionService: DeletionService,
+              private exportService: ExportService) { }
 
   ngAfterViewInit() {
     let showHelpOnStart = localStorage.getItem(HelpModalComponent.LOCAL_STORAGE_KEY);
@@ -100,5 +102,9 @@ export class NavBarComponent implements AfterViewInit {
 
   delete() {
     this.deletionService.deleteSelected();
+  }
+
+  dfa() {
+    this.exportService.exportDFA();
   }
 }
