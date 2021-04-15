@@ -91,19 +91,6 @@ public class  DiagramController {
     }
 
     /**
-     * Passes diagram object to be saved to db as a overwrite.
-     * @param diagram, diagram being updated
-     */
-    @PutMapping
-    public void update(@RequestBody Diagram diagram){
-        if(diagram.getId() != null) {
-            diagramService.update(diagram);
-        } else {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, "ID not provided");
-        }
-    }
-    /**
      * Helper method
      * Get authenticated user's email
      * @return userEmail

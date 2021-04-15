@@ -30,12 +30,12 @@ export class SaveModalComponent implements AfterContentInit {
   }
 
   exportAsPNG() {
-    this.exportService.exportAsPNG();
+    this.exportService.exportAsPNG(this.userService.openDiagramName);
     this.modal.close();
   }
 
   exportAsJSON() {
-    this.exportService.exportAsJSON()
+    this.exportService.exportAsJSON(this.userService.openDiagramName)
     this.modal.close();
   }
 

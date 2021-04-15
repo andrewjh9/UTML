@@ -4,7 +4,7 @@
     <ngb-panel *ngFor="let diagramGroup of groupKeys" title="{{diagramGroup}}">
       <ng-template ngbPanelContent>
         <ul class="list-group">
-          <a href="#"
+          <a
              class="list-group-item list-group-item-action"
              [ngClass]="{'selected': isSelected(diagramGroup, edgeKey) && edgeCreationIsActive}"
              *ngFor="let edgeKey of Object.keys(shapeSets[diagramGroup].edges)"
@@ -28,7 +28,7 @@
             </div>
           </a>
 
-          <a href="#"
+          <a
              class="list-group-item list-group-item-action flex-column align-items-start"
              *ngFor="let nodeKey of Object.keys(shapeSets[diagramGroup].nodes)"
              (mousedown)="handleMouseDown(diagramGroup, nodeKey, 'node')"

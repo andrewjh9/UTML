@@ -13,7 +13,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class ExportService {
   private diagram: Diagram;
-  public filename: string = 'yourDiagram';
+  private filename: string = "yourDiagram";
 
   constructor(diagramContainer: DiagramContainerService,
               private selectionService: SelectionService,
@@ -24,7 +24,8 @@ export class ExportService {
     diagramContainer.diagramObservable.subscribe(diagram => this.diagram = diagram);
   }
 
-  public exportAsPNG(): void {
+  public exportAsPNG(fileName: string): void {
+    this.filename = fileName;
     let oldGridValue = this.settingsContainerService.grid.getValue();
     this.settingsContainerService.grid.next(false);
     this.zoomService.reset();
@@ -76,10 +77,10 @@ export class ExportService {
     }, 100);
   }
 
-  public exportAsJSON() {
+  public exportAsJSON(filename: string) {
     let theJSON = JSON.stringify(this.diagram?.serialise());
     let uri: string = "data:text/json;charset=UTF-8," + encodeURIComponent(theJSON)
-    this.triggerDownload(this.filename, uri, "utml")
+    this.triggerDownload(filename, uri, "utml")
   }
 
   public getDiagramJSON(fileName: String){

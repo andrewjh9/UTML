@@ -7,14 +7,14 @@ export class UserService {
   private userEmail?: string;
   private _diagramNames: Set<String>;
   private authenticated: boolean = false;
-  public openDiagramName: String =  'yourDiagram';
+  public openDiagramName: string =  'yourDiagram';
 
   constructor() {
     this._diagramNames = new Set<String>();
 
   }
 
-  public setOpenDiagramName(diagramName: String){
+  public setOpenDiagramName(diagramName: string){
     this.openDiagramName = diagramName;
   }
 
