@@ -1,4 +1,4 @@
-#Running and Developing the Backend
+# Running and Developing the Backend
 ## Build angular and serve from backend
 Use the following commands build and to copy the angular into the backend:\
 `cd client `\
