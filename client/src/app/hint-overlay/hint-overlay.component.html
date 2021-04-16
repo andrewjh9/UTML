@@ -59,4 +59,13 @@
       <li>Type <code>\alpha</code> for greek letters and math symbols.</li>
     </ul>
   </div>
+
+  <div *ngIf="mode === 'multiple'" class="p-1">
+    <b>Multiple things are selected</b>
+    <ul>
+      <li><code>Escape</code> or click elsewhere to deselect </li>
+      <li><code>Control</code> click to add elements to the selection</li>
+      <li><code>Delete</code> to delete everything</li>
+    </ul>
+  </div>
 </div>

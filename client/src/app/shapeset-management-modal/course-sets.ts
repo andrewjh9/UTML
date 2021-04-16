@@ -197,11 +197,11 @@ let design: CourseSet = {
   'State Machine Diagram': smd
 };
 let lm: CourseSet = {
-  'Deterministic finite automaton': fsm,
+  'Automata': fsm,
   'Derivation tree': dt
 };
 let es: CourseSet = {
-  'PDA/MDP/HA/DTMS': embedded
+  'Automata Extended': embedded
 };
 let cao: CourseSet = {
   'Stack': stack
