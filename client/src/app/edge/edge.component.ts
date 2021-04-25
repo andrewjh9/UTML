@@ -22,7 +22,7 @@ export class EdgeComponent implements OnDestroy {
   styleObject: {[key: string]: string | number} = {
     'stroke': 'black',
     'stroke-width': 2
-  }
+  };
   cursor: 'pointer' | 'move' = 'pointer';
 
   constructor(private selectionService: SelectionService,
