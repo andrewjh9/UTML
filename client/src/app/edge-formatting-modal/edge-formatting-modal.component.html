@@ -19,7 +19,7 @@
           <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
         </button>
       </div>
-      <button class="w-75 btn btn-primary" *ngIf="!edge.startLabel" (click)="edge.addStartLabel()">
+      <button class="w-75 btn btn-primary" *ngIf="!edge.startLabel" (click)="edge.addStartLabel('')">
       Add start label
       </button>
     </div>
@@ -35,7 +35,7 @@
           <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
         </button>
       </div>
-      <button class="w-75 btn btn-primary" *ngIf="!edge.middleLabel" (click)="edge.addMiddleLabel()">
+      <button class="w-75 btn btn-primary" *ngIf="!edge.middleLabel" (click)="edge.addMiddleLabel('')">
         Add middle label
       </button>
     </div>
@@ -51,7 +51,7 @@
           <fa-icon [icon]="['far', 'trash-alt']"></fa-icon>
         </button>
       </div>
-      <button class="w-75 btn btn-primary" *ngIf="!edge.endLabel" (click)="edge.addEndLabel()">
+      <button class="w-75 btn btn-primary" *ngIf="!edge.endLabel" (click)="edge.addEndLabel('')">
         Add end label
       </button>
     </div>

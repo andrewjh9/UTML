@@ -66,7 +66,7 @@ export class EdgeComponent implements OnDestroy {
       }
     } else {
       let mousePosition = this.mousePositionTransformService.transformPosition(new Position(event.x, event.y));
-      const DISTANCE_THRESHOLD = 25;
+      const DISTANCE_THRESHOLD = 45;
 
       if (Position.getDistance(mousePosition, this.edge.getStartPosition()) <= DISTANCE_THRESHOLD
         && this.edge.startLabel === undefined) {
