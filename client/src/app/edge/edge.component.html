@@ -35,3 +35,21 @@
        label-component
        [label]="edge.endLabel!">
 </svg:g>
+
+<svg:g *ngIf="isSelected && edge && !edge?.startLabel"
+       label-create
+       [edge]="edge"
+       [location]="'start'">
+</svg:g>
+
+<svg:g *ngIf="isSelected && edge && !edge?.middleLabel"
+       label-create
+       [edge]="edge"
+       [location]="'middle'">
+</svg:g>
+
+<svg:g *ngIf="isSelected && edge && !edge?.endLabel"
+       label-create
+       [edge]="edge"
+       [location]="'end'">
+</svg:g>

@@ -37,6 +37,22 @@ export class Edge {
     this.startLabel = new Label(value, EdgeLocation.START, offset, this.labelAnchors);
   }
 
+  public getLabelPosition(mode: 'start' | 'middle' | 'end'): Position {
+    if (mode === 'start') {
+      let offset = Position.subtract(this.getEndPosition(), this.getStartPosition());
+      offset = Position.multiply(20 / offset.getLength(), offset);
+      return Position.add(offset, this.getStartPosition());
+    } else if (mode === 'middle') {
+      return this.labelAnchors[1]();
+    } else if (mode === 'end') {
+      let offset = Position.subtract(this.getStartPosition(), this.getEndPosition());
+      offset = Position.multiply(20 / offset.getLength(), offset);
+      return Position.add(this.getEndPosition(), offset);
+    }
+
+    throw new Error('Congratulations, you broke the type system.');
+  }
+
   public addMiddleLabel(value: string = 'middle') {
     this.middleLabel = new Label(value, EdgeLocation.MIDDLE, Position.zero(), this.labelAnchors);
   }

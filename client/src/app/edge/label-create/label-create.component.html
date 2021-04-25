@@ -1,0 +1,22 @@
+<svg:line [attr.x1]="position.x"
+          [attr.x2]="position.x"
+          [attr.y1]="position.y - 8"
+          [attr.y2]="position.y + 8"
+          style="stroke: red; stroke-width: 1;"
+          >
+</svg:line>
+<svg:line [attr.x1]="position.x - 8"
+          [attr.x2]="position.x + 8"
+          [attr.y1]="position.y"
+          [attr.y2]="position.y"
+          style="stroke: red; stroke-width: 1;"
+>
+</svg:line>
+
+<svg:ellipse [attr.cx]="position.x"
+             [attr.cy]="position.y"
+             rx="10"
+             ry="10"
+             style="stroke: red; stroke-width: 1; stroke-opacity: 0.1; fill: red; fill-opacity: 0.1"
+             (mousedown)="handleClick()">
+</svg:ellipse>
