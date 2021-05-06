@@ -71,17 +71,16 @@
   </div>
 
   <ul class="navbar-nav ml-auto pb-0 pt-0">
-    <li class="nav-item" *ngIf="userService.getAuthenticated()">
-      <a class="nav-link" (click)="openDiagramManagementModal()" ngbTooltip="Manage Diagrams" placement="bottom">
-        <fa-icon [icon]="['fas', 'tasks']"></fa-icon>
-      </a>
-    </li>
     <li class="nav-item">
       <a *ngIf="!userService.getAuthenticated()" class="nav-link" href="/login" ngbTooltip="Login" placement="bottom">
         <fa-icon [icon]="['fas', 'user']"></fa-icon>
       </a>
-      <a *ngIf="userService.getAuthenticated()" class="nav-link" href="/logout" ngbTooltip="Logout" placement="bottom">
-        {{userService.getUserEmail()}} <fa-icon [icon]="['fas', 'user-slash']"></fa-icon>
+      <a *ngIf="userService.getAuthenticated()"
+         (click)="openDiagramManagementModal()"
+         class="nav-link"
+         ngbTooltip="Manage Diagrams and Account"
+         placement="bottom">
+        {{userService.getUserEmail()}}
       </a>
     </li>
     <li class="nav-item">
