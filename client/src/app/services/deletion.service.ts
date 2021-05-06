@@ -31,6 +31,7 @@ export class DeletionService {
     selectionService.selectedObservable.subscribe(value => this.selected = value);
 
     keyboardEventCallerService.addCallback(['Delete', 'keydown', 'any'], ignored => this.deleteSelected());
+    editService.deleteLabelEmitter.subscribe((label: Label) => this.deleteLabel(label));
   }
 
   /**

@@ -10,9 +10,9 @@
 
 
   <svg:text *ngFor="let line of textLines; let i = index;"
-            [attr.x]="node.position.x + node.width / 2"
+            [attr.x]="getTextLineX(i)"
             [attr.y]="node.position.y + i * 24 + 20"
-            text-anchor="middle"
+            [attr.text-anchor]="getTextLineAnchor(  i)"
             style="font-size: 16px">
     {{line}}
   </svg:text>

@@ -1,4 +1,4 @@
-import {Injectable, Renderer2, RendererFactory2} from '@angular/core';
+import {EventEmitter, Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {Node} from "../../model/node/node";
 import {Edge} from "../../model/edge";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
@@ -8,6 +8,7 @@ import {SelectionService} from "./selection.service";
 import {BehaviorSubject} from "rxjs";
 import {logger} from "codelyzer/util/logger";
 import {specialCharMap} from "../special-char-map";
+import {DeletionService} from "./deletion.service";
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +16,13 @@ import {specialCharMap} from "../special-char-map";
 export class EditService {
   private readonly editElement: BehaviorSubject<Node | Label | undefined> = new BehaviorSubject<Node|Label|undefined>(undefined);
   public readonly editElementObservable = this.editElement.asObservable();
+  public readonly deleteLabelEmitter: EventEmitter<Label> = new EventEmitter<Label>();
 
   private rowIndex?: number;
   private charIndex?: number;
 
-  constructor(private selectionService: SelectionService, private cachingService: CachingService) {
+  constructor(private selectionService: SelectionService,
+              private cachingService: CachingService) {
     selectionService.selectedObservable.subscribe(ignored => this.deactivate());
   }
 
@@ -185,6 +188,12 @@ export class EditService {
 
   public deactivate() {
     if (this.isActive()) {
+      // Delete labels that are just whitespace as these can not be selected again and would
+      // have to be deleted or edited through the advanced formatting.
+      if (this.editElement.getValue() instanceof Label && (this.editElement.getValue() as Label).value.trim() === '') {
+        this.deleteLabelEmitter.emit(this.editElement.getValue() as Label);
+      }
+
       this.cachingService.save();
     }
     this.charIndex = undefined;

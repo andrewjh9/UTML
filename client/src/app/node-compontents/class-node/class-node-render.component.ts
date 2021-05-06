@@ -19,4 +19,13 @@ export class ClassNodeRenderComponent extends AbstractTextNode implements AfterV
   ngAfterViewInit() {
     this.subscribeToEditService();
   }
+
+  getTextLineX(index: number): number {
+    const OFFSET = 5;
+    return this.node.position.x + (index == 0 ? this.node.width / 2 : OFFSET);
+  }
+
+  getTextLineAnchor(index: number): string {
+    return index == 0 ? 'middle' : 'left';
+  }
 }

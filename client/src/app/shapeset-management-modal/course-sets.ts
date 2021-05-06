@@ -52,6 +52,7 @@ cd.edges['Generalisation'] = generalisation;
 cd.edges['Dotted Assocation'] = associationClassEdge;
 cd.edges['Aggregation'] = aggregation;
 cd.edges['Composition'] = composition;
+cd.nodes['Circle'] = new EllipseNode(40, 40, new Position(84,30));
 
 
 let ad: ShapeSet = {nodes: {}, edges: {}, active: true};
