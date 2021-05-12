@@ -19,6 +19,7 @@ import {SystemBoundaryNode} from "../../model/node/system-boundary-node";
 import {CrossNode} from "../../model/node/cross-node";
 import {ExecutionNode} from "../../model/node/execution-node";
 import {SequenceControlFlowNode} from "../../model/node/sequence-control-flow-node";
+import {CommentNode} from "../../model/node/comment-node";
 
 function deserialiseGeneric(serialisedNode: SerialisedNode, constructor: GenericNodeConstructor): Node {
   let result = new constructor(serialisedNode.width, serialisedNode.height,
@@ -68,6 +69,8 @@ export function deserialiseNode(serialisedNode: SerialisedNode): Node {
       return deserialiseGeneric(serialisedNode, SystemBoundaryNode);
     case 'CrossNode':
       return deserialiseGeneric(serialisedNode, CrossNode);
+    case 'CommentNode':
+      return deserialiseGeneric(serialisedNode, CommentNode);
     case 'ExecutionNode':
       return deserialiseGeneric(serialisedNode, ExecutionNode);
     case 'SequenceControlFlowNode':

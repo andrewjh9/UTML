@@ -74,6 +74,7 @@ import { WhiteBackgroundComponent } from './white-background/white-background.co
 import { CrossNodeRenderComponent } from './node-compontents/cross-node/cross-node-render.component';
 import { ErrorModalComponent } from './error-modal/error-modal.component';
 import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-control-flow-node/sequence-control-flow-node.component';
+import { CommentNodeComponent } from './node-compontents/comment-node/comment-node.component';
 
 @NgModule({
   declarations: [
@@ -133,6 +134,7 @@ import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-co
     CrossNodeRenderComponent,
     ErrorModalComponent,
     SequenceControlFlowNodeComponent,
+    CommentNodeComponent,
   ],
     imports: [
         BrowserModule,

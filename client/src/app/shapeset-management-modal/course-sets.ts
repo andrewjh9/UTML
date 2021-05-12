@@ -14,6 +14,7 @@ import {SystemClockNode} from "../../model/node/system-clock-node";
 import {CrossNode} from "../../model/node/cross-node";
 import {ExecutionNode} from "../../model/node/execution-node";
 import {SequenceControlFlowNode} from "../../model/node/sequence-control-flow-node";
+import {CommentNode} from "../../model/node/comment-node";
 
 export function flattenActive(courseSets: {[key: string]: CourseSet}) {
   let result: CourseSet = {};
@@ -189,6 +190,11 @@ embedded.nodes['Edge split off node'] = splitoff
 embedded.nodes['Node'] = new RectangleNode(100, 120, new Position(54, 2));
 embedded.nodes['Circular Node'] = new EllipseNode(100, 100, new Position(58, 2));
 
+let comments: ShapeSet = {nodes: {}, edges: {}, active: true};
+let note= new CommentNode(120, 100, new Position(44, 2))
+note.text = 'This is \\na comment!';
+comments.nodes['Sticky Note'] = note;
+
 export let courseSets: {[key: string]: CourseSet};
 let design: CourseSet = {
   'Activity Diagram': ad,
@@ -211,7 +217,12 @@ let g: CourseSet = {
   'Graphs': graphs
 };
 
+let generic: CourseSet = {
+  'Commments': comments
+};
+
 courseSets = {
+  'Generic': generic,
   'Design': design,
   'Languages & Machines': lm,
   'Embedded Systems': es,
