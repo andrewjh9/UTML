@@ -7,6 +7,6 @@ Located in the ./client and ./src dictionaries respectively.
 Please refer to the user and development manual for more information.
 This can be obtained by contacting: \
 a.j.heath@student.utwente.nl\
-m.t.voorberg@student.uwente.nl\
+martenvoorberg@gmail.com\
 upon no reply contact:\
 t.kemp@utwente.nl
