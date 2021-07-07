@@ -22,6 +22,7 @@ import {ExportService} from "../services/export.service";
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements AfterViewInit {
+  private readonly EXAM_MODE_SUBDOMAIN: string = "exam";
   get NAV_HEIGHT() { return DiagramComponent.NAV_HEIGHT; }
 
   constructor(private modalService: NgbModal,
@@ -40,6 +41,11 @@ export class NavBarComponent implements AfterViewInit {
     }
   }
 
+  examMode(){
+    console.log(window.location.hostname)
+    console.log(window.location.hostname.startsWith(this.EXAM_MODE_SUBDOMAIN))
+    return window.location.hostname.startsWith(this.EXAM_MODE_SUBDOMAIN)
+  }
   copy() {
     this.copyPasteService.doCopy();
   }

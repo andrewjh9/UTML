@@ -96,11 +96,11 @@ public class DiagramServiceImplIntegrationTest {
     /*
     Update a diagram passing diagram
      */
-    @Test
-    public void update(){
-        Mockito.when(diagramRepository.save(testDiagram1)).thenReturn(testDiagram1);
-        assertThat(this.diagramService.update(testDiagram1)).isEqualTo(testDiagram1);
-    }
+//    @Test
+//    public void update(){
+//        Mockito.when(diagramRepository.save(testDiagram1)).thenReturn(testDiagram1);
+//        assertThat(this.diagramService.update(testDiagram1)).isEqualTo(testDiagram1);
+//    }
 
     /*
         Toggle on and off visibility of diagram

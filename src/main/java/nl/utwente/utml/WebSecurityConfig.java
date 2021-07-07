@@ -1,8 +1,10 @@
 package nl.utwente.utml;
 
+import nl.utwente.utml.api.BaseController;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -19,6 +21,8 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.reactive.result.method.annotation.RequestMappingHandlerMapping;
+import org.springframework.web.servlet.mvc.condition.RequestCondition;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.ServletException;
@@ -44,14 +48,8 @@ public class  WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
         /**
-         * Scopes of Oauth2 Methods
+         * Scopes of Oauth2 Method
          */
-        Set<String> oauth2ScopesOkta = new HashSet<>();
-        oauth2ScopesOkta.add("okta.users.read.self");
-
-        OidcUserService oktaUserService = new OidcUserService();
-        oktaUserService.setAccessibleScopes(oauth2ScopesOkta);
-
         Set<String> oauth2ScopesCanvas = new HashSet<>();
         oauth2ScopesCanvas.add("canvas.users.read.self");
 

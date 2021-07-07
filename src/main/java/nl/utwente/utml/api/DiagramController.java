@@ -1,5 +1,6 @@
 package nl.utwente.utml.api;
 
+import nl.utwente.utml.CustomWebMvcRegistrations.SubdomainController;
 import nl.utwente.utml.model.Diagram;
 import nl.utwente.utml.service.IDiagramService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,12 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
 @RequestMapping("api/diagram")
 @CrossOrigin()
 @RestController
+@SubdomainController()
 /**
  * Diagram Controller
  * Handle all requests for diagrams, all end points require use authentication unless stated.
@@ -26,19 +27,6 @@ public class  DiagramController {
     public DiagramController(IDiagramService diagramService) {
         this.diagramService = diagramService;
     }
-
-
-    /**
-     * Does not require authentication
-     * Returns a diagram to the user (provided it is set to visible)
-     * @param id of the diagram
-     * @return diagram
-     */
-    @GetMapping("/visible")
-    public Diagram getVisibleDiagram(@RequestParam String id){
-        return diagramService.getByIdVisible(id);
-    }
-
 
     /**
      * @param diagram - to be saved to db

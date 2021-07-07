@@ -71,7 +71,7 @@
   </div>
 
   <ul class="navbar-nav ml-auto pb-0 pt-0">
-    <li class="nav-item">
+    <li class="nav-item" *ngIf="!examMode()">
       <a *ngIf="!userService.getAuthenticated()" class="nav-link" href="/login" ngbTooltip="Login" placement="bottom">
         <fa-icon [icon]="['fas', 'user']"></fa-icon>
       </a>
