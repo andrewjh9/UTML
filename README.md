@@ -1,4 +1,9 @@
-# READ ME
+# UTML
+UTML is a diagraming tool developed at the University of Twente in The Netherlands.
+THe tool is a web app and allows the user to create UML diagrams as well as finite state machine.
+UTML is currently being actively developed. 
+
+## The source
 There are separate readme files for front end and backend.
 Located in the ./client and ./src dictionaries respectively.
 
