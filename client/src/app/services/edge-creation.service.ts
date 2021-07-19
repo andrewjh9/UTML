@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {Deactivatable} from "./deactivatable";
-import {AttachmentDirection, Node} from "../../model/node/node";
+import {Node} from "../../model/node/node";
 import {Position} from "../../model/position";
 import {Edge, LineType} from "../../model/edge";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";

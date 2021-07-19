@@ -21,10 +21,29 @@ export class ZoomService {
   public readonly resizeEmitter: EventEmitter<any> = new EventEmitter<any>();
 
   /**
+   * Value holding the viewBox we are using to export the canvas to a PNG.
+   * If null, return value of getViewBox() should be determined by the zoom part of the service
+   * If not null, the stored viewBox string should be returned by getViewBox().
+   */
+  private downloadViewBox: string | null = null;
+
+  public setDownloadViewBox(value: string): void {
+    this.downloadViewBox = value;
+  }
+
+  public unsetDownloadViewBox(): void {
+    this.downloadViewBox = null;
+  }
+
+  /**
    * Get the correctly moved and zoomed value that can be assigned to the 'viewbox' attribute of the svg tag.
    */
   public getViewBox(): string {
-    return "" + this.x + " " + this.y + " " + this.getZoomedWidth() + " " + this.getZoomedHeight();
+    if (this.downloadViewBox == null) {
+      return "" + this.x + " " + this.y + " " + this.getZoomedWidth() + " " + this.getZoomedHeight();
+    } else {
+      return this.downloadViewBox;
+    }
   }
 
   public getCurrentZoomFactor(): number {
