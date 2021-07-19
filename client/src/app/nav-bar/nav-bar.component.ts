@@ -103,8 +103,4 @@ export class NavBarComponent implements AfterViewInit {
   delete() {
     this.deletionService.deleteSelected();
   }
-
-  dfa() {
-    this.exportService.exportDFA();
-  }
 }

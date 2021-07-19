@@ -55,8 +55,6 @@ export abstract class Node {
     this._hasDoubleBorder = value;
   }
 
-
-
   protected constructor(width: number, height: number, position: Position) {
     this._width = width;
     this._height = height;
@@ -87,7 +85,7 @@ export abstract class Node {
   }
 
   public getAllAttachmentPoints(): Position[] {
-   return this.getAllOffsets().map(offset => Position.add(offset, this._position));
+    return this.getAllOffsets().map(offset => Position.add(offset, this._position));
   }
 
 
@@ -144,15 +142,3 @@ export abstract class Node {
 export type StyleObject = {
   [key: string]: string | number;
 }
-
-export enum AttachmentDirection {
-  North,
-  NorthEast,
-  East,
-  SouthEast,
-  South,
-  SouthWest,
-  West,
-  NorthWest
-}
-

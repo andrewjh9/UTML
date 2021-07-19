@@ -1,0 +1,8 @@
+<div id="download-svg-container" style="display: none">
+  <svg [attr.width]="width" id="downloadSVG"
+       [attr.height]="height"
+       [attr.viewBox]="viewBox">
+    <g *ngFor="let edge of diagram.edges" edge-render-dispatch [edge]="edge"/>
+    <g *ngFor="let node of diagram.nodes" node-render-dispatch [node]="node"/>
+  </svg>
+</div>

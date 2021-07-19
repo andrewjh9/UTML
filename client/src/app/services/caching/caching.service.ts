@@ -25,6 +25,7 @@ export class CachingService {
               keyboardEventCallerService: KeyboardEventCallerService) {
     this.diagram = diagramContainerService.get();
     diagramContainerService.diagramObservable.subscribe(diagram => this.diagram = diagram);
+
     this.list = new SizeBoundDoublyLinkedList<SerialisedDiagram>(this.MAX_SIZE, this.diagram.serialise());
 
     keyboardEventCallerService.addCallback(['z', 'keydown', 'ctrl'], (ignored) => {
@@ -46,7 +47,6 @@ export class CachingService {
    * Save the current version of the diagram to localStorage and the redo/undo structure.
    */
   public save(): void {
-    console.log('Saving (cachingService)')
     let serialisedDiagram = this.diagram.serialise();
     this.list.add(serialisedDiagram);
     this.localStorageService.save();
