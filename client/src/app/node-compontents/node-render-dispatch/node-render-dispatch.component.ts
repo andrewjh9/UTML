@@ -1,4 +1,14 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {
+  AfterViewInit,
+  ApplicationRef,
+  Component,
+  ComponentFactoryResolver,
+  ElementRef,
+  EmbeddedViewRef,
+  Injector,
+  Input,
+  ViewChild
+} from '@angular/core';
 import {Node} from "../../../model/node/node";
 import {RectangleNode} from "../../../model/node/rectangle-node";
 import {ClassNode} from "../../../model/node/class-node";
@@ -13,14 +23,48 @@ import {SystemClockNode} from "../../../model/node/system-clock-node";
 import {CrossNode} from "../../../model/node/cross-node";
 import {SequenceControlFlowNode} from "../../../model/node/sequence-control-flow-node";
 import {CommentNode} from "../../../model/node/comment-node";
+import {RectangleNodeRenderComponent} from "../rectangle-node/rectangle-node-render.component";
+import {TempComponent} from "../../temp/temp.component";
 
 @Component({
   selector: '[node-render-dispatch]',
   templateUrl: './node-render-dispatch.component.html',
   styleUrls: ['./node-render-dispatch.component.scss']
 })
-export class NodeRenderDispatchComponent {
+export class NodeRenderDispatchComponent implements AfterViewInit {
   @Input() node!: Node
+  @ViewChild('containerElement') containerElement!: ElementRef;
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,
+              private appRef: ApplicationRef,
+              private injector: Injector) {
+  }
+
+  ngAfterViewInit(): void {
+    // 1. Create a component reference from the component
+    // const componentRef = this.componentFactoryResolver
+    //   .resolveComponentFactory(RectangleNodeRenderComponent)
+    //   .create(this.injector);
+
+    // const factory = this.componentFactoryResolver.resolveComponentFactory(RectangleNodeRenderComponent);
+    const factory = this.componentFactoryResolver.resolveComponentFactory(TempComponent);
+
+    const componentRef = factory.create(this.injector);
+    // componentRef.instance.node = <RectangleNode> this.node;
+    // 2. Attach component to the appRef so that it's inside the ng component tree
+    this.appRef.attachView(componentRef.hostView);
+
+    // 3. Get DOM element from component
+    const domElem = (componentRef.hostView as EmbeddedViewRef<any>).rootNodes[0] as HTMLElement;
+    // 4. Append DOM element to the body
+    this.containerElement.nativeElement.appendChild(domElem);
+    // document.body.appendChild(domElem);
+    // 5. Wait some time and remove it from the component tree and from the DOM
+    // setTimeout(() => {
+    //   this.appRef.detachView(componentRef.hostView);
+    //   componentRef.destroy();
+    // }, 3000);
+  }
 
   isRectangle(node: Node): boolean {
     return node instanceof RectangleNode && !(node instanceof ClassNode) && !(node instanceof HourglassNode)

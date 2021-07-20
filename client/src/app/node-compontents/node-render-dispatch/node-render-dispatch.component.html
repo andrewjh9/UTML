@@ -1,12 +1,14 @@
-<svg:g *ngIf="isRectangle(node)" rectangle-node-render  [node]="castToRectangle(node)"></svg:g>
-<svg:g *ngIf="isEllipse(node)" ellipse-node-render  [node]="castToEllipse(node)"></svg:g>
-<svg:g *ngIf="isDiamond(node)" diamond-node-render  [node]="castToDiamond(node)"></svg:g>
-<svg:g *ngIf="isClass(node)" class-node-render  [node]="castToClass(node)"></svg:g>
-<svg:g *ngIf="isHourglass(node)" hourglass-node-render  [node]="castToHourglass(node)"></svg:g>
-<svg:g *ngIf="isActor(node)" actor-node-render  [node]="castToActor(node)"></svg:g>
-<svg:g *ngIf="isSwimlane(node)" swimlane-node-render  [node]="castToSwimlane(node)"></svg:g>
-<svg:g *ngIf="isSystemBoundary(node)" system-boundary-node-render  [node]="castToSystemBoundary(node)"></svg:g>
-<svg:g *ngIf="isSystemClock(node)" system-clock-node-render  [node]="castToSystemClockNode(node)"></svg:g>
-<svg:g *ngIf="isCross(node)" cross-node-render  [node]="castToCrossNode(node)"></svg:g>
-<svg:g *ngIf="isSequenceControlFlowNode(node)" sequence-control-flow-node-render [node]="castToSequenceControlFlowNode(node)"></svg:g>
-<svg:g *ngIf="isComment(node)" comment-node-render [node]="castToCommentNode(node)"></svg:g>
+<svg:g #containerElement>
+<!--  <svg:g *ngIf="isRectangle(node)" rectangle-node-render  [node]="castToRectangle(node)"></svg:g>-->
+<!--  <svg:g *ngIf="isEllipse(node)" ellipse-node-render  [node]="castToEllipse(node)"></svg:g>-->
+<!--  <svg:g *ngIf="isDiamond(node)" diamond-node-render  [node]="castToDiamond(node)"></svg:g>-->
+<!--  <svg:g *ngIf="isClass(node)" class-node-render  [node]="castToClass(node)"></svg:g>-->
+<!--  <svg:g *ngIf="isHourglass(node)" hourglass-node-render  [node]="castToHourglass(node)"></svg:g>-->
+<!--  <svg:g *ngIf="isActor(node)" actor-node-render  [node]="castToActor(node)"></svg:g>-->
+<!--  <svg:g *ngIf="isSwimlane(node)" swimlane-node-render  [node]="castToSwimlane(node)"></svg:g>-->
+<!--  <svg:g *ngIf="isSystemBoundary(node)" system-boundary-node-render  [node]="castToSystemBoundary(node)"></svg:g>-->
+<!--  <svg:g *ngIf="isSystemClock(node)" system-clock-node-render  [node]="castToSystemClockNode(node)"></svg:g>-->
+<!--  <svg:g *ngIf="isCross(node)" cross-node-render  [node]="castToCrossNode(node)"></svg:g>-->
+<!--  <svg:g *ngIf="isSequenceControlFlowNode(node)" sequence-control-flow-node-render [node]="castToSequenceControlFlowNode(node)"></svg:g>-->
+<!--  <svg:g *ngIf="isComment(node)" comment-node-render [node]="castToCommentNode(node)"></svg:g>-->
+</svg:g>

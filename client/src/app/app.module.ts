@@ -76,6 +76,7 @@ import { ErrorModalComponent } from './error-modal/error-modal.component';
 import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-control-flow-node/sequence-control-flow-node.component';
 import { CommentNodeComponent } from './node-compontents/comment-node/comment-node.component';
 import { DownloadSvgComponent } from './download-svg/download-svg.component';
+import { TempComponent } from './temp/temp.component';
 
 @NgModule({
   declarations: [
@@ -137,6 +138,7 @@ import { DownloadSvgComponent } from './download-svg/download-svg.component';
     SequenceControlFlowNodeComponent,
     CommentNodeComponent,
     DownloadSvgComponent,
+    TempComponent,
   ],
     imports: [
         BrowserModule,
