@@ -22,6 +22,8 @@ import {LensOffsetService} from "../services/lens-offset.service";
 import {LabelRepositionService} from "../services/label-reposition.service";
 import {FixedPointRepositioner} from "../services/edge-reposition/fixed-point-repositioner";
 import {StartEndRepositioner} from "../services/edge-reposition/start-end-repositioner";
+import {LocalFeedbackService} from "../services/local-feedback/local-feedback.service";
+import {FeedbackMessage} from "../services/local-feedback/feedback-message";
 
 @Component({
   selector: 'app-diagram',
@@ -52,7 +54,8 @@ export class DiagramComponent implements AfterViewInit, OnInit {
               private localStorageService: LocalStorageService,
               private mousePositionTransformService: MousePositionTransformService,
               private lensOffsetService: LensOffsetService,
-              private labelRepositionService: LabelRepositionService) {
+              private labelRepositionService: LabelRepositionService,
+              localFeedbackService: LocalFeedbackService) {
     edgeCreationService.activityObservable.subscribe(b => this.edgeCreationIsActive = b);
     zoomService.resizeEmitter.subscribe((ignored: any) => this.setSVGDimensions());
 
@@ -83,6 +86,11 @@ export class DiagramComponent implements AfterViewInit, OnInit {
       }
 
       this.cachingService.trigger();
+    });
+
+    // Todo: Remove this temporary testing code
+    localFeedbackService.feedbackMessageEmitter.subscribe((messages: Array<FeedbackMessage>) => {
+      messages.forEach(message => console.log(message));
     });
   }
 

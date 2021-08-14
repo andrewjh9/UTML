@@ -4,6 +4,7 @@ import {Error} from "tslint/lib/error";
 @Injectable({
   providedIn: 'root'
 })
+// Todo: Fix bug where change detection does not trigger upon undo redo.
 export class ChangeDetectionService {
   private nextId: number = 0;
   private callbackMap: {[key: number]: Callback} = {};
