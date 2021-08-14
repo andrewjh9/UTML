@@ -3,7 +3,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SelectionService} from "../services/selection.service";
 import {Edge} from "../../model/edge";
 import {DeletionService} from "../services/deletion.service";
-import {CachingService} from "../services/caching/caching.service";
+import {ChangeDetectionService} from "../services/caching/change-detection.service";
 
 @Component({
   selector: 'app-edge-formatting-modal',
@@ -22,7 +22,7 @@ export class EdgeFormattingModalComponent {
   constructor(public modal: NgbActiveModal,
               selectionService: SelectionService,
               private deletionService: DeletionService,
-              private cachingService: CachingService) {
+              private cachingService: ChangeDetectionService) {
     selectionService.selectedObservable.subscribe(selectedList => {
       if (selectedList.length === 1 && selectedList[0] instanceof Edge) {
         this.edge = <Edge> selectedList[0];
@@ -40,7 +40,7 @@ export class EdgeFormattingModalComponent {
   }
 
   cache() {
-    this.cachingService.save();
+    this.cachingService.trigger();
   }
 
   removeLabel(middle: 'start' | 'middle' | 'end'): void {

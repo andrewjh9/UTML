@@ -7,7 +7,7 @@ import {Position} from "../../model/position";
 import {Edge} from "../../model/edge";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {DeletionService} from "./deletion.service";
-import {CachingService} from "./caching/caching.service";
+import {ChangeDetectionService} from "./caching/change-detection.service";
 
 describe('CopyPasteService', () => {
   let selectionService: SelectionService;

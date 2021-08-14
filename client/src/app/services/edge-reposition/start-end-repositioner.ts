@@ -4,7 +4,7 @@ import {Position} from "../../../model/position";
 import {Injectable} from "@angular/core";
 import {SnapService} from "../snap.service";
 import {DiagramContainerService} from "../diagram-container.service";
-import {CachingService} from "../caching/caching.service";
+import {ChangeDetectionService} from "../caching/change-detection.service";
 
 /**
  * Class responsible for repositioning the start and end points of an edge.
@@ -22,7 +22,7 @@ export class StartEndRepositioner {
   private isStart?: boolean;
 
   constructor(private snapService: SnapService,
-              private cachingService: CachingService,
+              private cachingService: ChangeDetectionService,
               diagramContainerService: DiagramContainerService) {
     this.nodes = diagramContainerService.get().nodes;
     diagramContainerService.diagramObservable.subscribe(diagram => this.nodes = diagram.nodes);
@@ -90,7 +90,7 @@ export class StartEndRepositioner {
    */
   public deactivate(): void {
     if (this.isActive()) {
-      this.cachingService.save();
+      this.cachingService.trigger();
     }
     this.edge = undefined;
     this.isStart = undefined;

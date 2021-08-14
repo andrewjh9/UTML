@@ -2,7 +2,7 @@ import {EventEmitter, Injectable} from "@angular/core";
 import {Node} from "../../model/node/node";
 import {Diagram} from "../../model/diagram";
 import {Edge} from "../../model/edge";
-import {CachingService} from "./caching/caching.service";
+import {ChangeDetectionService} from "./caching/change-detection.service";
 import {SelectionService} from "./selection.service";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {EditService} from "./edit.service";
@@ -21,7 +21,7 @@ export class DeletionService {
   private diagram: Diagram;
   private selected: Array<Edge | Node | Label> = [];
 
-  constructor(private cachingService: CachingService,
+  constructor(private cachingService: ChangeDetectionService,
               private selectionService: SelectionService,
               keyboardEventCallerService: KeyboardEventCallerService,
               diagramContainerService: DiagramContainerService,
@@ -61,7 +61,7 @@ export class DeletionService {
       this.selectionService.deselect();
     }
     if (cache) {
-      this.cachingService.save();
+      this.cachingService.trigger();
     }
   }
 
@@ -82,7 +82,7 @@ export class DeletionService {
       this.selectionService.deselect();
     }
     if (cache) {
-      this.cachingService.save();
+      this.cachingService.trigger();
     }
   }
 
@@ -98,7 +98,7 @@ export class DeletionService {
     }
 
     if (cache) {
-      this.cachingService.save();
+      this.cachingService.trigger();
     }
   }
 
@@ -114,6 +114,6 @@ export class DeletionService {
         this.deleteLabel(selectedElem as Label, false);
       }
     });
-    this.cachingService.save();
+    this.cachingService.trigger();
   }
 }

@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 import {Deactivatable} from "./deactivatable";
 import {SnapService} from "./snap.service";
 import {Node} from "../../model/node/node";
-import {CachingService} from "./caching/caching.service";
+import {ChangeDetectionService} from "./caching/change-detection.service";
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,7 @@ export class ResizeService implements Deactivatable {
   private static readonly MIN_SIZE = 10;
 
   constructor(private snapService: SnapService,
-              private cachingService: CachingService) { }
+              private cachingService: ChangeDetectionService) { }
 
   public isActive(): boolean {
     return this.node !== undefined;
@@ -116,7 +116,7 @@ export class ResizeService implements Deactivatable {
    */
   public deactivate(): void {
     if (this.isActive()) {
-      this.cachingService.save();
+      this.cachingService.trigger();
     }
     this.node = undefined;
     this.startPosition = undefined;

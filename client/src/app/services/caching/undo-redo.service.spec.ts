@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { CachingService } from './caching.service';
+import { UndoRedoService } from './undo-redo.service';
 
-describe('CachingService', () => {
-  let service: CachingService;
+describe('UndoRedoService', () => {
+  let service: UndoRedoService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(CachingService);
+    service = TestBed.inject(UndoRedoService);
   });
 
   it('should be created', () => {

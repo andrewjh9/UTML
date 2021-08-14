@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Position} from "../../model/position";
 import {Deactivatable} from "./deactivatable";
-import {CachingService} from "./caching/caching.service";
+import {ChangeDetectionService} from "./caching/change-detection.service";
 import {SnapService} from "./snap.service";
 import {SelectionService} from "./selection.service";
 import {Node} from "../../model/node/node";
@@ -20,7 +20,7 @@ export class RepositionService implements Deactivatable {
   private edgeMiddlePositions: Array<Array<Position>> = [];
 
   constructor(private snapService: SnapService,
-              private cachingService: CachingService,
+              private cachingService: ChangeDetectionService,
               selectionService: SelectionService) {
     selectionService.selectedObservable.subscribe(selectedList => {
       this.selectedNodes = selectedList.filter(n => n instanceof Node).map(n => <Node> n);
@@ -74,7 +74,7 @@ export class RepositionService implements Deactivatable {
   public deactivate(): void {
     if (this.isActive() && differ(this.nodeStartPositions, this.selectedNodes.map(node => node.position))) {
       console.log('Reposition save')
-      this.cachingService.save();
+      this.cachingService.trigger();
     }
     this.startMousePosition = undefined;
   }

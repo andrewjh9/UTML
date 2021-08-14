@@ -3,7 +3,7 @@ import {Position} from "../../model/position";
 import {Edge, EndStyle, LineStyle, LineType} from "../../model/edge";
 import {SelectionService} from "../services/selection.service";
 import {DeletionService} from "../services/deletion.service";
-import {CachingService} from "../services/caching/caching.service";
+import {ChangeDetectionService} from "../services/caching/change-detection.service";
 import {EdgeFormattingModalComponent} from "../edge-formatting-modal/edge-formatting-modal.component";
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
@@ -27,7 +27,7 @@ export class EdgeComponent implements OnDestroy {
 
   constructor(private selectionService: SelectionService,
               private deletionService: DeletionService,
-              private cachingService: CachingService,
+              private cachingService: ChangeDetectionService,
               private modalService: NgbModal,
               private mousePositionTransformService: MousePositionTransformService,
               private editService: EditService) {

@@ -5,7 +5,7 @@ import {DeletionService} from "../services/deletion.service";
 import {Node} from "../../model/node/node";
 import {ResizeService} from "../services/resize.service";
 import {DomSanitizer} from "@angular/platform-browser";
-import {CachingService} from "../services/caching/caching.service";
+import {ChangeDetectionService} from "../services/caching/change-detection.service";
 import {SelectionService} from "../services/selection.service";
 import {Diagram} from "../../model/diagram";
 import {Edge} from "../../model/edge";
@@ -42,7 +42,7 @@ export class DiagramComponent implements AfterViewInit, OnInit {
               private edgeCreationService: EdgeCreationService,
               private deletionService: DeletionService,
               private resizeService: ResizeService,
-              private cachingService: CachingService,
+              private cachingService: ChangeDetectionService,
               private selectionService: SelectionService,
               private copyPasteService: CopyPasteService,
               private dragDropCreationService: DragDropCreationService,
@@ -63,7 +63,7 @@ export class DiagramComponent implements AfterViewInit, OnInit {
 
     edgeCreationService.newEdgeEmitter.subscribe((newEdge: Edge) => {
       this.diagram.edges.push(newEdge);
-      this.cachingService.save();
+      this.cachingService.trigger();
     });
 
     copyPasteService.pasteEmitter.subscribe((nodeOrEdge: Node | Edge) => {
@@ -72,7 +72,7 @@ export class DiagramComponent implements AfterViewInit, OnInit {
       } else {
         this.diagram.edges.push(nodeOrEdge as Edge);
       }
-      this.cachingService.save();
+      this.cachingService.trigger();
     });
 
     dragDropCreationService.createdEmitter.subscribe((edgeOrNode: Edge | Node) => {
@@ -82,7 +82,7 @@ export class DiagramComponent implements AfterViewInit, OnInit {
         this.diagram.nodes.push(edgeOrNode);
       }
 
-      this.cachingService.save();
+      this.cachingService.trigger();
     });
   }
 

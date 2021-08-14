@@ -21,7 +21,7 @@ import {DeletionService} from "../services/deletion.service";
 import {CourseSet, ShapeSet} from "../shapeset-management-modal/shapeset-management-modal.component";
 import {ShapeSetContainerService} from "../services/shape-set-container.service";
 import {DiagramComponent} from "../diagram/diagram.component";
-import {CachingService} from "../services/caching/caching.service";
+import {ChangeDetectionService} from "../services/caching/change-detection.service";
 import {EditService} from "../services/edit.service";
 import {ZoomService} from "../services/zoom.service";
 import {logger} from "codelyzer/util/logger";
@@ -45,7 +45,7 @@ export class CreationSidebarComponent implements OnInit {
               private edgeCreationService: EdgeCreationService,
               private selectionService: SelectionService,
               private deletionService: DeletionService,
-              private cachingService: CachingService,
+              private cachingService: ChangeDetectionService,
               private editService: EditService,
               private zoomService: ZoomService,
               shapeSetContainerService: ShapeSetContainerService) {

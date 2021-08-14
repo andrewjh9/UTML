@@ -4,7 +4,6 @@ import {SaveModalComponent} from "../save-modal/save-modal.component";
 import {Diagram} from "../../model/diagram";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {CopyPasteService} from "../services/copy-paste.service";
-import {CachingService} from "../services/caching/caching.service";
 import {DiagramContainerService} from "../services/diagram-container.service";
 import {DiagramManagementModalComponent} from "../diagram-management-modal/diagram-management-modal.component";
 import {DiagramComponent} from "../diagram/diagram.component";
@@ -15,6 +14,7 @@ import {HelpModalComponent} from "../help-modal/help-modal.component";
 import {DeletionService} from "../services/deletion.service";
 import {UserService} from "../services/user.service";
 import {ExportService} from "../services/export.service";
+import {UndoRedoService} from "../services/caching/undo-redo.service";
 
 @Component({
   selector: 'app-nav-bar',
@@ -26,7 +26,7 @@ export class NavBarComponent implements AfterViewInit {
 
   constructor(private modalService: NgbModal,
               private copyPasteService: CopyPasteService,
-              private cachingService: CachingService,
+              private undoRedoService: UndoRedoService,
               private diagramContainer: DiagramContainerService,
               private zoomService: ZoomService,
               public userService: UserService,
@@ -57,17 +57,11 @@ export class NavBarComponent implements AfterViewInit {
   }
 
   undo() {
-    let result = this.cachingService.undo();
-    if (result !== null) {
-      this.diagramContainer.set(result as Diagram);
-    }
+    this.undoRedoService.undo();
   }
 
   redo() {
-    let result = this.cachingService.redo();
-    if (result !== null) {
-      this.diagramContainer.set(result as Diagram);
-    }
+    this.undoRedoService.redo();
   }
 
   openDiagramManagementModal() {

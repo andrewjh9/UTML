@@ -3,7 +3,7 @@ import {SelectionService} from "./selection.service";
 import {SnapService} from "./snap.service";
 import {Label} from "../../model/label";
 import {Position} from "../../model/position";
-import {CachingService} from "./caching/caching.service";
+import {ChangeDetectionService} from "./caching/change-detection.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class LabelRepositionService {
   private label?: Label;
 
   constructor(private snapService: SnapService,
-              private cachingService: CachingService) {
+              private cachingService: ChangeDetectionService) {
   }
 
   public activate(position: Position, label: Label) {
@@ -35,7 +35,7 @@ export class LabelRepositionService {
   public deactivate() {
     if (this.isActive()) {
       console.log('Label Repositioner')
-      this.cachingService.save();
+      this.cachingService.trigger();
     }
     this.label = undefined;
     this.startMousePosition = undefined;

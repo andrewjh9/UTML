@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChange, SimpleChanges} from '@angular/core';
 import {DeletionService} from "../../services/deletion.service";
 import {Node} from "../../../model/node/node";
-import {CachingService} from "../../services/caching/caching.service";
+import {ChangeDetectionService} from "../../services/caching/change-detection.service";
 
 @Component({
   selector: 'app-node-editor',

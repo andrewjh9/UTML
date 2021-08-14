@@ -5,7 +5,7 @@ import {Position} from "../../model/position";
 import {Component, Input} from "@angular/core";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {DeletionService} from "../services/deletion.service";
-import {CachingService} from "../services/caching/caching.service";
+import {ChangeDetectionService} from "../services/caching/change-detection.service";
 import {FormattingModalComponent} from "../formatting-modal/formatting-modal.component";
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 import {EditService} from "../services/edit.service";
@@ -27,7 +27,7 @@ export class NodeComponent {
               private selectionService: SelectionService,
               private modalService: NgbModal,
               private deletionService: DeletionService,
-              private cachingService: CachingService,
+              private cachingService: ChangeDetectionService,
               private mousePositionTransformService: MousePositionTransformService,
               private editService: EditService,
               edgeCreationService: EdgeCreationService,

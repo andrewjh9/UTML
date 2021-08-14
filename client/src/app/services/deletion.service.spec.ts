@@ -6,7 +6,7 @@ import {Node} from "../../model/node/node";
 import {Diagram} from "../../model/diagram";
 import {EllipseNode} from "../../model/node/ellipse-node";
 import {typeIsOrHasBaseType} from "tslint/lib/language/typeUtils";
-import {CachingService} from "./caching/caching.service";
+import {ChangeDetectionService} from "./caching/change-detection.service";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {SelectionService} from "./selection.service";
 import {TestBed} from "@angular/core/testing";

@@ -3,7 +3,7 @@ import {Node} from "../../model/node/node";
 import {Edge} from "../../model/edge";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {Label} from "../../model/label";
-import {CachingService} from "./caching/caching.service";
+import {ChangeDetectionService} from "./caching/change-detection.service";
 import {SelectionService} from "./selection.service";
 import {BehaviorSubject} from "rxjs";
 import {logger} from "codelyzer/util/logger";
@@ -22,7 +22,7 @@ export class EditService {
   private charIndex?: number;
 
   constructor(private selectionService: SelectionService,
-              private cachingService: CachingService) {
+              private cachingService: ChangeDetectionService) {
     selectionService.selectedObservable.subscribe(ignored => this.deactivate());
   }
 
@@ -194,7 +194,7 @@ export class EditService {
         this.deleteLabelEmitter.emit(this.editElement.getValue() as Label);
       }
 
-      this.cachingService.save();
+      this.cachingService.trigger();
     }
     this.charIndex = undefined;
     this.rowIndex = undefined;

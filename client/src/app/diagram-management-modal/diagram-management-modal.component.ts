@@ -3,7 +3,7 @@ import {Node} from "../../model/node/node";
 import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {SelectionService} from "../services/selection.service";
 import {DeletionService} from "../services/deletion.service";
-import {CachingService} from "../services/caching/caching.service";
+import {ChangeDetectionService} from "../services/caching/change-detection.service";
 import {cd} from "../../model/examples/cd";
 import {fsm} from "../../model/examples/fsm";
 import {Diagram} from "../../model/diagram";

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {DiagramContainerService} from "../diagram-container.service";
 import {Diagram} from "../../../model/diagram";
 import {deserialiseDiagram} from "../../../serialisation/deserialise/deserialise-diagram";
+import {ChangeDetectionService} from "./change-detection.service";
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,9 @@ export class LocalStorageService {
     return LocalStorageService.CACHE_PREFIX + this.currentID!;
   }
 
-  constructor(private diagramContainer: DiagramContainerService) {
-
+  constructor(private diagramContainer: DiagramContainerService,
+              changeDetectionService: ChangeDetectionService) {
+    changeDetectionService.addCallback(() => this.save());
   }
   // This setup must happen after the DOM is created. Therefore this logic can not be in the constructor.
   // Setup is now called in ngAfterInit of the diagram component.

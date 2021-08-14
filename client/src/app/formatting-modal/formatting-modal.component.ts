@@ -3,7 +3,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SelectionService} from "../services/selection.service";
 import {Node} from "../../model/node/node";
 import {DeletionService} from "../services/deletion.service";
-import {CachingService} from "../services/caching/caching.service";
+import {ChangeDetectionService} from "../services/caching/change-detection.service";
 
 @Component({
   selector: 'app-formatting-modal',
@@ -17,7 +17,7 @@ export class FormattingModalComponent {
   constructor(public modal: NgbActiveModal,
               private selectionService: SelectionService,
               private deletionService: DeletionService,
-              private cachingService: CachingService) {
+              private cachingService: ChangeDetectionService) {
     this.node = this.selectionService.getNode();
     selectionService.deselect();
   }
@@ -32,7 +32,7 @@ export class FormattingModalComponent {
   }
 
   cache() {
-    this.cachingService.save();
+    this.cachingService.trigger();
   }
 
   addChar(char: string) {
