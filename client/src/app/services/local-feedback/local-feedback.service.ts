@@ -1,18 +1,18 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {LocalFeedbackProvider, LocalFeedbackProviderConstructor} from "./local-feedback-provider";
-import {BasicProvider} from "./basic-provider";
-import {ChangeDetectionService} from "../caching/change-detection.service";
-import {DiagramContainerService} from "../diagram-container.service";
-import {FeedbackMessage} from "./feedback-message";
-import {TempProvider} from "./temp-provider";
+import {LocalFeedbackProvider, LocalFeedbackProviderConstructor} from './local-feedback-provider';
+import {BasicProvider} from './basic-provider';
+import {ChangeDetectionService} from '../caching/change-detection.service';
+import {DiagramContainerService} from '../diagram-container.service';
+import {FeedbackMessage} from './feedback-message';
+import {TempProvider} from './temp-provider';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalFeedbackService {
   private readonly constructors: Array<LocalFeedbackProviderConstructor> = [
-    () => { return new BasicProvider(); },
-    () => { return new TempProvider(); },
+    () => new BasicProvider(),
+    () => new TempProvider(),
   ];
 
   private currentProvider: LocalFeedbackProvider | null = new BasicProvider();
