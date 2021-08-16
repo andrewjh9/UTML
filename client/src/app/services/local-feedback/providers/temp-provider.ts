@@ -1,6 +1,6 @@
 import {LocalFeedbackProvider} from "./local-feedback-provider";
-import {FeedbackMessage} from "./feedback-message";
-import {Diagram} from "../../../model/diagram";
+import {FeedbackMessage} from "../feedback-message";
+import {Diagram} from "../../../../model/diagram";
 
 export class TempProvider extends LocalFeedbackProvider {
   public getFeedback(diagram: Diagram): Array<FeedbackMessage> {

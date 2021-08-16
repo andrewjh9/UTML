@@ -15,6 +15,7 @@ import {DeletionService} from "../services/deletion.service";
 import {UserService} from "../services/user.service";
 import {ExportService} from "../services/export.service";
 import {UndoRedoService} from "../services/caching/undo-redo.service";
+import {LocalFeedbackModalComponent} from '../local-feedback-modal/local-feedback-modal.component';
 
 @Component({
   selector: 'app-nav-bar',
@@ -96,5 +97,9 @@ export class NavBarComponent implements AfterViewInit {
 
   delete() {
     this.deletionService.deleteSelected();
+  }
+
+  openLocalFeedback() {
+    this.modalService.open(LocalFeedbackModalComponent, {size: 'xl'});
   }
 }

@@ -1,5 +1,5 @@
-import {Diagram} from "../../../model/diagram";
-import {FeedbackMessage} from "./feedback-message";
+import {Diagram} from "../../../../model/diagram";
+import {FeedbackMessage} from "../feedback-message";
 
 export abstract class LocalFeedbackProvider {
   public abstract getName(): string;

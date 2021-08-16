@@ -53,7 +53,7 @@ import {
   faSave, faSearch,
   faSearchMinus,
   faSearchPlus, faTasks,
-  faUndo, faUser, faUserSlash
+  faUndo, faUser, faUserSlash, faComment
 } from "@fortawesome/free-solid-svg-icons";
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { SpecialCharacterSelectorComponent } from './special-character-selector/special-character-selector.component';
@@ -76,6 +76,7 @@ import { ErrorModalComponent } from './error-modal/error-modal.component';
 import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-control-flow-node/sequence-control-flow-node.component';
 import { CommentNodeComponent } from './node-compontents/comment-node/comment-node.component';
 import { DownloadSvgComponent } from './download-svg/download-svg.component';
+import { LocalFeedbackModalComponent } from './local-feedback-modal/local-feedback-modal.component';
 
 @NgModule({
   declarations: [
@@ -137,6 +138,7 @@ import { DownloadSvgComponent } from './download-svg/download-svg.component';
     SequenceControlFlowNodeComponent,
     CommentNodeComponent,
     DownloadSvgComponent,
+    LocalFeedbackModalComponent,
   ],
     imports: [
         BrowserModule,
@@ -153,6 +155,6 @@ export class AppModule {
   constructor(library: FaIconLibrary) {
     library.addIcons(faTrashAlt, faEdit, faEye, faEyeSlash, faSave, faUndo, faRedo, faCopy, faPaste, faFolderOpen,
       faSearchMinus, faSearchPlus, faQuestion, faCog, faUser, faTasks, faUserSlash, faList, faFile, faSearch,
-      faAngleDown, faAngleUp);
+      faAngleDown, faAngleUp, faComment);
   }
 }
