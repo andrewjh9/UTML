@@ -5,13 +5,37 @@
   </button>
 </div>
 <div class="modal-body">
-  <button type="button" class="btn btn-outline-primary" (click)="deactivate()">
+  <button type="button" class="btn btn-outline-secondary w-100" (click)="deactivate()">
     Deactivate Local Feedback
   </button>
 
-  <button type="button" class="btn btn-outline-primary" (click)="tempActivate()">
-    Button Set FSM Feedback
-  </button>
+  <hr>
+
+  <table class="table">
+    <tr *ngFor="let name of names; let i = index;">
+      <td style="flex-grow: 1">
+        {{name}}
+      </td>
+      <td style="width: 85px">
+        <button class="btn btn-outline-primary" (click)="setSelectedFactory(i)">Select</button>
+      </td>
+    </tr>
+  </table>
+
+  <hr>
+
+  <div *ngIf="selectedFactoryIndex !== -1">
+    <div *ngFor="let field of fields; let i = index;">
+      <div class="form-group row px-3" ngbTooltip="{{field.description}}" placement="bottom">
+        <label class="w-25 col-form-label pr-2" style="text-align: center">{{field.name}}</label>
+        <div class="w-75">
+          <input class="w-100 form-control" type="text" [(ngModel)]="field.value" [ngClass]="getFieldClass(i)">
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-outline-primary w-100" (click)="buildProvider()">Activate</button>
+  </div>
 </div>
 <div class="modal-footer">
   <button type="button"

@@ -100,6 +100,6 @@ export class NavBarComponent implements AfterViewInit {
   }
 
   openLocalFeedback() {
-    this.modalService.open(LocalFeedbackModalComponent, {size: 'xl'});
+    this.modalService.open(LocalFeedbackModalComponent);
   }
 }

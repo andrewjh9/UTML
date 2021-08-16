@@ -11,7 +11,12 @@ export class FsmAlphabetValidatorFactory extends LocalFeedbackProviderFactory {
     return [{
       name: "alphabet",
       value: "a, b, c",
-      description: "Alphabet of the FSM in the form of 'a, b, c'"
+      description: "Alphabet of the FSM in the form of 'a, b, c'",
+      validator: s => s.length > 0
     }];
+  }
+
+  public get name(): string {
+    return "FSM Alphabet Validator";
   }
 }
