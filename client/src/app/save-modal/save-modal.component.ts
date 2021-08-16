@@ -35,7 +35,12 @@ export class SaveModalComponent implements AfterContentInit {
   }
 
   exportAsJSON() {
-    this.exportService.exportAsJSON(this.userService.openDiagramName)
+    this.exportService.exportAsJSON(this.userService.openDiagramName);
+    this.modal.close();
+  }
+
+  exportAsSVG() {
+    this.exportService.exportAsSVG(this.userService.openDiagramName);
     this.modal.close();
   }
 

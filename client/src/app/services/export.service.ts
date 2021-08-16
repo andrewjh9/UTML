@@ -107,6 +107,36 @@ export class ExportService {
     this.triggerDownload(filename, uri, "utml");
   }
 
+  public exportAsSVG(filename: string) {
+    // See https://stackoverflow.com/questions/23218174/how-do-i-save-export-an-svg-file-after-creating-an-svg-with-d3-js-ie-safari-an
+
+    const svg = document.getElementById("downloadSVG");
+
+    if (svg === null) {
+      this.errorLauncherService.launch("There is no diagram to export to SVG.");
+    }
+
+    const serializer = new XMLSerializer();
+    // Even though we do a null check on svg variable, we still have to cast it due to type checking constraints.
+    let source = serializer.serializeToString(svg as HTMLElement);
+
+    // Add name spaces.
+    if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+      source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+    if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+      source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+    }
+
+    // Add xml declaration
+    source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+    // Convert svg source to URI data scheme.
+    let url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+
+    this.triggerDownload(filename, url, "svg");
+  }
+
   public getDiagramJSON(fileName: String){
     return {
       serialisedDiagram: JSON.stringify(this.diagram?.serialise()),
