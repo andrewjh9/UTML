@@ -4,6 +4,7 @@ import {LocalFeedbackService} from '../services/local-feedback/local-feedback.se
 import {FeedbackMessage} from '../services/local-feedback/feedback-message';
 import {LocalFeedbackProviderFactory, ProviderSetupField} from '../services/local-feedback/providers/local-feedback-provider-factory';
 import {FsmAlphabetValidatorFactory} from '../services/local-feedback/providers/fsm-alphabet/fsm-alphabet-validator-factory';
+import {NodeCountValidatorFactory} from '../services/local-feedback/providers/node-count/node-count-validator-factory';
 
 @Component({
   selector: 'app-local-feedback-modal',
@@ -16,7 +17,7 @@ export class LocalFeedbackModalComponent {
 
   readonly factories: Array<LocalFeedbackProviderFactory> = [
     new FsmAlphabetValidatorFactory(),
-    new FsmAlphabetValidatorFactory()
+    new NodeCountValidatorFactory(),
   ];
 
   get names(): string[] {

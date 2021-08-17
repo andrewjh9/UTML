@@ -24,15 +24,9 @@ export class MousePositionTransformService {
 
   public transFormZoomAndMenubar(position: Position): Position {
     position.y -= MENUBAROFFSET;
+    position.x -= DetailsSidebarComponent.WIDTH;
     position.x *= this.zoomService.getCurrentZoomFactor();
     position.y *= this.zoomService.getCurrentZoomFactor();
     return position;
   }
-
-  //without zoom factor
-  public simpleTransform(position: Position): Position {
-    position.y -= MENUBAROFFSET;
-    return position;
-  }
-
 }
