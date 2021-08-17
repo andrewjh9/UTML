@@ -77,6 +77,7 @@ import { SequenceControlFlowNodeComponent } from './node-compontents/sequence-co
 import { CommentNodeComponent } from './node-compontents/comment-node/comment-node.component';
 import { DownloadSvgComponent } from './download-svg/download-svg.component';
 import { LocalFeedbackModalComponent } from './local-feedback-modal/local-feedback-modal.component';
+import { DetailsSidebarComponent } from './details-sidebar/details-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -139,6 +140,7 @@ import { LocalFeedbackModalComponent } from './local-feedback-modal/local-feedba
     CommentNodeComponent,
     DownloadSvgComponent,
     LocalFeedbackModalComponent,
+    DetailsSidebarComponent,
   ],
     imports: [
         BrowserModule,

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {ZoomService} from "./zoom.service";
 import {Position} from "../../model/position";
-const MENUBAROFFSET: number = 50;
+import {DetailsSidebarComponent} from '../details-sidebar/details-sidebar.component';
+const MENUBAROFFSET: number = 53;
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class MousePositionTransformService {
 
   public transformPosition(position: Position): Position {
     position.y -= MENUBAROFFSET;
+    position.x -= DetailsSidebarComponent.WIDTH;
 
     position.x *= this.zoomService.getCurrentZoomFactor();
     position.y *= this.zoomService.getCurrentZoomFactor();

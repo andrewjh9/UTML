@@ -1,0 +1,9 @@
+#details-sidebar {
+  position: absolute;
+  top: 53px;
+  left: 0;
+  width: 300px;
+  height: calc(100vh - 53px);
+  background-color: rgb(248, 249, 250);
+  border-right: 1px solid #CCC;
+}

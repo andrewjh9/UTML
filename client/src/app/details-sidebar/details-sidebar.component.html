@@ -1,0 +1,20 @@
+<nav id="details-sidebar">
+  <div *ngFor="let message of feedbackMessages">
+
+    <div class="alert alert-dismissible fade show" role="alert" [ngClass]="typeToClass(message.type)">
+      {{message.message}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="alert alert-dismissible fade show" role="alert" [ngClass]="typeToClass(message.type)">
+      {{message.message}}
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+
+  <hr *ngIf="feedbackMessages.length > 0">
+</nav>

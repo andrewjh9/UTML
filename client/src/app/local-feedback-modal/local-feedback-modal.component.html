@@ -25,6 +25,10 @@
   <hr>
 
   <div *ngIf="selectedFactoryIndex !== -1">
+    <h5 class="text-center">
+      Set Feedback Parameters
+    </h5>
+
     <div *ngFor="let field of fields; let i = index;">
       <div class="form-group row px-3" ngbTooltip="{{field.description}}" placement="bottom">
         <label class="w-25 col-form-label pr-2" style="text-align: center">{{field.name}}</label>

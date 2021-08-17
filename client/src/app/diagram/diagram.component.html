@@ -2,13 +2,15 @@
   <app-nav-bar></app-nav-bar>
 
   <div style="overflow: hidden">
+    <details-sidebar></details-sidebar>
+
     <svg #svg
          [attr.viewBox]="zoomService.getViewBox()"
          (mousedown)="handleMouseDown($event)"
          (mouseup)="handleMouseUp($event)"
          (mousemove)="handleMouseMove($event)"
          id="diagram"
-         style="overflow: hidden">
+         style="overflow: hidden; margin-left: 300px;">
       <g white-background></g>
       <g grid-overlay></g>
 
@@ -32,7 +34,7 @@
   </div>
 
   <creation-sidebar></creation-sidebar>
-  <hint-overlay></hint-overlay>
+  <!--<hint-overlay></hint-overlay>-->
 </div>
 
 <download-svg></download-svg>
