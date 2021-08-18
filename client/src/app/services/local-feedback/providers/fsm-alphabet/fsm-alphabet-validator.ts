@@ -23,34 +23,25 @@ export class FsmAlphabetValidator extends LocalFeedbackProvider {
   public getFeedback(diagram: Diagram): Feedback {
     let result = getEmptyFeedback();
 
-    if (diagram.edges.some((edge, index) => edge.middleLabel === undefined)) {
-      result.messages.push({
-        type: "error",
-        message: "There is at least one edge without a middle label."
-      });
-    }
-
-    if (diagram.edges.some((edge: Edge) => {
+    diagram.edges.forEach((edge, index) => {
       if (edge.middleLabel === undefined) {
-        return false;
+        result.messages.push({
+          type: "warning",
+          message: "An edge is missing a middle label"
+        });
+        result.edgeHighlights.push({id: index, type: 'warning'});
+      } else {
+          let chars = edge.middleLabel!.value.split(",").map(char => char.trim());
+          if (chars.some(char => !this.alphabet.includes(char))) {
+            result.messages.push({
+              type: "error",
+              message: "There is at least one edge with an invalid character."
+            });
+
+            result.edgeHighlights.push({id: index, type: 'error'});
+          }
       }
-
-      let chars = edge.middleLabel!.value.split(",").map(char => char.trim());
-
-      return chars.some(char => !this.alphabet.includes(char));
-    })) {
-      result.messages.push({
-        type: "error",
-        message: "There is at least one edge with an invalid character."
-      });
-    }
-
-    if (result.messages.length === 0) {
-      result.messages.push({
-        type: "success",
-        message: "Looking Good!"
-      });
-    }
+    });
 
     return result;
   }

@@ -22,8 +22,25 @@ export class EdgeComponent implements OnDestroy {
   styleObject: {[key: string]: string | number} = {
     'stroke': 'black',
     'stroke-width': 2
-  }
+  };
   cursor: 'pointer' | 'move' = 'pointer';
+
+  get highlightStroke(): string {
+    switch (this.edge.highlight) {
+      case 'warning':
+        return 'orange';
+      case 'error':
+        return'red';
+      case 'success':
+        return 'green';
+      default:
+        return 'white';
+    }
+  }
+
+  get highlightOpacity(): string {
+    return this.edge.highlight === 'none' ? '0' : '0.1';
+  }
 
   constructor(private selectionService: SelectionService,
               private deletionService: DeletionService,

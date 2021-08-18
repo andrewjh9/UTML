@@ -3,19 +3,20 @@
        [styleObject]="styleObject"/>
 
 <!-- Invisible, selectable to make the mouse down trigger easily accessible -->
+<!-- Also used to render the feedback highlights of the edges -->
 <svg:polyline *ngIf="edge && isLine()"
               [attr.points]="edge.getPointString()"
-              style="stroke:rgb(0, 0, 0); stroke-width:15; stroke-opacity: 0;  fill:none;"
+              style="stroke-width:15; fill:none;"
               (mousedown)="handleMouseDown($event)"
               (dblclick)="handleDoubleClick($event)"
-              [ngStyle]="{'cursor': cursor}"/>
+              [ngStyle]="{'cursor': cursor, 'stroke': highlightStroke, 'stroke-opacity': highlightOpacity}"/>
 <svg:path *ngIf="edge && isArc()"
           [attr.d]="edge.getPointString()"
           fill="none"
-          style="stroke-width: 15; stroke: black; stroke-opacity: 0"
+          style="stroke-width: 15; stroke: none;"
           (mousedown)="handleMouseDown($event)"
           (dblclick)="handleDoubleClick($event)"
-          [ngStyle]="{'cursor': cursor}"/>
+          [ngStyle]="{'cursor': cursor, 'stroke': highlightStroke, 'stroke-opacity': highlightOpacity}"/>
 
 <svg:g *ngIf="isSelected && isLine()" clickable-new-points [edge]="edge" pointer-events="visible"/>
 <svg:g *ngIf="isSelected" clickable-start-end-points [edge]="edge"/>
