@@ -7,6 +7,7 @@ import {Node} from '../../../model/node/node';
 import {Edge} from '../../../model/edge';
 import {Feedback, getEmptyFeedback} from './feedback';
 import {Diagram} from '../../../model/diagram';
+import {FeedbackHighlight} from './feedback-highlight';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,7 @@ export class LocalFeedbackService {
    * Components or services that use feedback messages should subscribe to it.
    */
   public readonly feedbackMessageEmitter: EventEmitter<Array<FeedbackMessage>> = new EventEmitter<Array<FeedbackMessage>>();
+  public readonly nodeHighlightEmitter: EventEmitter<Array<FeedbackHighlight>> = new EventEmitter<Array<FeedbackHighlight>>();
 
   private currentProvider: LocalFeedbackProvider | null = null;
 
@@ -51,6 +53,8 @@ export class LocalFeedbackService {
       let highlight = feedback.edgeHighlights.find(h => h.id === index);
       edge.highlight = highlight === undefined ? 'none' : highlight.type;
     });
+
+    this.nodeHighlightEmitter.emit(feedback.nodeHighlights);
   }
 
   /**

@@ -10,3 +10,13 @@
 
   <svg:g clickable-resize-points [node]="node"/>
 </svg:g>
+
+<svg:g *ngFor="let node of highlightedNodes">
+  <svg:rect
+    [attr.x]="node.position.x - 5"
+    [attr.y]="node.position.y - 5"
+    [attr.width]="node.width + 10"
+    [attr.height]="node!.height + 10"
+    [ngStyle]="highlightStyle(node)"
+  />
+</svg:g>

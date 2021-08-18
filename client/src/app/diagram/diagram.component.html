@@ -21,7 +21,7 @@
       <g *ngFor="let edge of diagram.edges; let i = index"
          edge-component [(edge)]="diagram.edges[i]" (edgeChange)="diagram.edges[i]=$event"></g>
 
-      <g selected-node-highlight/>
+      <g node-highlight/>
       <g drag-select-preview/>
       <g drag-drop-preview></g>
 

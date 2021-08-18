@@ -9,22 +9,4 @@ import {Node, StyleObject} from '../../../model/node/node';
 })
 export class RectangleNodeRenderComponent {
   @Input() node!: RectangleNode;
-
-  get style(): StyleObject {
-    let copy = Node.copyStyleObject(this.node.styleObject);
-
-    switch (this.node.highlight) {
-      case 'warning':
-        copy['stroke'] = 'orange';
-        break;
-      case 'error':
-        copy['stroke'] = 'red';
-        break;
-      case 'success':
-        copy['stroke'] = 'green';
-        break;
-    }
-
-    return copy;
-  }
 }

@@ -19,7 +19,7 @@ import {ClickableResizePointsComponent} from "./node-compontents/clickable-resiz
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
 import { BasicNodeTextComponent } from './node-compontents/basic-node-text/basic-node-text.component';
 import { DiagramImportComponent } from './diagram-import/diagram-import.component';
-import { SelectedNodeHighlightComponent } from './node-compontents/selected-node-highlight/selected-node-highlight.component';
+import { NodeHighlightComponent } from './node-compontents/selected-node-highlight/node-highlight.component';
 import { CreationSidebarComponent } from './creation-sidebar/creation-sidebar.component';
 import { DragDropPreviewComponent } from './drag-drop-preview/drag-drop-preview.component';
 import {LineRenderComponent} from "./edge/line-render/line-render.component";
@@ -95,7 +95,7 @@ import { DetailsSidebarComponent } from './details-sidebar/details-sidebar.compo
     ExportDiagramComponent,
     BasicNodeTextComponent,
     DiagramImportComponent,
-    SelectedNodeHighlightComponent,
+    NodeHighlightComponent,
     CreationSidebarComponent,
     DragDropPreviewComponent,
     ArcRenderComponent,
