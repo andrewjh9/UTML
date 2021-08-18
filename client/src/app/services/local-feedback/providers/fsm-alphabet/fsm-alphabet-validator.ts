@@ -3,6 +3,7 @@ import {Diagram} from '../../../../../model/diagram';
 import {FeedbackMessage} from '../../feedback-message';
 import {ProviderSetupField} from '../local-feedback-provider-factory';
 import {Edge} from '../../../../../model/edge';
+import {Feedback, getEmptyFeedback} from '../../feedback';
 
 export class FsmAlphabetValidator extends LocalFeedbackProvider {
   private alphabet: Array<string>;
@@ -19,11 +20,11 @@ export class FsmAlphabetValidator extends LocalFeedbackProvider {
     this.alphabet = field.value.split(",").map(char => char.trim());
   }
 
-  public getFeedback(diagram: Diagram): Array<FeedbackMessage> {
-    let result: Array<FeedbackMessage> = [];
+  public getFeedback(diagram: Diagram): Feedback {
+    let result = getEmptyFeedback();
 
-    if (diagram.edges.some(edge => edge.middleLabel === undefined)) {
-      result.push({
+    if (diagram.edges.some((edge, index) => edge.middleLabel === undefined)) {
+      result.messages.push({
         type: "error",
         message: "There is at least one edge without a middle label."
       });
@@ -38,23 +39,19 @@ export class FsmAlphabetValidator extends LocalFeedbackProvider {
 
       return chars.some(char => !this.alphabet.includes(char));
     })) {
-      result.push({
+      result.messages.push({
         type: "error",
         message: "There is at least one edge with an invalid character."
       });
     }
 
-    if (result.length === 0) {
-      result.push({
+    if (result.messages.length === 0) {
+      result.messages.push({
         type: "success",
         message: "Looking Good!"
       });
     }
 
     return result;
-  }
-
-  public getName(): string {
-    return "FSM Alphabet Validator";
   }
 }

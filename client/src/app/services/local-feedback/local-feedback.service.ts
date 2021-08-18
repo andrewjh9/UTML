@@ -1,21 +1,28 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {LocalFeedbackProvider, LocalFeedbackProviderConstructor} from './providers/local-feedback-provider';
-import {BasicProvider} from './providers/basic-provider';
+import {LocalFeedbackProvider} from './providers/local-feedback-provider';
 import {ChangeDetectionService} from '../caching/change-detection.service';
 import {DiagramContainerService} from '../diagram-container.service';
 import {FeedbackMessage} from './feedback-message';
-import {TempProvider} from './providers/temp-provider';
-import {LocalFeedbackProviderFactory, ProviderSetupField} from './providers/local-feedback-provider-factory';
-import {FsmAlphabetValidatorFactory} from './providers/fsm-alphabet/fsm-alphabet-validator-factory';
+import {Node} from '../../../model/node/node';
+import {Edge} from '../../../model/edge';
+import {Feedback, getEmptyFeedback} from './feedback';
+import {Diagram} from '../../../model/diagram';
 
 @Injectable({
   providedIn: 'root'
 })
+/**
+ * The LocalFeedbackService is responsible for subscribing to UTML change detection and upon change
+ * it must request feedback from the selected local feedback provider.
+ */
 export class LocalFeedbackService {
+  /**
+   * If a feedback provider is selected, this emitter emits its feedback messages after every change detection.
+   * Components or services that use feedback messages should subscribe to it.
+   */
+  public readonly feedbackMessageEmitter: EventEmitter<Array<FeedbackMessage>> = new EventEmitter<Array<FeedbackMessage>>();
 
-  private currentProvider: LocalFeedbackProvider | null = new BasicProvider();
-  public readonly feedbackMessageEmitter: EventEmitter<Array<FeedbackMessage>> =
-    new EventEmitter<Array<FeedbackMessage>>();
+  private currentProvider: LocalFeedbackProvider | null = null;
 
   constructor(changeDetectionService: ChangeDetectionService,
               private diagramContainerService: DiagramContainerService) {
@@ -24,16 +31,50 @@ export class LocalFeedbackService {
 
   private handleChange(): void {
     if (this.currentProvider !== null) {
-      this.feedbackMessageEmitter.emit(this.currentProvider.getFeedback(this.diagramContainerService.get()));
+      let diagram = this.diagramContainerService.get();
+
+      let feedback = this.currentProvider.getFeedback(diagram);
+
+      this.handleFeedback(feedback, diagram);
     }
   }
 
-  public deactivate() {
-    this.currentProvider = null;
+  private handleFeedback(feedback: Feedback, diagram: Diagram) {
+    this.feedbackMessageEmitter.emit(feedback.messages);
+
+    diagram.nodes.forEach((node: Node, index: number) => {
+      let highlight = feedback.nodeHighlights.find(h => h.id === index);
+      node.highlight = highlight === undefined ? 'none' : highlight.type;
+    });
+
+    diagram.edges.forEach((edge: Edge, index: number) => {
+      let highlight = feedback.edgeHighlights.find(h => h.id === index);
+      edge.highlight = highlight === undefined ? 'none' : highlight.type;
+    });
   }
 
+  /**
+   * Deactivate the current feedback provider.
+   *
+   * Additionally this clears all feedback messages and highlights.
+   * There will no longer be any feedback messages emitted by the feedbackMessageEmitter upon a detected change.
+   */
+  public deactivate() {
+    this.currentProvider = null;
+    // Remove messages and highlights by handling empty feedback
+    this.handleFeedback(getEmptyFeedback(), this.diagramContainerService.get());
+  }
+
+  /**
+   * Set the provided localFeedbackProvider as the selected local feedback provider.
+   *
+   * If there is already another provider, this one will be replaced.
+   * This method will also ask the new provider for feedback and emit this feedback through the feedbackMessageEmitter.
+   * @param localFeedbackProvider The new local feedback provider
+   */
   public set(localFeedbackProvider: LocalFeedbackProvider) {
     this.currentProvider = localFeedbackProvider;
+    this.handleChange();
   }
 }
 

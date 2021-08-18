@@ -3,6 +3,7 @@ import {Node} from "./node/node";
 import {EdgeLocation, Label, PositionCallback} from "./label";
 import {SerialisedEdge} from "../serialisation/serialised-data-structures/serialised-edge";
 import {liesOnSegment} from "../app/services/edge-reposition/lies-on-segment";
+import {HighlightType} from '../app/services/local-feedback/feedback-highlight';
 
 export class Edge {
   public startNode?: Node;
@@ -20,6 +21,9 @@ export class Edge {
   public startLabel?: Label;
   public middleLabel?: Label;
   public endLabel?: Label;
+
+  public highlight: HighlightType = 'none';
+
 
   constructor(startPosition: Position | number,
               endPosition: Position | number,
