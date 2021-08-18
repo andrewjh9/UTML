@@ -43,6 +43,17 @@ export class FsmAlphabetValidator extends LocalFeedbackProvider {
       }
     });
 
+    diagram.nodes.forEach((node, index) => {
+      if (diagram.nodes.filter(innerNode => innerNode.text === node.text).length !== 1) {
+        result.messages.push({
+          type: "error",
+          message: "There is at least one other node with this name."
+        });
+
+        result.nodeHighlights.push({id: index, type: 'error'});
+      }
+    });
+
     return result;
   }
 }
