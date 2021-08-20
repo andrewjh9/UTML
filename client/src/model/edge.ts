@@ -3,7 +3,7 @@ import {Node} from "./node/node";
 import {EdgeLocation, Label, PositionCallback} from "./label";
 import {SerialisedEdge} from "../serialisation/serialised-data-structures/serialised-edge";
 import {liesOnSegment} from "../app/services/edge-reposition/lies-on-segment";
-import {HighlightType} from '../app/services/local-feedback/feedback-highlight';
+import {HighlightType} from '../app/services/feedback/local/feedback-highlight';
 
 export class Edge {
   public startNode?: Node;

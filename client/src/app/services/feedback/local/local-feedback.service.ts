@@ -1,12 +1,12 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {LocalFeedbackProvider} from './providers/local-feedback-provider';
-import {ChangeDetectionService} from '../caching/change-detection.service';
-import {DiagramContainerService} from '../diagram-container.service';
+import {ChangeDetectionService} from '../../caching/change-detection.service';
+import {DiagramContainerService} from '../../diagram-container.service';
 import {FeedbackMessage} from './feedback-message';
-import {Node} from '../../../model/node/node';
-import {Edge} from '../../../model/edge';
+import {Node} from '../../../../model/node/node';
+import {Edge} from '../../../../model/edge';
 import {Feedback, getEmptyFeedback} from './feedback';
-import {Diagram} from '../../../model/diagram';
+import {Diagram} from '../../../../model/diagram';
 import {FeedbackHighlight} from './feedback-highlight';
 
 @Injectable({

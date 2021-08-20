@@ -22,8 +22,8 @@ import {LensOffsetService} from "../services/lens-offset.service";
 import {LabelRepositionService} from "../services/label-reposition.service";
 import {FixedPointRepositioner} from "../services/edge-reposition/fixed-point-repositioner";
 import {StartEndRepositioner} from "../services/edge-reposition/start-end-repositioner";
-import {LocalFeedbackService} from "../services/local-feedback/local-feedback.service";
-import {FeedbackMessage} from "../services/local-feedback/feedback-message";
+import {LocalFeedbackService} from "../services/feedback/local/local-feedback.service";
+import {FeedbackMessage} from "../services/feedback/local/feedback-message";
 
 @Component({
   selector: 'app-diagram',

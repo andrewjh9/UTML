@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {LocalFeedbackService} from '../services/local-feedback/local-feedback.service';
-import {FeedbackMessage} from '../services/local-feedback/feedback-message';
-import {LocalFeedbackProviderFactory, ProviderSetupField} from '../services/local-feedback/providers/local-feedback-provider-factory';
-import {FsmAlphabetValidatorFactory} from '../services/local-feedback/providers/fsm-alphabet/fsm-alphabet-validator-factory';
-import {NodeCountValidatorFactory} from '../services/local-feedback/providers/node-count/node-count-validator-factory';
+import {LocalFeedbackService} from '../services/feedback/local/local-feedback.service';
+import {FeedbackMessage} from '../services/feedback/local/feedback-message';
+import {LocalFeedbackProviderFactory, ProviderSetupField} from '../services/feedback/local/providers/local-feedback-provider-factory';
+import {FsmAlphabetValidatorFactory} from '../services/feedback/local/providers/fsm-alphabet/fsm-alphabet-validator-factory';
+import {NodeCountValidatorFactory} from '../services/feedback/local/providers/node-count/node-count-validator-factory';
 
 @Component({
   selector: 'app-local-feedback-modal',

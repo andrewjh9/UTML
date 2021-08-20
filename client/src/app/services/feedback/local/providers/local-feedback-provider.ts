@@ -1,4 +1,4 @@
-import {Diagram} from "../../../../model/diagram";
+import {Diagram} from "../../../../../model/diagram";
 import {Feedback} from '../feedback';
 
 /**

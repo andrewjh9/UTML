@@ -1,8 +1,8 @@
 import {LocalFeedbackProvider} from '../local-feedback-provider';
-import {Diagram} from '../../../../../model/diagram';
+import {Diagram} from '../../../../../../model/diagram';
 import {FeedbackMessage} from '../../feedback-message';
 import {ProviderSetupField} from '../local-feedback-provider-factory';
-import {Edge} from '../../../../../model/edge';
+import {Edge} from '../../../../../../model/edge';
 import {Feedback, getEmptyFeedback} from '../../feedback';
 
 export class FsmAlphabetValidator extends LocalFeedbackProvider {

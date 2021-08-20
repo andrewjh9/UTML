@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {FeedbackMessage} from '../services/local-feedback/feedback-message';
-import {LocalFeedbackService} from '../services/local-feedback/local-feedback.service';
+import {FeedbackMessage} from '../services/feedback/local/feedback-message';
+import {LocalFeedbackService} from '../services/feedback/local/local-feedback.service';
 
 @Component({
   selector: 'details-sidebar',

@@ -1,7 +1,7 @@
 import {Position} from '../position';
 import {SerialisedNode} from "../../serialisation/serialised-data-structures/serialised-node";
 import {Style} from "@angular/cli/lib/config/schema";
-import {HighlightType} from '../../app/services/local-feedback/feedback-highlight';
+import {HighlightType} from '../../app/services/feedback/local/feedback-highlight';
 
 export abstract class Node {
   private _width: number;

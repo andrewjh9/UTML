@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {SelectionService} from "../../services/selection.service";
 import {Node} from '../../../model/node/node';
 import {Edge} from "../../../model/edge";
-import {LocalFeedbackService} from '../../services/local-feedback/local-feedback.service';
-import {FeedbackHighlight} from '../../services/local-feedback/feedback-highlight';
+import {LocalFeedbackService} from '../../services/feedback/local/local-feedback.service';
+import {FeedbackHighlight} from '../../services/feedback/local/feedback-highlight';
 import {DiagramContainerService} from '../../services/diagram-container.service';
 
 @Component({
