@@ -15,6 +15,8 @@ import {CrossNode} from "../../model/node/cross-node";
 import {ExecutionNode} from "../../model/node/execution-node";
 import {SequenceControlFlowNode} from "../../model/node/sequence-control-flow-node";
 import {CommentNode} from "../../model/node/comment-node";
+import {AndGateNode} from '../../model/node/fault-tree/and-gate-node';
+import {OrGateNode} from '../../model/node/fault-tree/or-gate-node';
 
 export function flattenActive(courseSets: {[key: string]: CourseSet}) {
   let result: CourseSet = {};
@@ -150,6 +152,18 @@ sequence.nodes['Opt'] = new SequenceControlFlowNode(100, 100, new Position(56, 2
 sequence.nodes['Loop'] = new SequenceControlFlowNode(100, 100, new Position(56, 2), 'Loop');
 sequence.nodes['Alt'] = new SequenceControlFlowNode(100, 100, new Position(56, 2), 'Alt');
 
+
+let ft: ShapeSet = {nodes: {}, edges: {}, active: true};
+ft.edges['Line'] = association;
+let basicEvent = new EllipseNode(100, 100, new Position(58, 2));
+ft.nodes['Basic Event'] = basicEvent;
+let intermediateEvent = new RectangleNode(186, 50, new Position(10, 2));
+ft.nodes['Intermediate Event'] = intermediateEvent;
+let andGate = new AndGateNode(100, 100, new Position(58, 2));
+ft.nodes['And Gate'] = andGate;
+let orGate = new OrGateNode(100, 100, new Position(58, 2));
+ft.nodes['Or Gate'] = orGate;
+
 let fsm: ShapeSet = {nodes: {}, edges: {}, active: true};
 fsm.nodes['State'] = state;
 fsm.nodes['End State'] = endState;
@@ -203,6 +217,11 @@ let design: CourseSet = {
   'Sequence Diagram': sequence,
   'State Machine Diagram': smd
 };
+
+let faultTree: CourseSet = {
+  'Fault Trees': ft
+};
+
 let lm: CourseSet = {
   'Automata': fsm,
   'Derivation tree': dt
@@ -224,6 +243,7 @@ let generic: CourseSet = {
 courseSets = {
   'Generic': generic,
   'Design': design,
+  'Fault Trees': faultTree,
   'Languages & Machines': lm,
   'Embedded Systems': es,
   'Computer architecture and Organization': cao,

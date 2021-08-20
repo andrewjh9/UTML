@@ -3,6 +3,7 @@ import {Node} from "./node/node";
 import {EdgeLocation, Label, PositionCallback} from "./label";
 import {SerialisedEdge} from "../serialisation/serialised-data-structures/serialised-edge";
 import {liesOnSegment} from "../app/services/edge-reposition/lies-on-segment";
+import {computeSVGArcString} from '../util/curve-render-util';
 
 export class Edge {
   public startNode?: Node;
@@ -129,29 +130,8 @@ export class Edge {
         throw new Error(`An Arc typed edge should have exactly 1 middle position. Edge ${this} has
         ${this.middlePositions.length}.`);
       }
-      let start: Position = this.getStartPosition();
-      let middle: Position = this.middlePositions[0];
-      let end: Position = this.getEndPosition();
 
-      let A: number = Position.getDistance(end, middle);
-      let B: number = Position.getDistance(middle, start);
-      let C: number = Position.getDistance(start, end);
-
-      let angle: number = Math.acos((A * A + B * B - C * C) / (2 * A * B));
-
-      //calc radius of circle
-      let K: number = .5 * A * B * Math.sin(angle);
-      let r: number = A * B * C / 4 / K;
-      r = Math.round(r * 1000) / 1000;
-
-      //large arc flag
-      let laf: number = +(Math.PI / 2 > angle);
-
-      //sweep flag
-      let saf: number = +((end.x - start.x) * (middle.y - start.y) - (end.y - start.y) * (middle.x - start.x) < 0);
-
-      return ['M', start.x, start.y, 'A', r, r, 0, laf, saf, end.x, end.y].join(' ');
-
+      return computeSVGArcString(this.getStartPosition(), this.middlePositions[0], this.getEndPosition());
     } else {
       let start = this.getStartPosition();
       let end = this.getEndPosition();

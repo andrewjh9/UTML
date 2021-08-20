@@ -13,6 +13,8 @@ import {SystemClockNode} from "../../../model/node/system-clock-node";
 import {CrossNode} from "../../../model/node/cross-node";
 import {SequenceControlFlowNode} from "../../../model/node/sequence-control-flow-node";
 import {CommentNode} from "../../../model/node/comment-node";
+import {AndGateNode} from '../../../model/node/fault-tree/and-gate-node';
+import {OrGateNode} from '../../../model/node/fault-tree/or-gate-node';
 
 @Component({
   selector: '[node-render-dispatch]',
@@ -120,5 +122,21 @@ export class NodeRenderDispatchComponent {
 
   castToCommentNode(node: Node) {
     return <CommentNode> node;
+  }
+
+  isAndGate(node: Node) {
+    return node instanceof AndGateNode;
+  }
+
+  castToAndGateNode(node: Node) {
+    return <AndGateNode> node;
+  }
+
+  isOrGate(node: Node) {
+    return node instanceof OrGateNode;
+  }
+
+  castToOrGateNode(node: Node) {
+    return <OrGateNode> node;
   }
 }

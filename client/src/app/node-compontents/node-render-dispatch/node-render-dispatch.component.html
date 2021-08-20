@@ -10,3 +10,6 @@
 <svg:g *ngIf="isCross(node)" cross-node-render  [node]="castToCrossNode(node)"></svg:g>
 <svg:g *ngIf="isSequenceControlFlowNode(node)" sequence-control-flow-node-render [node]="castToSequenceControlFlowNode(node)"></svg:g>
 <svg:g *ngIf="isComment(node)" comment-node-render [node]="castToCommentNode(node)"></svg:g>
+<svg:g *ngIf="isAndGate(node)" and-gate-node-render [node]="castToAndGateNode(node)"></svg:g>
+<svg:g *ngIf="isOrGate(node)" or-gate-node-render [node]="castToOrGateNode(node)"></svg:g>
+
