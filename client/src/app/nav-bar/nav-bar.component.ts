@@ -16,6 +16,7 @@ import {UserService} from "../services/user.service";
 import {ExportService} from "../services/export.service";
 import {UndoRedoService} from "../services/caching/undo-redo.service";
 import {LocalFeedbackModalComponent} from '../local-feedback-modal/local-feedback-modal.component';
+import {ExternalFeedbackService} from '../services/feedback/external/external-feedback.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -32,7 +33,8 @@ export class NavBarComponent implements AfterViewInit {
               private zoomService: ZoomService,
               public userService: UserService,
               private deletionService: DeletionService,
-              private exportService: ExportService) { }
+              private exportService: ExportService,
+              private externalFeedbackService: ExternalFeedbackService) { }
 
   ngAfterViewInit() {
     let showHelpOnStart = localStorage.getItem(HelpModalComponent.LOCAL_STORAGE_KEY);
@@ -101,5 +103,9 @@ export class NavBarComponent implements AfterViewInit {
 
   openLocalFeedback() {
     this.modalService.open(LocalFeedbackModalComponent);
+  }
+
+  triggerExternalFeedback() {
+    this.externalFeedbackService.trigger();
   }
 }

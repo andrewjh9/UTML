@@ -8,6 +8,7 @@ import {Edge} from '../../../../model/edge';
 import {Feedback, getEmptyFeedback} from './feedback';
 import {Diagram} from '../../../../model/diagram';
 import {FeedbackHighlight} from './feedback-highlight';
+import {FeedbackManagementService} from '../feedback-management.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,45 +18,41 @@ import {FeedbackHighlight} from './feedback-highlight';
  * it must request feedback from the selected local feedback provider.
  */
 export class LocalFeedbackService {
-  /**
-   * If a feedback provider is selected, this emitter emits its feedback messages after every change detection.
-   * Components or services that use feedback messages should subscribe to it.
-   */
-  public readonly feedbackMessageEmitter: EventEmitter<Array<FeedbackMessage>> = new EventEmitter<Array<FeedbackMessage>>();
-  public readonly nodeHighlightEmitter: EventEmitter<Array<FeedbackHighlight>> = new EventEmitter<Array<FeedbackHighlight>>();
-
   private currentProvider: LocalFeedbackProvider | null = null;
 
   constructor(changeDetectionService: ChangeDetectionService,
-              private diagramContainerService: DiagramContainerService) {
+              private diagramContainerService: DiagramContainerService,
+              private feedbackManagementService: FeedbackManagementService) {
     changeDetectionService.addCallback(() => this.handleChange());
   }
 
   private handleChange(): void {
     if (this.currentProvider !== null) {
-      let diagram = this.diagramContainerService.get();
-
-      let feedback = this.currentProvider.getFeedback(diagram);
-
-      this.handleFeedback(feedback, diagram);
+      let feedback = this.currentProvider.getFeedback(this.diagramContainerService.get());
+      this.feedbackManagementService.setLocalFeedback(feedback);
     }
   }
 
-  private handleFeedback(feedback: Feedback, diagram: Diagram) {
-    this.feedbackMessageEmitter.emit(feedback.messages);
-
-    diagram.nodes.forEach((node: Node, index: number) => {
-      let highlight = feedback.nodeHighlights.find(h => h.id === index);
-      node.highlight = highlight === undefined ? 'none' : highlight.type;
-    });
-
-    diagram.edges.forEach((edge: Edge, index: number) => {
-      let highlight = feedback.edgeHighlights.find(h => h.id === index);
-      edge.highlight = highlight === undefined ? 'none' : highlight.type;
-    });
-
-    this.nodeHighlightEmitter.emit(feedback.nodeHighlights);
-  }
+  // private handleFeedback(feedback: Feedback, diagram: Diagram) {
+  //   this.feedbackMessageEmitter.emit(feedback.messages);
+  //
+  //   diagram.nodes.forEach((node: Node, index: number) => {
+  //     let message = feedback.messages.find(msg =>
+  //       msg.nodeHighlights !== undefined && msg.nodeHighlights!.includes(index));
+  //
+  //     node.highlight = message === undefined ? 'none' : message.type;
+  //   });
+  //
+  //   diagram.edges.forEach((edge: Edge, index: number) => {
+  //     let message = feedback.messages.find(msg =>
+  //       msg.edgeHighlights !== undefined && (index in msg.edgeHighlights!));
+  //
+  //
+  //     edge.highlight = message === undefined ? 'none' : message.type;
+  //   });
+  //
+  //   this.nodeHighlightEmitter.emit(null);
+  // }
 
   /**
    * Deactivate the current feedback provider.
@@ -65,8 +62,8 @@ export class LocalFeedbackService {
    */
   public deactivate() {
     this.currentProvider = null;
-    // Remove messages and highlights by handling empty feedback
-    this.handleFeedback(getEmptyFeedback(), this.diagramContainerService.get());
+    // Remove messages and highlights by setting empty feedback
+    this.feedbackManagementService.setLocalFeedback(getEmptyFeedback());
   }
 
   /**

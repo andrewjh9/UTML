@@ -87,11 +87,6 @@ export class DiagramComponent implements AfterViewInit, OnInit {
 
       this.cachingService.trigger();
     });
-
-    // Todo: Remove this temporary testing code
-    localFeedbackService.feedbackMessageEmitter.subscribe((messages: Array<FeedbackMessage>) => {
-      messages.forEach(message => console.log(message));
-    });
   }
 
   private setSVGDimensions(): void {

@@ -5,6 +5,7 @@ import {Edge} from "../../../model/edge";
 import {LocalFeedbackService} from '../../services/feedback/local/local-feedback.service';
 import {FeedbackHighlight} from '../../services/feedback/local/feedback-highlight';
 import {DiagramContainerService} from '../../services/diagram-container.service';
+import {FeedbackManagementService} from '../../services/feedback/feedback-management.service';
 
 @Component({
   selector: '[node-highlight]',
@@ -23,13 +24,13 @@ export class NodeHighlightComponent {
   highlightedNodes: Array<Node> = [];
 
   constructor(selectionService: SelectionService,
-              localFeedbackService: LocalFeedbackService,
+              feedbackManagementService: FeedbackManagementService,
               private diagramContainerService: DiagramContainerService) {
     selectionService.selectedObservable.subscribe(newList => {
       this.selectedNodes = newList.filter(elem => elem instanceof Node).map(node => <Node> node);
     });
 
-    localFeedbackService.nodeHighlightEmitter.subscribe((highlights: Array<FeedbackHighlight>) => {
+    feedbackManagementService.nodeHighlightUpdateObservable.subscribe((ignored: null) => {
       let nodes = this.diagramContainerService.get().nodes;
       this.highlightedNodes = nodes.filter(node => node.highlight !== 'none');
     });

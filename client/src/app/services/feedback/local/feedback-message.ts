@@ -5,11 +5,15 @@ export interface FeedbackMessage {
   /**
    * The type of message. This is usually used to style the message displayed to the user.
    */
-  type: 'warning' | 'error' | 'success' | 'neutral',
+  type: 'warning' | 'error' | 'success',
 
   /**
    * The actual message to be shown to the user.
    * The message should be human-readable and understandable to the user.
    */
-  message: string
+  message: string,
+
+  edgeHighlights?: number[],
+
+  nodeHighlights?: number[],
 }

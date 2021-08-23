@@ -1,14 +1,21 @@
 import { Injectable } from '@angular/core';
 import {Feedback, getEmptyFeedback} from '../local/feedback';
 import {FeedbackManagementService} from '../feedback-management.service';
+import {HttpClient} from '@angular/common/http';
+import {DiagramContainerService} from '../../diagram-container.service';
+import {SerialisedDiagram} from '../../../../serialisation/serialised-data-structures/serialised-diagram';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExternalFeedbackService {
-  private selectedAPI: ExternalFeedbackAPI | null = null;
+  private selectedAPI: ExternalFeedbackAPI | null = {
+    url: 'http://localhost:5000'
+  };
 
-  constructor(private feedbackManagementService: FeedbackManagementService) {
+  constructor(private feedbackManagementService: FeedbackManagementService,
+              private diagramContainerService: DiagramContainerService,
+              private http: HttpClient) {
 
   }
 
@@ -26,12 +33,18 @@ export class ExternalFeedbackService {
       return;
     }
 
-    this.feedbackManagementService.setExternalFeedback(await this.requestFeedback());
+    this.http.post<APIResponse>(this.selectedAPI!.url, { diagram: this.diagramContainerService.get().serialise() })
+      .subscribe(response => {
+        this.feedbackManagementService.setExternalFeedback(response.feedback!);
+      });
   }
+}
 
-  private async requestFeedback(): Promise<Feedback> {
-    return getEmptyFeedback();
-  }
+type APIResponse = {
+  status: 'success' | 'warning' | 'error',
+  errorMessage?: string,
+  feedback?: Feedback,
+  diagram?: SerialisedDiagram
 }
 
 type ExternalFeedbackAPI = {

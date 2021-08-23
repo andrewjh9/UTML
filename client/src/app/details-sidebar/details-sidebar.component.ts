@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {FeedbackMessage} from '../services/feedback/local/feedback-message';
-import {LocalFeedbackService} from '../services/feedback/local/local-feedback.service';
+import {FeedbackManagementService} from '../services/feedback/feedback-management.service';
 
 @Component({
   selector: 'details-sidebar',
@@ -12,8 +12,8 @@ export class DetailsSidebarComponent {
 
   feedbackMessages: FeedbackMessage[] = [];
 
-  constructor(localFeedbackService: LocalFeedbackService) {
-    localFeedbackService.feedbackMessageEmitter.subscribe((messages: FeedbackMessage[]) => {
+  constructor(feedbackManagementService: FeedbackManagementService) {
+    feedbackManagementService.feedbackMessageEmitter.subscribe((messages: FeedbackMessage[]) => {
       this.feedbackMessages = messages;
     });
   }

@@ -37,7 +37,6 @@ export class NodeCountValidator extends LocalFeedbackProvider {
         'message': 'You should probably remove some nodes.'
       }];
 
-      result.nodeHighlights.push({id: 0, type: 'error'});
       return result;
     }
 

@@ -27,18 +27,17 @@ export class FsmAlphabetValidator extends LocalFeedbackProvider {
       if (edge.middleLabel === undefined) {
         result.messages.push({
           type: "warning",
-          message: "An edge is missing a middle label"
+          message: "An edge is missing a middle label",
+          edgeHighlights: [index]
         });
-        result.edgeHighlights.push({id: index, type: 'warning'});
       } else {
           let chars = edge.middleLabel!.value.split(",").map(char => char.trim());
           if (chars.some(char => !this.alphabet.includes(char))) {
             result.messages.push({
               type: "error",
-              message: "There is at least one edge with an invalid character."
+              message: "There is at least one edge with an invalid character.",
+              edgeHighlights: [index]
             });
-
-            result.edgeHighlights.push({id: index, type: 'error'});
           }
       }
     });
@@ -47,12 +46,13 @@ export class FsmAlphabetValidator extends LocalFeedbackProvider {
       if (diagram.nodes.filter(innerNode => innerNode.text === node.text).length !== 1) {
         result.messages.push({
           type: "error",
-          message: "There is at least one other node with this name."
+          message: "There is at least one other node with this name.",
+          nodeHighlights: [index]
         });
-
-        result.nodeHighlights.push({id: index, type: 'error'});
       }
     });
+
+    console.log(result);
 
     return result;
   }
