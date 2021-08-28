@@ -13,7 +13,6 @@ import { NewEdgePreviewComponent } from './new-edge-preview/new-edge-preview.com
 import {DeletionService} from "./services/deletion.service";
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { NodeEditorComponent } from './node-compontents/node-editor/node-editor.component';
-import { MoveMenuComponent } from './move-menu/move-menu.component';
 import { ClickableAttachmentPointsComponent } from './node-compontents/clickable-attachment-points/clickable-attachment-points.component';
 import {ClickableResizePointsComponent} from "./node-compontents/clickable-resize-points/clickable-resize-points.component";
 import { ExportDiagramComponent } from './export-diagram/export-diagram.component';
@@ -90,7 +89,6 @@ import { ExternalFeedbackModalComponent } from './external-feedback-modal/extern
     LabelComponent,
     NewEdgePreviewComponent,
     NodeEditorComponent,
-    MoveMenuComponent,
     ClickableAttachmentPointsComponent,
     ClickableResizePointsComponent,
     ExportDiagramComponent,

@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SelectionService} from "../../services/selection.service";
 import {Node} from '../../../model/node/node';
-import {Edge} from "../../../model/edge";
-import {LocalFeedbackService} from '../../services/feedback/local/local-feedback.service';
-import {FeedbackHighlight} from '../../services/feedback/local/feedback-highlight';
 import {DiagramContainerService} from '../../services/diagram-container.service';
 import {FeedbackManagementService} from '../../services/feedback/feedback-management.service';
 
@@ -30,7 +27,7 @@ export class NodeHighlightComponent {
       this.selectedNodes = newList.filter(elem => elem instanceof Node).map(node => <Node> node);
     });
 
-    feedbackManagementService.nodeHighlightUpdateObservable.subscribe((ignored: null) => {
+    feedbackManagementService.feedbackEmitter.subscribe((ignored: any) => {
       let nodes = this.diagramContainerService.get().nodes;
       this.highlightedNodes = nodes.filter(node => node.highlight !== 'none');
     });

@@ -42,7 +42,8 @@ export class ExternalFeedbackService {
     }
 
     this.http.post<APIResponse>(this.selectedAPI!.url, { diagram: this.diagramContainerService.get().serialise() })
-      .subscribe({ next: feedback => this.handleFeedback(feedback),
+      .subscribe({
+        next: feedback => this.handleFeedback(feedback),
         error: error => {
           if (error.message) {
             this.errorLauncherService.launch(error.message);

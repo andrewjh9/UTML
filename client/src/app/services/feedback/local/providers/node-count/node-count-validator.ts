@@ -1,6 +1,5 @@
 import {LocalFeedbackProvider} from '../local-feedback-provider';
 import {Diagram} from '../../../../../../model/diagram';
-import {FeedbackMessage} from '../../feedback-message';
 import {ProviderSetupField} from '../local-feedback-provider-factory';
 import {getEmptyFeedback, Feedback} from '../../feedback';
 

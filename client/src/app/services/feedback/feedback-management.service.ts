@@ -1,9 +1,8 @@
 import {EventEmitter, Injectable} from '@angular/core';
-import {Feedback, getEmptyFeedback} from './local/feedback';
+import {Feedback, FeedbackMessage, getEmptyFeedback} from './local/feedback';
 import {Node} from '../../../model/node/node';
 import {Edge} from '../../../model/edge';
 import {DiagramContainerService} from '../diagram-container.service';
-import {FeedbackMessage} from './local/feedback-message';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +10,11 @@ import {FeedbackMessage} from './local/feedback-message';
 export class FeedbackManagementService {
   private localFeedback: Feedback = getEmptyFeedback();
   private externalFeedback: Feedback = getEmptyFeedback();
-  private readonly nodeHighlightUpdateEmitter: EventEmitter<null> = new EventEmitter<null>();
-  public readonly nodeHighlightUpdateObservable = this.nodeHighlightUpdateEmitter.asObservable();
-  public readonly feedbackMessageEmitter: EventEmitter<FeedbackMessage[]> = new EventEmitter();
 
-  constructor(private diagramContainerService: DiagramContainerService) {
+  public readonly feedbackEmitter: EventEmitter<Feedback> = new EventEmitter<Feedback>();
 
-  }
+  constructor(private diagramContainerService: DiagramContainerService) { }
+
 
   public setLocalFeedback(feedback: Feedback): void {
     this.localFeedback = feedback;
@@ -29,7 +26,7 @@ export class FeedbackManagementService {
     this.mergeAndEmit();
   }
 
-  private mergeAndEmit() {
+  private mergeAndEmit(): void {
     // Todo: Deal with nodes and edges being highlighting differently by external and local feedback.
     let feedback = getEmptyFeedback();
 
@@ -49,11 +46,9 @@ export class FeedbackManagementService {
       let message = feedback.messages.find(msg =>
         msg.edgeHighlights !== undefined && (index in msg.edgeHighlights!));
 
-
       edge.highlight = message === undefined ? 'none' : message.type;
     });
 
-    this.nodeHighlightUpdateEmitter.emit(null);
-    this.feedbackMessageEmitter.emit(feedback.messages);
+    this.feedbackEmitter.emit(feedback);
   }
 }

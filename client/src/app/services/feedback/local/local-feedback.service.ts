@@ -2,12 +2,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {LocalFeedbackProvider} from './providers/local-feedback-provider';
 import {ChangeDetectionService} from '../../caching/change-detection.service';
 import {DiagramContainerService} from '../../diagram-container.service';
-import {FeedbackMessage} from './feedback-message';
-import {Node} from '../../../../model/node/node';
-import {Edge} from '../../../../model/edge';
 import {Feedback, getEmptyFeedback} from './feedback';
-import {Diagram} from '../../../../model/diagram';
-import {FeedbackHighlight} from './feedback-highlight';
 import {FeedbackManagementService} from '../feedback-management.service';
 
 @Injectable({
@@ -32,27 +27,6 @@ export class LocalFeedbackService {
       this.feedbackManagementService.setLocalFeedback(feedback);
     }
   }
-
-  // private handleFeedback(feedback: Feedback, diagram: Diagram) {
-  //   this.feedbackMessageEmitter.emit(feedback.messages);
-  //
-  //   diagram.nodes.forEach((node: Node, index: number) => {
-  //     let message = feedback.messages.find(msg =>
-  //       msg.nodeHighlights !== undefined && msg.nodeHighlights!.includes(index));
-  //
-  //     node.highlight = message === undefined ? 'none' : message.type;
-  //   });
-  //
-  //   diagram.edges.forEach((edge: Edge, index: number) => {
-  //     let message = feedback.messages.find(msg =>
-  //       msg.edgeHighlights !== undefined && (index in msg.edgeHighlights!));
-  //
-  //
-  //     edge.highlight = message === undefined ? 'none' : message.type;
-  //   });
-  //
-  //   this.nodeHighlightEmitter.emit(null);
-  // }
 
   /**
    * Deactivate the current feedback provider.
