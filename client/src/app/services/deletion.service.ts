@@ -1,13 +1,13 @@
 import {EventEmitter, Injectable} from "@angular/core";
 import {Node} from "../../model/node/node";
 import {Diagram} from "../../model/diagram";
-import {Edge} from "../../model/edge";
+import {Edge} from "../../model/edge/edge";
 import {CachingService} from "./caching/caching.service";
 import {SelectionService} from "./selection.service";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {EditService} from "./edit.service";
 import {DiagramContainerService} from "./diagram-container.service";
-import {Label} from "../../model/label";
+import {Label} from "../../model/edge/label";
 
 @Injectable({
   providedIn: "root"

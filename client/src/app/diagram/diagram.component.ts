@@ -8,7 +8,7 @@ import {DomSanitizer} from "@angular/platform-browser";
 import {CachingService} from "../services/caching/caching.service";
 import {SelectionService} from "../services/selection.service";
 import {Diagram} from "../../model/diagram";
-import {Edge} from "../../model/edge";
+import {Edge} from "../../model/edge/edge";
 import {Position} from "../../model/position";
 import {CopyPasteService} from "../services/copy-paste.service";
 import {DragDropCreationService} from "../services/drag-drop-creation.service";

@@ -5,7 +5,7 @@ import {CachingService} from "./caching/caching.service";
 import {SnapService} from "./snap.service";
 import {SelectionService} from "./selection.service";
 import {Node} from "../../model/node/node";
-import {Edge} from "../../model/edge";
+import {Edge} from "../../model/edge/edge";
 
 @Injectable({
   providedIn: 'root'

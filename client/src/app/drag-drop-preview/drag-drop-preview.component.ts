@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Edge} from "../../model/edge";
+import {Edge} from "../../model/edge/edge";
 import {DragDropCreationService} from "../services/drag-drop-creation.service";
 import {Node} from "../../model/node/node";
 

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Edge} from "../../../model/edge";
+import {Edge} from "../../../model/edge/edge";
 
 @Component({
   selector: '[arc-render-component]',

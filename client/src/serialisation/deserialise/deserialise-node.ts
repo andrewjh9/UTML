@@ -20,6 +20,8 @@ import {CrossNode} from "../../model/node/cross-node";
 import {ExecutionNode} from "../../model/node/execution-node";
 import {SequenceControlFlowNode} from "../../model/node/sequence-control-flow-node";
 import {CommentNode} from "../../model/node/comment-node";
+import {OrGateNode} from "../../model/node/fault-tree/or-gate-node";
+import {AndGateNode} from "../../model/node/fault-tree/and-gate-node";
 
 function deserialiseGeneric(serialisedNode: SerialisedNode, constructor: GenericNodeConstructor): Node {
   let result = new constructor(serialisedNode.width, serialisedNode.height,
@@ -73,6 +75,10 @@ export function deserialiseNode(serialisedNode: SerialisedNode): Node {
       return deserialiseGeneric(serialisedNode, CommentNode);
     case 'ExecutionNode':
       return deserialiseGeneric(serialisedNode, ExecutionNode);
+    case 'OR Gate':
+      return deserialiseGeneric(serialisedNode, OrGateNode);
+    case 'AND Gate':
+      return deserialiseGeneric(serialisedNode, AndGateNode);
     case 'SequenceControlFlowNode':
       return deserialiseSequenceControlFlowNode(serialisedNode as SerialisedSequenceControlFlowNode);
   }

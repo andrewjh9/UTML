@@ -1,4 +1,4 @@
-import {Edge} from "./edge";
+import {Edge} from "./edge/edge";
 import {Node} from "./node/node";
 import {SerialisedDiagram} from "../serialisation/serialised-data-structures/serialised-diagram";
 import {Position} from "./position";

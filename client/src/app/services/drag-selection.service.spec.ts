@@ -3,7 +3,7 @@ import {TestBed} from '@angular/core/testing';
 import {DragSelectionService} from './drag-selection.service';
 import {Position} from "../../model/position";
 import {RectangleNode} from "../../model/node/rectangle-node";
-import {Edge} from "../../model/edge";
+import {Edge} from "../../model/edge/edge";
 import {Diagram} from "../../model/diagram";
 import {SelectionService} from "./selection.service";
 import {DiagramContainerService} from "./diagram-container.service";

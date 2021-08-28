@@ -1,8 +1,8 @@
 import {EventEmitter, Injectable, Renderer2, RendererFactory2} from '@angular/core';
 import {Node} from "../../model/node/node";
-import {Edge} from "../../model/edge";
+import {Edge} from "../../model/edge/edge";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
-import {Label} from "../../model/label";
+import {Label} from "../../model/edge/label";
 import {CachingService} from "./caching/caching.service";
 import {SelectionService} from "./selection.service";
 import {BehaviorSubject} from "rxjs";

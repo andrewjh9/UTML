@@ -1,2 +1,2 @@
-<svg:g *ngIf="isLine()" line-render-component [edge]="edge" [styleObject]="styleObject"/>
+<svg:g *ngIf="isLine() || isFaultTree()" line-render-component [edge]="edge" [styleObject]="styleObject"/>
 <svg:g *ngIf="isArc()" arc-render-component [edge]="edge" [styleObject]="styleObject"/>

@@ -2,8 +2,8 @@ import {TestBed} from "@angular/core/testing";
 import {SelectionService} from "./selection.service";
 import {RectangleNode} from "../../model/node/rectangle-node";
 import {Node} from "../../model/node/node";
-import {Edge} from "../../model/edge";
-import {Label} from "../../model/label";
+import {Edge} from "../../model/edge/edge";
+import {Label} from "../../model/edge/label";
 import {Position} from "../../model/position";
 
 describe('SelectionService ', () => {

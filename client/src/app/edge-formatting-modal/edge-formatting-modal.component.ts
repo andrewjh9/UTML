@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {SelectionService} from "../services/selection.service";
-import {Edge} from "../../model/edge";
+import {Edge} from "../../model/edge/edge";
 import {DeletionService} from "../services/deletion.service";
 import {CachingService} from "../services/caching/caching.service";
 

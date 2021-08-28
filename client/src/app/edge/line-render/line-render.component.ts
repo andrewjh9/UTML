@@ -1,5 +1,5 @@
 import {Component, Input} from "@angular/core";
-import {Edge} from "../../../model/edge";
+import {Edge} from "../../../model/edge/edge";
 
 @Component({
   selector: '[line-render-component]',

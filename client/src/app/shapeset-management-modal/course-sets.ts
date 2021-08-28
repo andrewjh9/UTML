@@ -1,7 +1,7 @@
 import {CourseSet, ShapeSet} from "./shapeset-management-modal.component";
 import {ClassNode} from "../../model/node/class-node";
 import {Position} from "../../model/position";
-import {Edge, EndStyle, LineStyle, LineType} from "../../model/edge";
+import {Edge, EndStyle, LineStyle, LineType} from "../../model/edge/edge";
 import {RectangleNode} from "../../model/node/rectangle-node";
 import {HourglassNode} from "../../model/node/hourglass-node";
 import {ActorNode} from "../../model/node/actor-node";
@@ -17,6 +17,7 @@ import {SequenceControlFlowNode} from "../../model/node/sequence-control-flow-no
 import {CommentNode} from "../../model/node/comment-node";
 import {AndGateNode} from '../../model/node/fault-tree/and-gate-node';
 import {OrGateNode} from '../../model/node/fault-tree/or-gate-node';
+import {FaultTreeEdge} from "../../model/edge/fault-tree-edge";
 
 export function flattenActive(courseSets: {[key: string]: CourseSet}) {
   let result: CourseSet = {};
@@ -154,15 +155,17 @@ sequence.nodes['Alt'] = new SequenceControlFlowNode(100, 100, new Position(56, 2
 
 
 let ft: ShapeSet = {nodes: {}, edges: {}, active: true};
-ft.edges['Line'] = association;
-let basicEvent = new EllipseNode(100, 100, new Position(58, 2));
-ft.nodes['Basic Event'] = basicEvent;
+
 let intermediateEvent = new RectangleNode(186, 50, new Position(10, 2));
 ft.nodes['Intermediate Event'] = intermediateEvent;
 let andGate = new AndGateNode(100, 100, new Position(58, 2));
 ft.nodes['And Gate'] = andGate;
 let orGate = new OrGateNode(100, 100, new Position(58, 2));
 ft.nodes['Or Gate'] = orGate;
+ft.edges['Edge'] = association;
+ft.nodes['Basic Event'] =  new EllipseNode(100, 100, new Position(58, 2));
+let ftEdge = new FaultTreeEdge(new Position(30, 2), new Position(168, 30));
+ft.edges['Auto-Formatted Edge'] = ftEdge;
 
 let fsm: ShapeSet = {nodes: {}, edges: {}, active: true};
 fsm.nodes['State'] = state;

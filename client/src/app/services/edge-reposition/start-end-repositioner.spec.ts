@@ -2,7 +2,7 @@ import {StartEndRepositioner} from "./start-end-repositioner";
 import {Node} from "../../../model/node/node";
 import {RectangleNode} from "../../../model/node/rectangle-node";
 import {Position} from "../../../model/position";
-import {Edge} from "../../../model/edge";
+import {Edge} from "../../../model/edge/edge";
 import {TestBed} from "@angular/core/testing";
 import {DiagramContainerService} from "../diagram-container.service";
 import {Diagram} from "../../../model/diagram";

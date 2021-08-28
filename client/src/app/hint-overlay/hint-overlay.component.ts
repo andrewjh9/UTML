@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {SelectionService} from "../services/selection.service";
-import {Edge} from "../../model/edge";
+import {Edge} from "../../model/edge/edge";
 import {Node} from "../../model/node/node";
 import {EdgeCreationService} from "../services/edge-creation.service";
 import {ZoomService} from "../services/zoom.service";
 import {EditService} from "../services/edit.service";
-import {Label} from "../../model/label";
+import {Label} from "../../model/edge/label";
 import {logger} from "codelyzer/util/logger";
 
 @Component({

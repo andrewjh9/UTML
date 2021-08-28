@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { EdgeRenderDispatchComponent } from './edge-render-dispatch.component';
 import {Position} from "../../../model/position";
-import {Edge} from "../../../model/edge";
+import {Edge} from "../../../model/edge/edge";
 
 describe('EdgeRenderDispatchComponent', () => {
   let component: EdgeRenderDispatchComponent;

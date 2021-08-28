@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AndGateNode} from '../../../../model/node/fault-tree/and-gate-node';
 import {Node} from '../../../../model/node/node';
 import {Position} from '../../../../model/position';
-import {computeSVGArcString} from '../../../../util/curve-render-util';
+import {computeCubicCurve, computeSVGArcString} from '../../../../util/curve-render-util';
 
 @Component({
   selector: '[and-gate-node-render]',
@@ -25,11 +25,20 @@ export class AndGateNodeRenderComponent {
     let bottomLeft = Position.add(this.node.position, new Position(0, this.node.height));
     let bottomRight = Position.add(this.node.position, new Position(this.node.width, this.node.height));
 
+    let control1 = this.node.position.getDeepCopy();
+    let control2 = Position.add(new Position(this.node.width, 0), this.node.position.getDeepCopy());
 
-    let hatPath = computeSVGArcString(hatStart, hatMiddle, hatEnd);
-    let lowerPath = `L ${bottomRight.x} ${bottomRight.y} L ${bottomLeft.x} ${bottomLeft.y}  
+
+
+    let hatPath1 = computeCubicCurve(hatStart, control1, hatMiddle);
+    let hatPath2 = computeCubicCurve(hatMiddle, control2, hatEnd);
+
+    let lowerPath = `L ${bottomRight.x} ${bottomRight.y} L ${bottomLeft.x} ${bottomLeft.y}
                      L ${hatStart.x} ${hatStart.y}`;
 
-    return hatPath + lowerPath;
+    return `M ${hatStart.x} ${hatStart.y}
+            ${hatPath1}
+            ${hatPath2}
+            ${lowerPath}`;
   }
 }

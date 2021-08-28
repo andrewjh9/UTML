@@ -5,7 +5,7 @@ import {SelectionService} from "./selection.service";
 import {ZoomService} from "./zoom.service";
 import {SettingsContainerService} from "./settings-container.service";
 import {Node} from "../../model/node/node";
-import {EndStyle} from "../../model/edge";
+import {EndStyle} from "../../model/edge/edge";
 import {HttpClient} from "@angular/common/http";
 import {ErrorLauncherService} from "./error-launcher.service";
 

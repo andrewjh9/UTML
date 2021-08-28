@@ -2,7 +2,7 @@ import {EdgeCreationService} from "./edge-creation.service";
 import {RectangleNode} from "../../model/node/rectangle-node";
 import {Position} from "../../model/position";
 import {Node} from "../../model/node/node";
-import {Edge, LineType} from "../../model/edge";
+import {Edge, LineType} from "../../model/edge/edge";
 import {TestBed} from "@angular/core/testing";
 import {DragSelectionService} from "./drag-selection.service";
 

@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
-import {Edge, LineType} from "../../model/edge";
+import {Edge, LineType} from "../../model/edge/edge";
 import {Node} from "../../model/node/node";
 import {Position} from "../../model/position";
 import {BehaviorSubject, Observable} from "rxjs";

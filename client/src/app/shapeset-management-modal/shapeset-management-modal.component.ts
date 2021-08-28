@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Node} from "../../model/node/node";
-import {Edge} from "../../model/edge";
+import {Edge} from "../../model/edge/edge";
 import {courseSets, flattenActive} from "./course-sets";
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 import {ShapeSetContainerService} from "../services/shape-set-container.service";

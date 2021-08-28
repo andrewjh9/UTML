@@ -1,9 +1,10 @@
 import {SerialisedEdge} from "../serialised-data-structures/serialised-edge";
-import {Edge} from "../../model/edge";
+import {Edge, LineType} from "../../model/edge/edge";
 import {deserialiseLabel} from "./deserialise-label";
 import {deserialisePosition} from "./deserialise-position";
 import {Position} from "../../model/position";
 import {SerialisedPosition} from "../serialised-data-structures/serialised-position";
+import {FaultTreeEdge} from "../../model/edge/fault-tree-edge";
 
 export function deserialiseEdge(serialisedEdge: SerialisedEdge): Edge {
   let startPos: number | Position;
@@ -22,7 +23,13 @@ export function deserialiseEdge(serialisedEdge: SerialisedEdge): Edge {
     endPos = serialisedEdge.endPosition as number;
   }
 
-  let result = new Edge(startPos, endPos);
+  let result: Edge;
+
+  if (serialisedEdge.lineType === LineType.FaultTreeLine) {
+    result = new FaultTreeEdge(startPos, endPos);
+  } else {
+    result = new Edge(startPos, endPos);
+  }
 
   // Add formatting
   result.lineType = serialisedEdge.lineType;
@@ -30,7 +37,9 @@ export function deserialiseEdge(serialisedEdge: SerialisedEdge): Edge {
   result.startStyle = serialisedEdge.startStyle;
   result.endStyle = serialisedEdge.endStyle;
 
-  result.middlePositions = serialisedEdge.middlePositions.map(p => deserialisePosition(p));
+  if (result.lineType !== LineType.FaultTreeLine) {
+    result.middlePositions = serialisedEdge.middlePositions.map(p => deserialisePosition(p));
+  }
 
   // Add labels, if defined.
   if (serialisedEdge.startLabel) {

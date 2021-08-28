@@ -2,7 +2,7 @@ import {EventEmitter, Injectable} from '@angular/core';
 import {Deactivatable} from "./deactivatable";
 import {Node} from "../../model/node/node";
 import {Position} from "../../model/position";
-import {Edge, LineType} from "../../model/edge";
+import {Edge, LineType} from "../../model/edge/edge";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {BehaviorSubject} from "rxjs";
 import {SelectionService} from "./selection.service";

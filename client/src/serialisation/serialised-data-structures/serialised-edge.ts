@@ -1,6 +1,6 @@
 import {Position} from "../../model/position";
 import {SerialisedLabel} from "./serialised-label";
-import {EndStyle, LineStyle, LineType} from "../../model/edge";
+import {EndStyle, LineStyle, LineType} from "../../model/edge/edge";
 import {SerialisedPosition} from "./serialised-position";
 
 export interface SerialisedEdge {

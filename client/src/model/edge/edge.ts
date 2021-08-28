@@ -1,16 +1,16 @@
-import {Position} from "./position";
-import {Node} from "./node/node";
+import {Position} from "../position";
+import {Node} from "../node/node";
 import {EdgeLocation, Label, PositionCallback} from "./label";
-import {SerialisedEdge} from "../serialisation/serialised-data-structures/serialised-edge";
-import {liesOnSegment} from "../app/services/edge-reposition/lies-on-segment";
-import {computeSVGArcString} from '../util/curve-render-util';
+import {SerialisedEdge} from "../../serialisation/serialised-data-structures/serialised-edge";
+import {liesOnSegment} from "../../app/services/edge-reposition/lies-on-segment";
+import {computeSVGArcString} from '../../util/curve-render-util';
 
 export class Edge {
   public startNode?: Node;
   public endNode?: Node;
 
   public startPosition: Position | number;
-  public middlePositions: Position[] = [];
+  protected _middlePositions: Position[] = [];
   public endPosition: Position | number;
 
   public lineType: LineType = LineType.Line;
@@ -21,6 +21,14 @@ export class Edge {
   public startLabel?: Label;
   public middleLabel?: Label;
   public endLabel?: Label;
+
+  get middlePositions(): Position[] {
+    return this._middlePositions;
+  }
+
+  set middlePositions(value: Position[]) {
+    this._middlePositions = value;
+  }
 
   constructor(startPosition: Position | number,
               endPosition: Position | number,
@@ -115,7 +123,7 @@ export class Edge {
    * Returns a point string that can be used to draw a polyline or path depending on the line type
    */
   public getPointString(): string {
-    if (this.lineType === LineType.Line) {
+    if (this.lineType === LineType.Line || this.lineType === LineType.FaultTreeLine) {
       let result: string = "";
       result += this.getStartPosition().toString();
       for (let position of this.middlePositions) {
@@ -133,9 +141,7 @@ export class Edge {
 
       return computeSVGArcString(this.getStartPosition(), this.middlePositions[0], this.getEndPosition());
     } else {
-      let start = this.getStartPosition();
-      let end = this.getEndPosition();
-      return ['M', start.x, start.y, 'L', end.x, end.y].join(' ');
+      throw new Error("Unkown LineType. This should not be possible.")
     }
   }
 
@@ -255,7 +261,8 @@ export class Edge {
 
 export enum LineType {
   Arc,
-  Line
+  Line,
+  FaultTreeLine
 }
 
 export enum LineStyle {

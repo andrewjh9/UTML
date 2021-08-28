@@ -1,6 +1,6 @@
 import {Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild} from '@angular/core';
 import {Position} from "../../model/position";
-import {Edge, EndStyle, LineStyle, LineType} from "../../model/edge";
+import {Edge, EndStyle, LineStyle, LineType} from "../../model/edge/edge";
 import {SelectionService} from "../services/selection.service";
 import {DeletionService} from "../services/deletion.service";
 import {CachingService} from "../services/caching/caching.service";
@@ -8,7 +8,8 @@ import {EdgeFormattingModalComponent} from "../edge-formatting-modal/edge-format
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {MousePositionTransformService} from "../services/mouse-position-transform.service";
 import {EditService} from "../services/edit.service";
-import {Label} from "../../model/label";
+import {Label} from "../../model/edge/label";
+import {FaultTreeEdge} from "../../model/edge/fault-tree-edge";
 
 @Component({
   selector: '[edge-component]',
@@ -96,6 +97,10 @@ export class EdgeComponent implements OnDestroy {
 
   public isArc(): boolean {
     return this.edge?.lineType === LineType.Arc || false;
+  }
+
+  public isFaultTree(): boolean {
+    return this.edge instanceof FaultTreeEdge;
   }
 
   ngOnDestroy(): void {

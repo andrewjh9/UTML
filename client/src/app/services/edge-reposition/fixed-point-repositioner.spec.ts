@@ -1,6 +1,6 @@
 import {FixedPointRepositioner} from "./fixed-point-repositioner";
 import {Position} from "../../../model/position";
-import {Edge} from "../../../model/edge";
+import {Edge} from "../../../model/edge/edge";
 import {Node} from "../../../model/node/node";
 import {RectangleNode} from "../../../model/node/rectangle-node";
 import {before} from "selenium-webdriver/testing";

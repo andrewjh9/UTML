@@ -1,11 +1,11 @@
 import {EventEmitter, Injectable} from '@angular/core';
 import {SelectionService} from "./selection.service";
-import {Edge} from "../../model/edge";
+import {Edge} from "../../model/edge/edge";
 import {Node} from "../../model/node/node";
 import {KnownDeclaration} from "@angular/compiler-cli/src/ngtsc/reflection";
 import {Position} from "../../model/position";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
-import {Label} from "../../model/label";
+import {Label} from "../../model/edge/label";
 
 @Injectable({
   providedIn: 'root'

@@ -1,11 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Edge} from "../../model/edge";
+import {Edge} from "../../model/edge/edge";
 import {Node} from "../../model/node/node";
 import {BehaviorSubject} from "rxjs";
 import {KeyboardEventCallerService} from "./keyboard-event-caller.service";
 import {DeletionService} from "./deletion.service";
 import {DiagramContainerService} from "./diagram-container.service";
-import {Label} from "../../model/label";
+import {Label} from "../../model/edge/label";
 
 @Injectable({
   providedIn: 'root'

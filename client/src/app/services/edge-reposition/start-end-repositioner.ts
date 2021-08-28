@@ -1,4 +1,4 @@
-import {Edge} from "../../../model/edge";
+import {Edge} from "../../../model/edge/edge";
 import {Node} from "../../../model/node/node";
 import {Position} from "../../../model/position";
 import {Injectable} from "@angular/core";

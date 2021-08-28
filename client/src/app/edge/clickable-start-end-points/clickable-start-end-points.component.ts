@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Edge} from "../../../model/edge";
+import {Edge} from "../../../model/edge/edge";
 import {StartEndRepositioner} from "../../services/edge-reposition/start-end-repositioner";
 import {MousePositionTransformService} from "../../services/mouse-position-transform.service";
 import {SelectionService} from "../../services/selection.service";

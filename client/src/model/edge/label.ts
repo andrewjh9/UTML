@@ -1,6 +1,6 @@
-import {Position} from "./position";
-import {SerialisedLabel} from "../serialisation/serialised-data-structures/serialised-label";
-import {deserialiseLabel} from "../serialisation/deserialise/deserialise-label";
+import {Position} from "../position";
+import {SerialisedLabel} from "../../serialisation/serialised-data-structures/serialised-label";
+import {deserialiseLabel} from "../../serialisation/deserialise/deserialise-label";
 import {Edge} from "./edge";
 
 export class Label {

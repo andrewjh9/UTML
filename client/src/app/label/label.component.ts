@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Label} from "../../model/label";
+import {Label} from "../../model/edge/label";
 import {Position} from "../../model/position";
 import {SelectionService} from "../services/selection.service";
 import {LabelRepositionService} from "../services/label-reposition.service";

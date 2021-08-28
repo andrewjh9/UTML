@@ -1,5 +1,5 @@
 import {SerialisedLabel} from "../serialised-data-structures/serialised-label";
-import {EdgeLocation, Label} from "../../model/label";
+import {EdgeLocation, Label} from "../../model/edge/label";
 import {deserialisePosition} from "./deserialise-position";
 import {Position} from "../../model/position";
 

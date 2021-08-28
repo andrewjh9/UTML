@@ -1,5 +1,5 @@
 import {Position} from "../../../model/position";
-import {Edge, LineType} from "../../../model/edge";
+import {Edge, LineType} from "../../../model/edge/edge";
 import {Injectable} from "@angular/core";
 import {liesOnSegment} from "./lies-on-segment";
 import {SnapService} from "../snap.service";

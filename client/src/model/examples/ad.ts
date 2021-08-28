@@ -3,9 +3,9 @@ import {Diagram} from "../diagram";
 import {RectangleNode} from "../node/rectangle-node";
 import {EllipseNode} from "../node/ellipse-node";
 import {DiamondNode} from "../node/diamond-node";
-import {Edge} from "../edge";
+import {Edge} from "../edge/edge";
 import {ForkRejoinNode} from "../node/fork-rejoin-node";
-import {Label} from "../label";
+import {Label} from "../edge/label";
 
 export let ad: Diagram;
 

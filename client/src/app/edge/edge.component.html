@@ -3,7 +3,7 @@
        [styleObject]="styleObject"/>
 
 <!-- Invisible, selectable to make the mouse down trigger easily accessible -->
-<svg:polyline *ngIf="edge && isLine()"
+<svg:polyline *ngIf="edge && (isLine() || isFaultTree())"
               [attr.points]="edge.getPointString()"
               style="stroke:rgb(0, 0, 0); stroke-width:15; stroke-opacity: 0;  fill:none;"
               (mousedown)="handleMouseDown($event)"
@@ -17,9 +17,9 @@
           (dblclick)="handleDoubleClick($event)"
           [ngStyle]="{'cursor': cursor}"/>
 
-<svg:g *ngIf="isSelected && isLine()" clickable-new-points [edge]="edge" pointer-events="visible"/>
+<svg:g *ngIf="isSelected && (isLine() || isFaultTree()) && !isFaultTree()" clickable-new-points [edge]="edge" pointer-events="visible"/>
 <svg:g *ngIf="isSelected" clickable-start-end-points [edge]="edge"/>
-<svg:g *ngIf="isSelected" clickable-middle-points [edge]="edge"/>
+<svg:g *ngIf="isSelected && !isFaultTree()" clickable-middle-points [edge]="edge"/>
 
 <svg:g *ngIf="edge && edge?.startLabel"
        label-component

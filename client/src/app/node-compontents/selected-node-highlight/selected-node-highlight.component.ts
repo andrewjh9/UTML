@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {SelectionService} from "../../services/selection.service";
 import {Node} from "../../../model/node/node";
-import {Edge} from "../../../model/edge";
+import {Edge} from "../../../model/edge/edge";
 
 @Component({
   selector: '[selected-node-highlight]',

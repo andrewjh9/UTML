@@ -4,7 +4,7 @@
 import {Diagram} from "../diagram";
 import {EllipseNode} from "../node/ellipse-node";
 import {Position} from "../position";
-import {Edge} from "../edge";
+import {Edge} from "../edge/edge";
 //
 export let fsm: Diagram;
 let n1 = new EllipseNode(100, 100, new Position(50, 10));

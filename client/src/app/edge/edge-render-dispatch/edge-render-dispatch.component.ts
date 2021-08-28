@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Edge, LineType} from "../../../model/edge";
+import {Edge, LineType} from "../../../model/edge/edge";
 
 @Component({
   selector: '[edge-render-dispatch]',
@@ -15,6 +15,10 @@ export class EdgeRenderDispatchComponent {
 
   isLine() {
     return this.edge.lineType === LineType.Line;
+  }
+
+  isFaultTree() {
+    return this.edge.lineType === LineType.FaultTreeLine;
   }
 
   isArc() {

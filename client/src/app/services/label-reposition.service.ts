@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {SelectionService} from "./selection.service";
 import {SnapService} from "./snap.service";
-import {Label} from "../../model/label";
+import {Label} from "../../model/edge/label";
 import {Position} from "../../model/position";
 import {CachingService} from "./caching/caching.service";
 

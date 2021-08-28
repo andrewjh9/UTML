@@ -1,7 +1,7 @@
 import {Component, OnChanges, OnInit} from '@angular/core';
 import {ClassNode} from "../../model/node/class-node";
 import {Position} from "../../model/position";
-import {Edge, EndStyle, LineType} from "../../model/edge";
+import {Edge, EndStyle, LineType} from "../../model/edge/edge";
 import {Node} from "../../model/node/node";
 import {RectangleNode} from "../../model/node/rectangle-node";
 import {DragDropCreationService} from "../services/drag-drop-creation.service";
@@ -15,7 +15,7 @@ import {EdgeCreationService} from "../services/edge-creation.service";
 import {group} from "@angular/animations";
 import {element} from "protractor";
 import {SelectionService} from "../services/selection.service";
-import {Label} from "../../model/label";
+import {Label} from "../../model/edge/label";
 import {DiagramContainerService} from "../services/diagram-container.service";
 import {DeletionService} from "../services/deletion.service";
 import {CourseSet, ShapeSet} from "../shapeset-management-modal/shapeset-management-modal.component";
