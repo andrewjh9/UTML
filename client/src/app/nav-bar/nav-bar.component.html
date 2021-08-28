@@ -67,8 +67,13 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link"  (click)="triggerExternalFeedback()" ngbTooltip="External Feedback" placement="bottom">
+        <a class="nav-link"  (click)="openExternalFeedback()" ngbTooltip="Select External Feedback" placement="bottom">
           <fa-icon [icon]="['fas', 'server']"></fa-icon>
+        </a>
+      </li>
+      <li class="nav-item" *ngIf="externalFeedbackIsActive">
+        <a class="nav-link"  (click)="triggerExternalFeedback()" ngbTooltip="Trigger External Feedback" placement="bottom">
+          <fa-icon [icon]="['fas', 'paper-plane']"></fa-icon>
         </a>
       </li>
       <!-- This is an experimental feature, currently removed from the app.-->

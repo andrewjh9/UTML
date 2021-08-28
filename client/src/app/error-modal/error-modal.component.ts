@@ -9,6 +9,13 @@ import {ErrorLauncherService} from "../services/error-launcher.service";
 })
 export class ErrorModalComponent {
   errorMessage!: string;
+  get alertClass() {
+    return this.errorLauncherService.type === 'error' ? 'alert-danger' : 'alert-warning';
+  }
+  get title() {
+    return this.errorLauncherService.type === 'error' ? 'Error' : 'Warning';
+  }
+
   constructor(public modal: NgbActiveModal, private errorLauncherService: ErrorLauncherService) { }
 
   ngOnInit(): void {

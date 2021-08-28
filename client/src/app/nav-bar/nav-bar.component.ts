@@ -17,6 +17,7 @@ import {ExportService} from "../services/export.service";
 import {UndoRedoService} from "../services/caching/undo-redo.service";
 import {LocalFeedbackModalComponent} from '../local-feedback-modal/local-feedback-modal.component';
 import {ExternalFeedbackService} from '../services/feedback/external/external-feedback.service';
+import {ExternalFeedbackModalComponent} from "../external-feedback-modal/external-feedback-modal.component";
 
 @Component({
   selector: 'app-nav-bar',
@@ -24,6 +25,7 @@ import {ExternalFeedbackService} from '../services/feedback/external/external-fe
   styleUrls: ['./nav-bar.component.scss']
 })
 export class NavBarComponent implements AfterViewInit {
+  externalFeedbackIsActive: boolean = false;
   get NAV_HEIGHT() { return DiagramComponent.NAV_HEIGHT; }
 
   constructor(private modalService: NgbModal,
@@ -34,7 +36,9 @@ export class NavBarComponent implements AfterViewInit {
               public userService: UserService,
               private deletionService: DeletionService,
               private exportService: ExportService,
-              private externalFeedbackService: ExternalFeedbackService) { }
+              private externalFeedbackService: ExternalFeedbackService) {
+    this.externalFeedbackService.isActive.subscribe(b => this.externalFeedbackIsActive = b);
+  }
 
   ngAfterViewInit() {
     let showHelpOnStart = localStorage.getItem(HelpModalComponent.LOCAL_STORAGE_KEY);
@@ -107,5 +111,9 @@ export class NavBarComponent implements AfterViewInit {
 
   triggerExternalFeedback() {
     this.externalFeedbackService.trigger();
+  }
+
+  openExternalFeedback() {
+    this.modalService.open(ExternalFeedbackModalComponent);
   }
 }
