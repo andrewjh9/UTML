@@ -2,7 +2,21 @@
   <svg [attr.width]="width" id="downloadSVG"
        [attr.height]="height"
        [attr.viewBox]="viewBox">
+    <defs arrow-marker></defs>
+
     <g *ngFor="let edge of diagram.edges" edge-render-dispatch [edge]="edge"/>
     <g *ngFor="let node of diagram.nodes" node-render-dispatch [node]="node"/>
+
+    <g *ngFor="let edge of diagram.edges">
+      <g *ngIf="edge.middleLabel"
+         label-component
+         [label]="edge.middleLabel!"/>
+      <g *ngIf="edge.startLabel"
+         label-component
+         [label]="edge.startLabel!"/>
+      <g *ngIf="edge.endLabel"
+         label-component
+         [label]="edge.endLabel!"/>
+    </g>
   </svg>
 </div>

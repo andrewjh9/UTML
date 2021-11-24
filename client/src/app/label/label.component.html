@@ -4,6 +4,7 @@
           (mousedown)="handleMouseDown($event)"
           (dblclick)="handleDoubleClick($event)"
           [ngStyle]="{'fill': isSelected ? 'red' : 'black', 'cursor': isSelected ? 'move' : 'pointer'}"
+          font-family="sans-serif"
           dominant-baseline="middle"
           text-anchor="middle">
       <svg:tspan *ngFor="let labelLine of textRows(); let i = index" [attr.x]="label.position.x" dy="1.2em">
